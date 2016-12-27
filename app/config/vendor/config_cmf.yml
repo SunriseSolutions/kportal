@@ -12,7 +12,7 @@ cmf_core:
 cmf_content:
     persistence:
         phpcr:
-#            content_basepath: '%app_basepath%/content'
+            content_basepath: '%app_basepath%/content'
 #            document_class: AppBundle\Document\Post
  #           admin_class: AppBundle\Admin\PostAdmin
 #            use_sonata_admin: true

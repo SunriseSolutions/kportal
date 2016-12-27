@@ -1,3 +1,14 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+vendor_sonata:
+    resource: vendor/routing_sonata.yml
+
+vendor_cmf:
+    resource: vendor/routing_cmf.yml
+
+vendor_other:
+    resource: vendor/routing_others.yml
+
+

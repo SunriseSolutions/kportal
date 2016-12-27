@@ -1,0 +1,15 @@
+home_redirect:
+    path: /
+    defaults:
+        _controller: lunetics_locale.switcher_controller:switchAction
+        route: '/inspot/routes/%locale%'
+        statusCode: 301
+        useReferrer: false
+
+block_cache:
+    resource: '@CmfBlockBundle/Resources/config/routing/cache.xml'
+    prefix: /
+
+cmf_resource:
+    resource: '@CmfResourceRestBundle/Resources/config/routing.yml'
+    prefix: /admin
