@@ -1,0 +1,82 @@
+# cmf configuration
+cmf_core:
+    multilang:
+        locales: '%locales%'
+    persistence:
+        phpcr:
+            enabled: true
+            translation_strategy: attribute
+            basepath: '%app_basepath%'
+#            use_sonata_admin: false
+
+cmf_content:
+    persistence:
+        phpcr:
+#            content_basepath: '%app_basepath%/content'
+#            document_class: AppBundle\Document\Post
+ #           admin_class: AppBundle\Admin\PostAdmin
+            use_sonata_admin: true
+
+cmf_routing:
+    chain:
+        routers_by_id:
+            cmf_routing.dynamic_router: 20
+            router.default: 100
+    dynamic:
+        route_collection_limit: 10
+#        controllers_by_type:
+#            demo_type: app.content_controller:typeAction
+        controllers_by_class:
+            AppBundle\Document\Post: AppBundle\Controller\DefaultController::postAction
+#            AppBundle\Document\DemoClassContent: app.content_controller:classAction
+#            Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\RedirectRoute:  cmf_routing.redirect_controller:redirectAction
+
+#        templates_by_class:
+#            Symfony\Cmf\Bundle\ContentBundle\Doctrine\Phpcr\StaticContent: static_content/index.html.twig
+
+        persistence:
+            phpcr:
+                route_basepaths:
+                    - '%app_basepath%/routes'
+                admin_basepath:       null
+#                content_basepath:     '%app_basepath%/content'
+                enable_initializer: true
+
+cmf_routing_auto:
+    persistence:
+        phpcr:
+            route_basepath: '%app_basepath%/routes'
+    mapping:
+        resources:
+            path: 'config/cmf_routing_auto.yml'
+cmf_seo:
+    title: seo.title
+    description: seo.description
+    alternate_locale: ~
+    original_route_pattern: redirect
+
+cmf_menu:
+    persistence:
+        phpcr:
+#            menu_basepath: '%app_basepath%/menu'
+#            content_basepath:  '%app_basepath%/content'
+
+    voters:
+        content_identity: ~
+
+cmf_resource:
+    repositories:
+        default:
+            type: doctrine_phpcr_odm
+
+cmf_resource_rest:
+    enhancer_map:
+        - { repository: default, enhancer: sonata_admin }
+        
+cmf_block:
+    persistence:
+        phpcr:
+            slideshow_document_class:  Symfony\Cmf\Bundle\BlockBundle\Doctrine\Phpcr\SlideshowBlock
+            slideshow_admin_class:  Symfony\Cmf\Bundle\BlockBundle\Admin\Imagine\SlideshowBlockAdmin            
+            imagine_document_class:  Application\Cmf\BlockBundle\Doctrine\Phpcr\ImagineBlock
+            imagine_admin_class:  Application\Cmf\BlockBundle\Admin\ImagineBlockAdmin

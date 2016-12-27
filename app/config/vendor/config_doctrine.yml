@@ -29,9 +29,8 @@ doctrine_phpcr:
 
         auto_generate_proxy_classes: '%kernel.debug%'
         locales:
-            en: [vi, fr]
-            vi: [en, fr]
-            fr: [en, vi]
+            en: [vi]
+            vi: [en]
 
             
 doctrine:

@@ -1,0 +1,3 @@
+[submodule "src/Sonata/UserBundle"]
+	path = src/Sonata/UserBundle
+	url = git@github.com:binhle410/SonataUserBundle.git
