@@ -1,3 +1,165 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 #parameters:
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
+
+
+lunetics_locale:
+    guessing_order:
+        - router
+        - cookie
+        - browser
+    strict_mode: true
+    allowed_locales: '%locales%'
+
+
+hwi_oauth:
+    # name of the firewall in which this bundle is active, this setting MUST be set
+    firewall_names: [main]
+    target_path_parameter: target_path
+    use_referer: true
+    connect:
+        account_connector: app.provider.oauth
+    resource_owners:
+        facebook:
+            type:                facebook
+            client_id:           %facebook_client_id%
+            client_secret:       %facebook_client_secret%
+            scope:               "email, public_profile"
+            infos_url:           "https://graph.facebook.com/me?fields=id,name,first_name,last_name,email,picture.type(large)"
+            paths:
+                email: email
+            options:
+                display: page
+                csrf: true
+        google:
+            type:                google
+            client_id:           %google_client_id%
+            client_secret:       %google_client_secret%
+            scope:              "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+            paths:
+                email: email
+
+    connect: ~
+    fosub:
+        properties: ~
+
+
+
+liip_imagine:
+    # ...
+#    controller:
+#        filter_action:  'AppBundle:VendorFilter:liipImagineFilter'
+    filter_sets:
+        cmf_block:
+            data_loader: cmf_media_doctrine_phpcr
+            quality: 85
+#            filters:
+#                thumbnail: { size: [616, 419], mode: outbound }
+        # ...
+        default_admin:
+            quality: 75
+            filters:
+                thumbnail: { size: [200, null], mode: outbound }
+
+        default_small:
+            quality: 75
+            filters:
+                thumbnail: { size: [100, 70], mode: outbound }
+
+        default_big:
+            quality: 75
+            filters:
+                thumbnail: { size: [500, 70], mode: outbound }
+
+ivory_ck_editor:
+    toolbars:
+        configs:
+            minimum_1: [ [ "Source", "-", "Save" ], "/", [ "Anchor" ], "/", [ "Maximize" ] ]
+    default_config: default
+    configs:
+        cmf_content: { toolbar: standard }
+        user_edit: {toolbar: basic}
+        default:
+            toolbar: standard
+            filebrowserBrowseRoute: admin_sonata_media_media_ckeditor_browser
+            filebrowserImageBrowseRoute: admin_sonata_media_media_ckeditor_browser
+            # Display images by default when clicking the image dialog browse button
+            filebrowserImageBrowseRouteParameters:
+                provider: sonata.media.provider.image
+            filebrowserUploadRoute: admin_sonata_media_media_ckeditor_upload
+            filebrowserUploadRouteParameters:
+                provider: sonata.media.provider.file
+            # Upload file as image when sending a file from the image dialog
+            filebrowserImageUploadRoute: admin_sonata_media_media_ckeditor_upload
+            filebrowserImageUploadRouteParameters:
+                provider: sonata.media.provider.image
+#                context: my-context # Optional, to upload in a custom context
+
+
+sensio_framework_extra:
+    router:  { annotations: true }
+    request: { converters: true }
+
+fos_user:
+    db_driver:      orm # can be orm or odm
+    firewall_name:  main
+    user_class:     Application\Sonata\UserBundle\Entity\User
+    from_email:
+        address:              no-reply@magentapulse.com
+        sender_name:          Interview-spot Auto Email
+    registration:
+        form:
+            type: Application\Sonata\UserBundle\Form\Type\RegistrationFormType
+        confirmation:
+            enabled:              false
+            template:             'FOSUserBundle:Registration:email.txt.twig'
+            from_email:
+                address:              no-reply@magentapulse.com
+                sender_name:          Interview-spot Auto Email
+    resetting:
+        token_ttl:            86400
+        email:
+            template:             'FOSUserBundle:Resetting:email.txt.twig'
+            from_email:
+                address:              no-reply@magentapulse.com
+                sender_name:          Interview-spot Auto Email
+    group:
+        group_class:   Application\Sonata\UserBundle\Entity\Group
+        group_manager: sonata.user.orm.group_manager
+        # If you're using doctrine orm (use sonata.user.mongodb.user_manager for mongodb)
+
+    service:
+        user_manager: sonata.user.orm.user_manager
+        # If you're using doctrine orm (use sonata.user.mongodb.group_manager for mongodb)
+
+fos_rest:
+    routing_loader:
+        default_format: json
+#    service:
+#        serializer:
+
+fos_js_routing:
+    routes_to_expose: [ app_job_search, get_jobs, get_filters, get_industries, get_locations, get__media_cvs, get__media_videos, app_job_detail, get__email_check, get__media, delete__medium, put__medium_name, sonata_media_download ]
+
+parameters:
+#    sonata.media.provider.youtube.class: Application\Sonata\MediaBundle\Provider\AppYouTubeProvider
+#    sonata.media.provider.image.class: Application\Sonata\MediaBundle\Provider\AppImageProvider
+#    sonata.media.provider.file.class: Application\Sonata\MediaBundle\Provider\AppFileProvider
+#    sonata.media.manager.media.class: Application\Sonata\MediaBundle\Entity\AppMediaManager
+
+#    sonata.media.admin.media.class: Application\Sonata\MediaBundle\Admin\AppMediaAdmin
+#    sonata.media.admin.gallery.class: Application\Sonata\MediaBundle\Admin\AppGalleryAdmin
+
+    max_file_size: 150 # 150 MB per file
+    max_file_per_user: 7 # 7 files
+    video_thumbnail_pos: 3 # at the 3rd second
+    video_thumbnail_resolution: 300x225 # width 300, height: 225 px
+
+    s3_version: latest
+    s3_sdk_version: 3

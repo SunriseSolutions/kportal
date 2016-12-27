@@ -22,3 +22,36 @@ parameters:
     locales:
         - en
         - vi
+
+
+
+    phpcr_backend:
+        logging: true
+        profiling: true
+        type: jackrabbit
+        url: http://localhost:8080/server/
+        parameters:
+            jackalope.check_login_on_server: false
+    phpcr_workspace: default
+    phpcr_user: admin
+    phpcr_pass: admin
+
+    app_basepath: /kportal
+    app_baseroute: /
+
+    ffmpeg_bin: E:\Software\ffmpeg\bin\
+
+    pager_size: 20
+
+    facebook_client_id: ~
+    facebook_client_secret: ~
+    google_client_id: ~
+    google_client_secret: ~
+
+# Sonata
+#    sonata.media.admin.media.class: Application\Sonata\MediaBundle\Admin\PHPCR\ApplicationMediaAdmin
+    s3_bucket_name: magenta-consulting.com
+    s3_access_key: ~
+    s3_secret_key: ~
+    s3_region: ap-southeast-1
+    s3_directory: ~

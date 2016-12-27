@@ -22,3 +22,16 @@ security:
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            oauth:
+                failure_path: /login
+                login_path: /login
+                check_path: /connect_check
+                provider: fos_userbundle
+                resource_owners:
+                    facebook: "/login/check-facebook"
+                    google: "/login/check-google"
+                oauth_user_provider:
+                    service: app.provider.oauth
+#                use_forward:       false
+#                oauth_user_provider:
+#                    service: app.provider.oauth

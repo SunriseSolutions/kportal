@@ -3,8 +3,9 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: vendor/config_doctrine.yml }
+    - { resource: vendor/config_sonata.yml }
+    - { resource: vendor/config_cmf.yml }
     - { resource: vendor/config_others.yml }
-    - { resource: vendor/config_cmf.yml}
 
 framework:
     #esi:             ~

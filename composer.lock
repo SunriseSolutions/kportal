@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c2a2dd3de956f18bddc10725bc8a0b4e",
-    "content-hash": "02a26ada435d5894a58c522aeb09eadf",
+    "hash": "6ebc5d681fbe531eb750f01b3aba6718",
+    "content-hash": "0db32d09a4545f2b5357fde266c42c6e",
     "packages": [
         {
             "name": "aferrandini/urlizer",
@@ -1659,16 +1659,16 @@
         },
         {
             "name": "friendsofsymfony/user-bundle",
-            "version": "v2.0.0-beta1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "28151dcb25de663c05ce26917fd6a0b5cb2787cf"
+                "reference": "9c64d6fa7ae264828b2ec98aca847840b200bd56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/28151dcb25de663c05ce26917fd6a0b5cb2787cf",
-                "reference": "28151dcb25de663c05ce26917fd6a0b5cb2787cf",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/9c64d6fa7ae264828b2ec98aca847840b200bd56",
+                "reference": "9c64d6fa7ae264828b2ec98aca847840b200bd56",
                 "shasum": ""
             },
             "require": {
@@ -1677,6 +1677,7 @@
                 "symfony/form": "^2.7 || ^3.0",
                 "symfony/framework-bundle": "^2.7 || ^3.0",
                 "symfony/security-bundle": "^2.7 || ^3.0",
+                "symfony/templating": "^2.7 || ^3.0",
                 "symfony/twig-bundle": "^2.7 || ^3.0"
             },
             "conflict": {
@@ -1729,7 +1730,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2016-11-29 14:53:27"
+            "time": "2016-10-14 20:44:45"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -6613,12 +6614,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony-cmf/content-bundle.git",
-                "reference": "b010b471142e28e5e3d5d5d0aab7c862a2f795b0"
+                "reference": "5ce4474d0a0240720076ba9be1021dca71826280"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-cmf/content-bundle/zipball/b010b471142e28e5e3d5d5d0aab7c862a2f795b0",
-                "reference": "b010b471142e28e5e3d5d5d0aab7c862a2f795b0",
+                "url": "https://api.github.com/repos/symfony-cmf/content-bundle/zipball/5ce4474d0a0240720076ba9be1021dca71826280",
+                "reference": "5ce4474d0a0240720076ba9be1021dca71826280",
                 "shasum": ""
             },
             "require": {
@@ -6668,7 +6669,7 @@
             "keywords": [
                 "Symfony CMF"
             ],
-            "time": "2016-12-23 19:34:24"
+            "time": "2016-12-26 20:33:32"
         },
         {
             "name": "symfony-cmf/core-bundle",
@@ -6676,12 +6677,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony-cmf/core-bundle.git",
-                "reference": "1e165f9ff0721db091826846f5981fff7573a1b3"
+                "reference": "50db72547ee44c10283b03200438ba0141064057"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-cmf/core-bundle/zipball/1e165f9ff0721db091826846f5981fff7573a1b3",
-                "reference": "1e165f9ff0721db091826846f5981fff7573a1b3",
+                "url": "https://api.github.com/repos/symfony-cmf/core-bundle/zipball/50db72547ee44c10283b03200438ba0141064057",
+                "reference": "50db72547ee44c10283b03200438ba0141064057",
                 "shasum": ""
             },
             "require": {
@@ -6732,7 +6733,7 @@
             "keywords": [
                 "Symfony CMF"
             ],
-            "time": "2016-12-23 19:35:09"
+            "time": "2016-12-26 19:59:48"
         },
         {
             "name": "symfony-cmf/media-bundle",
@@ -9562,6 +9563,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "friendsofsymfony/user-bundle": 20,
         "jms/translation-bundle": 20,
         "jms/di-extra-bundle": 20
     },

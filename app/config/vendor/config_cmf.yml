@@ -15,7 +15,7 @@ cmf_content:
 #            content_basepath: '%app_basepath%/content'
 #            document_class: AppBundle\Document\Post
  #           admin_class: AppBundle\Admin\PostAdmin
-            use_sonata_admin: true
+#            use_sonata_admin: true
 
 cmf_routing:
     chain:
@@ -38,7 +38,7 @@ cmf_routing:
             phpcr:
                 route_basepaths:
                     - '%app_basepath%/routes'
-                admin_basepath:       null
+#                admin_basepath:       null
 #                content_basepath:     '%app_basepath%/content'
                 enable_initializer: true
 
@@ -73,10 +73,10 @@ cmf_resource_rest:
     enhancer_map:
         - { repository: default, enhancer: sonata_admin }
         
-cmf_block:
-    persistence:
-        phpcr:
-            slideshow_document_class:  Symfony\Cmf\Bundle\BlockBundle\Doctrine\Phpcr\SlideshowBlock
-            slideshow_admin_class:  Symfony\Cmf\Bundle\BlockBundle\Admin\Imagine\SlideshowBlockAdmin            
-            imagine_document_class:  Application\Cmf\BlockBundle\Doctrine\Phpcr\ImagineBlock
-            imagine_admin_class:  Application\Cmf\BlockBundle\Admin\ImagineBlockAdmin
+#cmf_block:
+#    persistence:
+#        phpcr:
+#            slideshow_document_class:  Symfony\Cmf\Bundle\BlockBundle\Doctrine\Phpcr\SlideshowBlock
+#            slideshow_admin_class:  Symfony\Cmf\Bundle\BlockBundle\Admin\Imagine\SlideshowBlockAdmin
+#            imagine_document_class:  Application\Cmf\BlockBundle\Doctrine\Phpcr\ImagineBlock
+#            imagine_admin_class:  Application\Cmf\BlockBundle\Admin\ImagineBlockAdmin
