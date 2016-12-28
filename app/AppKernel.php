@@ -72,7 +72,7 @@ class AppKernel extends Kernel
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
 
-            //            CMF Bundles
+            // CMF Bundles
             new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),
             new Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
             new Symfony\Cmf\Bundle\MenuBundle\CmfMenuBundle(),
@@ -87,6 +87,8 @@ class AppKernel extends Kernel
             new Symfony\Cmf\Bundle\ResourceBundle\CmfResourceBundle(),
             new Symfony\Cmf\Bundle\ResourceRestBundle\CmfResourceRestBundle(),
             new Symfony\Cmf\Bundle\ContentBundle\CmfContentBundle(),
+            new Symfony\Cmf\Bundle\SonataAdminIntegrationBundle\CmfSonataAdminIntegrationBundle(),
+
 
 //            new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
 //            new Sylius\Bundle\CurrencyBundle\SyliusCurrencyBundle(),

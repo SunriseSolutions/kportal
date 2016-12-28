@@ -73,10 +73,21 @@ cmf_resource_rest:
     enhancer_map:
         - { repository: default, enhancer: sonata_admin }
         
-#cmf_block:
-#    persistence:
-#        phpcr:
+cmf_block:
+    persistence:
+        phpcr:
+            enabled: true
+            block_basepath: '%app_basepath%/content'
 #            slideshow_document_class:  Symfony\Cmf\Bundle\BlockBundle\Doctrine\Phpcr\SlideshowBlock
 #            slideshow_admin_class:  Symfony\Cmf\Bundle\BlockBundle\Admin\Imagine\SlideshowBlockAdmin
 #            imagine_document_class:  Application\Cmf\BlockBundle\Doctrine\Phpcr\ImagineBlock
 #            imagine_admin_class:  Application\Cmf\BlockBundle\Admin\ImagineBlockAdmin
+
+cmf_sonata_admin_integration:
+    bundles:
+        core:
+            enabled: true
+        block:
+            enabled: true
+#        core: ~
+
