@@ -62,6 +62,9 @@
         "sonata-project/notification-bundle": "^3.0",
         "sonata-project/formatter-bundle": "^3.1",
 
+        "bean-project/core-bundle": "dev-master",
+        "bean-project/location-bundle": "dev-master",
+
         "friendsofsymfony/jsrouting-bundle": "1.6.0",
         "cocur/slugify": "v2.3",
         "ocramius/proxy-manager": "^1.0",

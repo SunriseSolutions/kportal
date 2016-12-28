@@ -99,6 +99,10 @@ class AppKernel extends Kernel
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
 
+            new Bean\Bundle\DictionaryBundle\BeanDictionaryBundle(),
+            new Bean\Bundle\CoreBundle\BeanCoreBundle(),
+            new Bean\Bundle\LocationBundle\BeanLocationBundle(),
+            new Application\Bean\LocationBundle\ApplicationBeanLocationBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

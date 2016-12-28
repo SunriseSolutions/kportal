@@ -13,9 +13,23 @@
         table="classification__tag"
         repository-class="Doctrine\ORM\EntityRepository">
 
+        <unique-constraints>
+            <unique-constraint columns="slug,context" name="tag_context" />
+        </unique-constraints>
+
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
+<!--            <options>
+                <option name="unsigned">true</option>
+            </options>			
+-->			
         </id>
+        <many-to-one field="context" target-entity="Application\Sonata\ClassificationBundle\Entity\Context"  orphan-removal="false">
+            <join-column name="context" referenced-column-name="id"  />
+            <cascade>
+                <cascade-persist />
+            </cascade>
+        </many-to-one>
 
     </entity>
 </doctrine-mapping>

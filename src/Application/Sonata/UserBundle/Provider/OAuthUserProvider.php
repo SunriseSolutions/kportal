@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Security\Provider;
+namespace Application\Sonata\UserBundle\Provider;
 
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
@@ -44,11 +44,11 @@ class OAuthUserProvider extends BaseClass
             $service = $response->getResourceOwner()->getName();
             switch ($service) {
                 case 'google':
-                    $user->setGoogleID($socialID);
+//                    $user->setGoogleID($socialID);
                     $user->setGplusUid($socialID);
                     break;
                 case 'facebook':
-                    $user->setFacebookID($socialID);
+//                    $user->setFacebookID($socialID);
                     $user->setFacebookUid($socialID);
                     break;
             }

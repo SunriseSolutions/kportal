@@ -13,9 +13,29 @@
         table="classification__collection"
         repository-class="Doctrine\ORM\EntityRepository">
 
+        <unique-constraints>
+            <unique-constraint columns="slug,context" name="collection_context" />
+        </unique-constraints>
+
+
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>
+
+        <many-to-one field="context" target-entity="Application\Sonata\ClassificationBundle\Entity\Context"  orphan-removal="false">
+            <join-column name="context" referenced-column-name="id"  />
+            <cascade>
+                <cascade-persist />
+            </cascade>
+        </many-to-one>
+
+
+        <many-to-one field="media" target-entity="Application\Sonata\MediaBundle\Entity\Media"  orphan-removal="false">
+            <join-column name="id_media" referenced-column-name="id" on-delete="SET NULL"  />
+            <cascade>
+                <cascade-persist />
+            </cascade>
+        </many-to-one>
 
     </entity>
 </doctrine-mapping>

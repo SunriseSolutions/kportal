@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "87c08c654689b500237f42ce0373ceb8",
-    "content-hash": "72ed65707a3f6b0019830e7e00e82e4b",
+    "hash": "a7dc6226e3be30333a5c6f3fb41aa53a",
+    "content-hash": "7f96f5fd9a27d165e6464ca48ac35242",
     "packages": [
         {
             "name": "aferrandini/urlizer",
@@ -130,6 +130,127 @@
                 "sdk"
             ],
             "time": "2016-12-22 20:47:16"
+        },
+        {
+            "name": "bean-project/core-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bean-project/BeanCoreBundle.git",
+                "reference": "711dfcdf21d60d2b9eb7cd0fb004d2031cdd1d7d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bean-project/BeanCoreBundle/zipball/711dfcdf21d60d2b9eb7cd0fb004d2031cdd1d7d",
+                "reference": "711dfcdf21d60d2b9eb7cd0fb004d2031cdd1d7d",
+                "shasum": ""
+            },
+            "require": {
+                "sonata-project/core-bundle": "^3.0",
+                "symfony/framework-bundle": "^3.1"
+            },
+            "conflict": {
+                "jms/serializer": "<0.13"
+            },
+            "require-dev": {
+                "doctrine/mongodb-odm": "~1.0",
+                "jackalope/jackalope-doctrine-dbal": "~1.1",
+                "symfony/phpunit-bridge": "~2.7|~3.0"
+            },
+            "suggest": {
+                "liip/imagine-bundle": "~0.9",
+                "sonata-project/doctrine-orm-admin-bundle": "~2.3"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bean\\Bundle\\CoreBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Pierre",
+                    "email": "peter@bean-project.org"
+                }
+            ],
+            "description": "Symfony BeanCoreBundle",
+            "keywords": [
+                "bean",
+                "bundle"
+            ],
+            "time": "2016-12-28 13:30:58"
+        },
+        {
+            "name": "bean-project/location-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bean-project/BeanLocationBundle.git",
+                "reference": "1330422efd91759d19f8448354df190f4db32ebc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bean-project/BeanLocationBundle/zipball/1330422efd91759d19f8448354df190f4db32ebc",
+                "reference": "1330422efd91759d19f8448354df190f4db32ebc",
+                "shasum": ""
+            },
+            "require": {
+                "bean-project/core-bundle": "dev-master",
+                "sonata-project/core-bundle": "^3.0",
+                "symfony/framework-bundle": "^3.1"
+            },
+            "conflict": {
+                "jms/serializer": "<0.13",
+                "sonata-project/block-bundle": "<2.2.8",
+                "sonata-project/seo-bundle": "<1.1.5"
+            },
+            "require-dev": {
+                "doctrine/mongodb-odm": "~1.0",
+                "jackalope/jackalope-doctrine-dbal": "~1.1",
+                "symfony/phpunit-bridge": "~2.7|~3.0"
+            },
+            "suggest": {
+                "liip/imagine-bundle": "~0.9",
+                "sonata-project/doctrine-orm-admin-bundle": "~2.3"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bean\\Bundle\\LocationBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Pierre",
+                    "email": "peter@bean-project.org"
+                }
+            ],
+            "description": "Symfony BeanLocationBundle",
+            "keywords": [
+                "bean",
+                "bundle",
+                "geolocation",
+                "location manager"
+            ],
+            "time": "2016-12-28 13:32:17"
         },
         {
             "name": "behat/transliterator",
@@ -1734,16 +1855,16 @@
         },
         {
             "name": "gedmo/doctrine-extensions",
-            "version": "v2.4.25",
+            "version": "v2.4.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "9ac9111dfa7e4b89f8961f29bb64a385c31d5ed8"
+                "reference": "983dd85d6860f87fb7dffd0d9f7ad1462e20a09d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/9ac9111dfa7e4b89f8961f29bb64a385c31d5ed8",
-                "reference": "9ac9111dfa7e4b89f8961f29bb64a385c31d5ed8",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/983dd85d6860f87fb7dffd0d9f7ad1462e20a09d",
+                "reference": "983dd85d6860f87fb7dffd0d9f7ad1462e20a09d",
                 "shasum": ""
             },
             "require": {
@@ -1809,7 +1930,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2016-12-14 20:12:38"
+            "time": "2016-12-21 13:46:54"
         },
         {
             "name": "guzzle/common",
@@ -9637,6 +9758,8 @@
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
         "symfony-cmf/sonata-admin-integration-bundle": 20,
+        "bean-project/core-bundle": 20,
+        "bean-project/location-bundle": 20,
         "jms/translation-bundle": 20,
         "jms/di-extra-bundle": 20
     },

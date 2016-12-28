@@ -11,8 +11,8 @@
             association mapping  : http://www.doctrine-project.org/projects/orm/2.0/docs/reference/association-mapping/en
     -->
     <entity
-            name="Application\Sonata\MediaBundle\Entity\Media"
-            table="media__media"
+            name="Application\Bean\LocationBundle\Entity\Geolocation"
+            table="location__geolocation"
     >
 
         <id name="id" type="integer" column="id">
@@ -21,29 +21,6 @@
                 <option name="unsigned">true</option>
             </options>
         </id>
-
-        <many-to-one field="category" target-entity="Application\Sonata\ClassificationBundle\Entity\Category"
-                     inversed-by="media">
-            <join-column name="id_category" referenced-column-name="id" on-delete="SET NULL"/>
-            <cascade>
-                <cascade-persist/>
-            </cascade>
-        </many-to-one>
-
-        <one-to-many field="galleryHasMedias" target-entity="Application\Sonata\MediaBundle\Entity\GalleryHasMedia" orphan-removal="true"
-                     mapped-by="media">
-            <cascade>
-                <cascade-persist/>
-                <cascade-remove/>
-            </cascade>
-        </one-to-many>
-
-        <one-to-one field="avatarUser" target-entity="Application\Sonata\UserBundle\Entity\User"
-                    mapped-by="avatar">
-            <cascade>
-                <cascade-persist/>
-            </cascade>
-        </one-to-one>
 
     </entity>
 </doctrine-mapping>

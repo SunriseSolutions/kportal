@@ -48,8 +48,8 @@ doctrine:
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
         #     path:     "%database_path%"
-#        types:
-#            json: Sonata\Doctrine\Types\JsonType
+        types:
+            json: Sonata\Doctrine\Types\JsonType
 #            attribute_array:  AppBundle\Doctrine\DBAL\Types\AttributeArray
 
             
@@ -60,15 +60,15 @@ doctrine:
                 naming_strategy: doctrine.orm.naming_strategy.underscore
                 auto_mapping: true
                 mappings:
-#                    SonataMediaBundle: ~
-#                    SonataClassificationBundle: ~
+                    BeanLocationBundle: ~
+                    SonataMediaBundle: ~
+                    SonataClassificationBundle: ~
                     SonataUserBundle: ~
 #                    SonataNotificationBundle: ~
 #
-#                    ApplicationBeanLocationBundle: ~
-#
-#                    ApplicationSonataMediaBundle: ~
-#                    ApplicationSonataClassificationBundle: ~
+                    ApplicationBeanLocationBundle: ~
+                    ApplicationSonataMediaBundle: ~
+                    ApplicationSonataClassificationBundle: ~
                     ApplicationSonataUserBundle: ~
 #                    ApplicationSonataNotificationBundle: ~
 
