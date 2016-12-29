@@ -89,5 +89,6 @@ cmf_sonata_admin_integration:
             enabled: true
         block:
             enabled: true
+            use_imagine: true
 #        core: ~
 
