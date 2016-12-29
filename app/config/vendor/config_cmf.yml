@@ -9,10 +9,10 @@ cmf_core:
             basepath: '%app_basepath%'
 #            use_sonata_admin: false
 
-cmf_content:
-    persistence:
-        phpcr:
-            content_basepath: '%app_basepath%/content'
+#cmf_content:
+#    persistence:
+#        phpcr:
+#            content_basepath: '%app_basepath%/content'
 #            document_class: AppBundle\Document\Post
  #           admin_class: AppBundle\Admin\PostAdmin
 #            use_sonata_admin: true
@@ -85,8 +85,8 @@ cmf_block:
 
 cmf_sonata_admin_integration:
     bundles:
-        content:
-            enabled: true
+#        content:
+#            enabled: true
         core:
             enabled: true
         block:
