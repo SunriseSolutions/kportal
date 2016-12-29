@@ -181,6 +181,7 @@ sonata_admin:
                 items:
 #                    - cmf_content.admin
 #                    - app.admin.post
+                    - cmf_sonata_admin_integration.content.admin
                     - cmf_sonata_admin_integration.block.simple_admin
                     - cmf_sonata_admin_integration.block.container_admin
                     - cmf_sonata_admin_integration.block.reference_admin

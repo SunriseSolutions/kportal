@@ -85,6 +85,8 @@ cmf_block:
 
 cmf_sonata_admin_integration:
     bundles:
+        content:
+            enabled: true
         core:
             enabled: true
         block:
