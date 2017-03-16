@@ -9,7 +9,7 @@ services:
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
     user.provider.oauth:
-        class: Application\Sonata\UserBundle\Provider\OAuthUserProvider
+        class: AppBundle\Security\Provider\OAuthUserProvider
         arguments: ['@fos_user.user_manager',{facebook: facebookID, google: googleID}]
 
     fos_user.entity_manager:

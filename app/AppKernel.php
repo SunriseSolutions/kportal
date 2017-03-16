@@ -60,7 +60,9 @@ class AppKernel extends Kernel
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\SeoBundle\SonataSeoBundle(),
             new Sonata\MediaBundle\SonataMediaBundle(),
-            new Sonata\ClassificationBundle\SonataClassificationBundle(),
+
+//            new Sonata\ClassificationBundle\SonataClassificationBundle(),
+
             new Sonata\IntlBundle\SonataIntlBundle(),
             new Sonata\TranslationBundle\SonataTranslationBundle(),
             new Sonata\FormatterBundle\SonataFormatterBundle(),
@@ -87,7 +89,7 @@ class AppKernel extends Kernel
             new Symfony\Cmf\Bundle\ResourceBundle\CmfResourceBundle(),
             new Symfony\Cmf\Bundle\ResourceRestBundle\CmfResourceRestBundle(),
 //            new Symfony\Cmf\Bundle\ContentBundle\CmfContentBundle(),
-            new Symfony\Cmf\Bundle\SonataAdminIntegrationBundle\CmfSonataAdminIntegrationBundle(),
+//            new Symfony\Cmf\Bundle\SonataAdminIntegrationBundle\CmfSonataAdminIntegrationBundle(),
 
 
 //            new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
@@ -95,14 +97,14 @@ class AppKernel extends Kernel
 
             new AppBundle\AppBundle(),
 //            for Sonata
-            new Application\Sonata\ClassificationBundle\ApplicationSonataClassificationBundle(),
-            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
-            new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+//            new Application\Sonata\ClassificationBundle\ApplicationSonataClassificationBundle(),
+//            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+//            new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
 
             new Bean\Bundle\DictionaryBundle\BeanDictionaryBundle(),
             new Bean\Bundle\CoreBundle\BeanCoreBundle(),
             new Bean\Bundle\LocationBundle\BeanLocationBundle(),
-            new Application\Bean\LocationBundle\ApplicationBeanLocationBundle()
+//            new Application\Bean\LocationBundle\ApplicationBeanLocationBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

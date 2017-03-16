@@ -67,11 +67,11 @@ cmf_menu:
 cmf_resource:
     repositories:
         default:
-            type: doctrine_phpcr_odm
+            type: doctrine/phpcr-odm
 
-cmf_resource_rest:
-    enhancer_map:
-        - { repository: default, enhancer: sonata_admin }
+#cmf_resource_rest:
+#    enhancer_map:
+#        - { repository: default, enhancer: sonata_admin }
         
 cmf_block:
     persistence:
@@ -83,14 +83,14 @@ cmf_block:
 #            imagine_document_class:  Application\Cmf\BlockBundle\Doctrine\Phpcr\ImagineBlock
 #            imagine_admin_class:  Application\Cmf\BlockBundle\Admin\ImagineBlockAdmin
 
-cmf_sonata_admin_integration:
-    bundles:
+#cmf_sonata_admin_integration:
+#    bundles:
 #        content:
 #            enabled: true
-        core:
-            enabled: true
-        block:
-            enabled: true
-            use_imagine: true
+#        core:
+#            enabled: true
+#        block:
+#            enabled: true
+#            use_imagine: true
 #        core: ~
 

@@ -14,15 +14,15 @@ doctrine_phpcr:
 #                prefix: Application\Cmf\BlockBundle\Doctrine\Phpcr
             SonataMediaBundle:
                 prefix: Sonata\MediaBundle\PHPCR
-            SonataClassificationBundle:
-                prefix: Sonata\ClassificationBundle\PHPCR
+#            SonataClassificationBundle:
+#                prefix: Sonata\ClassificationBundle\PHPCR
 #            SonataUserBundle:
 #                prefix: Sonata\UserBundle\PHPCR
 
-            ApplicationSonataMediaBundle:
-                prefix: Application\Sonata\MediaBundle\PHPCR
-            ApplicationSonataClassificationBundle:
-                prefix: Application\Sonata\ClassificationBundle\PHPCR
+#            ApplicationSonataMediaBundle:
+#                prefix: Application\Sonata\MediaBundle\PHPCR
+#            ApplicationSonataClassificationBundle:
+#                prefix: Application\Sonata\ClassificationBundle\PHPCR
 #            ApplicationSonataUserBundle:
 #                prefix: Application\Sonata\UserBundle\PHPCR
 
@@ -62,14 +62,14 @@ doctrine:
                 mappings:
                     BeanLocationBundle: ~
                     SonataMediaBundle: ~
-                    SonataClassificationBundle: ~
+#                    SonataClassificationBundle: ~
                     SonataUserBundle: ~
 #                    SonataNotificationBundle: ~
 #
-                    ApplicationBeanLocationBundle: ~
-                    ApplicationSonataMediaBundle: ~
-                    ApplicationSonataClassificationBundle: ~
-                    ApplicationSonataUserBundle: ~
+#                    ApplicationBeanLocationBundle: ~
+#                    ApplicationSonataMediaBundle: ~
+#                    ApplicationSonataClassificationBundle: ~
+#                    ApplicationSonataUserBundle: ~
 #                    ApplicationSonataNotificationBundle: ~
 
 #                     Use KnpLabs Behaviour instead

@@ -32,16 +32,16 @@ sonata_formatter:
             service: sonata.formatter.text.twigengine
             extensions: [] # Twig formatter cannot have extensions
 
-sonata_classification:
-    admin:
-        tag:
-            class:                Application\Sonata\ClassificationBundle\Admin\TagAdmin
-            controller:           'SonataAdminBundle:CRUD'
-            translation:          SonataClassificationBundle
-        category:
-            class:                Application\Sonata\ClassificationBundle\Admin\CategoryAdmin
-            controller:           'SonataAdminBundle:CRUD'
-            translation:          SonataClassificationBundle
+#sonata_classification:
+#    admin:
+#        tag:
+#            class:                Application\Sonata\ClassificationBundle\Admin\TagAdmin
+#            controller:           'SonataAdminBundle:CRUD'
+#            translation:          SonataClassificationBundle
+#        category:
+#            class:                Application\Sonata\ClassificationBundle\Admin\CategoryAdmin
+#            controller:           'SonataAdminBundle:CRUD'
+#            translation:          SonataClassificationBundle
 
 sonata_notification:
     backend: sonata.notification.backend.doctrine
@@ -205,10 +205,10 @@ sonata_admin:
 
 sonata_media:
     # if you don't use default namespace configuration
-    #class:
-    #    media: MyVendor\MediaBundle\Entity\Media
-    #    gallery: MyVendor\MediaBundle\Entity\Gallery
-    #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
+    class:
+        media: AppBundle\Entity\Media\Media
+        gallery: AppBundle\Entity\Media\Gallery
+        gallery_has_media: AppBundle\Entity\Media\GalleryHasMedia
     default_context: default
     db_driver: doctrine_orm # could be doctrine_orm, doctrine_mongodb or doctrine_phpcr
     contexts:
@@ -263,7 +263,6 @@ sonata_media:
 #            path: /uploads/media # http://media.sonata-project.org/
 #http://s3-ap-southeast-1.amazonaws.com/magenta-consulting.com/
 
-
     filesystem:
         local:
             directory:  "%kernel.root_dir%/../web/uploads/media"
@@ -274,8 +273,8 @@ sonata_media:
             secretKey:   "%s3_secret_key%"
             region:      "%s3_region%"
             version:     "%s3_version%" # latest by default (cf. https://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/configuration.html#version)
-            sdk_version: "%s3_sdk_version%" # 2 by default
-            directory: "%s3_directory%"
+            sdk_version: 3 # 2 by default - "%s3_sdk_version%" is no longer permissable
+            directory:   "%s3_directory%"
 
             create:         false
             #region:         s3.amazonaws.com # change if not using US Standard region
@@ -389,6 +388,9 @@ sonata_user:
     manager_type: orm # can be orm or mongodb
     table:
         user_group: user__users_groups
+    class:
+        group: AppBundle\Entity\User\Group
+        user:  AppBundle\Entity\User\User
 #    admin:
 #        group:
 #            class:                ~
