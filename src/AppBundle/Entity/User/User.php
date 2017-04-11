@@ -10,7 +10,7 @@
 
 namespace AppBundle\Entity\User;
 
-use AppBundle\Entity\User\Base\User as BaseUser;
+use AppBundle\Entity\User\Base\AppUser as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;

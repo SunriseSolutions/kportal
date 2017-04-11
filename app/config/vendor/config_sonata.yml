@@ -126,7 +126,7 @@ sonata_admin:
 #        edit: ::admin/edit.html.twig
 
 
-    title:                'Interview Spot'
+    title:                'KPortal'
 #    title_logo:           bundles/sonataadmin/logo_title.png
     options:
         title_mode: 'single_text'
@@ -168,10 +168,10 @@ sonata_admin:
                 items:
                     - sonata.user.admin.user
                     - sonata.user.admin.group
-                    - sonata.classification.admin.context                    
-                    - sonata.classification.admin.category                      
-                    - sonata.classification.admin.collection                    
-                    - sonata.classification.admin.tag                    
+#                    - sonata.classification.admin.context
+#                    - sonata.classification.admin.category
+#                    - sonata.classification.admin.collection
+#                    - sonata.classification.admin.tag
                     - sonata.notification.admin.message
 #                    - bean_location.admin.geolocation
 #                    - app.admin.organisation_location
@@ -182,13 +182,14 @@ sonata_admin:
 #                    - cmf_content.admin
 #                    - app.admin.post
 #                    - cmf_sonata_admin_integration.content.admin
-                    - cmf_sonata_admin_integration.block.simple_admin
-                    - cmf_sonata_admin_integration.block.container_admin
-                    - cmf_sonata_admin_integration.block.reference_admin
-                    - cmf_sonata_admin_integration.block.action_admin
-                    - cmf_sonata_admin_integration.block.string_admin
-                    - cmf_sonata_admin_integration.block.menu_admin
-                    - cmf_sonata_admin_integration.block.imagine.slideshow_admin
+
+#                    - cmf_sonata_admin_integration.block.simple_admin
+#                    - cmf_sonata_admin_integration.block.container_admin
+#                    - cmf_sonata_admin_integration.block.reference_admin
+#                    - cmf_sonata_admin_integration.block.action_admin
+#                    - cmf_sonata_admin_integration.block.string_admin
+#                    - cmf_sonata_admin_integration.block.menu_admin
+#                    - cmf_sonata_admin_integration.block.imagine.slideshow_admin
                     
             routing:
                 label: URLs

@@ -9,7 +9,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /** @ORM\MappedSuperclass */
-class User extends BaseUser
+class AppUser extends BaseUser
 {
     /**
      * @var int
