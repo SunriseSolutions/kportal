@@ -1,6 +1,10 @@
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
 
+liip_theme:
+    resource: "@LiipThemeBundle/Resources/config/routing.xml"
+    prefix: /theme
+
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
     

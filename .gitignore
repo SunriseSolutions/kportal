@@ -2,6 +2,7 @@
 /web/media
 *.bat
 /web/js/
+/web/css/
 /web/uploads/
 
 !var/spool

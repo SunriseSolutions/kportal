@@ -1,11 +1,8 @@
 <?php
 namespace AppBundle\Entity\Media;
 
-use AppBundle\Entity\CandidateAnswer;
-use AppBundle\Entity\JobCandidate;
-use Application\Sonata\UserBundle\Entity\User;
+use AppBundle\Entity\User\User;
 use Sonata\MediaBundle\Entity\BaseMedia as BaseMedia;
-use AppBundle\Entity\Organisation;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class BaseAppMedia extends BaseMedia
@@ -24,11 +21,6 @@ class BaseAppMedia extends BaseMedia
      * @var User
      */
     protected $avatarUser;
-
-    /**
-     * @var CandidateAnswer
-     */
-    protected $videoAnswer;
 
     /**
      * @var ArrayCollection JobCandidate

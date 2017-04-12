@@ -51,6 +51,15 @@ hwi_oauth:
     fosub:
         properties: ~
 
+liip_theme:
+    themes: ['standard', 'winter_theme', 'weekend']
+    active_theme: 'standard'
+    # If your application doesn't allow the user to switch theme, you can deactivate the controller shipped with the bundle:
+    load_controllers: false
+    #Because of the way the LiipThemeBundle overrides the template locator service, assetic will only dump the assets of the active theme. In order to dump the assets of all themes enable the assetic_integration option:
+    assetic_integration: true
+
+
 
 
 liip_imagine:
