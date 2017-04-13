@@ -88,4 +88,4 @@ security:
         # This config requires being logged for the whole site and having the admin/employer role for the admin/employer part.
         # Change these rules to adapt them to your needs
         - { path: ^(/(vi|fr|en))?/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
-        - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY,requires_channel: https  }
+#        - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY,requires_channel: https  }
