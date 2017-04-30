@@ -2,6 +2,13 @@
 namespace AppBundle\Entity\Content;
 use Doctrine\ORM\Mapping as ORM;
 
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="content__piece")
+ *
+ *
+ */
 class PieceOfContent
 {
     /**
