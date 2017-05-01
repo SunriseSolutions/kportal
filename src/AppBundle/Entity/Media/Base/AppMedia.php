@@ -1,14 +1,22 @@
 <?php
+
 namespace AppBundle\Entity\Media;
 
 use AppBundle\Entity\User\User;
-use Sonata\MediaBundle\Entity\BaseMedia as BaseMedia;
+use Sonata\MediaBundle\Entity\BaseMedia;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
 
-class BaseAppMedia extends BaseMedia
+/** @ORM\MappedSuperclass */
+class AppMedia extends BaseMedia
 {
     /**
-     * @var int $id
+     * @ORM\Id
+     * @ORM\Column(type="string", length=24)
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="AppBundle\Doctrine\ORM\RandomIdGenerator")
      */
     protected $id;
 

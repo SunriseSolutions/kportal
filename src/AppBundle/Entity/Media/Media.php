@@ -25,7 +25,26 @@ use Doctrine\Common\Collections\Collection;
  *
  * @author <yourname> <youremail>
  */
-class Media extends BaseAppMedia
+use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="media__media")
+ *
+ * @Hateoas\Relation(
+ *  "self",
+ *  href= @Hateoas\Route(
+ *         "get_jobs",
+ *         parameters = { "user" = "expr(object.getId())"},
+ *         absolute = true
+ *     ),
+ *  attributes = { "method" = {} },
+ * )
+ *
+ */
+class Media extends AppMedia
 {
 
     function __construct()

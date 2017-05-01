@@ -2,7 +2,6 @@
 namespace AppBundle\Entity\Content;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * @ORM\Entity
  * @ORM\Table(name="content__piece")
@@ -18,5 +17,7 @@ class PieceOfContent
      * @ORM\CustomIdGenerator(class="AppBundle\Doctrine\ORM\RandomIdGenerator")
      */
     protected $id;
+
+
 
 }
