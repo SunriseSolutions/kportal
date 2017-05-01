@@ -11,6 +11,7 @@
 
 namespace AppBundle\Entity\Media;
 
+use AppBundle\Entity\Media\Base\AppGallery;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;

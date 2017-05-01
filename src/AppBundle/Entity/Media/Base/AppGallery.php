@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Entity\Media;
+namespace AppBundle\Entity\Media\Base;
 
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;

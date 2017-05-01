@@ -52,15 +52,20 @@ hwi_oauth:
         properties: ~
 
 liip_theme:
-    themes: ['standard', 'winter_theme', 'weekend']
+    themes: ['standard', 'tiengphap', 'tiengnhat', 'tienganh']
     active_theme: 'standard'
     # If your application doesn't allow the user to switch theme, you can deactivate the controller shipped with the bundle:
     load_controllers: false
     #Because of the way the LiipThemeBundle overrides the template locator service, assetic will only dump the assets of the active theme. In order to dump the assets of all themes enable the assetic_integration option:
     assetic_integration: true
-
-
-
+    # You can provide specific themes or even templates for different devices (like: desktop, tablet, phone, plain). Set option autodetect_theme to true for setting current_device parameter based on the user agent:
+    autodetect_theme: true
+    # Then in path_patterns you can use %%current_device%% parameter (with your device type as value)
+    path_patterns:
+        app_resource:
+            - %%app_path%%/themes/%%current_theme%%/%%current_device%%/%%template%%
+            - %%app_path%%/themes/standard/%%current_device%%/%%template%%
+            - %%app_path%%/views/%%current_device%%/%%template%%
 
 liip_imagine:
     # ...
@@ -157,20 +162,3 @@ fos_rest:
 
 fos_js_routing:
     routes_to_expose: [ app_job_search, get_jobs, get_filters, get_industries, get_locations, get__media_cvs, get__media_videos, app_job_detail, get__email_check, get__media, delete__medium, put__medium_name, sonata_media_download ]
-
-parameters:
-#    sonata.media.provider.youtube.class: Application\Sonata\MediaBundle\Provider\AppYouTubeProvider
-#    sonata.media.provider.image.class: Application\Sonata\MediaBundle\Provider\AppImageProvider
-#    sonata.media.provider.file.class: Application\Sonata\MediaBundle\Provider\AppFileProvider
-#    sonata.media.manager.media.class: AppBundle\Entity\Media\AppMediaManager
-
-#    sonata.media.admin.media.class: Application\Sonata\MediaBundle\Admin\AppMediaAdmin
-#    sonata.media.admin.gallery.class: Application\Sonata\MediaBundle\Admin\AppGalleryAdmin
-
-    max_file_size: 150 # 150 MB per file
-    max_file_per_user: 7 # 7 files
-    video_thumbnail_pos: 3 # at the 3rd second
-    video_thumbnail_resolution: 300x225 # width 300, height: 225 px
-
-    s3_version: latest
-#    s3_sdk_version: 3 no longer permissible

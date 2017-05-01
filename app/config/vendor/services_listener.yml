@@ -1,0 +1,6 @@
+services:
+    app.tokens.action_listener:
+        class: AppBundle\EventListener\HostNameListener
+        arguments: ['@service_container']
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
