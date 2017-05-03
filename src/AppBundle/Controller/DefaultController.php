@@ -2,12 +2,30 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Content\PieceOfContent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
+
+    /**
+     * @Route("/hello", name="hello")
+     */
+    public function helloAction(Request $request)
+    {
+        $content = new PieceOfContent();
+        $content->setBody('olala');
+        $manager = $this->get('doctrine.orm.default_entity_manager');
+        $manager->persist($content);
+        $manager->flush();
+
+        return $this->render('default/index.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..') . DIRECTORY_SEPARATOR,
+        ]);
+    }
+
     /**
      * @Route("/", name="homepage")
      */
@@ -24,6 +42,7 @@ class DefaultController extends Controller
 //            $activeThemeName = $activeTheme->getName();
 //            $activeTheme->setName($themeName);
 //        }
+
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..') . DIRECTORY_SEPARATOR,

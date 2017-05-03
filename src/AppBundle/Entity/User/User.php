@@ -10,7 +10,7 @@
 
 namespace AppBundle\Entity\User;
 
-use AppBundle\Entity\User\Base\AppUser as BaseUser;
+use AppBundle\Entity\User\Base\AppUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
@@ -32,6 +32,6 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  *
  */
-class User extends BaseUser
+class User extends AppUser
 {
 }
