@@ -24,25 +24,6 @@ class AppUser extends BaseUser
     function __construct()
     {
         parent::__construct();
-        $this->contentPieces = new ArrayCollection();
-    }
-
-    /**
-     * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\PieceOfContent", mappedBy="owner", cascade={"persist","merge"})
-     */
-    protected $contentPieces;
-
-    public function addContentPiece(PieceOfContent $poc)
-    {
-        $this->contentPieces->add($poc);
-        $poc->setOwner($this);
-    }
-
-    public function removeContentPiece(PieceOfContent $poc)
-    {
-        $this->contentPieces->removeElement($poc);
-        $poc->setOwner(null);
     }
 
     /**

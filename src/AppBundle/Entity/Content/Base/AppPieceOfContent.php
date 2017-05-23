@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Content\Base;
 
+use AppBundle\Entity\Content\AppContentEntity;
 use AppBundle\Entity\Content\PieceOfContent;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
@@ -29,8 +30,8 @@ class AppPieceOfContent
     protected $id;
 
     /**
-     * @var AppUser
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\User",inversedBy="contentPieces")
+     * @var AppContentEntity
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentEntity",inversedBy="contentPieces")
      * @ORM\JoinColumn(name="id_owner", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $owner;
@@ -157,7 +158,7 @@ class AppPieceOfContent
     }
 
     /**
-     * @return AppUser
+     * @return AppContentEntity
      */
     public function getOwner()
     {
@@ -165,7 +166,7 @@ class AppPieceOfContent
     }
 
     /**
-     * @param AppUser $owner
+     * @param AppContentEntity $owner
      */
     public function setOwner($owner)
     {
