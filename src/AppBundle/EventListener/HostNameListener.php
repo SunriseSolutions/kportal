@@ -22,9 +22,9 @@ class HostNameListener
 //        $request = $event->getRequest();
         $host = $event->getRequest()->getHost();
         if ($this->container->hasParameter($host)) {
-            $themeName = $this->container->getParameter($host);
+            $themeName = $this->container->getParameter($host)['theme'];
             $activeTheme = $this->container->get('liip_theme.active_theme');
-            $activeThemeName = $activeTheme->getName();
+
             $activeTheme->setName($themeName);
         }
         return;

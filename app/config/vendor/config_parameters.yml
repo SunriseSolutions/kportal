@@ -16,5 +16,9 @@ parameters:
     s3_version: latest
 #    s3_sdk_version: 3 no longer permissible
 
-    tiengphap.local.com: tiengphap
-    tiengnhat.local.com: tiengnhat
+    tiengphap.local.com:
+        theme: tiengphap
+        locale: vi
+    tiengnhat.local.com:
+        theme: tiengnhat
+        locale: vi

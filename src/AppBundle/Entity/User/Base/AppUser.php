@@ -1,6 +1,8 @@
 <?php
+
 namespace AppBundle\Entity\User\Base;
 
+use AppBundle\Entity\Content\PieceOfContent;
 use AppBundle\Entity\Media\Media;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\UserBundle\Entity\BaseUser;
@@ -18,6 +20,30 @@ class AppUser extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    function __construct()
+    {
+        parent::__construct();
+        $this->contentPieces = new ArrayCollection();
+    }
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\PieceOfContent", mappedBy="owner", cascade={"persist","merge"})
+     */
+    protected $contentPieces;
+
+    public function addContentPiece(PieceOfContent $poc)
+    {
+        $this->contentPieces->add($poc);
+        $poc->setOwner($this);
+    }
+
+    public function removeContentPiece(PieceOfContent $poc)
+    {
+        $this->contentPieces->removeElement($poc);
+        $poc->setOwner(null);
+    }
 
     /**
      * @var  ArrayCollection $addresses
