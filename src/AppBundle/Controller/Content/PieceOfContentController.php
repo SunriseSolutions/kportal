@@ -21,7 +21,7 @@ class PieceOfContentController extends Controller {
 	
 	
 	/**
-	 * @Route("/{entity}/{slug}", name="single_poc")
+	 * @Route("/{entity}/post/{slug}", name="single_poc")
 	 */
 	public function singleArticleAction( $entity, $slug, Request $request ) {
 		return $this->render( 'content/piece.html.twig', [
