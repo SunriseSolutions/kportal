@@ -1,5 +1,5 @@
 services:
-    app.tokens.action_listener:
+    app.hostname.action_listener:
         class: AppBundle\EventListener\HostNameListener
         arguments: ['@service_container']
         tags:
