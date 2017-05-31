@@ -24,7 +24,6 @@ class HostNameListener
         if ($this->container->hasParameter($host)) {
             $themeName = $this->container->getParameter($host)['theme'];
             $activeTheme = $this->container->get('liip_theme.active_theme');
-
             $activeTheme->setName($themeName);
         }
         return;
