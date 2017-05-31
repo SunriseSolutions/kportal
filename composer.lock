@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "636cd8b52ade1d4b5a2685f24ec24f5a",
-    "content-hash": "c44a133b2f6efe8f0666d4c4a2cd17cd",
+    "hash": "a72d1bf3335d1e2b851d6e7fc74b4d1e",
+    "content-hash": "41e582a77928869979bd1ab8d5dbcad3",
     "packages": [
         {
             "name": "aferrandini/urlizer",
@@ -2317,6 +2317,62 @@
                 "url"
             ],
             "time": "2017-02-27 10:51:17"
+        },
+        {
+            "name": "h5p/h5p-core",
+            "version": "1.15.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/h5p/h5p-php-library.git",
+                "reference": "677adb0d8ab14fd2ed656c28e672a200fa61534c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/h5p/h5p-php-library/zipball/677adb0d8ab14fd2ed656c28e672a200fa61534c",
+                "reference": "677adb0d8ab14fd2ed656c28e672a200fa61534c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "h5p.classes.php",
+                    "h5p-development.class.php",
+                    "h5p-file-storage.interface.php",
+                    "h5p-default-storage.class.php",
+                    "h5p-event-base.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Svein-Tore Griff With",
+                    "email": "with@joubel.com",
+                    "homepage": "http://joubel.com",
+                    "role": "CEO"
+                },
+                {
+                    "name": "Frode Petterson",
+                    "email": "frode.petterson@joubel.com",
+                    "homepage": "http://joubel.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "H5P Core functionality in PHP",
+            "homepage": "https://h5p.org",
+            "keywords": [
+                "content",
+                "h5p",
+                "hvp",
+                "interactive",
+                "quiz"
+            ],
+            "time": "2017-05-03 08:02:27"
         },
         {
             "name": "hwi/oauth-bundle",

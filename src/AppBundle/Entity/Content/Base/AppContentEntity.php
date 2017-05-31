@@ -50,7 +50,7 @@ class AppContentEntity
      * @var string
      * @ORM\Column(type="string", length=128, nullable=true)
      */
-    protected $alias;
+    protected $slug;
 
     /**
      * @return mixed
@@ -75,20 +75,19 @@ class AppContentEntity
     {
         $this->contentPieces = $contentPieces;
     }
+	
+	/**
+	 * @return string
+	 */
+	public function getSlug() {
+		return $this->slug;
+	}
+	
+	/**
+	 * @param string $slug
+	 */
+	public function setSlug( $slug ) {
+		$this->slug = $slug;
+	}
 
-    /**
-     * @return string
-     */
-    public function getAlias()
-    {
-        return $this->alias;
-    }
-
-    /**
-     * @param string $alias
-     */
-    public function setAlias($alias)
-    {
-        $this->alias = $alias;
-    }
 }
