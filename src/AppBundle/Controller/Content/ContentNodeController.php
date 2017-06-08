@@ -24,9 +24,14 @@ class ContentNodeController extends Controller {
 	 * @Route("/{entity}/post/{slug}", name="content_single_node")
 	 */
 	public function singleArticleAction( $entity, $slug, Request $request ) {
+		$scripts = \H5PCore::$scripts;
+		array_shift( $scripts );
+		
 		return $this->render( 'content/node.html.twig', [
-			'entity' => $entity,
-			'slug' => $slug
+			'styles'  => \H5PCore::$styles,
+			'scripts' => $scripts,
+			'entity'  => $entity,
+			'slug'    => $slug
 		] );
 	}
 }
