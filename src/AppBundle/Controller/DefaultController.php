@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Content\PieceOfContent;
+use AppBundle\Entity\Content\ContentNode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +15,7 @@ class DefaultController extends Controller
      */
     public function helloAction(Request $request)
     {
-        $content = new PieceOfContent();
+        $content = new ContentNode();
         $content->setBody('olala');
         $manager = $this->get('doctrine.orm.default_entity_manager');
         $manager->persist($content);
