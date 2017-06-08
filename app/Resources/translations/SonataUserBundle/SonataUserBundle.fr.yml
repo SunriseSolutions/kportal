@@ -1,0 +1,13 @@
+title_user_authentication_email: Ou connectez-vous en utilisant votre adresse email.
+desc_choose_login_method: Choisir un de ces manieres d'authentification suivantes.
+form:
+    first_name: Votre prenom
+    last_name: Your last name
+    organisation_name: Your Company's name
+    user_phone: Your Mobile Phone Number
+registration:
+    submit: Soumettre
+security:
+    login:
+        email: Votre adresse e-mail
+        password_repeat: Votre mot de passe de nouveau

@@ -1,0 +1,27 @@
+page:
+    all_jobs: All Jobs
+    video_interview: Video Interview
+full_time: Job Full Time
+security:
+    hack_attempt: Are you trying to hack us ?
+form:
+    label_position_roles: Roles in this Organisation
+    marital_married: Married
+    marital_single: Single
+    label_geolocation: Address
+    label_enabled: Enabled
+    label_position: Ordering
+    label_product: Packages/Products
+
+    label_select_product: Select Product
+    label_price_agreement: Price Agreement
+    label_consultant: Select Sales Consultant
+
+    label_employee: Employees
+seo:
+    title: "%content_title% - Interview Spot"
+    description: "The Video Interview Platform. %content_description%"
+dashboard:
+    product: Products
+    channel_partner_employee: CP Employee
+    employee: Manage Employee

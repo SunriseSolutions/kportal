@@ -1,8 +1,7 @@
 <?php
+namespace AppBundle\Entity\Content\Base;
 
-namespace AppBundle\Entity\Content;
-
-use AppBundle\Entity\Content\PieceOfContent;
+use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -25,24 +24,24 @@ class AppContentEntity
 
     function __construct()
     {
-        $this->contentPieces = new ArrayCollection();
+        $this->contentNodes = new ArrayCollection();
     }
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\PieceOfContent", mappedBy="owner", cascade={"persist","merge"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentNode", mappedBy="owner", cascade={"persist","merge"})
      */
-    protected $contentPieces;
+    protected $contentNodes;
 
-    public function addContentPiece(PieceOfContent $poc)
+    public function addContentNode(ContentNode $poc)
     {
-        $this->contentPieces->add($poc);
+        $this->contentNodes->add($poc);
         $poc->setOwner($this);
     }
 
-    public function removeContentPiece(PieceOfContent $poc)
+    public function removeContentNode(ContentNode $poc)
     {
-        $this->contentPieces->removeElement($poc);
+        $this->contentNodes->removeElement($poc);
         $poc->setOwner(null);
     }
 
@@ -59,22 +58,21 @@ class AppContentEntity
     {
         return $this->id;
     }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getContentPieces()
-    {
-        return $this->contentPieces;
-    }
-
-    /**
-     * @param ArrayCollection $contentPieces
-     */
-    public function setContentPieces($contentPieces)
-    {
-        $this->contentPieces = $contentPieces;
-    }
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getContentNodes() {
+		return $this->contentNodes;
+	}
+	
+	/**
+	 * @param ArrayCollection $contentNodes
+	 */
+	public function setContentNodes( $contentNodes ) {
+		$this->contentNodes = $contentNodes;
+	}
+ 
 	
 	/**
 	 * @return string

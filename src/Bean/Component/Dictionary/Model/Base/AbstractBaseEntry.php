@@ -3,7 +3,7 @@ namespace Bean\Component\Dictionary\Model\Base;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Entry implements EntryInterface {
+abstract class AbstractEntry implements BaseEntryInterface {
 	/**
 	 * Primary identifier, details depend on storage layer.
 	 */
@@ -12,7 +12,7 @@ class Entry implements EntryInterface {
 	protected $locale;
 	
 	/**
-	 * @var EntryInterface
+	 * @var BaseEntryInterface
 	 */
 	protected $parent;
 	
@@ -152,14 +152,14 @@ class Entry implements EntryInterface {
 	}
 	
 	/**
-	 * @return EntryInterface
+	 * @return BaseEntryInterface
 	 */
 	public function getParent() {
 		return $this->parent;
 	}
 	
 	/**
-	 * @param EntryInterface $parent
+	 * @param BaseEntryInterface $parent
 	 */
 	public function setParent( $parent ) {
 		$this->parent = $parent;

@@ -1,0 +1,107 @@
+
+action_import_employees_to_benefit: Import Employees To Benefit
+action_assign_product: Assign To Product
+action_receive_payment: Receive & Approve
+action_approve_payment: Approve Only
+action_approve: Approve
+action_issue_payment: Issue Payment
+action_buy_now: Buy now
+action_download_voucher: Download Voucher
+action_mark_paid: Mark as Paid
+action_void: Void Order
+business_employer_registry: Manage Clients
+business_employer_payments: Manage Client Payments
+employee_benefit_registry: Manage Employee Benefits
+flash:
+    batch_payment_received: Invoices have been successfully processed
+    batch_payment_approved: Vouchers have been approved
+    send_invite_success: Invitation for %name% has been sent successfully
+    create_candidate_successfully: The New Candidate has been created successfully
+dashboard:
+    ahb_data_export: AHB Data Export
+    ihp_data_export: IHP Data Export
+    analytics: Analytics
+    report_product_consumption: Product Consumption
+    report_monthly_billings: Monthly Billings
+    consumer_sales_partner: B2C Channel Partners
+    consumer_sales_partner_payment: B2C Payments
+    consumer_sales_partner_issue_payment: Issue Payment
+    consumer_sales_partner_pending_orders: Orders Pending Payment
+    consumer_sales_partner_payments_received: Paid Invoices
+    consumer_sales_partner_all_payments: View All Payments
+    consumer_sales_partner_payments_issued: New Invoices
+
+    business_sales_partner: B2B Channel Partners
+    business_sales_partner_payment: B2B Payments
+    business_sales_partner_issue_payment: Issue Payment
+    business_sales_partner_pending_orders: Orders Pending Payment
+    business_sales_partner_payments_received: Paid Invoices
+    business_sales_partner_all_payments: View All Payments
+    business_sales_partner_payments_issued: New Invoices
+
+    principal_employee_benefit_report: Employee Report
+    channel_partner_employee: CPE
+    employee: Employee
+    my_employer_orders_payment_pending: Generate Invoice
+    b2b_all_payments: View All Payments
+    list_business_benefit: Manage Benefits
+    system_all_payments: View All Payments/Invoices
+    all_consumer_orders: B2C Orders
+    channel_partner_employer_catalogue: Place Order
+    add_business_employee: Add New Employee
+    list_business_employee: Manage Employees
+    list_business_employee_resigned: Resignees
+    list_channel_partner_employer: Manage Employers
+    add_channel_partner_employer: Add New Employer Account
+    product: Products
+    principal_product_report: Product Report
+    create_user: Create New User
+    my_orders_payment_pending: Issue Payment
+    my_payments_issued: Payment Status
+    b2b_payments_issued: New Payment/Invoices
+    b2b_payments_issued_to_us_bcp: Process Indirect Invoices
+    my_payments_received: Paid Invoices
+    payments_received: Paid Invoices
+    system_issued_payments: New Payments/Invoices
+    add_sales_agent: Add CP User
+    sales_agents: Manage CP Users
+    all_orders: View All Orders
+    my_orders: My Orders
+    pending_orders: Orders Pending Payment
+    my_payments: Invoice List
+    add_account_manager: Add Sales Consultant
+    account_managers: List Sales Consultants
+
+    add_consumer_channel_partner: Add B2C Channel Partner
+    consumer_channel_partners: List B2C Channel Partners
+    add_business_channel_partner: Add B2B Channel Partner
+    business_channel_partners: List B2B Channel Partners
+    master_channel_partners: Master Channel Partner List
+
+    add_channel_partner: Add Channel Partner
+    channel_partners: List Channel Partners
+    channel_partner_packages: Browse Packages
+    channel_partner_catalogue: Place Order
+    principal_products: Products
+    principal_add_package: Add Package
+    principal_add_product: Add Product
+    principal_packages: Browse Packages
+
+    miscellaneous: Miscellaneous
+    manage_admin: Manage Admin
+    order: Orders
+    company: Manage Organisations
+    register_company: Register Your Company
+    my_listings: My Listings
+    my_invitations: My Invitations
+    my_company: Company Information
+    my_candidates: My Applicants
+    talent_bank: Talent Bank
+    media: Files
+    jobboard: Job Board
+    system: System
+    content: CMS
+    post: Site Content
+
+post:
+    make_homepage: Make Homepage

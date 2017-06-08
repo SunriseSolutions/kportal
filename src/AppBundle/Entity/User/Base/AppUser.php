@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity\User\Base;
 
-use AppBundle\Entity\Content\PieceOfContent;
+use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\Media\Media;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\UserBundle\Entity\BaseUser;

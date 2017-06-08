@@ -1,0 +1,48 @@
+title_join_today: Đăng ký ngay hôm nay
+title_choose_one_signup_method: Với Tài khoản Facebook/Google
+title_user_registration_email: Hoặc đăng ký sử dụng Email của bạn
+title_user_authentication: Đăng nhập
+desc_choose_login_method: Với Tài khoản Facebook/Google
+title_user_authentication_email: Hoặc đăng nhập sử dụng Email của bạn.
+
+link_login: Đăng nhập
+link_register: Đăng ký
+
+label_accept_terms: Việc nhấp chuột (click) vào nút <strong>"Đăng ký"</strong> đồng nghĩa với việc tôi đã đọc và đồng ý với <a target="_blank" href="%privacy_policy_url%"><strong>Chính sách riêng tư</strong></a> và <a target="_blank" href="%terms_of_use_url%"><strong>Điều khoản sử dụng</strong></a> của Website.
+
+gender:
+    f: Nữ
+    m: Nam
+    u: Không xác định
+marital_status:
+    s: Độc thân
+    m: Đã kết hôn
+    u: Không xác định
+show:
+    label_profile_title: Prof Title
+    label_profile_years_of_experience: Years of Experience
+    label_profile_skills: Skills
+    label_cv_media: CV/Resumes
+    label_profile_summary: Summary
+    label_marital_status: Marital Status
+    label_address: Address
+list:
+    label_avatar: Avatar
+    label_first_name: First Name
+    label_last_name: Last Name
+    label_updated_at: Updated At
+form:
+    first_name: Tên của bạn
+    last_name: Họ của bạn
+    organisation_name: Tên công ty của bạn
+    user_phone: Số Di động
+    subscribed_newsletters: Đăng ký nhận thông báo từ Website
+    password_confirmation: Nhập lại Password (Mật khẩu)
+registration:
+    submit: Đăng ký
+security:
+    login:
+        email: Địa chỉ Email
+        password_again: Nhập lại Password (mật khẩu)
+
+forgotten_password: Quên mật khẩu ?

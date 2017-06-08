@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Content;
 
+use AppBundle\Entity\Content\Base\AppContentEntity;
 use AppBundle\Entity\NLP\Sense;
 use AppBundle\Entity\User\User;
 use Doctrine\ORM\Mapping as ORM;

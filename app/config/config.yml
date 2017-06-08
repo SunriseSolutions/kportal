@@ -9,6 +9,8 @@ imports:
     - { resource: vendor/config_parameters.yml }
 
     - { resource: vendor/services_listener.yml }
+    - { resource: vendor/services_admin.yml }
+
 
 framework:
     #esi:             ~

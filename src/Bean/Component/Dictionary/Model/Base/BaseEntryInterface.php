@@ -1,16 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Binh
- * Date: 12/30/2016
- * Time: 12:02 PM
- */
-
 namespace Bean\Component\Dictionary\Model\Base;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-interface EntryInterface {
+interface BaseEntryInterface {
 	/**
 	 * @return mixed
 	 */
@@ -92,12 +85,12 @@ interface EntryInterface {
 	public function setSamples( $samples );
 	
 	/**
-	 * @param EntryInterface $parent
+	 * @param BaseEntryInterface $parent
 	 */
 	public function setParent( $parent );
 	
 	/**
-	 * @return EntryInterface
+	 * @return BaseEntryInterface
 	 */
 	public function getParent();
 	
