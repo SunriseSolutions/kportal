@@ -8,7 +8,7 @@ class RandomIdGenerator extends AbstractIdGenerator
     public function generate(\Doctrine\ORM\EntityManager $em, $entity)
     {
 //        $entity_name = $em->getClassMetadata(get_class($entity))->getName();
-        $timestamp = base_convert((string)date_timestamp_get(new \DateTime()), 10, 32);
+        $timestamp = base_convert((string)date_timestamp_get(new \DateTime()), 10, 36);
 
         for ($i = 0; $i < 16 - strlen($timestamp);) {
             $timestamp = '0' . $timestamp;
@@ -25,7 +25,7 @@ class RandomIdGenerator extends AbstractIdGenerator
     public static function generate4DigitCode($code = null)
     {
         if ($code === null) {
-            $code = base_convert(rand(0, 1048575), 10, 32);
+            $code = base_convert(rand(0, 1679615), 10, 36);
         }
         for ($i = 0; $i < 4 - strlen($code);) {
             $code = '0' . $code;
