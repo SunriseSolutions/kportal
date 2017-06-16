@@ -510,7 +510,27 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   - libraryFullscreen: 1 if fullscreen is supported. 0 otherwise.
 	 */
 	public function loadContent( $id ) {
-		// TODO: Implement loadContent() method.
+		$content = [
+			'id'     => "1",
+			'title'  => "Quiz 1",
+			'params' => '{"media":{"params":{"contentName":"Image","file":{"path":"images/file-592da00abe776.jpg","mime":"image/jpeg","copyright":{"license":"U"},"width":800,"height":800},"alt":"sample ALternative Text","title":"sample hover text"},"library":"H5P.Image 1.0","subContentId":"d9fa0034-a59f-447e-a2c6-61da8c09e8d5"},"answers":[{"correct":false,"tipsAndFeedback":{"tip":"<p>sapmle tip for q1</p>\n","chosenFeedback":"<div>sample displayed message if answer is selected</div>\n","notChosenFeedback":"<div>sample msg if not selected</div>\n"},"text":"<div>option 1 text incorrect</div>\n"},{"correct":true,"tipsAndFeedback":{"tip":"<p>tip</p>\n","chosenFeedback":"<div>selected</div>\n","notChosenFeedback":"<div>why not selected</div>\n"},"text":"<div>option 1 text <strong>correct</strong></div>\n"}],"UI":{"checkAnswerButton":"Check","showSolutionButton":"Show solution","tryAgainButton":"Retry","tipsLabel":"Show tip","scoreBarLabel":"Score","tipAvailable":"Tip available","feedbackAvailable":"Feedback availab"',
+			
+			'filtered'            =>
+				'{"media":{"params":{"contentName":"Image","file":{"path":"images\/file-592da00abe776.jpg","mime":"image\/jpeg","copyright":{"license":"U"},"width":800,"height":800},"alt":"sample ALternative Text","title":"sample hover text"},"library":"H5P.Image 1.0","subContentId":"d9fa0034-a59f-447e-a2c6-61da8c09e8d5"},"answers":[{"correct":false,"tipsAndFeedback":{"tip":"<p>sapmle tip for q1<\/p>\n","chosenFeedback":"<div>sample displayed message if answer is selected<\/div>\n","notChosenFeedback":"<div>sample msg if not selected<\/div>\n"},"text":"<div>option 1 text incorrect<\/div>\n"},{"correct":true,"tipsAndFeedback":{"tip":"<p>tip<\/p>\n","chosenFeedback":"<div>selected<\/div>\n","notChosenFeedback":"<div>why not selected<\/div>\n"},"text":"<div>option 1 text <strong>correct<\/strong><\/div>\n"}],"UI":{"checkAnswerButton":"Check","showSolutionButton":"Show solution","tryAgainButton":"Retry","tipsLabel":"Show tip","scoreBarLabel":"Score","tipAvailable":"Tip available","feedbackAvailable":"Feedback available","readFeedback":"Read feedback","wrongAnswer":"Wrong answer","correctAnswer":"Correct answer","feedback":"You got @score of @total points","shouldCheck":"Should have been checked","shouldNotCheck":"Should not have been checked","noInput":"Please answer before viewing the solution"},"behaviour":{"enableRetry":true,"enableSolutionsButton":true,"type":"auto","singlePoint":true,"randomAnswers":true,"showSolutionsRequiresInput":true,"disableImageZooming":false,"confirmCheckDialog":false,"confirmRetryDialog":false,"autoCheck":true,"passPercentage":100},"confirmCheck":{"header":"Finish ?","body":"Are you sure you wish to finish ?","cancelLabel":"Cancel","confirmLabel":"Finish"},"confirmRetry":{"header":"Retry ?","body":"Are you sure you wish to retry ?","cancelLabel":"Cancel","confirmLabel":"Confirm"},"question":"<p>Question 1<\/p>\n"}'
+			,
+			'slug'                => "quiz-1",
+			'user_id'             => "1",
+			'embedType'           => "div",
+			'disable'             => "15",
+			'libraryId'           => "6",
+			'libraryName'         => "H5P.MultiChoice",
+			'libraryMajorVersion' => "1",
+			'libraryMinorVersion' => "9",
+			'libraryEmbedTypes'   => "",
+			'libraryFullscreen'   => "0"
+		];
+		
+		return $content;
 	}
 	
 	/**
