@@ -18,3 +18,8 @@ services:
     app.h5p:
         class: AppBundle\Service\H5P\H5PService
         arguments: ['@service_container']
+
+    app.user:
+        class: AppBundle\Service\User\UserService
+        arguments:
+            - "@service_container"
