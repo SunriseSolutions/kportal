@@ -26,12 +26,17 @@ class ContentNodeController extends Controller {
 	public function singleArticleAction( $entity, $slug, Request $request ) {
 		//$scripts = \H5PCore::$scripts;
 		//array_shift( $scripts );
+		$h5p      = $this->get( 'app.h5p' );
+		$h5pHtml  = $h5p->getHtml( 1 );
+		$settings = json_encode( $h5p->getSettings() );
 		
 		return $this->render( 'content/node.html.twig', [
-			'styles'  => \H5PCore::$styles,
-			'scripts' => \H5PCore::$scripts,
-			'entity'  => $entity,
-			'slug'    => $slug
+			'styles'      => $h5p->getStyles(),
+			'scripts'     => $h5p->getScripts(),
+			'h5pHtml'     => $h5pHtml,
+			'h5pSettings' => $settings,
+			'entity'      => $entity,
+			'slug'        => $slug
 		] );
 	}
 }

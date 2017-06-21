@@ -23,13 +23,13 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * Fetches a file from a remote server using HTTP GET
 	 *
 	 * @param string $url Where you want to get or send data.
-	 * @param array $data Data to post to the URL.
-	 * @param bool $blocking Set to 'FALSE' to instantly time out (fire and forget).
+	 * @param array  $data Data to post to the URL.
+	 * @param bool   $blocking Set to 'FALSE' to instantly time out (fire and forget).
 	 * @param string $stream Path to where the file should be saved.
 	 *
 	 * @return string The content (response body). NULL if something went wrong
 	 */
-	public function fetchExternalData( $url, $data = null, $blocking = true, $stream = null ) {
+	public function fetchExternalData($url, $data = null, $blocking = true, $stream = null) {
 		// TODO: Implement fetchExternalData() method.
 	}
 	
@@ -39,7 +39,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * @param string $machineName
 	 * @param string $tutorialUrl
 	 */
-	public function setLibraryTutorialUrl( $machineName, $tutorialUrl ) {
+	public function setLibraryTutorialUrl($machineName, $tutorialUrl) {
 		// TODO: Implement setLibraryTutorialUrl() method.
 	}
 	
@@ -49,7 +49,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * @param string $message
 	 *   The error message
 	 */
-	public function setErrorMessage( $message ) {
+	public function setErrorMessage($message) {
 		// TODO: Implement setErrorMessage() method.
 	}
 	
@@ -59,7 +59,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * @param string $message
 	 *  The error message
 	 */
-	public function setInfoMessage( $message ) {
+	public function setInfoMessage($message) {
 		// TODO: Implement setInfoMessage() method.
 	}
 	
@@ -68,7 +68,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *
 	 * @param string $message
 	 *  The english string to be translated.
-	 * @param array $replacements
+	 * @param array  $replacements
 	 *   An associative array of replacements to make after translation. Incidences
 	 *   of any key in this array are replaced with the corresponding value. Based
 	 *   on the first character of the key, the value is escaped and/or themed:
@@ -80,7 +80,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * @return string Translated string
 	 * Translated string
 	 */
-	public function t( $message, $replacements = array() ) {
+	public function t($message, $replacements = array()) {
 		// TODO: Implement t() method.
 	}
 	
@@ -92,7 +92,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *
 	 * @return string URL to file
 	 */
-	public function getLibraryFileUrl( $libraryFolderName, $fileName ) {
+	public function getLibraryFileUrl($libraryFolderName, $fileName) {
 		// TODO: Implement getLibraryFileUrl() method.
 	}
 	
@@ -143,15 +143,15 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *
 	 * @param string $machineName
 	 *   The librarys machine name
-	 * @param int $majorVersion
+	 * @param int    $majorVersion
 	 *   Optional major version number for library
-	 * @param int $minorVersion
+	 * @param int    $minorVersion
 	 *   Optional minor version number for library
 	 *
 	 * @return int
 	 *   The id of the specified library or FALSE
 	 */
-	public function getLibraryId( $machineName, $majorVersion = null, $minorVersion = null ) {
+	public function getLibraryId($machineName, $majorVersion = null, $minorVersion = null) {
 		// TODO: Implement getLibraryId() method.
 	}
 	
@@ -163,12 +163,12 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * @param boolean $isLibrary
 	 *   TRUE if this is the whitelist for a library. FALSE if it is the whitelist
 	 *   for the content folder we are getting
-	 * @param string $defaultContentWhitelist
+	 * @param string  $defaultContentWhitelist
 	 *   A string of file extensions separated by whitespace
-	 * @param string $defaultLibraryWhitelist
+	 * @param string  $defaultLibraryWhitelist
 	 *   A string of file extensions separated by whitespace
 	 */
-	public function getWhitelist( $isLibrary, $defaultContentWhitelist, $defaultLibraryWhitelist ) {
+	public function getWhitelist($isLibrary, $defaultContentWhitelist, $defaultLibraryWhitelist) {
 		// TODO: Implement getWhitelist() method.
 	}
 	
@@ -186,7 +186,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   TRUE if the library is a patched version of an existing library
 	 *   FALSE otherwise
 	 */
-	public function isPatchedLibrary( $library ) {
+	public function isPatchedLibrary($library) {
 		// TODO: Implement isPatchedLibrary() method.
 	}
 	
@@ -237,11 +237,11 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   - semantics(optional): Json describing the content structure for the library
 	 *   - language(optional): associative array containing:
 	 *     - languageCode: Translation in json format
-	 * @param bool $new
+	 * @param bool   $new
 	 *
 	 * @return
 	 */
-	public function saveLibraryData( &$libraryData, $new = true ) {
+	public function saveLibraryData(&$libraryData, $new = true) {
 		// TODO: Implement saveLibraryData() method.
 	}
 	
@@ -254,10 +254,10 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   - params: The content in json format
 	 *   - library: An associative array containing:
 	 *     - libraryId: The id of the main library for this content
-	 * @param int $contentMainId
+	 * @param int   $contentMainId
 	 *   Main id for the content if this is a system that supports versions
 	 */
-	public function insertContent( $content, $contentMainId = null ) {
+	public function insertContent($content, $contentMainId = null) {
 		// TODO: Implement insertContent() method.
 	}
 	
@@ -270,10 +270,10 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   - params: The content in json format
 	 *   - library: An associative array containing:
 	 *     - libraryId: The id of the main library for this content
-	 * @param int $contentMainId
+	 * @param int   $contentMainId
 	 *   Main id for the content if this is a system that supports versions
 	 */
-	public function updateContent( $content, $contentMainId = null ) {
+	public function updateContent($content, $contentMainId = null) {
 		// TODO: Implement updateContent() method.
 	}
 	
@@ -282,16 +282,16 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *
 	 * @param int $contentId
 	 */
-	public function resetContentUserData( $contentId ) {
+	public function resetContentUserData($contentId) {
 		// TODO: Implement resetContentUserData() method.
 	}
 	
 	/**
 	 * Save what libraries a library is depending on
 	 *
-	 * @param int $libraryId
+	 * @param int    $libraryId
 	 *   Library Id for the library we're saving dependencies for
-	 * @param array $dependencies
+	 * @param array  $dependencies
 	 *   List of dependencies as associative arrays containing:
 	 *   - machineName: The library machineName
 	 *   - majorVersion: The library's majorVersion
@@ -302,7 +302,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   - preloaded
 	 *   - dynamic
 	 */
-	public function saveLibraryDependencies( $libraryId, $dependencies, $dependency_type ) {
+	public function saveLibraryDependencies($libraryId, $dependencies, $dependency_type) {
 		// TODO: Implement saveLibraryDependencies() method.
 	}
 	
@@ -318,7 +318,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   That supports versions. (In this case the content id will typically be
 	 *   the version id, and the contentMainId will be the frameworks content id
 	 */
-	public function copyLibraryUsage( $contentId, $copyFromId, $contentMainId = null ) {
+	public function copyLibraryUsage($contentId, $copyFromId, $contentMainId = null) {
 		// TODO: Implement copyLibraryUsage() method.
 	}
 	
@@ -328,7 +328,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * @param int $contentId
 	 *   Id identifying the content
 	 */
-	public function deleteContentData( $contentId ) {
+	public function deleteContentData($contentId) {
 		// TODO: Implement deleteContentData() method.
 	}
 	
@@ -338,14 +338,14 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * @param int $contentId
 	 *   Content Id of the content we'll be deleting library usage for
 	 */
-	public function deleteLibraryUsage( $contentId ) {
+	public function deleteLibraryUsage($contentId) {
 		// TODO: Implement deleteLibraryUsage() method.
 	}
 	
 	/**
 	 * Saves what libraries the content uses
 	 *
-	 * @param int $contentId
+	 * @param int   $contentId
 	 *   Id identifying the content
 	 * @param array $librariesInUse
 	 *   List of libraries the content uses. Libraries consist of associative arrays with:
@@ -358,7 +358,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *     - dynamic
 	 *     - preloaded
 	 */
-	public function saveLibraryUsage( $contentId, $librariesInUse ) {
+	public function saveLibraryUsage($contentId, $librariesInUse) {
 		// TODO: Implement saveLibraryUsage() method.
 	}
 	
@@ -374,7 +374,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   - content: Number of content using the library
 	 *   - libraries: Number of libraries depending on the library
 	 */
-	public function getLibraryUsage( $libraryId ) {
+	public function getLibraryUsage($libraryId) {
 		// TODO: Implement getLibraryUsage() method.
 	}
 	
@@ -383,9 +383,9 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *
 	 * @param string $machineName
 	 *   The library's machine name
-	 * @param int $majorVersion
+	 * @param int    $majorVersion
 	 *   The library's major version
-	 * @param int $minorVersion
+	 * @param int    $minorVersion
 	 *   The library's minor version
 	 *
 	 * @return array|FALSE
@@ -418,7 +418,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *     - majorVersion: Major version for a library this library is depending on
 	 *     - minorVersion: Minor for a library this library is depending on
 	 */
-	public function loadLibrary( $machineName, $majorVersion, $minorVersion ) {
+	public function loadLibrary($machineName, $majorVersion, $minorVersion) {
 		// TODO: Implement loadLibrary() method.
 	}
 	
@@ -427,31 +427,31 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *
 	 * @param string $machineName
 	 *   Machine name for the library
-	 * @param int $majorVersion
+	 * @param int    $majorVersion
 	 *   The library's major version
-	 * @param int $minorVersion
+	 * @param int    $minorVersion
 	 *   The library's minor version
 	 *
 	 * @return string
 	 *   The library's semantics as json
 	 */
-	public function loadLibrarySemantics( $machineName, $majorVersion, $minorVersion ) {
+	public function loadLibrarySemantics($machineName, $majorVersion, $minorVersion) {
 		// TODO: Implement loadLibrarySemantics() method.
 	}
 	
 	/**
 	 * Makes it possible to alter the semantics, adding custom fields, etc.
 	 *
-	 * @param array $semantics
+	 * @param array  $semantics
 	 *   Associative array representing the semantics
 	 * @param string $machineName
 	 *   The library's machine name
-	 * @param int $majorVersion
+	 * @param int    $majorVersion
 	 *   The library's major version
-	 * @param int $minorVersion
+	 * @param int    $minorVersion
 	 *   The library's minor version
 	 */
-	public function alterLibrarySemantics( &$semantics, $machineName, $majorVersion, $minorVersion ) {
+	public function alterLibrarySemantics(&$semantics, $machineName, $majorVersion, $minorVersion) {
 		// TODO: Implement alterLibrarySemantics() method.
 	}
 	
@@ -461,7 +461,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * @param int $libraryId
 	 *   Library identifier
 	 */
-	public function deleteLibraryDependencies( $libraryId ) {
+	public function deleteLibraryDependencies($libraryId) {
 		// TODO: Implement deleteLibraryDependencies() method.
 	}
 	
@@ -485,7 +485,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * @param stdClass $library
 	 *   Library object with id, name, major version and minor version.
 	 */
-	public function deleteLibrary( $library ) {
+	public function deleteLibrary($library) {
 		// TODO: Implement deleteLibrary() method.
 	}
 	
@@ -509,7 +509,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   - libraryEmbedTypes: CSV of the main library's embed types
 	 *   - libraryFullscreen: 1 if fullscreen is supported. 0 otherwise.
 	 */
-	public function loadContent( $id ) {
+	public function loadContent($id) {
 		$content = [
 			'id'     => "1",
 			'title'  => "Quiz 1",
@@ -555,7 +555,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   - preloadedCss(optional): comma separated sting with css file paths
 	 *   - dropCss(optional): csv of machine names
 	 */
-	public function loadContentDependencies( $id, $type = null ) {
+	public function loadContentDependencies($id, $type = null) {
 		// TODO: Implement loadContentDependencies() method.
 	}
 	
@@ -570,7 +570,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * @return mixed
 	 *   Whatever has been stored as the setting
 	 */
-	public function getOption( $name, $default = null ) {
+	public function getOption($name, $default = null) {
 		// TODO: Implement getOption() method.
 	}
 	
@@ -580,20 +580,20 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *
 	 * @param string $name
 	 *   Identifier for the setting
-	 * @param mixed $value Data
+	 * @param mixed  $value Data
 	 *   Whatever we want to store as the setting
 	 */
-	public function setOption( $name, $value ) {
+	public function setOption($name, $value) {
 		// TODO: Implement setOption() method.
 	}
 	
 	/**
 	 * This will update selected fields on the given content.
 	 *
-	 * @param int $id Content identifier
+	 * @param int   $id Content identifier
 	 * @param array $fields Content fields, e.g. filtered or slug.
 	 */
-	public function updateContentFields( $id, $fields ) {
+	public function updateContentFields($id, $fields) {
 		// TODO: Implement updateContentFields() method.
 	}
 	
@@ -604,7 +604,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *
 	 * @param int $library_id
 	 */
-	public function clearFilteredParameters( $library_id ) {
+	public function clearFilteredParameters($library_id) {
 		// TODO: Implement clearFilteredParameters() method.
 	}
 	
@@ -625,7 +625,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *
 	 * @return int
 	 */
-	public function getNumContent( $libraryId ) {
+	public function getNumContent($libraryId) {
 		// TODO: Implement getNumContent() method.
 	}
 	
@@ -636,7 +636,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *
 	 * @return boolean
 	 */
-	public function isContentSlugAvailable( $slug ) {
+	public function isContentSlugAvailable($slug) {
 		// TODO: Implement isContentSlugAvailable() method.
 	}
 	
@@ -647,7 +647,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *
 	 * @return array Number values indexed by library name and version
 	 */
-	public function getLibraryStats( $type ) {
+	public function getLibraryStats($type) {
 		// TODO: Implement getLibraryStats() method.
 	}
 	
@@ -666,10 +666,10 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *
 	 * @param string $key
 	 *  Hash key for the given libraries
-	 * @param array $libraries
+	 * @param array  $libraries
 	 *  List of dependencies(libraries) used to create the key
 	 */
-	public function saveCachedAssets( $key, $libraries ) {
+	public function saveCachedAssets($key, $libraries) {
 		// TODO: Implement saveCachedAssets() method.
 	}
 	
@@ -683,7 +683,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * @return array
 	 *  List of hash keys removed
 	 */
-	public function deleteCachedAssets( $library_id ) {
+	public function deleteCachedAssets($library_id) {
 		// TODO: Implement deleteCachedAssets() method.
 	}
 	
@@ -698,7 +698,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	/**
 	 * Will trigger after the export file is created.
 	 */
-	public function afterExportCreated( $content, $filename ) {
+	public function afterExportCreated($content, $filename) {
 		// TODO: Implement afterExportCreated() method.
 	}
 	
@@ -711,7 +711,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *
 	 * @return boolean
 	 */
-	public function hasPermission( $permission, $id = null ) {
+	public function hasPermission($permission, $id = null) {
 		// TODO: Implement hasPermission() method.
 	}
 	
@@ -721,7 +721,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * @param object $contentTypeCache Json with an array called 'libraries'
 	 *  containing the new content type cache that should replace the old one.
 	 */
-	public function replaceContentTypeCache( $contentTypeCache ) {
+	public function replaceContentTypeCache($contentTypeCache) {
 		// TODO: Implement replaceContentTypeCache() method.
 	}
 }

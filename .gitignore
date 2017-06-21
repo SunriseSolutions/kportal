@@ -11,6 +11,24 @@ web/test.php
 /var/spool/*
 !var/spool/.gitkeep
 
+!web/assets/h5p/extension/cachedassets
+/web/assets/h5p/extension/cachedassets/*
+!web/assets/h5p/extension/cachedassets/.gitkeep
+
+
+!web/assets/h5p/extension/content
+/web/assets/h5p/extension/content/*
+!web/assets/h5p/extension/content/.gitkeep
+
+!web/assets/h5p/extension/editor
+/web/assets/h5p/extension/editor/*
+!web/assets/h5p/extension/editor/.gitkeep
+
+!web/assets/h5p/extension/exports
+/web/assets/h5p/extension/exports/*
+!web/assets/h5p/extension/exports/.gitkeep
+
+
 !var/spool/default
 /var/spool/default/*
 !var/spool/default/.gitkeep
