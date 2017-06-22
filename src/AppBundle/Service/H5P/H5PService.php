@@ -33,7 +33,7 @@ class H5PService extends BaseService {
 	 */
 	const VERSION = '1.8.3';
 	
-	public function __construct(ContainerInterface $container) {
+	public function __construct(ContainerInterface $container, AppH5PFramework $h5pF) {
 		parent::__construct($container);
 		$request                       = $this->container->get('request_stack')->getCurrentRequest();
 		$this->baseURL                 = $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
@@ -41,17 +41,16 @@ class H5PService extends BaseService {
 		$this->relativeH5PLibraryURL   = $request->getBasePath() . '/assets/h5p';
 		$this->absoluteH5PExtensionURL = $this->baseURL . '/assets/h5p/extension';
 		$this->absoluteH5PLibraryURL   = $this->baseURL . '/assets/h5p';
+		
+		$this->interface             = $h5pF;
+		$language                    = $this->getLanguage();
+		$this->core                  = new \H5PCore($this->interface, $this->relativeH5PExtensionURL, $this->relativeH5PExtensionURL, $language, true);
+		$this->core->aggregateAssets = ! (defined('H5P_DISABLE_AGGREGATION') && H5P_DISABLE_AGGREGATION === true);
+		// Add core assets
 		$this->addCoreAssets();
 	}
 	
 	public function getH5PInstance($type) {
-		if($this->interface === null) {
-			$this->interface             = new AppH5PFramework($this->container);
-			$language                    = $this->getLanguage();
-			$this->core                  = new \H5PCore($this->interface, $this->relativeH5PExtensionURL, $this->relativeH5PExtensionURL, $language, true);
-			$this->core->aggregateAssets = ! (defined('H5P_DISABLE_AGGREGATION') && H5P_DISABLE_AGGREGATION === true);
-		}
-		
 		switch($type) {
 			case 'validator':
 				return new \H5PValidator($this->interface, $this->core);
@@ -66,7 +65,6 @@ class H5PService extends BaseService {
 			case 'core':
 				return $this->core;
 		}
-		
 	}
 	
 	public function getHtml($id) {
@@ -166,7 +164,7 @@ class H5PService extends BaseService {
 	 */
 	public function addAssets($content, $no_cache = false) {
 		// Add core assets
-		$this->addCoreAssets();
+//		$this->addCoreAssets();
 		
 		// Detemine embed type
 		$embed = \H5PCore::determineEmbedType($content['embedType'], $content['library']['embedTypes']);

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\H5P\Base;
 
+use AppBundle\Entity\H5P\Dependency;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\MediaBundle\Entity\BaseGallery as BaseGallery;
@@ -22,6 +23,42 @@ class AppLibrary {
 	
 	function __construct() {
 		$this->createdAt = new \DateTime();
+	}
+	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\H5P\Base\AppDependency", mappedBy="dependee", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $dependencies;
+	
+	public function addDependency(Dependency $dependency)
+	{
+		$this->dependencies->add($dependency);
+		$dependency->setDependee($this);
+	}
+	
+	public function removeDependency(Dependency $dependency)
+	{
+		$this->dependencies->removeElement($dependency);
+		$dependency->setDependee(null);
+	}
+	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\H5P\Base\AppDependency", mappedBy="dependency", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $dependees;
+	
+	public function addDependee(Dependency $dependee)
+	{
+		$this->dependees->add($dependee);
+		$dependee->setDependency($this);
+	}
+	
+	public function removeDependee(Dependency $dependee)
+	{
+		$this->dependees->removeElement($dependee);
+		$dependee->setDependency(null);
 	}
 	
 	/**

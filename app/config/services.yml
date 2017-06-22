@@ -15,9 +15,14 @@ services:
     fos_user.entity_manager:
         alias: fos_user.object_manager
 
+    app.h5p_framework:
+        class: AppBundle\Service\H5P\AppH5PFramework
+        arguments: ['@service_container']
+
+
     app.h5p:
         class: AppBundle\Service\H5P\H5PService
-        arguments: ['@service_container']
+        arguments: ['@service_container', '@app.h5p_framework']
 
     app.user:
         class: AppBundle\Service\User\UserService
