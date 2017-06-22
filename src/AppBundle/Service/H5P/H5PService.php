@@ -46,7 +46,7 @@ class H5PService extends BaseService {
 	
 	public function getH5PInstance($type) {
 		if($this->interface === null) {
-			$this->interface             = new AppH5PFramework();
+			$this->interface             = new AppH5PFramework($this->container);
 			$language                    = $this->getLanguage();
 			$this->core                  = new \H5PCore($this->interface, $this->relativeH5PExtensionURL, $this->relativeH5PExtensionURL, $language, true);
 			$this->core->aggregateAssets = ! (defined('H5P_DISABLE_AGGREGATION') && H5P_DISABLE_AGGREGATION === true);
@@ -210,8 +210,7 @@ class H5PService extends BaseService {
 		// TODO: Implement method.
 		
 		
-		$core = $this->getH5PInstance('core');
-		
+		$core            = $this->getH5PInstance('core');
 		$safe_parameters = $core->filterParameters($content);
 //		if ( has_action( 'h5p_alter_filtered_parameters' ) ) {
 //

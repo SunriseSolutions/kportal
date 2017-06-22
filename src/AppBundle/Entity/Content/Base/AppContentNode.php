@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity\Content\Base;
 
-use AppBundle\Entity\Content\AppContentEntity;
+use AppBundle\Entity\Content\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
@@ -28,7 +28,7 @@ class AppContentNode {
 	protected $id;
 	
 	/**
-	 * @var AppContentEntity
+	 * @var ContentEntity
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentEntity",inversedBy="contentNodes")
 	 * @ORM\JoinColumn(name="id_owner", referencedColumnName="id", onDelete="CASCADE")
 	 */

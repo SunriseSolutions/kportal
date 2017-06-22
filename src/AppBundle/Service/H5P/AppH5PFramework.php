@@ -3,8 +3,17 @@
 namespace AppBundle\Service\H5P;
 
 use stdClass;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AppH5PFramework implements \H5PFrameworkInterface {
+	/**
+	 * @var ContainerInterface $container
+	 */
+	private $container;
+	
+	function __construct(ContainerInterface $container) {
+		$this->container = $container;
+	}
 	
 	/**
 	 * Returns info for the current platform
@@ -419,7 +428,50 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *     - minorVersion: Minor for a library this library is depending on
 	 */
 	public function loadLibrary($machineName, $majorVersion, $minorVersion) {
-		// TODO: Implement loadLibrary() method.
+//		global $wpdb;
+
+//		$library = $wpdb->get_row($wpdb->prepare(
+//			"SELECT id as libraryId, name as machineName, title, major_version as majorVersion, minor_version as minorVersion, patch_version as patchVersion,
+//          embed_types as embedTypes, preloaded_js as preloadedJs, preloaded_css as preloadedCss, drop_library_css as dropLibraryCss, fullscreen, runnable,
+//          semantics, has_icon as hasIcon
+//        FROM {$wpdb->prefix}h5p_libraries
+//        WHERE name = %s
+//        AND major_version = %d
+//        AND minor_version = %d",
+//			$name,
+//			$majorVersion,
+//			$minorVersion),
+//			ARRAY_A
+//		);
+		if($machineName === 'H5P.Image') {
+			$library = [
+				'libraryId'   => 1,
+				'machineName' => 'H5P.Image'
+			];
+		}
+		
+		$dependencies = $wpdb->get_results($wpdb->prepare(
+			"SELECT hl.name as machineName, hl.major_version as majorVersion, hl.minor_version as minorVersion, hll.dependency_type as dependencyType
+        FROM {$wpdb->prefix}h5p_libraries_libraries hll
+        JOIN {$wpdb->prefix}h5p_libraries hl ON hll.required_library_id = hl.id
+        WHERE hll.library_id = %d",
+			$library['libraryId'])
+		);
+		foreach($dependencies as $dependency) {
+			$library[ $dependency->dependencyType . 'Dependencies' ][] = array(
+				'machineName'  => $dependency->machineName,
+				'majorVersion' => $dependency->majorVersion,
+				'minorVersion' => $dependency->minorVersion,
+			);
+		}
+		if($this->isInDevMode()) {
+			$semantics = $this->getSemanticsFromFile($library['machineName'], $library['majorVersion'], $library['minorVersion']);
+			if($semantics) {
+				$library['semantics'] = $semantics;
+			}
+		}
+		
+		return $library;
 	}
 	
 	/**
@@ -436,8 +488,38 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   The library's semantics as json
 	 */
 	public function loadLibrarySemantics($machineName, $majorVersion, $minorVersion) {
-		// TODO: Implement loadLibrarySemantics() method.
+//		global $wpdb;
+		$semantics = $this->getSemanticsFromFile($machineName, $majorVersion, $minorVersion);
+//		if ($this->isInDevMode()) {
+//			$semantics = $this->getSemanticsFromFile($name, $majorVersion, $minorVersion);
+//		}
+//		else {
+//			$semantics = $wpdb->get_var($wpdb->prepare(
+//				"SELECT semantics
+//          FROM {$wpdb->prefix}h5p_libraries
+//          WHERE name = %s
+//          AND major_version = %d
+//          AND minor_version = %d",
+//				$name, $majorVersion, $minorVersion)
+//			);
+//		}
+		return ($semantics === false ? null : $semantics);
 	}
+	
+	private function getSemanticsFromFile($name, $majorVersion, $minorVersion) {
+		$semanticsPath = $this->container->getParameter('kernel.root_dir') . '/../web/assets/h5p/extension' . '/libraries/' . $name . '-' . $majorVersion . '.' . $minorVersion . '/semantics.json';
+		if(file_exists($semanticsPath)) {
+			$semantics = file_get_contents($semanticsPath);
+			if( ! json_decode($semantics, true)) {
+				$this->setErrorMessage($this->t('Invalid json in semantics for %library', array( '%library' => $name )));
+			}
+			
+			return $semantics;
+		}
+		
+		return false;
+	}
+	
 	
 	/**
 	 * Makes it possible to alter the semantics, adding custom fields, etc.
@@ -513,7 +595,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 		$content = [
 			'id'     => "1",
 			'title'  => "Quiz 1",
-			'params' => '{"media":{"params":{"contentName":"Image","file":{"path":"images/file-592da00abe776.jpg","mime":"image/jpeg","copyright":{"license":"U"},"width":800,"height":800},"alt":"sample ALternative Text","title":"sample hover text"},"library":"H5P.Image 1.0","subContentId":"d9fa0034-a59f-447e-a2c6-61da8c09e8d5"},"answers":[{"correct":false,"tipsAndFeedback":{"tip":"<p>sapmle tip for q1</p>\n","chosenFeedback":"<div>sample displayed message if answer is selected</div>\n","notChosenFeedback":"<div>sample msg if not selected</div>\n"},"text":"<div>option 1 text incorrect</div>\n"},{"correct":true,"tipsAndFeedback":{"tip":"<p>tip</p>\n","chosenFeedback":"<div>selected</div>\n","notChosenFeedback":"<div>why not selected</div>\n"},"text":"<div>option 1 text <strong>correct</strong></div>\n"}],"UI":{"checkAnswerButton":"Check","showSolutionButton":"Show solution","tryAgainButton":"Retry","tipsLabel":"Show tip","scoreBarLabel":"Score","tipAvailable":"Tip available","feedbackAvailable":"Feedback availab"',
+			'params' => '{"media":{"params":{"contentName":"Image","file":{"path":"images/file-592da00abe776.jpg","mime":"image/jpeg","copyright":{"license":"U"},"width":800,"height":800},"alt":"sample ALternative Text","title":"sample hover text"},"library":"H5P.Image 1.0","subContentId":"d9fa0034-a59f-447e-a2c6-61da8c09e8d5"},"answers":[{"correct":false,"tipsAndFeedback":{"tip":"<p>sapmle tip for q1</p>\n","chosenFeedback":"<div>sample displayed message if answer is selected</div>\n","notChosenFeedback":"<div>sample msg if not selected</div>\n"},"text":"<div>option 1 text incorrect</div>\n"},{"correct":true,"tipsAndFeedback":{"tip":"<p>tip</p>\n","chosenFeedback":"<div>selected</div>\n","notChosenFeedback":"<div>why not selected</div>\n"},"text":"<div>option 1 text <strong>correct</strong></div>\n"}],"UI":{"checkAnswerButton":"Check","showSolutionButton":"Show solution","tryAgainButton":"Retry","tipsLabel":"Show tip","scoreBarLabel":"Score","tipAvailable":"Tip available","feedbackAvailable":"Feedback availab"}}',
 			
 			'filtered'            =>
 				'{"media":{"params":{"contentName":"Image","file":{"path":"images\/file-592da00abe776.jpg","mime":"image\/jpeg","copyright":{"license":"U"},"width":800,"height":800},"alt":"sample ALternative Text","title":"sample hover text"},"library":"H5P.Image 1.0","subContentId":"d9fa0034-a59f-447e-a2c6-61da8c09e8d5"},"answers":[{"correct":false,"tipsAndFeedback":{"tip":"<p>sapmle tip for q1<\/p>\n","chosenFeedback":"<div>sample displayed message if answer is selected<\/div>\n","notChosenFeedback":"<div>sample msg if not selected<\/div>\n"},"text":"<div>option 1 text incorrect<\/div>\n"},{"correct":true,"tipsAndFeedback":{"tip":"<p>tip<\/p>\n","chosenFeedback":"<div>selected<\/div>\n","notChosenFeedback":"<div>why not selected<\/div>\n"},"text":"<div>option 1 text <strong>correct<\/strong><\/div>\n"}],"UI":{"checkAnswerButton":"Check","showSolutionButton":"Show solution","tryAgainButton":"Retry","tipsLabel":"Show tip","scoreBarLabel":"Score","tipAvailable":"Tip available","feedbackAvailable":"Feedback available","readFeedback":"Read feedback","wrongAnswer":"Wrong answer","correctAnswer":"Correct answer","feedback":"You got @score of @total points","shouldCheck":"Should have been checked","shouldNotCheck":"Should not have been checked","noInput":"Please answer before viewing the solution"},"behaviour":{"enableRetry":true,"enableSolutionsButton":true,"type":"auto","singlePoint":true,"randomAnswers":true,"showSolutionsRequiresInput":true,"disableImageZooming":false,"confirmCheckDialog":false,"confirmRetryDialog":false,"autoCheck":true,"passPercentage":100},"confirmCheck":{"header":"Finish ?","body":"Are you sure you wish to finish ?","cancelLabel":"Cancel","confirmLabel":"Finish"},"confirmRetry":{"header":"Retry ?","body":"Are you sure you wish to retry ?","cancelLabel":"Cancel","confirmLabel":"Confirm"},"question":"<p>Question 1<\/p>\n"}'
