@@ -2,6 +2,8 @@
 
 namespace AppBundle\Service\H5P;
 
+use AppBundle\Entity\H5P\Library;
+use Doctrine\ORM\QueryBuilder;
 use stdClass;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -443,6 +445,25 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 //			$minorVersion),
 //			ARRAY_A
 //		);
+		// TODO get all fields
+		/** @var QueryBuilder $libraryQb */
+		$libraryQb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
+		$expr = $libraryQb->expr();
+		$libraryQb->select(array( 'lib.machineName', 'lib.title', 'lib.majorVersion' ))->from(Library::class, 'lib')
+			->where(
+				$expr->andX(
+					$expr->eq('lib.machineName',':libName'),
+					$expr->eq('lib.majorVersion',':libMajorVersion'),
+					$expr->eq('lib.minorVersion',':libMinorVersion')
+				)
+			)
+			->setParameter('libName',$machineName)
+			->setParameter('libMajorVersion',$majorVersion)
+			->setParameter('libMinorVersion',$minorVersion)
+		;
+		$query = $libraryQb->getQuery()->getSQL();
+		$library = $libraryQb->getQuery()->setMaxResults(1)->getOneOrNullResult();
+		
 		if($machineName === 'H5P.Image') {
 			$library = [
 				'libraryId'   => 1,
