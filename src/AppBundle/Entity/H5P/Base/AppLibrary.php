@@ -10,7 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-/** @ORM\MappedSuperclass */
+/** @ORM\MappedSuperclass
+ * @ORM\Entity
+ */
 class AppLibrary {
 	/**
 	 * @var int $id
@@ -31,14 +33,12 @@ class AppLibrary {
 	 */
 	protected $dependencies;
 	
-	public function addDependency(Dependency $dependency)
-	{
+	public function addDependency(Dependency $dependency) {
 		$this->dependencies->add($dependency);
 		$dependency->setDependee($this);
 	}
 	
-	public function removeDependency(Dependency $dependency)
-	{
+	public function removeDependency(Dependency $dependency) {
 		$this->dependencies->removeElement($dependency);
 		$dependency->setDependee(null);
 	}
@@ -49,14 +49,12 @@ class AppLibrary {
 	 */
 	protected $dependees;
 	
-	public function addDependee(Dependency $dependee)
-	{
+	public function addDependee(Dependency $dependee) {
 		$this->dependees->add($dependee);
 		$dependee->setDependency($this);
 	}
 	
-	public function removeDependee(Dependency $dependee)
-	{
+	public function removeDependee(Dependency $dependee) {
 		$this->dependees->removeElement($dependee);
 		$dependee->setDependency(null);
 	}
@@ -151,4 +149,276 @@ class AppLibrary {
 	 */
 	protected $iconIncluded = false;
 	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getDependencies() {
+		return $this->dependencies;
+	}
+	
+	/**
+	 * @param ArrayCollection $dependencies
+	 */
+	public function setDependencies($dependencies) {
+		$this->dependencies = $dependencies;
+	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getDependees() {
+		return $this->dependees;
+	}
+	
+	/**
+	 * @param ArrayCollection $dependees
+	 */
+	public function setDependees($dependees) {
+		$this->dependees = $dependees;
+	}
+	
+	/**
+	 * @return \DateTime
+	 */
+	public function getCreatedAt() {
+		return $this->createdAt;
+	}
+	
+	/**
+	 * @param \DateTime $createdAt
+	 */
+	public function setCreatedAt($createdAt) {
+		$this->createdAt = $createdAt;
+	}
+	
+	/**
+	 * @return \DateTime
+	 */
+	public function getUpdatedAt() {
+		return $this->updatedAt;
+	}
+	
+	/**
+	 * @param \DateTime $updatedAt
+	 */
+	public function setUpdatedAt($updatedAt) {
+		$this->updatedAt = $updatedAt;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getMachineName() {
+		return $this->machineName;
+	}
+	
+	/**
+	 * @param string $machineName
+	 */
+	public function setMachineName($machineName) {
+		$this->machineName = $machineName;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getTitle() {
+		return $this->title;
+	}
+	
+	/**
+	 * @param string $title
+	 */
+	public function setTitle($title) {
+		$this->title = $title;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getMajorVersion() {
+		return $this->majorVersion;
+	}
+	
+	/**
+	 * @param int $majorVersion
+	 */
+	public function setMajorVersion($majorVersion) {
+		$this->majorVersion = $majorVersion;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getMinorVersion() {
+		return $this->minorVersion;
+	}
+	
+	/**
+	 * @param int $minorVersion
+	 */
+	public function setMinorVersion($minorVersion) {
+		$this->minorVersion = $minorVersion;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getPatchVersion() {
+		return $this->patchVersion;
+	}
+	
+	/**
+	 * @param int $patchVersion
+	 */
+	public function setPatchVersion($patchVersion) {
+		$this->patchVersion = $patchVersion;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isRunnable() {
+		return $this->runnable;
+	}
+	
+	/**
+	 * @param bool $runnable
+	 */
+	public function setRunnable($runnable) {
+		$this->runnable = $runnable;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isRestricted() {
+		return $this->restricted;
+	}
+	
+	/**
+	 * @param bool $restricted
+	 */
+	public function setRestricted($restricted) {
+		$this->restricted = $restricted;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isFullscreen() {
+		return $this->fullscreen;
+	}
+	
+	/**
+	 * @param bool $fullscreen
+	 */
+	public function setFullscreen($fullscreen) {
+		$this->fullscreen = $fullscreen;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getEmbedTypes() {
+		return $this->embedTypes;
+	}
+	
+	/**
+	 * @param string $embedTypes
+	 */
+	public function setEmbedTypes($embedTypes) {
+		$this->embedTypes = $embedTypes;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getPreloadedJs() {
+		return $this->preloadedJs;
+	}
+	
+	/**
+	 * @param string $preloadedJs
+	 */
+	public function setPreloadedJs($preloadedJs) {
+		$this->preloadedJs = $preloadedJs;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getPreloadedCss() {
+		return $this->preloadedCss;
+	}
+	
+	/**
+	 * @param string $preloadedCss
+	 */
+	public function setPreloadedCss($preloadedCss) {
+		$this->preloadedCss = $preloadedCss;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getDropLibraryCss() {
+		return $this->dropLibraryCss;
+	}
+	
+	/**
+	 * @param string $dropLibraryCss
+	 */
+	public function setDropLibraryCss($dropLibraryCss) {
+		$this->dropLibraryCss = $dropLibraryCss;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getSemantics() {
+		return $this->semantics;
+	}
+	
+	/**
+	 * @param string $semantics
+	 */
+	public function setSemantics($semantics) {
+		$this->semantics = $semantics;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getTutorialUrl() {
+		return $this->tutorialUrl;
+	}
+	
+	/**
+	 * @param string $tutorialUrl
+	 */
+	public function setTutorialUrl($tutorialUrl) {
+		$this->tutorialUrl = $tutorialUrl;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isIconIncluded() {
+		return $this->iconIncluded;
+	}
+	
+	/**
+	 * @param bool $iconIncluded
+	 */
+	public function setIconIncluded($iconIncluded) {
+		$this->iconIncluded = $iconIncluded;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getId() {
+		return $this->id;
+	}
 }

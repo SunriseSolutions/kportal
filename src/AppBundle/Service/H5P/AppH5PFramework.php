@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\H5P;
 
+use AppBundle\Entity\H5P\Dependency;
 use AppBundle\Entity\H5P\Library;
 use Doctrine\ORM\QueryBuilder;
 use stdClass;
@@ -448,49 +449,76 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 		// TODO get all fields
 		/** @var QueryBuilder $libraryQb */
 		$libraryQb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
-		$expr = $libraryQb->expr();
-		$libraryQb->select(array( 'lib.machineName', 'lib.title', 'lib.majorVersion' ))->from(Library::class, 'lib')
-			->where(
-				$expr->andX(
-					$expr->eq('lib.machineName',':libName'),
-					$expr->eq('lib.majorVersion',':libMajorVersion'),
-					$expr->eq('lib.minorVersion',':libMinorVersion')
-				)
-			)
-			->setParameter('libName',$machineName)
-			->setParameter('libMajorVersion',$majorVersion)
-			->setParameter('libMinorVersion',$minorVersion)
-		;
-		$query = $libraryQb->getQuery()->getSQL();
+		$expr      = $libraryQb->expr();
+		$libraryQb->select(array(
+			'lib.id as libraryId',
+			'lib.machineName',
+			'lib.title',
+			'lib.majorVersion',
+			'lib.minorVersion',
+			'lib.patchVersion',
+			'lib.embedTypes',
+			'lib.preloadedJs',
+			'lib.preloadedCss',
+			'lib.dropLibraryCss',
+			'lib.fullscreen',
+			'lib.runnable',
+			'lib.semantics',
+			'lib.iconIncluded as hasIcon'
+		))->from(Library::class, 'lib')
+		          ->where(
+			          $expr->andX(
+				          $expr->eq('lib.machineName', ':libName'),
+				          $expr->eq('lib.majorVersion', ':libMajorVersion'),
+				          $expr->eq('lib.minorVersion', ':libMinorVersion')
+			          )
+		          )
+		          ->setParameter('libName', $machineName)
+		          ->setParameter('libMajorVersion', $majorVersion)
+		          ->setParameter('libMinorVersion', $minorVersion);
+		
 		$library = $libraryQb->getQuery()->setMaxResults(1)->getOneOrNullResult();
 		
-		if($machineName === 'H5P.Image') {
-			$library = [
-				'libraryId'   => 1,
-				'machineName' => 'H5P.Image'
-			];
-		}
+		/** @var QueryBuilder $dependencyQb */
+		$dependencyQb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
+		$dependencyQb->select(
+			array(
+				'dependee.machineName',
+				'dependee.majorVersion',
+				'dependee.minorVersion',
+				'o.dependencyType',
+			)
+		)->from(Dependency::class, 'o')
+		             ->join('o.dependee', 'dependee')
+		             ->join('o.dependency', 'dependency')
+		             ->where($expr->eq('dependency.id', ':dependencyId'))
+		             ->setParameter('dependencyId', $library['libraryId']);
 		
-		$dependencies = $wpdb->get_results($wpdb->prepare(
-			"SELECT hl.name as machineName, hl.major_version as majorVersion, hl.minor_version as minorVersion, hll.dependency_type as dependencyType
-        FROM {$wpdb->prefix}h5p_libraries_libraries hll
-        JOIN {$wpdb->prefix}h5p_libraries hl ON hll.required_library_id = hl.id
-        WHERE hll.library_id = %d",
-			$library['libraryId'])
-		);
+		$query        = $dependencyQb->getQuery()->getSQL();
+		$dependencies = $dependencyQb->getQuery()->getResult();
+
+//		$dependencies = $wpdb->get_results($wpdb->prepare(
+//			"SELECT hl.name as machineName, hl.major_version as majorVersion, hl.minor_version as minorVersion, hll.dependency_type as dependencyType
+//        FROM {$wpdb->prefix}h5p_libraries_libraries hll
+//        JOIN {$wpdb->prefix}h5p_libraries hl ON hll.required_library_id = hl.id
+//        WHERE hll.library_id = %d",
+//			$library['libraryId'])
+//		);
+		
 		foreach($dependencies as $dependency) {
-			$library[ $dependency->dependencyType . 'Dependencies' ][] = array(
-				'machineName'  => $dependency->machineName,
-				'majorVersion' => $dependency->majorVersion,
-				'minorVersion' => $dependency->minorVersion,
+			$library[ $dependency['dependencyType'] . 'Dependencies' ][] = array(
+				'machineName'  => $dependency['machineName'],
+				'majorVersion' => $dependency['majorVersion'],
+				'minorVersion' => $dependency['minorVersion'],
 			);
 		}
-		if($this->isInDevMode()) {
-			$semantics = $this->getSemanticsFromFile($library['machineName'], $library['majorVersion'], $library['minorVersion']);
-			if($semantics) {
-				$library['semantics'] = $semantics;
-			}
+//		if($this->isInDevMode()) {
+		$semantics = $this->getSemanticsFromFile($library['machineName'], $library['majorVersion'], $library['minorVersion']);
+		if($semantics) {
+			$library['semantics'] = $semantics;
 		}
+
+//		}
 		
 		return $library;
 	}
