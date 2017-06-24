@@ -35,16 +35,17 @@ class H5PService extends BaseService {
 	
 	public function __construct(ContainerInterface $container, AppH5PFramework $h5pF) {
 		parent::__construct($container);
-		$request                       = $this->container->get('request_stack')->getCurrentRequest();
-		$this->baseURL                 = $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
-		$this->relativeH5PExtensionURL = $request->getBasePath() . '/assets/h5p/extension';
-		$this->relativeH5PLibraryURL   = $request->getBasePath() . '/assets/h5p';
-		$this->absoluteH5PExtensionURL = $this->baseURL . '/assets/h5p/extension';
-		$this->absoluteH5PLibraryURL   = $this->baseURL . '/assets/h5p';
+		$request                            = $this->container->get('request_stack')->getCurrentRequest();
+		$this->baseURL                      = $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
+		$this->relativeH5PExtensionURL      = $request->getBasePath() . '/assets/h5p/extension';
+		$this->relativeH5PLibraryURL        = $request->getBasePath() . '/assets/h5p';
+		$this->absoluteH5PExtensionURL      = $this->baseURL . '/assets/h5p/extension';
+		$this->absoluteH5PLibraryURL        = $this->baseURL . '/assets/h5p';
+		$this->absoluteH5PExtensionFilePath = $container->get('kernel')->getRootDir() . '/../web' . '/assets/h5p/extension';
 		
 		$this->interface             = $h5pF;
 		$language                    = $this->getLanguage();
-		$this->core                  = new \H5PCore($this->interface, $this->relativeH5PExtensionURL, $this->relativeH5PExtensionURL, $language, true);
+		$this->core                  = new \H5PCore($this->interface, $this->absoluteH5PExtensionFilePath, $this->relativeH5PExtensionURL, $language, true);
 		$this->core->aggregateAssets = ! (defined('H5P_DISABLE_AGGREGATION') && H5P_DISABLE_AGGREGATION === true);
 		// Add core assets
 		$this->addCoreAssets();
