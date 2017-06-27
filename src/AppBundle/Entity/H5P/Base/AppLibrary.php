@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\H5P\Base;
 
+use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\H5P\Dependency;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,7 +12,6 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /** @ORM\MappedSuperclass
- * @ORM\Entity
  */
 class AppLibrary {
 	/**
@@ -25,11 +25,31 @@ class AppLibrary {
 	
 	function __construct() {
 		$this->createdAt = new \DateTime();
+		
+		$this->contentNodes = new ArrayCollection();
+		$this->dependees = new ArrayCollection();
+		$this->dependencies = new ArrayCollection();
 	}
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\H5P\Base\AppDependency", mappedBy="dependee", cascade={"persist","merge"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\H5P\Content", mappedBy="library", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $contentNodes;
+	
+	public function addContentNode(Content $node) {
+		$this->contentNodes->add($node);
+		$node->setLibrary($this);
+	}
+	
+	public function removeContentNode(Content $node) {
+		$this->dependencies->removeElement($node);
+		$node->setLibrary(null);
+	}
+	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\H5P\Dependency", mappedBy="dependee", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $dependencies;
 	
@@ -45,7 +65,7 @@ class AppLibrary {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\H5P\Base\AppDependency", mappedBy="dependency", cascade={"persist","merge"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\H5P\Dependency", mappedBy="dependency", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $dependees;
 	

@@ -29,7 +29,6 @@ class Content extends AppContent
     function __construct()
     {
         parent::__construct();
-        $this->enabled = true;
         
     }
 
