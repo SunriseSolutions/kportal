@@ -297,17 +297,17 @@ class H5PService extends BaseService {
 		
 		// Add core stylesheets
 		foreach(\H5PCore::$styles as $style) {
-			$this->settings['core']['styles'][] = $rel_path . $style . $cache_buster;
+			$this->settings['core']['styles'][] = $rel_path . '/' . $style . $cache_buster;
 //			$assetPath                          = $this->asset_handle( 'core-' . $style );
 //			wp_enqueue_style( $assetPath, $lib_url . $style, array(), self::VERSION );
-			$this->styles[] = $style;
+			$this->styles[] = $rel_path . '/' . $style . $cache_buster;
 		}
 		
 		// Add core JavaScript
 		foreach(\H5PCore::$scripts as $script) {
-			$this->settings['core']['scripts'][] = $rel_path . $script . $cache_buster;
+			$this->settings['core']['scripts'][] = $rel_path . '/' . $script . $cache_buster;
 //			wp_enqueue_script( $this->asset_handle( 'core-' . $script ), $lib_url . $script, array(), self::VERSION );
-			$this->scripts[] = $script;
+			$this->scripts[] = $rel_path . '/' . $script . $cache_buster;
 		}
 	}
 	

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity\H5P\Base;
 
 use AppBundle\Entity\H5P\Content;
+use AppBundle\Entity\H5P\ContentLibrary;
 use AppBundle\Entity\H5P\Dependency;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -26,9 +27,10 @@ class AppLibrary {
 	function __construct() {
 		$this->createdAt = new \DateTime();
 		
-		$this->contentNodes = new ArrayCollection();
-		$this->dependees = new ArrayCollection();
-		$this->dependencies = new ArrayCollection();
+		$this->contentNodes     = new ArrayCollection();
+		$this->dependees        = new ArrayCollection();
+		$this->dependencies     = new ArrayCollection();
+		$this->contentLibraries = new ArrayCollection();
 	}
 	
 	/**
@@ -45,6 +47,22 @@ class AppLibrary {
 	public function removeContentNode(Content $node) {
 		$this->dependencies->removeElement($node);
 		$node->setLibrary(null);
+	}
+	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\H5P\ContentLibrary", mappedBy="library", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $contentLibraries;
+	
+	public function addContentLibrary(ContentLibrary $contentLibrary) {
+		$this->contentLibraries->add($contentLibrary);
+		$contentLibrary->setLibrary($this);
+	}
+	
+	public function removeContentLibrary(ContentLibrary $contentLibrary) {
+		$this->contentLibraries->removeElement($contentLibrary);
+		$contentLibrary->setLibrary(null);
 	}
 	
 	/**

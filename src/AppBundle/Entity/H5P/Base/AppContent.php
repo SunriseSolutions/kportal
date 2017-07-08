@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\H5P\Base;
 
+use AppBundle\Entity\H5P\ContentLibrary;
 use AppBundle\Entity\H5P\Library;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -23,7 +24,24 @@ class AppContent {
 	protected $id;
 	
 	function __construct() {
-		$this->createdAt = new \DateTime();
+		$this->createdAt        = new \DateTime();
+		$this->contentLibraries = new ArrayCollection();
+	}
+	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\H5P\ContentLibrary", mappedBy="content", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $contentLibraries;
+	
+	public function addContentLibrary(ContentLibrary $contentLibrary) {
+		$this->contentLibraries->add($contentLibrary);
+		$contentLibrary->setContent($this);
+	}
+	
+	public function removeContentLibrary(ContentLibrary $contentLibrary) {
+		$this->contentLibraries->removeElement($contentLibrary);
+		$contentLibrary->setContent(null);
 	}
 	
 	/**
@@ -313,6 +331,6 @@ class AppContent {
 	public function getId() {
 		return $this->id;
 	}
-
+	
 	
 }

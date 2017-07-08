@@ -2,8 +2,10 @@
 
 namespace AppBundle\Service\H5P;
 
+use AppBundle\Entity\H5P\ContentLibrary;
 use AppBundle\Entity\H5P\Dependency;
 use AppBundle\Entity\H5P\Library;
+use Doctrine\ORM\Query\Expr\OrderBy;
 use Doctrine\ORM\QueryBuilder;
 use stdClass;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -446,7 +448,6 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 //			$minorVersion),
 //			ARRAY_A
 //		);
-		// TODO get all fields
 		/** @var QueryBuilder $libraryQb */
 		$libraryQb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
 		$expr      = $libraryQb->expr();
@@ -512,6 +513,9 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 				'minorVersion' => $dependency['minorVersion'],
 			);
 		}
+		
+		// TODO Prod Mode please
+
 //		if($this->isInDevMode()) {
 		$semantics = $this->getSemanticsFromFile($library['machineName'], $library['majorVersion'], $library['minorVersion']);
 		if($semantics) {
@@ -641,6 +645,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   - libraryFullscreen: 1 if fullscreen is supported. 0 otherwise.
 	 */
 	public function loadContent($id) {
+		// TODO: Please implement DB for this
 		$content = [
 			'id'     => "1",
 			'title'  => "Quiz 1",
@@ -687,7 +692,31 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   - dropCss(optional): csv of machine names
 	 */
 	public function loadContentDependencies($id, $type = null) {
-		// TODO: Implement loadContentDependencies() method.
+		/** @var QueryBuilder $libraryQb */
+		$libraryQb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
+		$expr      = $libraryQb->expr();
+		$libraryQb->select(array(
+			'contentLibrary.dropCSS as dropCss',
+			'contentLibrary.dependencyType',
+			'library.id as libraryId',
+			'library.machineName',
+			'library.title',
+			'library.majorVersion',
+			'library.minorVersion',
+			'library.patchVersion',
+			'library.embedTypes',
+			'library.preloadedJs',
+			'library.preloadedCss'
+		))->from(ContentLibrary::class, 'contentLibrary')
+		          ->join('contentLibrary.content', 'content')
+		          ->join('contentLibrary.library', 'library')
+		          ->where(
+			          $expr->eq('content.id', ':contentId')
+		          )
+		          ->setParameter('contentId', $id)
+		          ->orderBy('contentLibrary.position', 'ASC');
+		
+		return $libraryQb->getQuery()->getResult();
 	}
 	
 	/**
