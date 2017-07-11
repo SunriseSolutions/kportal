@@ -213,7 +213,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *  FALSE otherwise
 	 */
 	public function isInDevMode() {
-		// TODO: Implement isInDevMode() method.
+		return false;
 	}
 	
 	/**
@@ -515,18 +515,16 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 			);
 		}
 		
-		// TODO Prod Mode please
-
-//		if($this->isInDevMode()) {
-		$semantics = $this->getSemanticsFromFile($library['machineName'], $library['majorVersion'], $library['minorVersion']);
-		if($semantics) {
-			$library['semantics'] = $semantics;
+		if($this->isInDevMode()) {
+			$semantics = $this->getSemanticsFromFile($library['machineName'], $library['majorVersion'], $library['minorVersion']);
+			if($semantics) {
+				$library['semantics'] = $semantics;
+			}
 		}
-
-//		}
 		
 		return $library;
 	}
+	
 	
 	/**
 	 * Loads library semantics.
@@ -692,7 +690,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 			          $expr->eq('content.id', ':contentId')
 		          )
 		          ->setParameter('contentId', $id);
-		
+
 //		$sql = $contentQb->getQuery()->getSQL();
 		$content = $contentQb->getQuery()->setMaxResults(1)->getOneOrNullResult();
 		
