@@ -45,6 +45,13 @@ class AppContent {
 	}
 	
 	/**
+	 * @var User
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\User")
+	 * @ORM\JoinColumn(name="id_user", referencedColumnName="id", onDelete="CASCADE")
+	 */
+	protected $owner;
+	
+	/**
 	 * @var Library
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\H5P\Library",inversedBy="contentNodes")
 	 * @ORM\JoinColumn(name="id_library", referencedColumnName="id", onDelete="CASCADE")
@@ -62,6 +69,12 @@ class AppContent {
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $updatedAt;
+	
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", options={"default":0} )
+	 */
+	protected $disable = 0;
 	
 	/**
 	 * @var boolean
@@ -332,5 +345,46 @@ class AppContent {
 		return $this->id;
 	}
 	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getContentLibraries() {
+		return $this->contentLibraries;
+	}
+	
+	/**
+	 * @param ArrayCollection $contentLibraries
+	 */
+	public function setContentLibraries($contentLibraries) {
+		$this->contentLibraries = $contentLibraries;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getDisable() {
+		return $this->disable;
+	}
+	
+	/**
+	 * @param mixed $disable
+	 */
+	public function setDisable($disable) {
+		$this->disable = $disable;
+	}
+	
+	/**
+	 * @return User
+	 */
+	public function getOwner() {
+		return $this->owner;
+	}
+	
+	/**
+	 * @param User $owner
+	 */
+	public function setOwner($owner) {
+		$this->owner = $owner;
+	}
 	
 }
