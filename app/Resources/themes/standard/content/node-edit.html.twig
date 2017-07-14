@@ -12,7 +12,26 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-	
+
+    {#
+
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-admin/load-scripts.php?c=1&amp;load%5B%5D=hoverIntent,common,admin-bar,svg-painter,heartbeat,wp-auth-check&amp;ver=4.7.5'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/h5p-php-library/js/jquery.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/h5p-php-library/js/h5p.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/h5p-php-library/js/h5p-event-dispatcher.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/h5p-php-library/js/h5p-x-api-event.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/h5p-php-library/js/h5p-x-api.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/h5p-php-library/js/h5p-content-type.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/h5p-php-library/js/h5p-confirmation-dialog.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/h5p-php-library/js/h5p-action-bar.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/h5p-editor-php-library/scripts/h5peditor-editor.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/admin/scripts/h5p-editor.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/h5p-editor-php-library/language/en.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/h5p-php-library/js/jquery.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/h5p-php-library/js/h5p-display-options.js?ver=1.8.3'></script>
+<script type='text/javascript' src='http://test.local.com/001/wordpress/wp-content/plugins/h5p/admin/scripts/h5p-toggle.js?ver=1.8.3'></script>
+
+    #}
     {% for script in scripts %}
         <script type='text/javascript' src='{{ script }}'></script>
     {% endfor %}

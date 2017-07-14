@@ -1,5 +1,4 @@
 <?php
-
 namespace AppBundle\Service\H5P;
 
 use AppBundle\Entity\H5P\Content;

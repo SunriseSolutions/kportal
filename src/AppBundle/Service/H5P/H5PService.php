@@ -8,13 +8,22 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class H5PService extends BaseService {
 	private $settings;
 	private $baseURL;
+	private $fullH5PExtensionURL;
+	private $fullH5PLibraryURL;
+	private $fullH5PEditorLibraryURL;
+	private $fullH5PAdminLibraryURL;
+	private $fullH5PExtensionFilePath;
+	private $fullH5PEditorFilePath;
+	
 	private $absoluteH5PExtensionURL;
 	private $absoluteH5PLibraryURL;
-	private $relativeH5PExtensionURL;
-	private $relativeH5PLibraryURL;
+	private $absoluteH5PEditorLibraryURL;
+	private $absoluteH5PAdminLibraryURL;
+	
 	private $scripts = [];
 	private $styles = [];
 	private $interface = null;
+	private $h5pEditor;
 	
 	/**
 	 * Instance of H5P Core.
@@ -35,17 +44,24 @@ class H5PService extends BaseService {
 	
 	public function __construct(ContainerInterface $container, AppH5PFramework $h5pF) {
 		parent::__construct($container);
-		$request                            = $this->container->get('request_stack')->getCurrentRequest();
-		$this->baseURL                      = $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
-		$this->relativeH5PExtensionURL      = $request->getBasePath() . '/assets/h5p/extension';
-		$this->relativeH5PLibraryURL        = $request->getBasePath() . '/assets/h5p';
-		$this->absoluteH5PExtensionURL      = $this->baseURL . '/assets/h5p/extension';
-		$this->absoluteH5PLibraryURL        = $this->baseURL . '/assets/h5p';
-		$this->absoluteH5PExtensionFilePath = $container->get('kernel')->getRootDir() . '/../web' . '/assets/h5p/extension';
+		$request                           = $this->container->get('request_stack')->getCurrentRequest();
+		$this->baseURL                     = $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
+		$this->absoluteH5PExtensionURL     = $request->getBasePath() . '/assets/h5p/extension';
+		$this->absoluteH5PLibraryURL       = $request->getBasePath() . '/assets/h5p';
+		$this->absoluteH5PEditorLibraryURL = $request->getBasePath() . '/assets/h5p-editor';
+		$this->absoluteH5PAdminLibraryURL  = $request->getBasePath() . '/assets/h5p-bo';
+		
+		$this->fullH5PExtensionURL     = $this->baseURL . '/assets/h5p/extension';
+		$this->fullH5PLibraryURL       = $this->baseURL . '/assets/h5p';
+		$this->fullH5PEditorLibraryURL = $this->baseURL . '/assets/h5p-editor';
+		$this->fullH5PAdminLibraryURL  = $this->baseURL . '/assets/h5p-bo';
+		
+		$this->fullH5PExtensionFilePath = $container->get('kernel')->getRootDir() . '/../web' . '/assets/h5p/extension';
+		$this->fullH5PEditorFilePath    = $container->get('kernel')->getRootDir() . '/../web' . '/assets/h5p-editor';
 		
 		$this->interface             = $h5pF;
 		$language                    = $this->getLanguage();
-		$this->core                  = new \H5PCore($this->interface, $this->absoluteH5PExtensionFilePath, $this->relativeH5PExtensionURL, $language, true);
+		$this->core                  = new \H5PCore($this->interface, $this->fullH5PExtensionFilePath, $this->absoluteH5PExtensionURL, $language, true);
 		$this->core->aggregateAssets = ! (defined('H5P_DISABLE_AGGREGATION') && H5P_DISABLE_AGGREGATION === true);
 		// Add core assets
 		$this->addCoreAssets();
@@ -66,6 +82,21 @@ class H5PService extends BaseService {
 			case 'core':
 				return $this->core;
 		}
+	}
+	
+	
+	/**
+	 * Returns the instance of the h5p editor library.
+	 *
+	 * @since 1.1.0
+	 * @return \H5peditor
+	 */
+	public function getH5PEditorInstance() {
+		if($this->h5pEditor === null) {
+			$this->h5pEditor = $this->container->get('app.h5p_editor');
+		}
+		
+		return $this->h5pEditor;
 	}
 	
 	public function getHtml($id) {
@@ -101,7 +132,7 @@ class H5PService extends BaseService {
 		if(empty($this->settings)) {
 			$this->settings = array(
 				'baseUrl'            => $this->baseURL,
-				'url'                => $this->relativeH5PExtensionURL,
+				'url'                => $this->absoluteH5PExtensionURL,
 				'postUserStatistics' => false,
 				'ajax'               => array(
 					'setFinished'     => 'http:\/\/localhost\/001\/wordpress\/wp-admin\/admin-ajax.php?token=bb437e0543&action=h5p_setFinished',
@@ -223,7 +254,7 @@ class H5PService extends BaseService {
 			'library'         => \H5PCore::libraryToString($content['library']),
 			'jsonContent'     => $safe_parameters,
 			'fullScreen'      => $content['library']['fullscreen'],
-			'exportUrl'       => true ? $this->relativeH5PExtensionURL . '/exports/' . ($content['slug'] ? $content['slug'] . '-' : '') . $content['id'] . '.h5p' : '',
+			'exportUrl'       => true ? $this->absoluteH5PExtensionURL . '/exports/' . ($content['slug'] ? $content['slug'] . '-' : '') . $content['id'] . '.h5p' : '',
 			'embedCode'       => '<iframe src="' . $this->admin_url('admin-ajax.php?action=h5p_embed&id=' . $content['id']) . '" width=":w" height=":h" frameborder="0" allowfullscreen="allowfullscreen"></iframe>',
 			'resizeCode'      => '<script src="' . $this->plugins_url('h5p/h5p-php-library/js/h5p-resizer.js') . '" charset="UTF-8"></script>',
 			'url'             => $this->admin_url('admin-ajax.php?action=h5p_embed&id=' . $content['id']),
@@ -291,9 +322,9 @@ class H5PService extends BaseService {
 		$this->settings['loadedCss'] = array();
 		$cache_buster                = '?ver=' . self::VERSION;
 		
-		// Use relative URL to support both http and https.
-		$lib_url  = $this->absoluteH5PLibraryURL . '/';
-		$rel_path = $this->relativeH5PLibraryURL;
+		// Use absolute URL to support both http and https.
+		$lib_url  = $this->fullH5PLibraryURL . '/';
+		$rel_path = $this->absoluteH5PLibraryURL;
 		
 		// Add core stylesheets
 		foreach(\H5PCore::$styles as $style) {
@@ -317,8 +348,8 @@ class H5PService extends BaseService {
 	 * @param array $assets
 	 */
 	public function enqueue_assets(&$assets) {
-		$abs_url = $this->absoluteH5PExtensionURL;
-		$rel_url = $this->relativeH5PExtensionURL;
+		$abs_url = $this->fullH5PExtensionURL;
+		$rel_url = $this->absoluteH5PExtensionURL;
 		foreach($assets['scripts'] as $script) {
 			$url = $rel_url . $script->path . $script->version;
 			if( ! in_array($url, $this->settings['loadedJs'])) {
@@ -342,78 +373,85 @@ class H5PService extends BaseService {
 	 * Add assets and JavaScript settings for the editor.
 	 *
 	 * @since 1.1.0
+	 *
 	 * @param int $id optional content identifier
 	 */
-	public function addEditorAssets($id = NULL) {
-		// TODO Implement addEditorAssets
-		$this->addCoreAssets();
-		
-		// Make sure the h5p classes are loaded
-		$this->getH5PInstance('core');
-		$this->get_h5peditor_instance();
-		
-		// Add JavaScript settings
-		$settings = $this->get_settings();
-		$cache_buster = '?ver=' . H5P_Plugin::VERSION;
-		
-		// Use jQuery and styles from core.
-		$assets = array(
-			'css' => $settings['core']['styles'],
-			'js' => $settings['core']['scripts']
-		);
-		
-		// Use relative URL to support both http and https.
-		$upload_dir = plugins_url('h5p/h5p-editor-php-library');
-		$url = '/' . preg_replace('/^[^:]+:\/\/[^\/]+\//', '', $upload_dir) . '/';
-		
-		// Add editor styles
-		foreach (H5peditor::$styles as $style) {
-			$assets['css'][] = $url . $style . $cache_buster;
-		}
-		
-		// Add editor JavaScript
-		foreach (H5peditor::$scripts as $script) {
-			// We do not want the creator of the iframe inside the iframe
-			if ($script !== 'scripts/h5peditor-editor.js') {
-				$assets['js'][] = $url . $script . $cache_buster;
-			}
-		}
-		
-		// Add JavaScript with library framework integration (editor part)
-		H5P_Plugin_Admin::add_script('editor-editor', 'h5p-editor-php-library/scripts/h5peditor-editor.js');
-		H5P_Plugin_Admin::add_script('editor', 'admin/scripts/h5p-editor.js');
-		
-		// Add translation
-		$language = $this->get_language();
-		$language_script = 'h5p-editor-php-library/language/' . $language . '.js';
-		if (!file_exists(plugin_dir_path(__FILE__) . '../' . $language_script)) {
-			$language_script = 'h5p-editor-php-library/language/en.js';
-		}
-		H5P_Plugin_Admin::add_script('language', $language_script);
-		
-		// Add JavaScript settings
-		$content_validator = $this->get_h5p_instance('contentvalidator');
-		$settings['editor'] = array(
-			'filesPath' => $this->get_h5p_url() . '/editor',
-			'fileIcon' => array(
-				'path' => plugins_url('h5p/h5p-editor-php-library/images/binary-file.png'),
-				'width' => 50,
-				'height' => 50,
-			),
-			'ajaxPath' => admin_url('admin-ajax.php?token=' . wp_create_nonce('h5p_editor_ajax') . '&action=h5p_'),
-			'libraryUrl' => plugin_dir_url('h5p/h5p-editor-php-library/h5peditor.class.php'),
-			'copyrightSemantics' => $content_validator->getCopyrightSemantics(),
-			'assets' => $assets,
-			'deleteMessage' => __('Are you sure you wish to delete this content?', $this->plugin_slug),
-			'apiVersion' => H5PCore::$coreApi
-		);
-		
-		if ($id !== NULL) {
-			$settings['editor']['nodeVersionId'] = $id;
-		}
-		
-		$this->print_settings($settings);
-	}
+//	public function addEditorAssets($id = null) {
+//		$this->addCoreAssets();
+//
+//		// Make sure the h5p classes are loaded
+//		$this->getH5PInstance('core');
+//		$this->getH5PEditorInstance();
+//
+//		// Add JavaScript settings
+//		$settings     = $this->getSettings();
+//		$cache_buster = '?ver=' . self::VERSION;
+//
+//		// Use jQuery and styles from core.
+//		$assets = array(
+//			'css' => $settings['core']['styles'],
+//			'js'  => $settings['core']['scripts']
+//		);
+//
+//		// Use absolute URL to support both http and https.
+//		$upload_dir = $this->fullH5PEditorLibraryURL;
+//		$url        = '/' . preg_replace('/^[^:]+:\/\/[^\/]+\//', '', $upload_dir) . '/';
+//
+//		// Add editor styles
+//		foreach(\H5peditor::$styles as $style) {
+//			$assets['css'][] = $url . $style . $cache_buster;
+//		}
+//
+//		// Add editor JavaScript
+//		foreach(\H5peditor::$scripts as $script) {
+//			// We do not want the creator of the iframe inside the iframe
+//			if($script !== 'scripts/h5peditor-editor.js') {
+//				$assets['js'][] = $url . $script . $cache_buster;
+//			}
+//		}
+//
+//
+//		// Add translation
+//		$language        = $this->container->get('app.site')->getLocale();
+//		$language_script = $this->fullH5PEditorFilePath . '/language/' . $language . '.js';
+//		if( ! file_exists($language_script)) {
+//			$language_script = $this->fullH5PEditorLibraryURL . '/language/en.js';
+//		}
+//
+//		// Add JavaScript with library framework integration (editor part)
+//		$h5pAssets = [
+//			'scripts' => [
+//				$this->fullH5PEditorLibraryURL . '/' . 'scripts/h5peditor-editor.js',
+//				$this->fullH5PAdminLibraryURL . '/' . 'scripts/h5p-editor.js',
+//				$language_script
+//			],
+//			'styles'  => []
+//		];
+//
+//		$this->enqueue_assets($h5pAssets);
+//
+//		// Add JavaScript settings
+//		$content_validator  = $this->getH5PInstance('contentvalidator');
+//		$settings['editor'] = array(
+//			'filesPath'          => $this->fullH5PExtensionFilePath . '/editor',
+//			'fileIcon'           => array(
+//				'path'   => $this->fullH5PEditorFilePath . '/images/binary-file.png',
+//				'width'  => 50,
+//				'height' => 50,
+//			),
+//			'ajaxPath'           => $this->admin_url('admin-ajax.php?token=sample-token' . '&action=h5p_'),
+//			'libraryUrl'         => $this->fullH5PEditorLibraryURL,
+//			'copyrightSemantics' => $content_validator->getCopyrightSemantics(),
+//			'assets'             => $assets,
+//			'deleteMessage'      => 'Are you sure you wish to delete this content?',
+//			'apiVersion'         => \H5PCore::$coreApi
+//		);
+//
+//		if($id !== null) {
+//			$settings['editor']['nodeVersionId'] = $id;
+//		}
+//		$this->settings = $settings;
+//	}
 	
 	/**
 	 * @return array

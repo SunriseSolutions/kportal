@@ -19,6 +19,15 @@ services:
         class: AppBundle\Service\H5P\AppH5PFramework
         arguments: ['@service_container']
 
+#    app.h5p_editor_storage:
+#        class: AppBundle\Service\H5P\AppH5PEditorStorage
+#        arguments: ['@service_container']
+#    app.h5p_editor_ajax:
+#        class: AppBundle\Service\H5P\AppH5PEditorAjax
+#        arguments: ['@service_container']
+#    app.h5p_editor:
+#        class: H5peditor
+#        arguments: ['@app.h5p','@app.h5p_editor_storage','@app.h5p_editor_ajax']
 
     app.h5p:
         class: AppBundle\Service\H5P\H5PService
@@ -26,5 +35,10 @@ services:
 
     app.user:
         class: AppBundle\Service\User\UserService
+        arguments:
+            - "@service_container"
+
+    app.site:
+        class: AppBundle\Service\SiteService
         arguments:
             - "@service_container"
