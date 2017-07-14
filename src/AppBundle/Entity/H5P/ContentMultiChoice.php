@@ -2,6 +2,7 @@
 namespace AppBundle\Entity\H5P;
 
 use AppBundle\Entity\H5P\Base\AppContent;
+use AppBundle\Entity\H5P\Base\AppContentMultiChoice;
 use AppBundle\Entity\Media\Base\AppGallery;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
@@ -11,10 +12,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="h5p__content")
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"multichoice" = "AppBundle\Entity\H5P\ContentMultiChoice"})
+ * @ORM\Table(name="h5p__content__multichoice")
  *
  * @Hateoas\Relation(
  *  "self",
@@ -27,7 +25,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  *
  */
-abstract class Content extends AppContent
+class ContentMultiChoice extends AppContentMultiChoice
 {
     function __construct()
     {

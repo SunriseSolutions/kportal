@@ -99,10 +99,19 @@ class H5PService extends BaseService {
 		return $this->h5pEditor;
 	}
 	
-	public function getHtml($id) {
-		$content = $this->getContent($id);
+	public function getHtml($ids) {
+		if(is_array($ids)) {
+			foreach($ids as $id) {
+				$content = $this->getContent($id);
+				$html    = $this->addAssets($content);
+			}
+		} else {
+			$content = $this->getContent($ids);
+			
+			return $this->addAssets($content);
+		}
 		
-		return $this->addAssets($content);
+		return $html;
 	}
 	
 	/**
@@ -135,8 +144,8 @@ class H5PService extends BaseService {
 				'url'                => $this->absoluteH5PExtensionURL,
 				'postUserStatistics' => false,
 				'ajax'               => array(
-					'setFinished'     => 'http:\/\/localhost\/001\/wordpress\/wp-admin\/admin-ajax.php?token=bb437e0543&action=h5p_setFinished',
-					'contentUserData' => 'http:\/\/localhost\/001\/wordpress\/wp-admin\/admin-ajax.php?token=4a4cf5bc89&action=h5p_contents_user_data&content_id=:contentId&data_type=:dataType&sub_content_id=:subContentId'
+					'setFinished'     => '',
+					'contentUserData' => ''
 				),
 				'saveFreq'           => false,
 				'siteUrl'            => $this->baseURL,
@@ -292,6 +301,8 @@ class H5PService extends BaseService {
 	}
 	
 	public function admin_url($hello) {
+		$hello = '';
+		
 		return $hello;
 	}
 	
