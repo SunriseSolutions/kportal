@@ -62,9 +62,9 @@ class AppContentNode {
 	
 	/**
 	 * @var string
-	 * @ORM\Column(type="string", length=5)
+	 * @ORM\Column(type="string", length=2, options={"default":"en"} ,  nullable=true)
 	 */
-	protected $locale;
+	protected $locale = 'en';
 	
 	/**
 	 * @var string
@@ -72,6 +72,11 @@ class AppContentNode {
 	 */
 	protected $body;
 	
+	/**
+	 * @var string
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $htmlBody;
 	
 	/**
 	 * @return mixed
@@ -90,7 +95,7 @@ class AppContentNode {
 	/**
 	 * @param string $topic
 	 */
-	public function setTopic( $topic ) {
+	public function setTopic($topic) {
 		$this->topic = $topic;
 	}
 	
@@ -104,7 +109,7 @@ class AppContentNode {
 	/**
 	 * @param string $locale
 	 */
-	public function setLocale( $locale ) {
+	public function setLocale($locale) {
 		$this->locale = $locale;
 	}
 	
@@ -118,7 +123,7 @@ class AppContentNode {
 	/**
 	 * @param string $body
 	 */
-	public function setBody( $body ) {
+	public function setBody($body) {
 		$this->body = $body;
 	}
 	
@@ -132,7 +137,7 @@ class AppContentNode {
 	/**
 	 * @param string $rootTopic
 	 */
-	public function setRootTopic( $rootTopic ) {
+	public function setRootTopic($rootTopic) {
 		$this->rootTopic = $rootTopic;
 	}
 	
@@ -146,7 +151,7 @@ class AppContentNode {
 	/**
 	 * @param bool $container
 	 */
-	public function setContainer( $container ) {
+	public function setContainer($container) {
 		$this->container = $container;
 	}
 	
@@ -160,7 +165,7 @@ class AppContentNode {
 	/**
 	 * @param AppContentEntity $owner
 	 */
-	public function setOwner( $owner ) {
+	public function setOwner($owner) {
 		$this->owner = $owner;
 	}
 	
@@ -174,7 +179,21 @@ class AppContentNode {
 	/**
 	 * @param string $slug
 	 */
-	public function setSlug( $slug ) {
+	public function setSlug($slug) {
 		$this->slug = $slug;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getHtmlBody() {
+		return $this->htmlBody;
+	}
+	
+	/**
+	 * @param string $htmlBody
+	 */
+	public function setHtmlBody($htmlBody) {
+		$this->htmlBody = $htmlBody;
 	}
 }

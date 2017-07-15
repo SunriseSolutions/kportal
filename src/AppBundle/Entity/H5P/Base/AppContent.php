@@ -83,6 +83,20 @@ class AppContent {
 	protected $enabled = true;
 	
 	/**
+	 * ID_REF
+	 * @var string
+	 * @ORM\Column(type="string", length=24, nullable=true)
+	 */
+	protected $topic;
+	
+	/**
+	 * custom field
+	 * @var string
+	 * @ORM\Column(type="string", length=2, options={"default":"en"}, nullable=true )
+	 */
+	protected $locale = 'en';
+	
+	/**
 	 * @var string
 	 * @ORM\Column(type="text")
 	 */
@@ -387,4 +401,31 @@ class AppContent {
 		$this->owner = $owner;
 	}
 	
+	/**
+	 * @return mixed
+	 */
+	public function getLocale() {
+		return $this->locale;
+	}
+	
+	/**
+	 * @param mixed $locale
+	 */
+	public function setLocale($locale) {
+		$this->locale = $locale;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getTopic() {
+		return $this->topic;
+	}
+	
+	/**
+	 * @param mixed $topic
+	 */
+	public function setTopic($topic) {
+		$this->topic = $topic;
+	}
 }
