@@ -9,8 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="content__node")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"article" = "AppBundle\Entity\Content\ArticleNode"})
+ *
  */
-class ContentNode extends AppContentNode
+abstract class ContentNode extends AppContentNode
 {
     /**
      * Content: 1 page or slideshow

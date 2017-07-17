@@ -23,7 +23,7 @@ abstract class AppContentMultiChoice extends Content {
 	/**
 	 * @var array
 	 */
-	private $libraries;
+	protected $libraries;
 	
 	function __construct() {
 		parent::__construct();

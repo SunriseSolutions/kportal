@@ -13,7 +13,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /** @ORM\MappedSuperclass */
-class AppContentNode {
+abstract class AppContentNode {
 	function __construct() {
 		$this->locale = 'en';
 	}

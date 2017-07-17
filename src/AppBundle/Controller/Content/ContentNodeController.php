@@ -48,6 +48,33 @@ class ContentNodeController extends Controller {
 		]);
 	}
 	
+	/**
+	 * @Route("/{slug}/", name="content_blog", requirements={"slug":"^(?!admin|login|blog).+"})
+	 */
+	public function blogAction($slug, Request $request) {
+		//$scripts = \H5PCore::$scripts;
+		//array_shift( $scripts );
+		$h5p     = $this->get('app.h5p');
+		$h5pHtml = $h5p->getHtml([ 1, 2 ]);
+		
+		$settings    = json_encode($h5p->getSettings());
+		$setting     = $h5p->getSettings();
+		$contentTest = [];
+		foreach($setting['contents'] as $content) {
+			$contentTest[] = json_decode($content['jsonContent']);
+		}
+		
+		return $this->render('content/blog.html.twig', [
+			'contentTest' => $contentTest,
+			'styles'      => $h5p->getStyles(),
+			'scripts'     => $h5p->getScripts(),
+			'settingRaw'  => $h5p->getSettings(),
+			'h5pHtml'     => $h5pHtml,
+			'h5pSettings' => $settings,
+			'slug'        => $slug
+		]);
+	}
+	
 	
 	/**
 	 * @Route("/{entity}/post/{slug}/edit", name="content_single_node_edit")
