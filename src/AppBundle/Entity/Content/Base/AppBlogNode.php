@@ -11,25 +11,27 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-abstract class AppArticleNode extends ContentNode {
+abstract class AppBlogNode extends ContentNode {
 	
 	function __construct() {
 		parent::__construct();
-		$this->blogItems = new ArrayCollection();
+		$this->items = new ArrayCollection();
+		
 	}
 	
 	/**
 	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\BlogItem", mappedBy="blog", cascade={"all"}, orphanRemoval=true)
 	 */
-	protected $blogItems;
+	protected $items;
 	
-	public function addBlogItem(BlogItem $item) {
-		$this->blogItems->add($item);
-		$item->setArticle($this);
+	public function addItem(BlogItem $item) {
+		$this->items->add($item);
+		$item->setBlog($this);
 	}
 	
-	public function removeBlogItem(BlogItem $item) {
-		$this->blogItems->removeElement($item);
-		$item->setArticle(null);
+	public function removeItem(BlogItem $item) {
+		$this->items->removeElement($item);
+		$item->setBlog(null);
 	}
 }

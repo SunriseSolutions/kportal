@@ -2,6 +2,7 @@
 namespace AppBundle\Entity\Content;
 
 use AppBundle\Entity\Content\Base\AppArticleNode;
+use AppBundle\Entity\Content\Base\AppBlogNode;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +11,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="content__node__article")
+ * @ORM\Table(name="content__node__blog")
  *
  * @Hateoas\Relation(
  *  "self",
@@ -23,18 +24,12 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  *
  */
-class ArticleNode extends AppArticleNode
+class BlogNode extends AppBlogNode
 {
     function __construct()
     {
         parent::__construct();
         
     }
-	
-	/**
-	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\BlogItem", mappedBy="article", cascade={"all"}, orphanRemoval=true)
-	 */
-	protected $blogItems;
 
 }

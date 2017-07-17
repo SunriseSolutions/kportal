@@ -3,7 +3,7 @@ namespace Bean\Component\Dictionary\Model\Base;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-abstract class AbstractEntry implements BaseEntryInterface {
+abstract class AbstractBaseEntry implements BaseEntryInterface {
 	/**
 	 * Primary identifier, details depend on storage layer.
 	 */
@@ -17,6 +17,7 @@ abstract class AbstractEntry implements BaseEntryInterface {
 	protected $parent;
 	
 	/**
+	 * ArrayCollection of BaseEntryInterface
 	 * @var ArrayCollection
 	 */
 	protected $children;
@@ -30,12 +31,17 @@ abstract class AbstractEntry implements BaseEntryInterface {
 	
 	protected $definition;
 	
+	/**
+	 * Noun, Verb, Phrasal Verb, Sentence
+	 * @var string
+	 */
 	protected $type;
 	
 	protected $sense;
 	
 	/**
-	 * A list of sample phrases/statements
+	 * A list of sample phrases/statements (BaseEntryInterface)
+	 * @var ArrayCollection
 	 */
 	protected $samples;
 	

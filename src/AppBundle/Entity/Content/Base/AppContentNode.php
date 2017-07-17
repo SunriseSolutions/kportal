@@ -1,5 +1,4 @@
 <?php
-
 namespace AppBundle\Entity\Content\Base;
 
 use AppBundle\Entity\Content\ContentEntity;
@@ -14,8 +13,9 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 /** @ORM\MappedSuperclass */
 abstract class AppContentNode {
+	
 	function __construct() {
-		$this->locale = 'en';
+		$this->createdAt = new \DateTime();
 	}
 	
 	/**
@@ -33,6 +33,18 @@ abstract class AppContentNode {
 	 * @ORM\JoinColumn(name="id_owner", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected $owner;
+	
+	/**
+	 * @var \DateTime
+	 * @ORM\Column(type="datetime", options={"default": 0})
+	 */
+	protected $createdAt;
+	
+	/**
+	 * @var \DateTime
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	protected $updatedAt;
 	
 	/**
 	 * @var boolean
@@ -59,6 +71,12 @@ abstract class AppContentNode {
 	 * @ORM\Column(type="string", length=128, nullable=true)
 	 */
 	protected $slug;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=256, nullable=true)
+	 */
+	protected $publicUrl;
 	
 	/**
 	 * @var string
@@ -196,4 +214,33 @@ abstract class AppContentNode {
 	public function setHtmlBody($htmlBody) {
 		$this->htmlBody = $htmlBody;
 	}
+	
+	/**
+	 * @return \DateTime
+	 */
+	public function getCreatedAt() {
+		return $this->createdAt;
+	}
+	
+	/**
+	 * @param \DateTime $createdAt
+	 */
+	public function setCreatedAt($createdAt) {
+		$this->createdAt = $createdAt;
+	}
+	
+	/**
+	 * @return \DateTime
+	 */
+	public function getUpdatedAt() {
+		return $this->updatedAt;
+	}
+	
+	/**
+	 * @param \DateTime $updatedAt
+	 */
+	public function setUpdatedAt($updatedAt) {
+		$this->updatedAt = $updatedAt;
+	}
+	
 }
