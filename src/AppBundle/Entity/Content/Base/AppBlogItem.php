@@ -42,7 +42,6 @@ abstract class AppBlogItem {
 	 */
 	protected $article;
 	
-	
 	/**
 	 * @var \DateTime
 	 * @ORM\Column(type="datetime", options={"default": 0})
@@ -54,7 +53,6 @@ abstract class AppBlogItem {
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $updatedAt;
-	
 	
 	/**
 	 * @var integer

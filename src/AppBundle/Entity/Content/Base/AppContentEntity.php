@@ -26,7 +26,9 @@ class AppContentEntity
     {
         $this->contentNodes = new ArrayCollection();
     }
-
+    
+	protected $owner;
+    
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentNode", mappedBy="owner", cascade={"persist","merge"})

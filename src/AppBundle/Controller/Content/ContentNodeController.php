@@ -2,10 +2,17 @@
 
 namespace AppBundle\Controller\Content;
 
+use AppBundle\Entity\Content\ArticleNode;
+use AppBundle\Entity\Content\BlogItem;
+use AppBundle\Entity\Content\BlogNode;
+use AppBundle\Entity\Content\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ContentNodeController extends Controller {
 	
@@ -21,11 +28,23 @@ class ContentNodeController extends Controller {
 	
 	
 	/**
-	 * @Route("/{entity}/post/{slug}", name="content_single_node")
+	 * @Route("/{entitySlug}/post/{articleSlug}", name="content_article")
 	 */
-	public function singleArticleAction($entity, $slug, Request $request) {
+	public function singleArticleAction($entitySlug, $articleSlug, Request $request) {
 		//$scripts = \H5PCore::$scripts;
 		//array_shift( $scripts );
+		$registry    = $this->getDoctrine();
+		$articleRepo = $registry->getRepository(ArticleNode::class);
+		$entityRepo  = $registry->getRepository(ContentEntity::class);
+		$entity      = $entityRepo->findOneBy([ 'slug' => $entitySlug ]);
+		if(empty($entity)) {
+			throw new NotFoundHttpException();
+		}
+		$article = $articleRepo->findOneBy([ 'slug' => $articleSlug, 'owner' => $entity->getId() ]);
+		if(empty($article)) {
+			throw new NotFoundHttpException();
+		}
+		
 		$h5p     = $this->get('app.h5p');
 		$h5pHtml = $h5p->getHtml([ 1, 2 ]);
 		
@@ -43,35 +62,58 @@ class ContentNodeController extends Controller {
 			'settingRaw'  => $h5p->getSettings(),
 			'h5pHtml'     => $h5pHtml,
 			'h5pSettings' => $settings,
+			'entitySlug'  => $entitySlug,
+			'slug'        => $articleSlug,
 			'entity'      => $entity,
-			'slug'        => $slug
+			'article'     => $article
 		]);
 	}
 	
 	/**
-	 * @Route("/{slug}/", name="content_blog", requirements={"slug":"^(?!admin|login|blog).+"})
+	 * @Route("/{slug}{trailingSlash}", name="content_blog", requirements={"slug":"^(?!admin|login).+", "trailingSlash" = "[/]"} )
 	 */
-	public function blogAction($slug, Request $request) {
+	public function blogAction($slug, $trailingSlash, Request $request) {
 		//$scripts = \H5PCore::$scripts;
 		//array_shift( $scripts );
-		$h5p     = $this->get('app.h5p');
-		$h5pHtml = $h5p->getHtml([ 1, 2 ]);
+//		$h5p     = $this->get('app.h5p');
+//		$h5pHtml = $h5p->getHtml([ 1, 2 ]);
 		
-		$settings    = json_encode($h5p->getSettings());
-		$setting     = $h5p->getSettings();
-		$contentTest = [];
-		foreach($setting['contents'] as $content) {
-			$contentTest[] = json_decode($content['jsonContent']);
+		$registry = $this->getDoctrine();
+		$blogRepo = $registry->getRepository(BlogNode::class);
+		$blog     = $blogRepo->findOneBy([ 'slug' => $slug ]);
+		if(empty($blog)) {
+			throw new NotFoundHttpException();
 		}
+		$entityManager = $this->get('doctrine.orm.default_entity_manager');
+		$queryBuilder  = $entityManager->createQueryBuilder();
+		$expr          = $queryBuilder->expr();
+		$queryBuilder->select('item')
+		             ->from(BlogItem::class, 'item')
+		             ->join('item.blog', 'blog')
+		             ->where($expr->eq('blog.id', ':blogId'))
+		             ->setParameter('blogId', $blog->getId());
+		
+		$adapter    = new DoctrineORMAdapter($queryBuilder);
+		$pagerfanta = new Pagerfanta($adapter);
+
+//		$settings    = json_encode($h5p->getSettings());
+//		$setting     = $h5p->getSettings();
+		$contentTest = [];
+//		foreach($setting['contents'] as $content) {
+//			$contentTest[] = json_decode($content['jsonContent']);
+//		}
 		
 		return $this->render('content/blog.html.twig', [
 			'contentTest' => $contentTest,
-			'styles'      => $h5p->getStyles(),
-			'scripts'     => $h5p->getScripts(),
-			'settingRaw'  => $h5p->getSettings(),
-			'h5pHtml'     => $h5pHtml,
-			'h5pSettings' => $settings,
-			'slug'        => $slug
+//			'styles'      => $h5p->getStyles(),
+//			'scripts'     => $h5p->getScripts(),
+//			'settingRaw'  => $h5p->getSettings(),
+//			'h5pHtml'     => $h5pHtml,
+//			'h5pSettings' => $settings,
+			'slug'        => $slug,
+			'blog'        => $blog,
+			'items'       => $pagerfanta->getCurrentPageResults(),
+			'pager'       => $pagerfanta
 		]);
 	}
 	

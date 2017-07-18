@@ -1,4 +1,41 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% for style in styles %}
+        <link rel="stylesheet" href="{{ style }}"/>
+    {% endfor %}
+
+    {#<link rel='stylesheet' id='h5p-cachedassets-532072e10b6e5351315fce011ff12cbf5bdac6f9-css'  href='http://localhost/001/wordpress/wp-content/uploads/h5p/cachedassets/532072e10b6e5351315fce011ff12cbf5bdac6f9.css?ver=4.7.5' type='text/css' media='all' />#}
+
+    <style>
+    </style>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+	
+    {% for script in scripts %}
+        <script type='text/javascript' src='{{ script }}'></script>
+    {% endfor %}
+
+    {#<script type='text/javascript' src='http://localhost/001/wordpress/wp-content/uploads/h5p/cachedassets/532072e10b6e5351315fce011ff12cbf5bdac6f9.js?ver=4.7.5'></script>#}
+
+        <script>
+            H5PIntegration = {{ h5pSettings | raw }}
+        </script>
+    <script>
+
+        {#
+        H5PIntegration123 = {"baseUrl":"http:\/\/localhost\/001\/wordpress","url":"\/001\/wordpress\/wp-content\/uploads\/h5p","postUserStatistics":false,"ajax":{"setFinished":"http:\/\/localhost\/001\/wordpress\/wp-admin\/admin-ajax.php?token=4bfc462e2f&action=h5p_setFinished","contentUserData":"http:\/\/localhost\/001\/wordpress\/wp-admin\/admin-ajax.php?token=fdadd31636&action=h5p_contents_user_data&content_id=:contentId&data_type=:dataType&sub_content_id=:subContentId"},"saveFreq":false,"siteUrl":"http:\/\/localhost\/001\/wordpress","l10n":{"H5P":{"fullscreen":"Fullscreen","disableFullscreen":"Disable fullscreen","download":"Download","copyrights":"Rights of use","embed":"Embed","size":"Size","showAdvanced":"Show advanced","hideAdvanced":"Hide advanced","advancedHelp":"Include this script on your website if you want dynamic sizing of the embedded content:","copyrightInformation":"Rights of use","close":"Close","title":"Title","author":"Author","year":"Year","source":"Source","license":"License","thumbnail":"Thumbnail","noCopyrights":"No copyright information available for this content.","downloadDescription":"Download this content as a H5P file.","copyrightsDescription":"View copyright information for this content.","embedDescription":"View the embed code for this content.","h5pDescription":"Visit H5P.org to check out more cool content.","contentChanged":"This content has changed since you last used it.","startingOver":"You'll be starting over.","confirmDialogHeader":"Confirm action","confirmDialogBody":"Please confirm that you wish to proceed. This action is not reversible.","cancelLabel":"Cancel","confirmLabel":"Confirm"}},"hubIsEnabled":true,"core":{"styles":["\/kportal\/web\/assets\/h5p\/h5p-php-library\/styles\/h5p.css?ver=1.8.3","\/kportal\/web\/assets\/h5p\/h5p-php-library\/styles\/h5p-confirmation-dialog.css?ver=1.8.3","\/kportal\/web\/assets\/h5p\/h5p-php-library\/styles\/h5p-core-button.css?ver=1.8.3"],"scripts":["\/kportal\/web\/assets\/h5p\/h5p-php-library\/js\/jquery.js?ver=1.8.3","\/kportal\/web\/assets\/h5p\/h5p-php-library\/js\/h5p.js?ver=1.8.3","\/kportal\/web\/assets\/h5p\/h5p-php-library\/js\/h5p-event-dispatcher.js?ver=1.8.3","\/kportal\/web\/assets\/h5p\/h5p-php-library\/js\/h5p-x-api-event.js?ver=1.8.3","\/kportal\/web\/assets\/h5p\/h5p-php-library\/js\/h5p-x-api.js?ver=1.8.3","\/kportal\/web\/assets\/h5p\/h5p-php-library\/js\/h5p-content-type.js?ver=1.8.3","\/kportal\/web\/assets\/h5p\/h5p-php-library\/js\/h5p-confirmation-dialog.js?ver=1.8.3","\/kportal\/web\/assets\/h5p\/h5p-php-library\/js\/h5p-action-bar.js?ver=1.8.3"]},"loadedJs":["\/001\/wordpress\/wp-content\/uploads\/h5p\/cachedassets\/532072e10b6e5351315fce011ff12cbf5bdac6f9.js"],"loadedCss":["\/001\/wordpress\/wp-content\/uploads\/h5p\/cachedassets\/532072e10b6e5351315fce011ff12cbf5bdac6f9.css"],"contents":{"cid-1":{"library":"H5P.MultiChoice 1.9","jsonContent":"{\"media\":{\"params\":{\"contentName\":\"Image\",\"file\":{\"path\":\"images\\\/file-592da00abe776.jpg\",\"mime\":\"image\\\/jpeg\",\"copyright\":{\"license\":\"U\"},\"width\":800,\"height\":800},\"alt\":\"sample ALternative Text\",\"title\":\"sample hover text\"},\"library\":\"H5P.Image 1.0\",\"subContentId\":\"d9fa0034-a59f-447e-a2c6-61da8c09e8d5\"},\"answers\":[{\"correct\":false,\"tipsAndFeedback\":{\"tip\":\"<p>sapmle tip for q1<\\\/p>\\n\",\"chosenFeedback\":\"<div>sample displayed message if answer is selected<\\\/div>\\n\",\"notChosenFeedback\":\"<div>sample msg if not selected<\\\/div>\\n\"},\"text\":\"<div>option 1 text incorrect<\\\/div>\\n\"},{\"correct\":true,\"tipsAndFeedback\":{\"tip\":\"<p>tip<\\\/p>\\n\",\"chosenFeedback\":\"<div>selected<\\\/div>\\n\",\"notChosenFeedback\":\"<div>why not selected<\\\/div>\\n\"},\"text\":\"<div>option 1 text <strong>correct<\\\/strong><\\\/div>\\n\"}],\"UI\":{\"checkAnswerButton\":\"Check\",\"showSolutionButton\":\"Show solution\",\"tryAgainButton\":\"Retry\",\"tipsLabel\":\"Show tip\",\"scoreBarLabel\":\"Score\",\"tipAvailable\":\"Tip available\",\"feedbackAvailable\":\"Feedback available\",\"readFeedback\":\"Read feedback\",\"wrongAnswer\":\"Wrong answer\",\"correctAnswer\":\"Correct answer\",\"feedback\":\"You got @score of @total points\",\"shouldCheck\":\"Should have been checked\",\"shouldNotCheck\":\"Should not have been checked\",\"noInput\":\"Please answer before viewing the solution\"},\"behaviour\":{\"enableRetry\":true,\"enableSolutionsButton\":true,\"type\":\"auto\",\"singlePoint\":true,\"randomAnswers\":true,\"showSolutionsRequiresInput\":true,\"disableImageZooming\":false,\"confirmCheckDialog\":false,\"confirmRetryDialog\":false,\"autoCheck\":true,\"passPercentage\":100},\"confirmCheck\":{\"header\":\"Finish ?\",\"body\":\"Are you sure you wish to finish ?\",\"cancelLabel\":\"Cancel\",\"confirmLabel\":\"Finish\"},\"confirmRetry\":{\"header\":\"Retry ?\",\"body\":\"Are you sure you wish to retry ?\",\"cancelLabel\":\"Cancel\",\"confirmLabel\":\"Confirm\"},\"question\":\"<p>Question 1<\\\/p>\\n\"}","fullScreen":"0","exportUrl":"\/001\/wordpress\/wp-content\/uploads\/h5p\/exports\/quiz-1-1.h5p","embedCode":"<iframe src=\"http:\/\/localhost\/001\/wordpress\/wp-admin\/admin-ajax.php?action=h5p_embed&id=1\" width=\":w\" height=\":h\" frameborder=\"0\" allowfullscreen=\"allowfullscreen\"><\/iframe>","resizeCode":"<script src=\"http:\/\/localhost\/kportal\/web\/assets\/h5p\/h5p-php-library\/js\/h5p-resizer.js\" charset=\"UTF-8\"><\/script>","url":"http:\/\/localhost\/001\/wordpress\/wp-admin\/admin-ajax.php?action=h5p_embed&id=1","title":"Quiz 1","displayOptions":{"frame":false,"export":false,"embed":false,"copyright":false,"icon":true},"contentUserData":[{"state":"{}"}]}}};
+        #}
+    </script>
+<script>
+    jQuery(document).ready(function ($) {
+        $('#h5p-mcq0').text('testing ahihi');
+    });
+</script>
+
+
+{% endblock %}
 
 {% block body %}
     <div class="wrapper wrapper-content  animated fadeInRight article">
@@ -17,29 +54,74 @@
                                 Behind the word mountains
                             </h3>
                         </div>
-                        <h1> Theme: Default views/content/piece.html.twig </h1>
-                        <h2>Entity: {{ entity }}</h2>
-                        <h4>Slug: {{ slug }}</h4>
+                        {#{{ h5pSettings }}#}
 
+                        <h1> Theme: Default views/content/piece.html.twig </h1>
+                        <h2>Entity: {{ entity.owner.username }}</h2>
+                        <h4>Slug: {{ slug }}</h4>
+                        {#{{ dump(scripts) }}#}
                         <p>
-                            Many desktop publishing packages and web page editors now use <strong>Lorem Ipsum as their default model text</strong>, and a search for 'lorem ipsum' will uncover many web
+                            {{ dump(settingRaw) }}
+                            {% for content in contentTest %}
+                                {{ dump(content) }}
+                            {% endfor %}
                         </p>
                         <p>
-                            One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. "What's happened to me?" he thought. It wasn't a dream. His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame. It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather. Drops
+                        <div class="h5p-content" data-content-id="1"></div>
+                        </p>
+                        <br/><br/><br/>
+                        <p>
+                        <div class="h5p-content" data-content-id="2"></div>
+                        </p>
+                        <p>
+                            Many desktop publishing packages and web page editors now use <strong>Lorem Ipsum as their
+                                default model text</strong>, and a search for 'lorem ipsum' will uncover many web
+                        </p>
+                        <p>
+                            One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in
+                            his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a
+                            little he could see his brown belly, slightly domed and divided by arches into stiff
+                            sections. The bedding was hardly able to cover it and seemed ready to slide off any moment.
+                            His many legs, pitifully thin compared with the size of the rest of him, waved about
+                            helplessly as he looked. "What's happened to me?" he thought. It wasn't a dream. His room, a
+                            proper human room although a little too small, lay peacefully between its four familiar
+                            walls. A collection of textile samples lay spread out on the table - Samsa was a travelling
+                            salesman - and above it there hung a picture that he had recently cut out of an illustrated
+                            magazine and housed in a nice, gilded frame. It showed a lady fitted out with a fur hat and
+                            fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm
+                            towards the viewer. Gregor then turned to look out the window at the dull weather. Drops
                         </p>
                         <p>
                             <i>
-                                Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
+                                Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                there live the blind texts. Separated they live in Bookmarksgrove right at the coast of
+                                the Semantics, a large language ocean. A small river named Duden flows by their place
+                                and supplies it with the necessary regelialia. It is a paradisematic country, in which
+                                roasted parts of sentences fly into your mouth.
                             </i>
                         </p>
                         <p>
-                            The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek,
+                            The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild
+                            Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. She packed her
+                            seven versalia, put her initial into the belt and made herself on the way. When she reached
+                            the first hills of the Italic Mountains, she had a last view back on the skyline of her
+                            hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road,
+                            the Line Lane. Pityful a rethoric question ran over her cheek,
                         </p>
                         <p>
-                            Two driven jocks help fax my big quiz. Quick, Baz, get my woven flax jodhpurs! "Now fax quiz Jack!" my brave ghost pled. Five quacking zephyrs jolt my wax bed. Flummoxed by job, kvetching W. zaps Iraq. Cozy sphinx waves quart jug of bad milk. A very bad quack might jinx zippy fowls. Few quips galvanized the mock jury box. Quick brown dogs jump over the lazy fox. The jay, pig, fox, zebra, and my wolves quack! Blowzy red vixens fight for a quick jump. Joaquin Phoenix was gazed by MTV for luck. A wizard’s job is to vex chumps quickly in fog. Watch "Jeopardy!", Alex Trebek's fun TV quiz game. Woven silk pyjamas exchanged for blue quartz. Brawny gods just
+                            Two driven jocks help fax my big quiz. Quick, Baz, get my woven flax jodhpurs! "Now fax quiz
+                            Jack!" my brave ghost pled. Five quacking zephyrs jolt my wax bed. Flummoxed by job,
+                            kvetching W. zaps Iraq. Cozy sphinx waves quart jug of bad milk. A very bad quack might jinx
+                            zippy fowls. Few quips galvanized the mock jury box. Quick brown dogs jump over the lazy
+                            fox. The jay, pig, fox, zebra, and my wolves quack! Blowzy red vixens fight for a quick
+                            jump. Joaquin Phoenix was gazed by MTV for luck. A wizard’s job is to vex chumps quickly in
+                            fog. Watch "Jeopardy!", Alex Trebek's fun TV quiz game. Woven silk pyjamas exchanged for
+                            blue quartz. Brawny gods just
                         </p>
                         <p>
-                            Brick quiz whangs jumpy veldt fox. Bright vixens jump; dozy fowl quack. Quick wafting zephyrs vex bold Jim. Quick zephyrs blow, vexing daft Jim. Sex-charged fop blew my junk TV quiz. How quickly daft jumping zebras vex.
+                            Brick quiz whangs jumpy veldt fox. Bright vixens jump; dozy fowl quack. Quick wafting
+                            zephyrs vex bold Jim. Quick zephyrs blow, vexing daft Jim. Sex-charged fop blew my junk TV
+                            quiz. How quickly daft jumping zebras vex.
                         </p>
                         <hr>
                         <div class="row">
@@ -51,7 +133,7 @@
                             <div class="col-md-6">
                                 <div class="small text-right">
                                     <h5>Stats:</h5>
-                                    <div> <i class="fa fa-comments-o"> </i> 56 comments </div>
+                                    <div><i class="fa fa-comments-o"> </i> 56 comments</div>
                                     <i class="fa fa-eye"> </i> 144 views
                                 </div>
                             </div>
@@ -64,7 +146,7 @@
                                 <div class="social-feed-box">
                                     <div class="social-avatar">
                                         <a href="" class="pull-left">
-                                            <img alt="image" src="img/a1.jpg">
+                                            <img alt="image" src="{{ asset('themes/standard/img/a1.jpg') }}">
                                         </a>
                                         <div class="media-body">
                                             <a href="#">
@@ -75,8 +157,10 @@
                                     </div>
                                     <div class="social-body">
                                         <p>
-                                            Many desktop publishing packages and web page editors now use Lorem Ipsum as their
-                                            default model text, and a search for 'lorem ipsum' will uncover many web sites still
+                                            Many desktop publishing packages and web page editors now use Lorem Ipsum as
+                                            their
+                                            default model text, and a search for 'lorem ipsum' will uncover many web
+                                            sites still
                                             default model text.
                                         </p>
                                     </div>
@@ -84,7 +168,7 @@
                                 <div class="social-feed-box">
                                     <div class="social-avatar">
                                         <a href="" class="pull-left">
-                                            <img alt="image" src="img/a2.jpg">
+                                            <img alt="image" src="{{ asset('themes/standard/img/a2.jpg') }}">
                                         </a>
                                         <div class="media-body">
                                             <a href="#">
@@ -95,9 +179,12 @@
                                     </div>
                                     <div class="social-body">
                                         <p>
-                                            Many desktop publishing packages and web page editors now use Lorem Ipsum as their
-                                            default model text, and a search for 'lorem ipsum' will uncover many web sites still
-                                            default model text, and a search for 'lorem ipsum' will uncover many web sites still
+                                            Many desktop publishing packages and web page editors now use Lorem Ipsum as
+                                            their
+                                            default model text, and a search for 'lorem ipsum' will uncover many web
+                                            sites still
+                                            default model text, and a search for 'lorem ipsum' will uncover many web
+                                            sites still
                                             in their infancy. Packages and web page editors now use Lorem Ipsum as their
                                             default model text.
                                         </p>
@@ -106,7 +193,7 @@
                                 <div class="social-feed-box">
                                     <div class="social-avatar">
                                         <a href="" class="pull-left">
-                                            <img alt="image" src="img/a3.jpg">
+                                            <img alt="image" src="{{ asset('themes/standard/img/a3.jpg') }}">
                                         </a>
                                         <div class="media-body">
                                             <a href="#">
@@ -117,8 +204,10 @@
                                     </div>
                                     <div class="social-body">
                                         <p>
-                                            Many desktop publishing packages and web page editors now use Lorem Ipsum as their
-                                            default model text, and a search for 'lorem ipsum' will uncover many web sites still
+                                            Many desktop publishing packages and web page editors now use Lorem Ipsum as
+                                            their
+                                            default model text, and a search for 'lorem ipsum' will uncover many web
+                                            sites still
                                             in their infancy. Packages and web page editors now use Lorem Ipsum as their
                                             default model text.
                                         </p>
@@ -127,7 +216,7 @@
                                 <div class="social-feed-box">
                                     <div class="social-avatar">
                                         <a href="" class="pull-left">
-                                            <img alt="image" src="img/a5.jpg">
+                                            <img alt="image" src="{{ asset('themes/standard/img/a5.jpg') }}">
                                         </a>
                                         <div class="media-body">
                                             <a href="#">
@@ -138,8 +227,10 @@
                                     </div>
                                     <div class="social-body">
                                         <p>
-                                            Many desktop publishing packages and web page editors now use Lorem Ipsum as their
-                                            default model text, and a search for 'lorem ipsum' will uncover many web sites still
+                                            Many desktop publishing packages and web page editors now use Lorem Ipsum as
+                                            their
+                                            default model text, and a search for 'lorem ipsum' will uncover many web
+                                            sites still
                                             in their infancy. Packages and web page editors now use Lorem Ipsum as their
                                             default model text.
                                         </p>
@@ -160,8 +251,3 @@
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-    </style>
-{% endblock %}

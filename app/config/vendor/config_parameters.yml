@@ -15,10 +15,15 @@ parameters:
 
     s3_version: latest
 #    s3_sdk_version: 3 no longer permissible
+    file_server: sunrise.vn
 
     tiengphap.local.com:
         theme: tiengphap
         locale: vi
+        file_server: sunrise.vn
+        modules: []
     tiengnhat.local.com:
         theme: tiengnhat
         locale: vi
+        file_server: sunrise.vn
+        modules: []

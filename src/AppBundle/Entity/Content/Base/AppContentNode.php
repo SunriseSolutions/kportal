@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Entity\Content\Base;
 
 use AppBundle\Entity\Content\ContentEntity;
@@ -83,6 +84,12 @@ abstract class AppContentNode {
 	 * @ORM\Column(type="string", length=2, options={"default":"en"} ,  nullable=true)
 	 */
 	protected $locale = 'en';
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $title;
 	
 	/**
 	 * @var string
@@ -243,4 +250,31 @@ abstract class AppContentNode {
 		$this->updatedAt = $updatedAt;
 	}
 	
+	/**
+	 * @return string
+	 */
+	public function getPublicUrl() {
+		return $this->publicUrl;
+	}
+	
+	/**
+	 * @param string $publicUrl
+	 */
+	public function setPublicUrl($publicUrl) {
+		$this->publicUrl = $publicUrl;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getTitle() {
+		return $this->title;
+	}
+	
+	/**
+	 * @param string $title
+	 */
+	public function setTitle($title) {
+		$this->title = $title;
+	}
 }

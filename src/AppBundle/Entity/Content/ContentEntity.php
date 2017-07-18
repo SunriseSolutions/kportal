@@ -10,8 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="content__entity")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"individual" = "AppBundle\Entity\Content\IndividualEntity"})
  */
-class ContentEntity extends AppContentEntity
-{
+abstract class ContentEntity extends AppContentEntity {
 
 }
