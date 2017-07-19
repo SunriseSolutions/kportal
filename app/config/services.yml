@@ -54,3 +54,7 @@ services:
         class: AppBundle\Service\SiteService
         arguments:
             - "@service_container"
+
+    app.admin.security.handler.role:
+        class: AppBundle\Admin\Security\Handler\RoleSecurityHandler
+        arguments: ['@security.authorization_checker', ['ROLE_ADMIN'], '@service_container']

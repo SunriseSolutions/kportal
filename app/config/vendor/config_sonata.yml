@@ -44,6 +44,9 @@ sonata_formatter:
 #            translation:          SonataClassificationBundle
 
 sonata_notification:
+    class:
+        message:              AppBundle\Entity\Notification\Message
+
     backend: sonata.notification.backend.doctrine
     backends:
         doctrine:
@@ -85,7 +88,8 @@ sonata_block:
 
 sonata_admin:
     security:
-        handler: sonata.admin.security.handler.role
+#        handler: sonata.admin.security.handler.role
+        handler: app.admin.security.handler.role
 
 #    admin_services:
 #        app.admin.listing:
