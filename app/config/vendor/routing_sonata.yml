@@ -1,24 +1,24 @@
 # Disable the default admin_area to enable locale
 #admin_area:
 #    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
-#    prefix: /admin
+#    prefix: /system
 
 admin_wo_locale:
-    path: /admin
+    path: /system
     defaults:
         _controller: FrameworkBundle:Redirect:redirect
         route: sonata_admin_dashboard
         permanent: true # this for 301
 
 admin_dashboard_wo_locale:
-    path: /admin/dashboard
+    path: /system/dashboard
     defaults:
         _controller: FrameworkBundle:Redirect:redirect
         route: sonata_admin_dashboard
         permanent: true # this for 301
 
 admin_dashboard:
-    path: /{_locale}/admin/
+    path: /{_locale}/system/
     defaults:
         _controller: FrameworkBundle:Redirect:redirect
         route: sonata_admin_dashboard
@@ -26,12 +26,12 @@ admin_dashboard:
 
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
-    prefix: /{_locale}/admin
+    prefix: /{_locale}/system
 
 sonata_admin:
     resource: .
     type: sonata_admin
-    prefix: /{_locale}/admin
+    prefix: /{_locale}/system
 
 #sonata_gallery:
 #    resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
@@ -54,8 +54,8 @@ sonata_media:
 # End of Copied from routing_sonata_user_admin_security
 sonata_user_admin:
     resource: 'routing_sonata_user_admin_security.xml'
-#   resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
-    prefix: /admin
+#   resource: '@SonataUserBundle/Resources/config/routing/system_security.xml'
+    prefix: /system
 
 
 sonata_user_security:
