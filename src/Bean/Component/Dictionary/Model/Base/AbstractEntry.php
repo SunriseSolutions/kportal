@@ -1,34 +1,36 @@
 <?php
 namespace Bean\Component\Dictionary\Model\Base;
 
+use Bean\Component\NLP\Model\Sense;
 use Doctrine\Common\Collections\ArrayCollection;
 
-abstract class AbstractBaseEntry implements BaseEntryInterface {
+abstract class AbstractEntry implements EntryInterface {
 	/**
 	 * Primary identifier, details depend on storage layer.
 	 */
 	protected $id;
 	
+	/** en, us, fr, vi
+	 * @var string
+	 */
 	protected $locale;
 	
 	/**
-	 * @var BaseEntryInterface
-	 */
-	protected $parent;
-	
-	/**
-	 * ArrayCollection of BaseEntryInterface
-	 * @var ArrayCollection
-	 */
-	protected $children;
-	
-	/**
 	 * Could be a word like "hello/bonjour/こんにちは" or a phrase like "go doing sth" or "I love my dog"
+	 * @var string
 	 */
 	protected $phrase;
 	
 	protected $phoneticSymbols;
 	
+	/**
+	 * @var string
+	 */
+	protected $briefComment;
+	
+	/**
+	 * @var string
+	 */
 	protected $definition;
 	
 	/**
@@ -37,13 +39,27 @@ abstract class AbstractBaseEntry implements BaseEntryInterface {
 	 */
 	protected $type;
 	
+	/**
+	 * @var Sense
+	 */
 	protected $sense;
 	
 	/**
-	 * A list of sample phrases/statements (BaseEntryInterface)
+	 * A list of (EntryInterface)
+	 * @var ArrayCollection
+	 */
+	protected $usages;
+	
+	/**
+	 * A list of sample phrases/statements (EntryInterface)
 	 * @var ArrayCollection
 	 */
 	protected $samples;
+	
+	/**
+	 * @var EntryInterface
+	 */
+	protected $userEntry;
 	
 	/**
 	 * @return mixed
@@ -158,30 +174,45 @@ abstract class AbstractBaseEntry implements BaseEntryInterface {
 	}
 	
 	/**
-	 * @return BaseEntryInterface
+	 * @return string
 	 */
-	public function getParent() {
-		return $this->parent;
+	public function getBriefComment() {
+		return $this->briefComment;
 	}
 	
 	/**
-	 * @param BaseEntryInterface $parent
+	 * @param string $briefComment
 	 */
-	public function setParent( $parent ) {
-		$this->parent = $parent;
+	public function setBriefComment($briefComment) {
+		$this->briefComment = $briefComment;
 	}
 	
 	/**
 	 * @return ArrayCollection
 	 */
-	public function getChildren() {
-		return $this->children;
+	public function getUsages() {
+		return $this->usages;
 	}
 	
 	/**
-	 * @param ArrayCollection $children
+	 * @param ArrayCollection $usages
 	 */
-	public function setChildren( $children ) {
-		$this->children = $children;
+	public function setUsages($usages) {
+		$this->usages = $usages;
 	}
+	
+	/**
+	 * @return EntryInterface
+	 */
+	public function getUserEntry() {
+		return $this->userEntry;
+	}
+	
+	/**
+	 * @param EntryInterface $userEntry
+	 */
+	public function setUserEntry($userEntry) {
+		$this->userEntry = $userEntry;
+	}
+	
 }

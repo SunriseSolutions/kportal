@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="content__node")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"article" = "AppBundle\Entity\Content\ArticleNode", "blog" = "AppBundle\Entity\Content\BlogNode"})
+ * @ORM\DiscriminatorMap({"article" = "AppBundle\Entity\Content\ArticleNode", "blog" = "AppBundle\Entity\Content\BlogNode", "book" = "AppBundle\Entity\Content\BookNode"})
  *
  */
 abstract class ContentNode extends AppContentNode

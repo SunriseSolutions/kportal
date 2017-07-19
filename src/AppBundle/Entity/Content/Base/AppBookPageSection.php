@@ -4,6 +4,7 @@ namespace AppBundle\Entity\Content\Base;
 
 use AppBundle\Entity\Content\ArticleNode;
 use AppBundle\Entity\Content\BlogNode;
+use AppBundle\Entity\Content\BookNode;
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,7 +14,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /** @ORM\MappedSuperclass */
-abstract class AppBlogItem {
+abstract class AppBookPageSection {
 	
 	/**
 	 * ID_REF
@@ -28,18 +29,11 @@ abstract class AppBlogItem {
  	}
 	
 	/**
-	 * @var BlogNode
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\BlogNode",inversedBy="items")
-	 * @ORM\JoinColumn(name="id_blog", referencedColumnName="id", onDelete="CASCADE")
+	 * @var BookNode
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\BookPage",inversedBy="sections")
+	 * @ORM\JoinColumn(name="id_book", referencedColumnName="id", onDelete="CASCADE")
 	 */
-	protected $blog;
-	
-	/**
-	 * @var ContentNode
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentNode" )
-	 * @ORM\JoinColumn(name="id_content_node", referencedColumnName="id", onDelete="CASCADE")
-	 */
-	protected $content;
+	protected $page;
 	
 	/**
 	 * @var \DateTime
@@ -61,38 +55,17 @@ abstract class AppBlogItem {
 	protected $position = 0;
 	
 	/**
-	 * @return BlogNode
+	 * @return BookNode
 	 */
-	public function getBlog() {
-		return $this->blog;
+	public function getPage() {
+		return $this->page;
 	}
 	
 	/**
-	 * @param BlogNode $blog
+	 * @param BookNode $page
 	 */
-	public function setBlog($blog) {
-		$this->blog = $blog;
-	}
-	
-	/**
-	 * @return mixed
-	 */
-	public function getId() {
-		return $this->id;
-	}
-	
-	/**
-	 * @return \DateTime
-	 */
-	public function getCreatedAt() {
-		return $this->createdAt;
-	}
-	
-	/**
-	 * @param \DateTime $createdAt
-	 */
-	public function setCreatedAt($createdAt) {
-		$this->createdAt = $createdAt;
+	public function setPage($page) {
+		$this->page = $page;
 	}
 	
 	/**
@@ -124,16 +97,25 @@ abstract class AppBlogItem {
 	}
 	
 	/**
-	 * @return ContentNode
+	 * @return mixed
 	 */
-	public function getContent() {
-		return $this->content;
+	public function getId() {
+		return $this->id;
 	}
 	
 	/**
-	 * @param ContentNode $content
+	 * @return \DateTime
 	 */
-	public function setContent($content) {
-		$this->content = $content;
+	public function getCreatedAt() {
+		return $this->createdAt;
 	}
+	
+	/**
+	 * @param \DateTime $createdAt
+	 */
+	public function setCreatedAt($createdAt) {
+		$this->createdAt = $createdAt;
+	}
+	
+	
 }

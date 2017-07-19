@@ -1,8 +1,8 @@
 <?php
-
 namespace AppBundle\Entity\Content;
 
 use AppBundle\Entity\Content\Base\AppArticleNode;
+use AppBundle\Entity\Content\Base\AppBookNode;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +11,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="content__node__article")
+ * @ORM\Table(name="content__node__book")
  *
  * @Hateoas\Relation(
  *  "self",
@@ -24,22 +24,12 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  *
  */
-class ArticleNode extends AppArticleNode {
-	function __construct() {
-		parent::__construct();
-		
-	}
-	
-	/**
-	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\BlogItem", mappedBy="article", cascade={"all"}, orphanRemoval=true)
-	 */
-	protected $blogItems;
-	
-	/**
-	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ArticleVocabEntry", mappedBy="article", cascade={"all"}, orphanRemoval=true)
-	 */
-	protected $vocabEntries;
-	
+class BookNode extends AppBookNode
+{
+    function __construct()
+    {
+        parent::__construct();
+        
+    }
+
 }

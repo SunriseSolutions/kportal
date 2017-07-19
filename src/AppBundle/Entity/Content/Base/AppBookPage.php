@@ -4,6 +4,8 @@ namespace AppBundle\Entity\Content\Base;
 
 use AppBundle\Entity\Content\ArticleNode;
 use AppBundle\Entity\Content\BlogNode;
+use AppBundle\Entity\Content\BookNode;
+use AppBundle\Entity\Content\BookPageSection;
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,7 +15,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /** @ORM\MappedSuperclass */
-abstract class AppBlogItem {
+abstract class AppBookPage {
 	
 	/**
 	 * ID_REF
@@ -25,21 +27,31 @@ abstract class AppBlogItem {
 	protected $id;
 	
 	function __construct() {
- 	}
+		$this->sections = new ArrayCollection();
+	}
 	
 	/**
-	 * @var BlogNode
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\BlogNode",inversedBy="items")
-	 * @ORM\JoinColumn(name="id_blog", referencedColumnName="id", onDelete="CASCADE")
+	 * @var BookNode
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\BookNode",inversedBy="pages")
+	 * @ORM\JoinColumn(name="id_book", referencedColumnName="id", onDelete="CASCADE")
 	 */
-	protected $blog;
+	protected $book;
 	
 	/**
-	 * @var ContentNode
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentNode" )
-	 * @ORM\JoinColumn(name="id_content_node", referencedColumnName="id", onDelete="CASCADE")
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\BookPageSection", mappedBy="page", cascade={"all"}, orphanRemoval=true)
 	 */
-	protected $content;
+	protected $sections;
+	
+	public function addSection(BookPageSection $item) {
+		$this->sections->add($item);
+		$item->setPage($this);
+	}
+	
+	public function removeSection(BookPageSection $item) {
+		$this->sections->removeElement($item);
+		$item->setPage(null);
+	}
 	
 	/**
 	 * @var \DateTime
@@ -61,24 +73,38 @@ abstract class AppBlogItem {
 	protected $position = 0;
 	
 	/**
-	 * @return BlogNode
-	 */
-	public function getBlog() {
-		return $this->blog;
-	}
-	
-	/**
-	 * @param BlogNode $blog
-	 */
-	public function setBlog($blog) {
-		$this->blog = $blog;
-	}
-	
-	/**
 	 * @return mixed
 	 */
 	public function getId() {
 		return $this->id;
+	}
+	
+	/**
+	 * @return BookNode
+	 */
+	public function getBook() {
+		return $this->book;
+	}
+	
+	/**
+	 * @param BookNode $book
+	 */
+	public function setBook($book) {
+		$this->book = $book;
+	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getSections() {
+		return $this->sections;
+	}
+	
+	/**
+	 * @param ArrayCollection $sections
+	 */
+	public function setSections($sections) {
+		$this->sections = $sections;
 	}
 	
 	/**
@@ -123,17 +149,6 @@ abstract class AppBlogItem {
 		$this->position = $position;
 	}
 	
-	/**
-	 * @return ContentNode
-	 */
-	public function getContent() {
-		return $this->content;
-	}
 	
-	/**
-	 * @param ContentNode $content
-	 */
-	public function setContent($content) {
-		$this->content = $content;
-	}
+	
 }

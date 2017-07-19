@@ -1,7 +1,7 @@
 <?php
-
 namespace AppBundle\Entity\Content\Base;
 
+use AppBundle\Entity\Content\ArticleVocabEntry;
 use AppBundle\Entity\Content\BlogItem;
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\User\User;
@@ -30,6 +30,22 @@ abstract class AppArticleNode extends ContentNode {
 	
 	public function removeBlogItem(BlogItem $item) {
 		$this->blogItems->removeElement($item);
+		$item->setArticle(null);
+	}
+	
+	
+	/**
+	 * @var ArrayCollection
+	 */
+	protected $vocabEntries;
+	
+	public function addVocabEntry(ArticleVocabEntry $item) {
+		$this->vocabEntries->add($item);
+		$item->setArticle($this);
+	}
+	
+	public function removeVocabEntry(ArticleVocabEntry $item) {
+		$this->vocabEntries->removeElement($item);
 		$item->setArticle(null);
 	}
 }

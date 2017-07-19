@@ -3,7 +3,7 @@ namespace Bean\Component\Dictionary\Model\Base;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-interface BaseEntryInterface {
+interface EntryInterface {
 	/**
 	 * @return mixed
 	 */
@@ -57,6 +57,16 @@ interface BaseEntryInterface {
 	/**
 	 * @return mixed
 	 */
+	public function getBriefComment();
+	
+	/**
+	 * @param mixed $commnent
+	 */
+	public function setBriefComment( $commnent );
+	
+	/**
+	 * @return mixed
+	 */
 	public function getType();
 	
 	/**
@@ -85,22 +95,22 @@ interface BaseEntryInterface {
 	public function setSamples( $samples );
 	
 	/**
-	 * @param BaseEntryInterface $parent
+	 * @param EntryInterface $entry
 	 */
-	public function setParent( $parent );
+	public function setUserEntry( $entry );
 	
 	/**
-	 * @return BaseEntryInterface
+	 * @return EntryInterface
 	 */
-	public function getParent();
+	public function getUserEntry();
 	
 	/**
-	 * @param ArrayCollection $children
+	 * @param ArrayCollection $usages
 	 */
-	public function setChildren( $children );
+	public function setUsages( $usages );
 	
 	/**
 	 * @return ArrayCollection
 	 */
-	public function getChildren();
+	public function getUsages();
 }
