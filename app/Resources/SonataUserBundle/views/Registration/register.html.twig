@@ -1,0 +1,129 @@
+{#{% extends "FOSUserBundle::layout.html.twig" %}#}
+{% extends "SonataUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    {#{% include "FOSUserBundle:Registration:register_content.html.twig" %}#}
+    {% trans_default_domain 'SonataUserBundle' %}
+
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="flash-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    {% set targetPath = path('sonata_user_profile_show') %}
+    {% if app.request.get('target_path') is not empty %}
+        {% set targetPath = app.request.get('target_path') %}
+    {% endif %}
+
+    <div class="box user-sign-blk">
+        <div class="box-md">
+            <h1 class="t-c user-sign-ttl">{{ 'title_join_today'|trans({}, 'SonataUserBundle') }}</h1>
+            <p class="t-c">{{ 'title_choose_one_signup_method'|trans({}, 'SonataUserBundle') }}</p>
+            <p class="t-c social-bar">
+                <a href="{{ path(
+                'hwi_oauth_service_redirect',
+                {
+                    'service': 'facebook',
+                    'target_path': targetPath
+                }
+                ) }}" class="btn btn-facebook">
+                    <i class="fa fa-fw fa-facebook"></i>
+                    <span
+                            class="social-name">Facebook</span>
+                </a>
+                <a href="{{ path(
+                'hwi_oauth_service_redirect',
+                {
+                    'service': 'google',
+                    'target_path': targetPath
+                }
+                ) }}" class="btn btn-primary">
+                    <i
+                            class="fa fa-fw fa-google"></i>
+                    <span class="social-name">Google</span>
+                </a>
+            </p>
+            <hr>
+            <p class="t-c user-sign-or">{{ 'title_user_registration_email'|trans({}, 'SonataUserBundle') }}</p>
+            <div class="user-sign-form">
+                {#{{ form_errors(form) }}#}
+                {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': ''}}) }}
+                {{ form_widget(form.username) }}
+                <input type="hidden" name="_target_path" value="{{ targetPath }}"/>
+                <div class="form-group">
+                    {{ form_widget(form.firstName,{'attr':{'class':'form-control','placeholder':'form.first_name'|trans}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_widget(form.lastName,{'attr':{'class':'form-control','placeholder':'form.last_name'|trans}}) }}
+                </div>
+                <div class="form-group">
+                    {% if not form.vars.valid %}
+                        {# Display the errors of the form item #}
+                        {% for error in form.email.vars.errors %}
+                            <p role="alert" class="alert alert-danger "> {{ error.message }} </p>
+                        {% endfor %}
+                    {% endif %}
+                    {{ form_widget(form.email,{'attr':{'class':'form-control','placeholder':'form.email'|trans}}) }}
+                </div>
+                <div class="form-group">
+                    {% if not form.vars.valid %}
+                        {# Display the errors of the form item #}
+                        {% for error in form.plainPassword.first.vars.errors %}
+                            <p role="alert" class="alert alert-danger "> {{ error.message }} </p>
+                        {% endfor %}
+                    {% endif %}
+                    {{ form_widget(form.plainPassword.first,{'attr':{'class':'form-control','placeholder':'form.password'|trans}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_widget(form.plainPassword.second,{'attr':{'class':'form-control','placeholder':'form.password_confirmation'|trans}}) }}
+                </div>
+                <div class="checkbox t-l">
+                    <label>
+                        {{ form_widget(form.subscribedToNewsletters,{'attr':{'class':''}}) }}
+                        {#<input type="checkbox" name="chkdfasdfIsNewLetter" >#}
+                        <span class="subscribe"> {{ 'form.subscribed_newsletters'|trans }}</span>
+
+                    </label>
+                </div>
+                <!--
+
+                -->
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="{{ 'registration.submit'|trans }}"/>
+                </div>
+                {{ form_end(form) }}
+            </div>
+            <p class="t-c">{{ 'label_accept_terms'|trans({"privacy_policy_url":"#","terms_of_use_url":"#"}, 'SonataUserBundle') | raw }}</p>
+        </div>
+    </div>
+    <!-- END BOX SIGN UP-->
+
+{% endblock fos_user_content %}
+
+{% block javascripts %}
+    <script>
+        (function ($) {
+            $username = $('#fos_user_registration_form_username');
+            $email = $('#fos_user_registration_form_email');
+            $f_register = $('form[name=fos_user_registration_form]');
+            /* ----------------------------------------------- */
+            /* ----------------------------------------------- */
+            /* OnLoad Page */
+            $(document).ready(function ($) {
+                $f_register.submit(function (e) {
+                    $username.val($email.val());
+                });
+            });
+            /* OnLoad Window */
+            var init = function () {
+
+            };
+            window.onload = init;
+
+        })(jQuery);
+    </script>
+{% endblock javascripts %}

@@ -25,17 +25,17 @@ security:
             security: false
         # -> custom firewall for the admin area of the URL
         admin:
-            pattern:            /admin(.*)
+            pattern:            /system(.*)
             context:            backend
             form_login:
                 provider:       fos_userbundle
-                login_path:     /admin/login
+                login_path:     /system/login
                 use_forward:    false
-                check_path:     /admin/login_check
+                check_path:     /system/login_check
                 failure_path:   null
-                default_target_path: /admin/dashboard
+                default_target_path: /system/dashboard
             logout:
-                path:           /admin/logout
+                path:           /system/logout
             anonymous:          true
         # -> end custom admin configuration
         main:
@@ -80,12 +80,12 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # Admin and Employer login page needs to be access without credential
-        - { path: ^(/(vi|fr|en))?/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^(/(vi|fr|en))?/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^(/(vi|fr|en))?/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^(/(vi|fr|en))?/system/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^(/(vi|fr|en))?/system/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^(/(vi|fr|en))?/system/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin/employer role for the admin/employer part.
         # Change these rules to adapt them to your needs
-        - { path: ^(/(vi|fr|en))?/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
+        - { path: ^(/(vi|fr|en))?/system/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
 #        - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY,requires_channel: https  }

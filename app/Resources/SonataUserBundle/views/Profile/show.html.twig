@@ -1,0 +1,1163 @@
+{% extends "::base.html.twig" %}
+{% block main %}
+    {% set profile = app.user.profile %}
+    {% set skills = profile.skills %}
+    {% set candidates = app.user.candidates %}
+    {#{% include "SonataUserBundle:Profile:action.html.twig" %}#}
+    <section class="main main-profile container">
+        {% if profile.getMissingFields|length > 0 %}
+            <div class="removable warning"><i class="fa fa-info-circle"></i><span><strong>{{ app.user.firstName }},</strong>{{ 'profile.title_add_more_details'|trans({},'SonataUserBundle') }}</span><a
+                    href="javascript:;" class="warning-msg pull-right"><i class="fa fa-remove click-to-remove"></i></a>
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-9">
+                <div class="section-detail section-resume-header">
+                    <div class="box">
+                        <div class="user-info border-primary">
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-3 center-block">
+                                    <div class="user-pic">
+                                        <a href="#" data-toggle="modal" data-target="#upload-img"
+                                           class="avatar img-circle">
+                                            <img id="avatar-img"
+                                                 src="{{ userAvatar(app.user,'admin') }}"/>
+                                            <p><i class="fa fa-camera"></i><span> {{ 'profile.change_avatar'|trans({},'SonataUserBundle') }}</span></p>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="section-header hidden-section col-xs-8 col-sm-9">
+                                    <form method="post" id="general-form" class="form-wrapper" name="general"
+                                          action="{{ path('post_profile_general',{'user':app.user.id}) }}">
+                                        <div class="relative box-md"><span class="form-btn-edit">
+                            <button type="button" class="btn"><i class="fa fa-pencil"></i></button></span>
+                                            <div class="profile-info">
+                                                <div class="prof-itm profile-name clearfix">
+                                                    <div class="name pull-left">
+                                                        <div class="view-field">
+                                                            <h3 class="fname profile-name text-orange">{{ app.user.firstName }}</h3>
+                                                        </div>
+                                                        <div class="edit-field form-group">
+                                                            <label><strong class="text-red">*</strong> {{ 'profile.label_last_name'|trans({},'SonataUserBundle') }}</label>
+                                                            <input type="text" name="lastName" autofocus=""
+                                                                   value="{{ app.user.lastName }}" class="form-control"
+                                                                   required="required">
+                                                        </div>
+                                                    </div>
+                                                    <div class="last-name pull-left">
+                                                        <div class="view-field">
+                                                            <h3 class="lname profile-name text-orange">{{ app.user.lastName }}</h3>
+                                                        </div>
+                                                        <div class="edit-field">
+                                                            <label><strong class="text-red">*</strong> {{ 'profile.label_first_name'|trans({},'SonataUserBundle') }} </label>
+                                                            <input type="text" name="firstName" autofocus=""
+                                                                   value="{{ app.user.firstName }}" class="form-control"
+                                                                   required="required">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="prof-itm prof-itm-sm clearfix">
+                                                    <div class="view-field"><span
+                                                                class="general_title view-control ">{{ profile.title|default('') }}</span>
+                                                    </div>
+                                                    <div class="edit-field form-group">
+                                                        <label><strong class="text-red">*</strong>{{ 'profile.label_professional_title'|trans({},'SonataUserBundle') }}</label>
+                                                        <input type="text" name="professionalTitle"
+                                                               value="{{ profile.title|default('') }}"
+                                                               class="form-control" required="required">
+                                                    </div>
+                                                </div>
+                                                <div class="prof-itm prof-itm-sm clearfix">
+
+                                                    <div class="view-field"><span class="year-of-ex-view-field"><span
+                                                                    class="general_years view-control">{{ profile.yearsOfExperience }}
+                                                                {{ 'profile.years_of_experience'|trans({},'SonataUserBundle') }}</span> </span></div>
+
+                                                    <div class="edit-field form-group">
+                                                        <label class="lbl-year-ex"><strong class="text-red">*</strong>
+                                                            {{ 'profile.label_years_of_experience'|trans({},'SonataUserBundle') }}</label>
+                                                        <input type="text" name="yearsOfExperience" maxlength="2"
+                                                               value="{{ profile.yearsOfExperience|default('') }}"
+                                                               class="form-control" required="required">
+                                                    </div>
+                                                </div>
+                                                {#
+                                              <div class="prof-itm prof-itm-sm clearfix">
+                                                  <div class="view-field">
+                                                  </div>
+
+                                                  <div class="edit-field form-group m-t-n-xs">
+                                                      <label>
+                                                          <input type="checkbox" name="newGraduate" value="false">   I am a new graduate / have no work experience
+                                                      </label>
+                                                  </div>
+                                              </div>
+                                              #}
+
+                                                <div class="prof-itm prof-itm-sm clearfix">
+                                                    {#
+                                                    <div class="view-field hidden-xs">
+                                                        <p><span class="text-gray-light">Latest company:</span><a class="current-company">Staff.com</a><br><span class="text-gray-light">Highest education:</span><a class="current-highest-education">Bachelors</a></p>
+                                                    </div>
+                                                    #}
+                                                    <div class="edit-field text-right">
+                                                        <button type="button" class="btn-cancel btn">Cancel</button>
+                                                        <button type="submit" class="btn-save btn btn-primary">Save
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                {#
+                                                <div class="prof-itm prof-itm-sm clearfix download-resume">
+                                                    <div class="view-field"><a href="javascript:;" class="btn btn-outline"><i class="fa fa-fw fa-file-pdf-o"></i> Download profile</a></div>
+                                                </div>
+                                                #}
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div> <!-- ME End: PROFILE INFO-->
+
+                            <div class="bg-gray text-right">
+                                <div class="clearfix"><a href="javascript:;" data-target="#my-job-tab"
+                                                         class="btn tab-prof add-one-more-section col-xs-12 col-md-4 active"><i
+                                                class="fa fa-fw fa-suitcase"></i><strong>{{ 'profile.title_my_jobs'|trans({},'SonataUserBundle') }}</strong></a><a
+                                            href="javascript:;" data-target="#media-tab"
+                                            class="btn tab-prof add-one-more-section col-xs-12 col-md-4"><i
+                                                class="fa fa-fw fa-cubes"></i><strong>{{ 'profile.title_my_resume_cv'|trans({},'SonataUserBundle') }}</strong></a><a
+                                            id="profile-tab" href="javascript:;" data-target="#professional-profile-tab"
+                                            class="btn tab-prof add-one-more-section col-xs-12 col-md-4"><i
+                                                class="fa fa-fw fa-phone"></i><strong>{{ 'profile.title_professional_profile'|trans({},'SonataUserBundle') }}</strong></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-prof-wrap" style="display: block;">
+                        <div id="professional-profile-tab" style="display: none;" class="section-contact tab-prof-ct">
+                            <div class="section-detail section-contact-info">
+                              <div class="box">
+                                <form class="form-horizontal" action="{{ path('post_profile_contact_info') }}" method="post"
+                                  id="contact-info-form">
+                                <div class="box">
+                                    <fieldset>
+                                        <div class="form-wrapper relative box-md"><span class="form-btn-edit">
+                          <button type="button" class="btn btn-sm"><i class="fa fa-pencil"></i></button></span>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="address">{{ 'form.email'|trans({},'SonataUserBundle') }}</label>
+                                                        <div class="view-field">
+                                                            <p class="form-control-static view-control">
+                                                                {{ app.user.email }}</p>
+                                                        </div>
+                                                        <div class="edit-field">
+                                                            <input type="email" autofocus="" disabled=""
+                                                                   value="{{ app.user.email }}" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="cell-number"><strong class="text-red">*</strong>{{ 'profile.label_mobile_number'|trans({},'SonataUserBundle') }} </label>
+                                                        <div class="view-field clearfix">
+                                                            <p class="phone form-control-static view-control pull-left">
+                                                                {{ app.user.phone }}</p>
+                                                            {#
+                                                            <div class="pull-left form-control-static text-gray-light">
+                                                                <em><i class="fa fa-eye"></i><span>  Visible to employer</span></em>
+                                                            </div>
+                                                            #}
+
+                                                        </div>
+                                                        <div class="edit-field">
+                                                            {{ form_widget(contactForm.phone) }}
+
+                                                            {#
+                                                            <label class="push-top-sm">
+                                                                <input name="confidential" value="1" type="checkbox"><em>
+                                                                    Invisible to employer</em>
+                                                            </label>
+                                                            #}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="date-of-birth"><strong class="text-red"></strong>{{ 'form.label_date_of_birth'|trans({},'SonataUserBundle') }}</label>
+                                                        <div class="edit-field">
+
+                                                            {{ form_widget(contactForm.birthday) }}
+
+                                                        </div>
+                                                        <div class="view-field">
+                                                            <p class="birthday form-control-static view-control">
+                                                                {% if app.user.dateOfBirth is not empty %}
+                                                                {{ app.user.dateOfBirth|date('d/m/Y') }}
+                                                                {% endif %}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="nationality"><strong class="text-red">*</strong>{{ 'profile.label_nationality'|trans({},'SonataUserBundle') }}</label>
+                                                        <div class="view-field">
+                                                            <p class="nationality form-control-static view-control">{{ app.user.nationality }}</p>
+                                                        </div>
+                                                        <div class="edit-field">
+                                                            {{ form_widget(contactForm.nationality) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label><strong class="text-red">*</strong> {{ 'form.label_gender'|trans({},'SonataUserBundle') }}</label>
+                                                        {{ form_widget(contactForm.gender,{'attr':
+                                                            {'class':'edit-field'}
+                                                        }) }}
+
+                                                        <div class="view-field">
+                                                            <p class="gender form-control-static view-control">
+                                                                {% if app.user.gender is not empty %}
+                                                                    {% if app.user.gender != 'u' %}
+                                                                    {{ app.user.gender == 'm'? 'gender_male'|trans({},'SonataUserBundle')|capitalize:'gender_female'|trans({},'SonataUserBundle')|capitalize }}
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label> {{ 'profile.label_marital_status'|trans({},'SonataUserBundle') }}</label>
+                                                        {{ form_widget(contactForm.marital_status,{'attr':
+                                                            {'class':'edit-field'}
+                                                        }) }}
+
+                                                        <div class="view-field">
+                                                            <p class="marital-status form-control-static view-control">
+                                                                {% if app.user.maritalStatus is not empty %}
+                                                                    {{ app.user.maritalStatus == 'm'?'form.marital_married'|trans({}):'form.marital_single'|trans({}) }}
+                                                                {% endif %}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <input type="hidden" id="place-id" name="street_number"/>
+                                            <input type="hidden" id="street_number" name="street_number"/>
+                                            <input type="hidden" id="route" name="route"/>
+                                            <input type="hidden" id="locality" name="locality"/>
+                                            <input type="hidden" id="administrative_area_level_1"
+                                                   name="administrative_area_level_1"/>
+                                            <input type="hidden" id="postal_code" name="postal_code"/>
+                                            <input type="hidden" id="country" name="country"/>
+
+                                            <div class="form-group no-margin">
+                                                <label for="address"><strong class="text-red"></strong> Address</label>
+                                                <div class="view-field">
+                                                    <p class="address form-control-static view-control">{{ app.user.address.address }}</p>
+                                                </div>
+                                                <div class="edit-field">
+                                                    {{ form_row(contactForm.address) }}
+                                                </div>
+                                            </div>
+                                            <!-- Buttons-->
+                                            <div class="form-group edit-field edit-btns">
+                                                <div class="pull-left">(<strong class="text-red">*</strong>) {{ 'form.required_field'|trans() }}
+                                                </div>
+                                                <div class="pull-right text-right">
+                                                    <button type="button" class="btn btn-cancel">{{ 'modal.button_cancel'|trans({},'AppBundle') }}</button>
+                                                    <button type="submit" class="btn btn-primary btn-save">{{ 'modal.button_save'|trans({},'AppBundle') }}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </form>
+                              </div>
+                            </div>
+
+                            <!-- Profile Summary -->
+                            <div class="section-detail section-profile">
+                                <div class="box">
+                                    <fieldset>
+                                        <legend class="box-md"><i class="fa fa-fw fa-list"></i> {{ 'profile.title_summary'|trans({},'SonataUserBundle') }}</legend>
+                                        <div class="relative">
+                                            <form id="summary-form" name="summary" class="form-horizontal box-md form-wrapper"
+                                                  action="{{ path('post_profile_summary',{'user':app.user.id}) }}"
+                                                  method="post"><span class="form-btn-edit">
+                        <button type="button" class="btn btn-sm"><i class="fa fa-pencil"></i></button></span>
+                                                <div class="form-group m-b-none">
+                                                    <div class="view-field summary">
+                                                        {{ profile.summary|default('<p>Introduce yourself and describe your career objectives</p>')|raw }}
+                                                    </div>
+                                                    <div class="edit-field">
+                                                        {#
+                                                           <p>
+                                                               <label>Introduce yourself and describe your career objectives</label>
+                                                           </p>
+                                                         #}
+                                                        {{ form_row(summaryForm.summary) }}
+                                                        {#
+                                                        <textarea rows="5" autofocus="" name="summary" maxlength="5000" class="form-control countdown-target"></textarea>
+                                                        #}
+
+                                                        <em class="countdown gray-light">
+                                                            {#5000 characters remaining#}
+                                                        </em>
+                                                    </div>
+                                                </div>
+                                                <!-- Buttons-->
+                                                <div class="form-group push-top-md edit-field edit-btns clearfix">
+                                                    <div class="text-right">
+                                                        <button type="button" class="btn btn-cancel">{{ 'modal.button_cancel'|trans({},'AppBundle') }}</button>
+                                                        <button type="submit" class="btn btn-save btn-primary">{{ 'modal.button_save'|trans({},'AppBundle') }}</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <!-- End Profile Summary -->
+                            <!-- Skills -->
+                            <div class="section-detail section-skills skill-section">
+                                <div class="box">
+                                    <fieldset>
+                                        <legend class="box-md"><i class="fa fa-fw fa-flash"></i> {{ 'profile.title_key_skills'|trans({},'SonataUserBundle') }}</legend>
+                                        <div class="form-wrapper box-md skill-section relative clearfix">
+                                <span
+                                        class="form-btn-edit">
+                      <button type="button" class="btn btn-sm"><i class="fa fa-pencil"></i></button>
+                                </span>
+                                            <div id="view-skills" class="view-skills view-field">
+                                                {% for skill in skills %}
+                                                    <span class="tag-xs">
+                                            <span class="tag-name">{{ skill.name }}</span>
+                                        </span>
+                                                {% endfor %}
+
+                                            </div>
+                                            <div hidden="" class="edit-skills edit-field">
+                                                <form id="skill-form" method="post" action="{{ path('post_profile_skills') }}"
+                                                      name="skill" class="form-horizontal">
+                                                    <div class="content-section relative">
+                                                        <div id="skill-list-field" class="tags-edit">
+                                                            {% for skill in skills %}
+                                                                <span class="tag-xs">
+                                                        <span class="tag-name">{{ skill.name }}</span>
+                                                        <a href="javascript:;"><i
+                                                                    class="fa fa-fw fa-remove"></i></a>
+                                                        <input type="hidden" value="{{ skill.name }}" name="skills[]"/>
+                                                    </span>
+                                                            {% endfor %}
+
+                                                        </div>
+                                                        <div class="skill-input">
+                                                            <div class="auto-dropdown">
+                                                                <input id="skill-srch" type="text" name="skills[]" autofocus
+                                                                       class="form-control">
+                                                            </div>
+                                                            <button type="button" class="btn"><i class="fa fa-plus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="push-top-sm pull-right">
+                                                        <button type="button" class="btn btn-cancel">Cancel</button>
+                                                        <button type="submit" class="btn btn-primary">Save</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <!-- End Skills -->
+
+
+
+                        </div>
+                        <div id="media-tab" style="display: none;" class="tab-prof-ct">
+                            <div class="box">
+                                <fieldset>
+                                    <div class="content-section">
+                                        <div class="form-wrapper box-md">
+                                            <div class="add-media well well-sm dash">
+
+                                                <div class="row">
+                                                    {#<div class="media-upl t-c col-md-5"> Rooms for YouTube#}
+                                                    <div class="media-upl t-c col-md-12">
+                                                        <p class="media-desc">{{ 'profile.allowed_types_size'|trans({'max_file_size':max_file_size,'max_file_per_user':max_file_per_user},'SonataUserBundle') }}</p>
+                                                        <form method="post" id="upload-cv" enctype="multipart/form-data"
+                                                              action="{{ path('post__file') }}"><span
+                                                                    id="file-name-info"></span>
+                                                            <input accept=".doc,.docx,.pdf" type="file"
+                                                                   name="binaryContent" id="media-upl" class="hidden"/>
+                                                            <label for="media-upl"
+                                                                   class="btn btn-default">{{ 'job.application.upload_cv_button'|trans({},'AppBundle') }}</label>
+                                                        </form>
+                                                        {#
+                                                        <span
+                                                                class="text-or"><span class="line"></span><span
+                                                                    class="or-ct">OR</span></span>
+                                                        #}
+                                                    </div>
+                                                    {#
+                                                    <form id="upload-youtube" method="post"
+                                                          action="{{ path('post__youtube') }}">
+                                                        <div class="media-youtb t-c col-md-5">
+                                                            <p class="media-desc">You can copy & paste to embed up to 7
+                                                                youtube videos. <strong>Eg:</strong> <code>https://youtu.be/RtbcZmCc7rg</code>
+                                                                or
+                                                                <code>https://www.youtube.com/watch?v=RtbcZmCc7rg</code> </code>
+                                                            </p>
+
+                                                            <input type="text" name="binaryContent"
+                                                                   placeholder="YouTube embed code"
+                                                                   class="form-control">
+                                                        </div>
+                                                        <div class="media-btn-group t-c col-md-2">
+                                                            <button href="javascript:;"
+                                                                    class="btn btn-primary">ADD
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                    #}
+                                                </div>
+
+                                            </div>
+                                            <!-- End: UPLOAD BLK-->
+                                            <div class="table-responsive">
+                                                <table class="table" id="media-tbl">
+                                                    <tr class="tbl-head">
+                                                        <th></th>
+                                                        <th>{{ 'profile.media.title_name_link'|trans({},'SonataUserBundle') }}</th>
+                                                        <th class="t-c">{{ 'profile.media.title_size'|trans({},'SonataUserBundle') }}</th>
+                                                        <th colspan="2" class="t-c">{{ 'profile.media.title_action'|trans({},'SonataUserBundle') }}</th>
+                                                    </tr>
+                                                    {% for medium in app.user.media %}
+                                                        <tr class="row-entity">
+                                                            <td class="fa {{ medium|mediaExt|faMediaIcon }}"></td>
+                                                            <td>
+                                                                <span data-id="{{ medium.id }}"
+                                                                      data-placeholder="{{ medium.name }}"
+                                                                      class="medium-name edittable"
+                                                                      style="display: inline;"><span
+                                                                            class="edit-ct">{{ medium.name }}</span></span>
+                                                            </td>
+                                                            <td class="t-c">{{ medium.size|formatBytes }}</td>
+
+                                                            <td class="t-c" colspan="2">
+                                                                <a target="_blank"
+                                                                   href="{{ path('sonata_media_download',{'id':medium.id}) }}"
+                                                                   class="del-row">
+                                                                    <i class="fa fa-download"></i>
+                                                                </a>
+                                                                &nbsp;
+                                                                <a href="javascript:;" data-id="{{ medium.id }}"
+                                                                   data-entity="media" class="del-row del-action">
+                                                                    <i class="fa fa-trash-o"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                            <!-- End: MEDIA TABLE-->
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <!-- End: TAB MEDIA-->
+                        </div>
+                        <div id="my-job-tab" style="display: block;" class="tab-prof-ct">
+                            <div class="box">
+                                <fieldset>
+                                    <div class="content-section">
+                                        <div class="form-wrapper box-md">
+                                            <p><!-- Don't know what to put here --></p>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <tr class="tbl-head">
+                                                        <th class="t-c">{{ 'profile.my_job.title_title'|trans({},'SonataUserBundle') }}</th>
+                                                        <th class="t-c">{{ 'profile.my_job.title_status'|trans({},'SonataUserBundle') }}</th>
+                                                        <th class="t-c">{{ 'profile.my_job.title_resume_cv'|trans({},'SonataUserBundle') }}</th>
+                                                        <th class="t-c">{{ 'profile.my_job.title_intro_videos'|trans({},'SonataUserBundle') }}</th>
+                                                        <th class="t-c">{{ 'profile.my_job.title_video_interview'|trans({},'SonataUserBundle') }}</th>
+                                                    </tr>
+                                                    {% if candidates|length == 0 %}
+                                                        {{ 'profile.my_job.no_active_application'|trans({},'SonataUserBundle') }}
+                                                    {% endif %}
+                                                    {% for candidate in candidates %}
+                                                        <tr>
+                                                            <td class="t-c">
+                                                                <strong>
+                                                                <a target="_blank"
+                                                                   href="{{ path('app_job_detail',{'organisation':candidate.listing.organisation.slug,'listing':candidate.listing.slug}) }}">{{ candidate.listing.title }}</a>
+                                                                </strong>
+                                                            </td>
+                                                            <td class="t-c txt-{{ candidate.status|candidateStatusColour }}">
+                                                                <a id="status-{{ candidate.id }}" href="#"
+                                                                   class="">{{ candidate.status|lower|capitalize }}</a>
+                                                                <script>
+                                                                    (function ($) {
+                                                                        $('#status-{{ candidate.id }}').on('click', function (e) {
+                                                                            e.preventDefault();
+                                                                            var _html = '<h3>' + '{{ (('candidate.status.' ~ candidate.status)|lower) |trans({},'AppBundle') }}' + '</h3>';
+//                                                                        _html += '<ul>';
+                                                                            {% if candidate.listing.interviewRequired and candidate.interviewed == false %}
+//                                                                        _html += '<li>';
+                                                                            _html += '<h3> &nbsp; - ';
+                                                                            _html += '{{ 'candidate.status.need_interview'|trans({},'AppBundle') }}';
+                                                                            _html += '</h3>';
+//                                                                        _html += '</li>';
+                                                                            {% endif %}
+
+                                                                            {% if candidate.resume is empty %}
+//                                                                        _html += '<li>';
+                                                                            _html += '<h3> &nbsp; - ';
+                                                                            _html += '{{ 'candidate.status.need_resume'|trans({},'AppBundle') }}';
+                                                                            _html += '</h3>';
+//                                                                        _html += '</li>';
+                                                                            {% endif %}
+
+                                                                            {% if candidate.listing.introductionRequired and (candidate.introVideos|length == 0) %}
+//                                                                        _html += '<li>';
+                                                                            _html += '<h3> &nbsp; - ';
+                                                                            _html += '{{ 'candidate.status.need_intro_videos'|trans({},'AppBundle') }}';
+                                                                            _html += '</h3>';
+//                                                                        _html += '</li>';
+
+                                                                            {% endif %}
+
+                                                                            _html += '</ul>';
+                                                                            $('#status-info').find('.modal-body').empty().append(_html);
+
+                                                                            $('#status-info').modal('show');
+                                                                        });
+
+                                                                    })(jQuery);
+                                                                </script>
+
+                                                            </td>
+                                                            <td class="t-c">
+                                                                {% if candidate.resume is not empty %}
+                                                                    {#<a class="btn btn-default" target="_blank" href="{{ path('sonata_media_download',{'id':candidate.resume.id}) }}">Download</a>#}
+                                                                    {{ candidate.resume.name }}
+                                                                {% else %}
+                                                                    <span id="status-resume-{{ candidate.id }}"><a id="upload-resume-{{ candidate.id }}" style="color:white;" class="btn btn-info" title="Resume/CV for {{ candidate.listing.title }}" href="#">{{ 'button_upload'|trans({},'SonataUserBundle') }}</a></span>
+                                                                    <script>
+                                                                        (function ($) {
+                                                                            $('#upload-resume-{{ candidate.id }}').on('click', function (e) {
+                                                                                e.preventDefault();
+                                                                                var $_uploadResumeModal =  $('#upload-resume-modal');
+                                                                                $_uploadResumeModal.find('#upload-resume-opt-form')
+                                                                                        .attr('action',"{{ path('post_candidates_resume',{'candidate':candidate.id}) }}")
+                                                                                        .data('id',"{{ candidate.id }}")
+                                                                                ;
+
+                                                                                $_uploadResumeModal.modal('show');
+                                                                            });
+
+                                                                        })(jQuery);
+                                                                    </script>
+
+                                                                {% endif %}
+                                                            </td>
+                                                            <td class="t-c" id="status-intro-videos-{{ candidate.id }}">
+                                                                {% if candidate.listing.introductionRequired and (candidate.introVideos|length == 0) %}
+                                                                    <a id="upload-intro-videos-{{ candidate.id }}"
+                                                                       class="btn btn-success" title="Intro Videos"
+                                                                       href="javascript:;" class="interview-row">
+                                                                        {{ 'button_submit_video'|trans({},'SonataUserBundle') }}
+                                                                    </a>
+                                                                    <script>
+                                                                        (function ($) {
+                                                                            $('#upload-intro-videos-{{ candidate.id }}').on('click', function (e) {
+                                                                                e.preventDefault();
+                                                                                $('#upload-intro-videos').find('#upload-intro-video-opt-form')
+                                                                                        .attr('action',"{{ path('post_candidates_intro_videos',{'candidate':candidate.id}) }}")
+                                                                                        .data('id',"{{ candidate.id }}")
+                                                                                ;
+
+                                                                                $('#upload-intro-videos').modal('show');
+                                                                            });
+
+                                                                        })(jQuery);
+                                                                    </script>
+                                                                {% elseif candidate.listing.introductionRequired %}
+                                                                    {{ 'status_submitted'|trans({},'SonataUserBundle') }}
+                                                                {% else %}
+                                                                    {{ 'status_not_required'|trans({},'SonataUserBundle') }}
+                                                                {% endif %}
+                                                            </td>
+                                                            <td class="t-c">
+                                                                {% if ( candidate.listing.interviewRequired and candidate.interviewed == false ) or candidate.listing.mock is not empty %}
+                                                                    <a id="take-interview-{{ candidate.id }}"
+                                                                       class="btn btn-primary" title="Take Interview"
+                                                                       href="javascript:;" class="interview-row">
+                                                                        {{ 'button_take_interview'|trans({},'SonataUserBundle') }}
+                                                                    </a>
+                                                                    <script>
+                                                                        (function ($) {
+                                                                            $('#take-interview-{{ candidate.id }}').on('click', function (e) {
+                                                                                e.preventDefault();
+                                                                                $('#take-interview').find('#modal-interview-code').text('{{ candidate.invitationCode|upper }}');
+
+                                                                                $('#take-interview').modal('show');
+                                                                            });
+
+                                                                        })(jQuery);
+                                                                    </script>
+                                                                {% elseif candidate.interviewed %}
+                                                                    {{ 'status_done'|trans({},'SonataUserBundle') }}
+                                                                {% else %}
+                                                                    {{ 'status_not_required'|trans({},'SonataUserBundle') }}
+                                                                {% endif %}
+
+                                                                {#<a#}
+                                                                {#href="javascript:;" class="del-row"><i#}
+                                                                {#class="fa fa-trash-o"></i></a>#}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                            <!-- End: MY JOB TABLE-->
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <!-- End: TAB MY JOB-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="panel panel-default section-sidebar section-profile-level">
+                    <div class="panel-heading">{{ 'profile.title_profile_strength'|trans({},'SonataUserBundle') }}<span hidden="" class="pull-right"><i
+                                    class="fa fa-spinner fa-pulse"></i></span></div>
+                    <div class="panel-content box-sm">
+                        <input type="hidden" value="1">
+                        <div class="profile-strength"><span
+                                    class="pull-left m-r-xs"> {{ 'profile.label_profile_strength'|trans({},'SonataUserBundle') }}</span><strong
+                                    class="text-success">{{ profile.getStrengthText()|trans({},'AppBundle') }}</strong></div>
+                        <hr class="m-t m-b">
+                        <div class="take-to-next-level strong-tooltip relative"><strong>{{ 'profile.label_take_profile_next_level'|trans({},'SonataUserBundle') }}</strong>
+
+                            {% if profile.getMissingFields|length > 0 %}
+                            <div class="removable guide-box"><a href="javascript:;" class="close-msg"><i
+                                            class="fa click-to-remove fa-times-circle"></i></a><span>{{ 'profile.label_complete_profile_pro_look'|trans({},'SonataUserBundle') }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="list-group">
+                            {% for field in profile.missingFields %}
+                                <a class="list-group-item list-add-{{ profile.getFieldCode(field) }}">
+                                + {{ profile.getMissingFieldText(field)|trans({},'AppBundle') }}
+                                </a>
+                            {% endfor %}
+
+                            {#
+                            <a class="list-group-item list-add-exp">+ Add Work Experience</a>
+                            <a
+                                    class="list-group-item list-add-edu">+ Add Education</a>
+                                    #}
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default section-sidebar form-wrapper">
+                    <div class="panel-heading">{{ 'profile.title_account_settings'|trans({},'SonataUserBundle') }}</div>
+                    <div class="panel-content box-sm">
+                        <form method="post" id="account-setting-form" name="account-setting"
+                              action="{{ path('post__account',{'user':app.user.id}) }}">
+                            <span id="error-account" role="alert" class="alert alert-danger hidden"
+                                  style="display: block; margin-top: 1px;"></span>
+                            {#
+                            <fieldset>
+                                <span id="email-span" data-placeholder="Enter your email" class="form-control edittable"
+                                      style="display: inline;"><span id="email-txt"
+                                                                     class="edit-ct">{{ app.user.email }}</span>
+                                    <i class="fa fa-pencil"></i>
+                                </span>
+                                <input name="email" type="hidden" id="email-ipt" value="{{ app.user.email }}"/>
+                            </fieldset>
+                            #}
+                            <fieldset>
+                                <input id="password-ipt" placeholder="Enter new password" type="password"
+                                       name="password" class="form-control"
+                                       style="margin-top:7px; margin-bottom: 7px;"/>
+                                <input id="password-repeat-ipt" placeholder="Re-enter the password" type="password"
+                                       name="password-repeat" class="form-control" style="margin-bottom: 7px;"/>
+                            </fieldset>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div id="dialog-remove-item" tabindex="-1" role="dialog" aria-labelledby="delete-confirmation" aria-hidden="false"
+         class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <button type="button btn-sm" data-dismiss="modal" class="close"><span aria-hidden="true"
+                                                                                              tabindex="8">×</span><span
+                                    class="sr-only">{{ 'modal.label_close'|trans({},'AppBundle') }}</span></button>
+                        <strong class="modal-title">{{ 'modal.title_delete_confirmation'|trans({},'AppBundle') }}</strong>
+                    </div>
+                    <div class="modal-body">
+                        {{ 'modal.confirm_delete'|trans({},'AppBundle') }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" tabindex="9" class="btn">{{ 'modal.button_cancel'|trans({},'AppBundle') }}</button>
+                        <button type="button" tabindex="10" class="btn btn-primary">{{ 'modal.button_yes_delete'|trans({},'AppBundle') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End: MODAL DIALOGE REMOVE ITEM - PROFILE-->
+
+    <div id="take-interview" tabindex="-1" role="dialog" aria-labelledby="take-interview" aria-hidden="false"
+         class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content form-wrapper">
+                <div class="modal-header">
+                    <button type="button btn-sm" data-dismiss="modal" class="close"><span aria-hidden="true"
+                                                                                          tabindex="8">×</span><span
+                                class="sr-only">{{ 'modal.label_close'|trans({},'AppBundle') }}</span></button>
+                    <strong class="modal-title">{{ 'profile.title_take_interview'|trans({},'SonataUserBundle') }}</strong>
+                </div>
+                <div class="modal-body">
+                    <h2 class="t-c user-sign-ttl">{{ 'profile.label_interview_code'|trans({},'SonataUserBundle') }} <span id="modal-interview-code"></span></h2>
+                    <h3 class="t-c user-sign-ttl">{{ 'invitation.done.title'|trans({}, 'AppBundle') }}</h3>
+                    <h4 class="t-c">{{ 'invitation.done.take_interview'|trans({},'AppBundle') }}</h4>
+                    <div class="t-c">
+                        <a href="https://play.google.com/store/apps/details?id=com.eaglecs.interviewspot" target="_self" title="Interview Android App Download">
+                        <img style="width:300px;margin: 0 auto;" title="Interview Android App Download" src="{{ asset('assets/images/google-play-badge.png') }}"/>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" tabindex="9" class="btn btn-default">{{ 'modal.label_close'|trans({},'AppBundle') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End: MODAL Take Interview Dialog -->
+
+    <div id="upload-intro-videos" tabindex="-1" role="dialog" aria-hidden="false" class="modal fade in resume-box">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button btn-sm" data-dismiss="modal" class="close"><span aria-hidden="true"
+                                                                                          tabindex="8">×</span><span
+                                class="sr-only">{{ 'modal.label_close'|trans({},'AppBundle') }}</span></button>
+                    <div class="modal-title">{{ 'profile.title_submit_intro_videos'|trans({},'SonataUserBundle') }}</div>
+                </div>
+                <div class="modal-body">
+                    <div class="resume-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="f-row">
+                                    <h4 class="error-msg t-c txt-gred"></h4>
+                                </div>
+                                <div class="f-row">
+                                    <div style="text-align:left" class="f-col col-sm-12 form-wrapper">
+                                        <label style="text-align:left">{{ 'job.application.error_require_x_videos'|trans({'number':2},'AppBundle') }} </label>
+                                        <ol style="text-align:left">
+                                            <li style="text-align:left">To introduce your education and training.
+                                            </li>
+                                            <li style="text-align:left">To introduce your skills and experience.
+                                            </li>
+                                        </ol>
+                                        {#</div>#}
+                                        {#<div class="f-col col-sm-6 ">#}
+                                        <label style="text-align:left">You can add new videos using 2 options
+                                            below:</label>
+                                        <form method="post" id="upload-mp4-form" enctype="multipart/form-data"
+                                              action="{{ path('post__file') }}" style="text-align:left">
+                                            <label style="text-align:left" class="resume-opt-itm">
+                                                    <span style="text-align:left" class="resume-opt-ttl">
+                                                        <div style="margin-bottom: 5px;" id="file-mp4-name-info"></div>
+                                                        <label for="upload-mp4-file" class="btn btn-primary">
+                                                            <input accept="video/mp4" type="file" name="binaryContent"
+                                                                   id="upload-mp4-file" class="hidden"/>
+                                                            Upload an MP4 file
+                                                            <i class="fa fa-arrow-circle-o-up"></i>
+                                                        </label>
+                                                        <span style="text-align:left" class="smll">You can only attach .mp4 files that are less than {{ max_file_size }}
+                                                            MB in size.
+                                                        </span>
+                                                    </span>
+                                            </label>
+                                        </form>
+                                        <div class="t-c">
+                                            OR Add a Youtube Video
+                                        </div>
+                                        <form id="upload-youtube" method="post" action="{{ path('post__youtube') }}"
+                                              class="form-wrapper">
+                                            <input name="binaryContent" type="text" class="form-control"
+                                                   placeholder="Eg: https://www.youtube.com/watch?v=eqqSa9n2ZQk"/>
+                                            <button type="submit" class="btn btn-primary" style="margin-top:5px;">ADD
+                                                Youtube link
+                                                <i class="fa fa-plus-circle"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>Please select 2 videos as explained <strong>on the left</strong> to introduce
+                                    yourself to the employer!</p>
+                                <div data-mode="multiple" class="vdeo-list form-wrapper">
+                                    {% for medium in user.videoMedia %}
+                                        <div class="vdeo-itm">
+                                            <input type="checkbox" name="video-title" id="vdeo-job-{{ medium.id }}"
+                                                   class="ipt hidden" value="{{ medium.id }}"/>
+                                            <label for="vdeo-job-{{ medium.id }}"><i class="fa fa-check"></i>
+                                                <div class="vdeo-img col-xs-3">
+                                                    <img
+                                                            src="{{ medium|thumbnailUrl }}"
+                                                            alt="{{ medium.name }}"/>
+                                                </div>
+                                                <div class="vdeo-ct col-xs-9">
+                                                        <span
+                                                                class="vdeo-ttl">{{ medium.name }}</span>
+                                                    <span
+                                                            class="vdeo-time">{{ medium.updatedAt|date('d/m/Y') }}</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer form-wrapper">
+                    <form action="" id="upload-intro-video-opt-form" name="upload-form" method="POST" data-resume="false" data-intro-video="true"
+                          data-ajax="true">
+                        <div id="formAlertIntroVideo" role="alert" class="hidden alert alert-danger">
+                        </div>
+                        <script>
+//                            window.formAlertMsg = 'Please select 2 videos for your introduction as instructed.';
+                        </script>
+                        <button type="button" data-dismiss="modal" tabindex="9" class="btn btn-bdline">Cancel</button>
+                        <button id="upload-intro-video-opt-form-submit" type="submit" tabindex="10" class="btn btn-primary">Submit Intro
+                            Videos
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End: MODAL Upload Intro Videos -->
+
+
+    <div id="upload-resume-modal" tabindex="-1" role="dialog" aria-hidden="false" class="modal fade in resume-box">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button btn-sm" data-dismiss="modal" class="close"><span aria-hidden="true"
+                                                                                          tabindex="8">×</span><span
+                                class="sr-only">{{ 'modal.label_close'|trans({},'AppBundle') }}</span></button>
+                    <div class="modal-title">{{ 'job.application.title_upload_cv'|trans({},'AppBundle') }}</div>
+                </div>
+                <div class="modal-body">
+                    <div class="resume-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="f-row">
+                                    <h4 class="error-msg t-c txt-gred"></h4>
+                                </div>
+                                <div class="f-row">
+                                    <div style="text-align:left" class="f-col col-sm-12 form-wrapper">
+                                        <label style="text-align:left">{{ 'job.application.label_select_a_cv_to_upload'|trans({},'AppBundle') }}</label>
+                                        <form method="post" id="upload-resume-form" enctype="multipart/form-data"
+                                              action="{{ path('post__file') }}" style="text-align:left">
+                                            <label style="text-align:left" class="resume-opt-itm">
+                                                    <span style="text-align:left" class="resume-opt-ttl">
+                                                        <div style="margin-bottom: 5px;" id="file-resume-name-info"></div>
+                                                        <label for="upload-resume-file" class="btn btn-primary">
+                                                            <input accept=".doc, .docx, .pdf" type="file" name="binaryContent"
+                                                                   id="upload-resume-file" class="hidden" />
+                                                            {{ 'job.application.label_upload_cv'|trans({},'AppBundle') }}
+                                                            <i class="fa fa-arrow-circle-o-up"></i>
+                                                        </label>
+                                                        <span style="text-align:left" class="smll">{{ 'job.application.notice_allowed_types_size'|trans({'max_file_size':max_file_size},'AppBundle') }}
+                                                        </span>
+                                                    </span>
+                                            </label>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>{{ 'job.application.label_select_cv_from_list'|trans({},'AppBundle') }}</p>
+                                <div style="margin-top:5px;" class="resume-opt form-wrapper">
+                                    {% for medium in user.cvMedia %}
+                                        <div class="resume-opt-itm">
+                                            <input type="radio" name="resume-opt" id="resume-opt-{{ medium.id }}" class="ipt hidden" value="{{ medium.id }}" />
+                                            <label for="resume-opt-{{ medium.id }}">
+                                            <span class="resume-opt-ttl">{{ medium.name }}
+                                                <span class="smll"> ({{ 'job.application.label_updated_at'|trans({},'AppBundle') }} {{ medium.updatedAt|date('d/m/Y') }})
+                                                </span>
+                                            </span>
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer form-wrapper">
+                    <form action="" id="upload-resume-opt-form" name="upload-form" method="POST" data-resume="true"
+                          data-ajax="true">
+                        <input type="hidden" name="cv" />
+                        <div id="formAlertResume" role="alert" class="hidden alert alert-danger">
+                        </div>
+                        <script>
+                            //                            window.formAlertMsg = 'Please select 2 videos for your introduction as instructed.';
+                        </script>
+                        <button type="button" data-dismiss="modal" tabindex="9" class="btn btn-bdline">{{ 'modal.button_cancel'|trans({},'AppBundle') }}</button>
+                        <button id="upload-resume-form-submit" type="submit" tabindex="10" class="btn btn-primary">{{ 'job.application.button_submit_cv'|trans({},'AppBundle') }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End: MODAL Upload Resume/CV -->
+
+    <div id="status-info" tabindex="-1" role="dialog" aria-labelledby="status-info" aria-hidden="false"
+         class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content form-wrapper">
+                <div class="modal-header">
+                    <button type="button btn-sm" data-dismiss="modal" class="close"><span aria-hidden="true"
+                                                                                          tabindex="8">×</span><span
+                                class="sr-only">{{ 'modal.label_close'|trans({},'AppBundle') }}</span></button>
+                    <strong class="modal-title">{{ 'profile.my_job.title_my_job_status'|trans({},'SonataUserBundle') }}</strong>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" tabindex="9" class="btn btn-default">{{ 'modal.label_close'|trans({},'AppBundle') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End: MODAL Status Dialog -->
+
+    <div id="upload-img" tabindex="-1" role="dialog" aria-labelledby="delete-confirmation" aria-hidden="false"
+         class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content form-wrapper">
+                <form id="avatar-form" method="post" action="{{ path('post__avatar') }}">
+                    <div class="modal-header">
+                        <button type="button btn-sm" data-dismiss="modal" class="close"><span aria-hidden="true"
+                                                                                              tabindex="8">×</span><span
+                                    class="sr-only">{{ 'modal.label_close'|trans({},'AppBundle') }}</span></button>
+                        <strong class="modal-title">{{ 'profile.title_upload_image'|trans({},'SonataUserBundle') }}</strong>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ 'profile.label_image_files_only'|trans({},'SonataUserBundle') }}</p>
+                        <p>{{ 'profile.label_max_file_size'|trans({'max_file_size':max_file_size},'SonataUserBundle') }}</p>
+                        <p><span id="upload-avatar-filename"></span></p>
+                        <label class="btn btn-bdline">{{ 'modal.button_choose_file'|trans({},'AppBundle') }}
+                            <input id="upload-avatar-file" accept="image/jpeg, image/png" type="file"
+                                   name="binaryContent" class="hidden"/>
+                        </label>
+                        <button type="submit" class="btn btn-primary">{{ 'modal.button_upload'|trans({},'AppBundle') }}</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" tabindex="9" class="btn btn-default">{{ 'modal.label_close'|trans({},'AppBundle') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End: MODAL UPLOAD IMAGE - PROFILE-->
+
+{% endblock main %}
+
+{% block sonata_profile_content %}
+    {% sonata_template_box 'This is the user profile template. Feel free to override it.' %}
+
+    <div class="row row-fluid">
+        {% set has_center = false %}
+        {% for block in blocks %}
+            {% if block.position == 'center' %}
+                {% set has_center = true %}
+            {% endif %}
+        {% endfor %}
+
+        <div class="{% if has_center %}span4 col-lg-4{% else %}span6 col-lg-6{% endif %}">
+            {% for block in blocks %}
+                {% if block.position == 'left' %}
+                    {{ sonata_block_render({ 'type': block.type, 'settings': block.settings}) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        {% if has_center %}
+            <div class="span4 col-lg-4">
+                {% for block in blocks %}
+                    {% if block.position == 'center' %}
+                        {{ sonata_block_render({ 'type': block.type, 'settings': block.settings}) }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="{% if has_center %}span4 col-lg-4{% else %}span6 col-lg-6{% endif %}">
+            {% for block in blocks %}
+                {% if block.position == 'right' %}
+                    {{ sonata_block_render({ 'type': block.type, 'settings': block.settings}) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts_head %}
+    <script async defer type="text/javascript"
+            src="{{ app.request.scheme }}://maps.googleapis.com/maps/api/js?language=en&region=US&key=AIzaSyD5bvGu5btI-WbyjRhh1uIKgI75E6myqGw&libraries=places"></script>
+{% endblock javascripts_head %}
+
+{% block javascripts %}
+    {% set profile = app.user.profile %}
+    {% set skills = profile.skills %}
+
+    {% javascripts
+    '@AppBundle/Resources/public/js/modules/job-profile.js'
+    '@AppBundle/Resources/public/js/modules/search_job.plg.js'
+    '@AppBundle/Resources/public/js/modules/application-form.js'
+    '@AppBundle/Resources/public/js/modules/job-detail.js'
+    '@AppBundle/Resources/public/js/the_project/pace/pace.min.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+
+    {#<script type="text/javascript" src="{{ asset('bundles/app/js/the_project/pace/pace.min.js') }}"></script>#}
+    {#<script src="{{ asset('assets/js/job-profile.js') }}"></script>#}
+    {#<script src="{{ asset('assets/js/search_job.plg.js') }}"></script>#}
+    {#<script src="{{ asset('assets/js/application-form.js') }}"></script>#}
+    {#<script src="{{ asset('assets/js/job-detail.js') }}"></script>#}
+
+    <script src="{{ asset('assets/vendor/bs-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    {% if app.request.locale != 'en' %}
+        <script src="{{ asset('assets/vendor/bs-datepicker/locales/bootstrap-datepicker.%s.min.js')|format(app.request.locale) }}"></script>
+    {% endif %}
+
+    <script>
+        $(function () {
+            window.skills = [];
+
+            {% for skill in skillDb %}
+
+            {% if skill not in skills %}
+            window.skills.push({value: '{{ skill.name }}', id: '{{ skill.id }}'});
+            {% endif %}
+
+            {% endfor %}
+            window.drdownSrch('#skill-srch', window.skills, function (selected) {
+
+            });
+
+
+            var _date = new Date();
+            var _day = _date.getDay();
+            var _month = _date.getMonth();
+            var _year = _date.getFullYear() - 16;
+
+            $('.birthday-input').datepicker({
+                format: "dd/mm/yyyy",
+                language: "{{ app.request.locale }}",
+                autoclose: true,
+                toggleActive: true,
+                defaultViewDate: {year: _year, month: _month, day: _day}
+            });
+        });
+
+        (function ($) {
+            /* OnLoad Page */
+            $(document).ready(function ($) {
+
+            });
+            /* OnLoad Window */
+            var init = function () {
+                $('body').removeClass('page-loader-2');
+                $('body').removeClass('pace-done');
+            };
+            window.onload = init;
+
+        })(jQuery);
+
+
+    </script>
+
+{% endblock javascripts %}
+
+{% block stylesheets %}
+    <link id="bsdp-css"
+          href="{{ asset('assets/vendor/bs-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{# for BS3 comptible radio button
+TODO put to a separate form theme file to be reused accross multiple themes.
+#}
+{% form_theme contactForm _self %}
+
+{% block choice_widget_expanded %}
+    {% spaceless %}
+        <div {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                {% if multiple %}
+                    {#      <div class="checkbox"> #}
+                {% else %}
+                    {#      <div class="radio"> #}
+                {% endif %}
+
+                {{ form_widget(child) }}
+                {# </div> #}
+            {% endfor %}
+        </div>
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block checkbox_widget %}
+    {% spaceless %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label for="{{ id }}">
+            <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />{{ label|trans({}, translation_domain)|capitalize }}
+        </label>
+    {% endspaceless %}
+{% endblock checkbox_widget %}
+
+{% block radio_widget %}
+    {% spaceless %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label class="radio-inline" for="{{ id }}">
+            <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />{{ label|trans({}, translation_domain)|capitalize }}
+        </label>
+    {% endspaceless %}
+{% endblock radio_widget %}
