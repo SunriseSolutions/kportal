@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a014ae169711403868b40caf62dfe4c1",
-    "content-hash": "df06ce2941eadc2ac0f7580c4e8397b6",
+    "hash": "90bf2988ccfac88078a12748a5531650",
+    "content-hash": "293cdbc5ed457fb34de08161b4eb821b",
     "packages": [
         {
             "name": "aferrandini/urlizer",
@@ -251,6 +251,68 @@
                 "location manager"
             ],
             "time": "2016-12-28 13:32:17"
+        },
+        {
+            "name": "bean-project/organisation",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bean-project/Organisation.git",
+                "reference": "6a5f3ddc08f439d0cf234bb6f7cc8e86221e0c8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bean-project/Organisation/zipball/6a5f3ddc08f439d0cf234bb6f7cc8e86221e0c8d",
+                "reference": "6a5f3ddc08f439d0cf234bb6f7cc8e86221e0c8d",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": "^2.7.1",
+                "php": "^5.6|^7.0",
+                "sylius/resource": "^1.0",
+                "symfony/intl": "^3.2"
+            },
+            "conflict": {
+                "jms/serializer": "<0.13",
+                "sonata-project/block-bundle": "<2.2.8",
+                "sonata-project/seo-bundle": "<1.1.5"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "^3.2",
+                "symfony/phpunit-bridge": "~2.7|~3.0"
+            },
+            "suggest": {
+                "liip/imagine-bundle": "~0.9",
+                "sonata-project/doctrine-orm-admin-bundle": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bean\\Component\\Organisation\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Pierre",
+                    "email": "peter@bean-project.org"
+                }
+            ],
+            "description": "Bean Organisation Component",
+            "homepage": "http://bean-project.org",
+            "keywords": [
+                "company management",
+                "organisation manager"
+            ],
+            "time": "2017-07-19 12:37:38"
         },
         {
             "name": "behat/transliterator",
@@ -2373,63 +2435,6 @@
                 "quiz"
             ],
             "time": "2017-05-03 08:02:27"
-        },
-        {
-            "name": "h5p/h5p-editor",
-            "version": "1.14.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/h5p/h5p-editor-php-library.git",
-                "reference": "78aa47115c9dc44d4279ade80f200430d684d8af"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/h5p/h5p-editor-php-library/zipball/78aa47115c9dc44d4279ade80f200430d684d8af",
-                "reference": "78aa47115c9dc44d4279ade80f200430d684d8af",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "h5peditor.class.php",
-                    "h5peditor-file.class.php",
-                    "h5peditor-ajax.interface.php",
-                    "h5peditor-ajax.class.php",
-                    "h5peditor-storage.interface.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Svein-Tore Griff With",
-                    "email": "with@joubel.com",
-                    "homepage": "http://joubel.com",
-                    "role": "CEO"
-                },
-                {
-                    "name": "Frode Petterson",
-                    "email": "frode.petterson@joubel.com",
-                    "homepage": "http://joubel.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "H5P Editor functionality in PHP",
-            "homepage": "https://h5p.org",
-            "keywords": [
-                "content",
-                "editor",
-                "h5p",
-                "hvp",
-                "interactive",
-                "quiz"
-            ],
-            "time": "2017-05-02 13:39:13"
         },
         {
             "name": "hwi/oauth-bundle",
@@ -6738,6 +6743,78 @@
             "time": "2017-02-13 07:52:53"
         },
         {
+            "name": "sylius/resource",
+            "version": "v1.0.0-beta.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sylius/Resource.git",
+                "reference": "abb9b4febf3a2788fdb0f5a8ec13a0a9d0c47e6d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sylius/Resource/zipball/abb9b4febf3a2788fdb0f5a8ec13a0a9d0c47e6d",
+                "reference": "abb9b4febf3a2788fdb0f5a8ec13a0a9d0c47e6d",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": "^2.6",
+                "gedmo/doctrine-extensions": "^2.4",
+                "pagerfanta/pagerfanta": "^1.0",
+                "php": "^5.6|^7.0",
+                "symfony/event-dispatcher": "^3.2",
+                "symfony/polyfill-php70": "~1.0",
+                "symfony/property-access": "^3.2",
+                "winzou/state-machine": "^0.3"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "^3.2",
+                "sylius/locale": "^1.0"
+            },
+            "suggest": {
+                "sylius/locale": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sylius\\Component\\Resource\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sylius project",
+                    "homepage": "http://sylius.org"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "http://github.com/Sylius/Sylius/contributors"
+                },
+                {
+                    "name": "Paweł Jędrzejewski",
+                    "homepage": "http://pjedrzejewski.com"
+                }
+            ],
+            "description": "Basic resource interfaces for PHP applications.",
+            "homepage": "http://sylius.org",
+            "keywords": [
+                "api",
+                "doctrine",
+                "ecommerce",
+                "resource",
+                "shop",
+                "sylius"
+            ],
+            "time": "2017-04-05 14:25:24"
+        },
+        {
             "name": "symfony-cmf/block-bundle",
             "version": "2.0.0",
             "source": {
@@ -9662,6 +9739,62 @@
     ],
     "packages-dev": [
         {
+            "name": "h5p/h5p-editor",
+            "version": "1.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/h5p/h5p-editor-php-library.git",
+                "reference": "78aa47115c9dc44d4279ade80f200430d684d8af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/h5p/h5p-editor-php-library/zipball/78aa47115c9dc44d4279ade80f200430d684d8af",
+                "reference": "78aa47115c9dc44d4279ade80f200430d684d8af",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "h5peditor.class.php",
+                    "h5peditor-file.class.php",
+                    "h5peditor-ajax.class.php",
+                    "h5peditor-storage.interface.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Svein-Tore Griff With",
+                    "email": "with@joubel.com",
+                    "homepage": "http://joubel.com",
+                    "role": "CEO"
+                },
+                {
+                    "name": "Frode Petterson",
+                    "email": "frode.petterson@joubel.com",
+                    "homepage": "http://joubel.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "H5P Editor functionality in PHP",
+            "homepage": "https://h5p.org",
+            "keywords": [
+                "content",
+                "editor",
+                "h5p",
+                "hvp",
+                "interactive",
+                "quiz"
+            ],
+            "time": "2017-05-02 13:39:13"
+        },
+        {
             "name": "sensio/generator-bundle",
             "version": "v3.1.4",
             "source": {
@@ -9786,7 +9919,8 @@
         "bean-project/core-bundle": 20,
         "bean-project/location-bundle": 20,
         "jms/translation-bundle": 20,
-        "jms/di-extra-bundle": 20
+        "jms/di-extra-bundle": 20,
+        "bean-project/organisation": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

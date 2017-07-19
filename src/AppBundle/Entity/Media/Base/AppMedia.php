@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Entity\Media\Base;
 
+use AppBundle\Entity\Organisation\Organisation;
 use AppBundle\Entity\User\User;
 use Sonata\MediaBundle\Entity\BaseMedia;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -41,6 +42,7 @@ class AppMedia extends BaseMedia
 
     /**
      * @var Organisation
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Organisation\Organisation", mappedBy="logo")
      */
     protected $logoOrganisation;
 

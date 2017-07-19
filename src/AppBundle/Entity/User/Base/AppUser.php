@@ -24,12 +24,17 @@ class AppUser extends BaseUser {
 		parent::__construct();
 	}
 	
-	
 	/**
 	 * One Customer has One Cart.
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Content\IndividualEntity", mappedBy="owner")
 	 */
 	private $individualEntity;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $christianName;
 	
 	/**
 	 * @var  ArrayCollection $addresses

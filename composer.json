@@ -88,7 +88,8 @@
         "jms/di-extra-bundle": "dev-master",
         "knplabs/doctrine-behaviors": "^1.4",
         "suncat/mobile-detect-bundle": "^1.0",
-        "h5p/h5p-core": "^1.5"
+        "h5p/h5p-core": "^1.5",
+        "bean-project/organisation": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
