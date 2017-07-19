@@ -29,6 +29,18 @@ services:
 #        class: H5peditor
 #        arguments: ['@app.h5p','@app.h5p_editor_storage','@app.h5p_editor_ajax']
 
+    app.twig:
+        class: AppBundle\Twig\AppExtension
+        arguments: ['@router.default','@app.site']
+        tags:
+            - {name: 'twig.extension'}
+
+    app.pagerfanta.view.default:
+        class: AppBundle\Service\Pagerfanta\AppView
+        public: false
+        tags: [{ name: pagerfanta.view, alias: app_pagerfanta_view_default }]
+
+
     app.h5p:
         class: AppBundle\Service\H5P\H5PService
         arguments: ['@service_container', '@app.h5p_framework']

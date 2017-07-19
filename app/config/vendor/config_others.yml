@@ -11,6 +11,14 @@ assetic:
 bean_location:
     db_driver: orm
 
+
+white_october_pagerfanta:
+    default_view:         app_pagerfanta_view_default
+    exceptions_strategy:
+        out_of_range_page:    ~
+        not_valid_current_page:  ~
+
+
 lunetics_locale:
     guessing_order:
         - router

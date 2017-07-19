@@ -39,9 +39,10 @@
                     {% if loop.index is odd %}
                         <div class="ibox">
                             <div class="ibox-content">
-                                <a href="{{ path('content_article',{'entitySlug':item.article.owner.slug,'articleSlug':item.article.slug}) }}" class="btn-link">
+                                {#<a href="{{ path('content_article',{'entitySlug':item.article.owner.slug,'articleSlug':item.article.slug}) }}" class="btn-link">#}
+                                <a href="{{ generateContentPath(item.content) }}" class="btn-link">
                                     <h2>
-                                        {{ item.article.title }}
+                                        {{ item.content.title }}
                                     </h2>
                                 </a>
                                 <div class="small m-b-xs">
@@ -76,7 +77,8 @@
                     {% if loop.index is even %}
                         <div class="ibox">
                             <div class="ibox-content">
-                                <a href="{{ path('content_article',{'entitySlug':item.article.entity.slug,'articleSlug':item.article.slug}) }}" class="btn-link">
+                                <a href="{{ path('content_article',{'entitySlug':item.article.entity.slug,'articleSlug':item.article.slug}) }}"
+                                   class="btn-link">
                                     <h2>
                                         {{ item.article.title }}
                                     </h2>

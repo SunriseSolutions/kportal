@@ -10,7 +10,7 @@ var SAudio = {
 var stratList = [];
 var song_paused = true;
 // var song_cache = [];
-// var host_url = 'http://localhost/001/social-teaching/joomla/file-server/';
+// var audio_server_url = 'http://localhost/001/social-teaching/joomla/file-server';
 // inner variables
 // var song_list = ['01','02','03','04','05','06','07'];
 var song_list = [];
@@ -20,23 +20,31 @@ var auto_next = false;
 function playOnEnded(_auto_next) {
     auto_next = _auto_next;
 }
+
+function clearAudioStyle(playlistJQ) {
+    playlistJQ.removeClass("word-played");
+    playlistJQ.removeClass("phrase-played");
+    playlistJQ.removeAttr("style");
+    return playlistJQ;
+}
+
 function initAudio(alias) {
     if (alias != undefined && alias != null && alias != '#'
         && alias.trim().length > 0) {
 
         var _scache = SAudio.song_cache[alias];
         if (_scache == undefined || _scache == null) {
-            SAudio.song_cache[alias] = new Audio(host_url
-                + 'file.php?ext=mp3&alias=' + alias);
+            SAudio.song_cache[alias] = new Audio(audio_server_url
+                + '/file.php?ext=mp3&alias=' + alias);
         } else {
         }
         song = SAudio.song_cache[alias];
     }
-    // song = new Audio(host_url + 'file.php?ext=mp3&alias=' + alias);//
+    // song = new Audio(audio_server_url + '/file.php?ext=mp3&alias=' + alias);//
     // song_cache[alias];
     // song = document.getElementById('globalaudio');
 
-    // song.src = host_url + 'file.php?ext=mp3&alias=' + alias;
+    // song.src = audio_server_url + '/file.php?ext=mp3&alias=' + alias;
     if (song != undefined && song != null) {
         jQuery(song).off();
     }
@@ -141,6 +149,7 @@ function playPhrase(audioalias, _onendedCallBack, _delay, range) {
 
 function playAudioParent(audioalias, _onendedCallBack, _delay,
                          _ontimeupdateCallBack) {
+
     setTimeout(
         function () {
             // playlistJQ = _playlist;

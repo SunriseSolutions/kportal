@@ -1,4 +1,5 @@
 <?php
+
 namespace Bean\Component\Dictionary\Model\Base;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,7 +13,7 @@ interface EntryInterface {
 	/**
 	 * @param mixed $id
 	 */
-	public function setId( $id );
+	public function setId($id);
 	
 	/**
 	 * @return mixed
@@ -22,7 +23,7 @@ interface EntryInterface {
 	/**
 	 * @param mixed $locale
 	 */
-	public function setLocale( $locale );
+	public function setLocale($locale);
 	
 	/**
 	 * @return mixed
@@ -32,7 +33,7 @@ interface EntryInterface {
 	/**
 	 * @param mixed $phrase
 	 */
-	public function setPhrase( $phrase );
+	public function setPhrase($phrase);
 	
 	/**
 	 * @return mixed
@@ -42,7 +43,7 @@ interface EntryInterface {
 	/**
 	 * @param mixed $phoneticSymbols
 	 */
-	public function setPhoneticSymbols( $phoneticSymbols );
+	public function setPhoneticSymbols($phoneticSymbols);
 	
 	/**
 	 * @return mixed
@@ -52,7 +53,7 @@ interface EntryInterface {
 	/**
 	 * @param mixed $definition
 	 */
-	public function setDefinition( $definition );
+	public function setDefinition($definition);
 	
 	/**
 	 * @return mixed
@@ -62,7 +63,7 @@ interface EntryInterface {
 	/**
 	 * @param mixed $commnent
 	 */
-	public function setBriefComment( $commnent );
+	public function setBriefComment($commnent);
 	
 	/**
 	 * @return mixed
@@ -72,7 +73,7 @@ interface EntryInterface {
 	/**
 	 * @param mixed $type
 	 */
-	public function setType( $type );
+	public function setType($type);
 	
 	/**
 	 * @return mixed
@@ -82,7 +83,7 @@ interface EntryInterface {
 	/**
 	 * @param mixed $sense
 	 */
-	public function setSense( $sense );
+	public function setSense($sense);
 	
 	/**
 	 * @return mixed
@@ -92,12 +93,12 @@ interface EntryInterface {
 	/**
 	 * @param mixed $samples
 	 */
-	public function setSamples( $samples );
+	public function setSamples($samples);
 	
 	/**
 	 * @param EntryInterface $entry
 	 */
-	public function setUserEntry( $entry );
+	public function setUserEntry($entry);
 	
 	/**
 	 * @return EntryInterface
@@ -107,10 +108,22 @@ interface EntryInterface {
 	/**
 	 * @param ArrayCollection $usages
 	 */
-	public function setUsages( $usages );
+	public function setUsages($usages);
 	
 	/**
 	 * @return ArrayCollection
 	 */
 	public function getUsages();
+	
+	/**
+	 * @param EntryInterface
+	 */
+	public function setSampleUserEntry($entry);
+	
+	
+	/**
+	 * @return EntryInterface
+	 */
+	public function getSampleUserEntry();
+	
 }

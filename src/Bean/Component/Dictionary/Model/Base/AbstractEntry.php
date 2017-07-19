@@ -1,4 +1,5 @@
 <?php
+
 namespace Bean\Component\Dictionary\Model\Base;
 
 use Bean\Component\NLP\Model\Sense;
@@ -10,7 +11,7 @@ abstract class AbstractEntry implements EntryInterface {
 	 */
 	protected $id;
 	
-	/** en, us, fr, vi
+	/** en_gb, en_us, fr, vi
 	 * @var string
 	 */
 	protected $locale;
@@ -50,16 +51,41 @@ abstract class AbstractEntry implements EntryInterface {
 	 */
 	protected $usages;
 	
+	public function addUsage(EntryInterface $entry) {
+		$this->usages->add($entry);
+		$entry->setUserEntry($this);
+	}
+	
+	public function removeUsage(EntryInterface $entry) {
+		$this->usages->remove($entry);
+		$entry->setUserEntry(null);
+	}
+	
 	/**
 	 * A list of sample phrases/statements (EntryInterface)
 	 * @var ArrayCollection
 	 */
 	protected $samples;
 	
+	public function addSample(EntryInterface $entry) {
+		$this->samples->add($entry);
+		$entry->setSampleUserEntry($this);
+	}
+	
+	public function removeSample(EntryInterface $entry) {
+		$this->samples->remove($entry);
+		$entry->setSampleUserEntry(null);
+	}
+	
 	/**
 	 * @var EntryInterface
 	 */
 	protected $userEntry;
+	
+	/**
+	 * @var EntryInterface
+	 */
+	protected $sampleUserEntry;
 	
 	/**
 	 * @return mixed
@@ -71,7 +97,7 @@ abstract class AbstractEntry implements EntryInterface {
 	/**
 	 * @param mixed $id
 	 */
-	public function setId( $id ) {
+	public function setId($id) {
 		$this->id = $id;
 	}
 	
@@ -85,7 +111,7 @@ abstract class AbstractEntry implements EntryInterface {
 	/**
 	 * @param mixed $locale
 	 */
-	public function setLocale( $locale ) {
+	public function setLocale($locale) {
 		$this->locale = $locale;
 	}
 	
@@ -99,7 +125,7 @@ abstract class AbstractEntry implements EntryInterface {
 	/**
 	 * @param mixed $phrase
 	 */
-	public function setPhrase( $phrase ) {
+	public function setPhrase($phrase) {
 		$this->phrase = $phrase;
 	}
 	
@@ -113,7 +139,7 @@ abstract class AbstractEntry implements EntryInterface {
 	/**
 	 * @param mixed $phoneticSymbols
 	 */
-	public function setPhoneticSymbols( $phoneticSymbols ) {
+	public function setPhoneticSymbols($phoneticSymbols) {
 		$this->phoneticSymbols = $phoneticSymbols;
 	}
 	
@@ -127,7 +153,7 @@ abstract class AbstractEntry implements EntryInterface {
 	/**
 	 * @param mixed $definition
 	 */
-	public function setDefinition( $definition ) {
+	public function setDefinition($definition) {
 		$this->definition = $definition;
 	}
 	
@@ -141,7 +167,7 @@ abstract class AbstractEntry implements EntryInterface {
 	/**
 	 * @param mixed $type
 	 */
-	public function setType( $type ) {
+	public function setType($type) {
 		$this->type = $type;
 	}
 	
@@ -155,7 +181,7 @@ abstract class AbstractEntry implements EntryInterface {
 	/**
 	 * @param mixed $sense
 	 */
-	public function setSense( $sense ) {
+	public function setSense($sense) {
 		$this->sense = $sense;
 	}
 	
@@ -169,7 +195,7 @@ abstract class AbstractEntry implements EntryInterface {
 	/**
 	 * @param mixed $samples
 	 */
-	public function setSamples( $samples ) {
+	public function setSamples($samples) {
 		$this->samples = $samples;
 	}
 	
@@ -215,4 +241,17 @@ abstract class AbstractEntry implements EntryInterface {
 		$this->userEntry = $userEntry;
 	}
 	
+	/**
+	 * @return EntryInterface
+	 */
+	public function getSampleUserEntry() {
+		return $this->sampleUserEntry;
+	}
+	
+	/**
+	 * @param EntryInterface $sampleUserEntry
+	 */
+	public function setSampleUserEntry($sampleUserEntry) {
+		$this->sampleUserEntry = $sampleUserEntry;
+	}
 }

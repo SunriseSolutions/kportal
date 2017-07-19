@@ -22,16 +22,28 @@
         {% endstylesheets %}
 
         <style>
+            .phrase-played {
+                color: darkolivegreen;
+            }
+
+            .word-played {
+                color: darkgoldenrod;
+            }
+
             .playlist [data-audioalias] {
                 cursor: pointer;
+            }
+
+            .pagination > li {
+                font-size: 16px;
             }
         </style>
     {% endblock %}
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
     <script>
-        var sroot = 'http://localhost/001/social-teaching/joomla/pkg-sunrise/public';
-        var host_url = 'http://localhost/001/social-teaching/joomla/file-server/';
+        var sroot = '{{ asset('assets/bean/js') }}';
+        var audio_server_url = '{{ app.request.scheme ~ '://' ~ fileServerURL('audio') }}';
 
     </script>
 
@@ -295,7 +307,7 @@
     'themes/standard/js/inspinia.js'
     'themes/standard/js/plugins/pace/pace.min.js'
 
-    'assets/js/audio.js'
+    'assets/bean/js/audio.js'
 
     output='js/compiled/app.js' %}
     <script src=" {{ asset_url }}"></script>
@@ -573,7 +585,7 @@
                             if (!stratList.hasOwnProperty(methodName)) {
                                 stratList[methodName] = 1;
                                 jQuery.getScript(sroot
-                                    + '/media/sunrise/js/audio-strats/'
+                                    + '/audio-strats/'
                                     + methodName + '.js', function () {
                                 });
                             }

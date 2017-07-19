@@ -28,7 +28,7 @@ class SiteService extends BaseService {
 			if($this->container->hasParameter($host)) {
 				$this->hostParams = $this->container->getParameter($host);
 			} else {
-				$this->hostParams = [];
+				$this->hostParams = $this->container->getParameter('default_site');
 			}
 		}
 		
@@ -43,5 +43,14 @@ class SiteService extends BaseService {
 		}
 		
 		return null;
+	}
+	
+	public function getFileServerURL($type = 'file') {
+		$hostParams = $this->getHostParams();
+		$fileServer = $hostParams['file_server'];
+		$subdomain  = substr($fileServer, 0, strpos($fileServer, '.'));
+		$domain     = substr($fileServer, strpos($fileServer, '.'));
+		
+		return $type . '-' . $subdomain . $domain;
 	}
 }
