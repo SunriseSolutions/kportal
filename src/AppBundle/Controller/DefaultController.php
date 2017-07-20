@@ -17,13 +17,23 @@ class DefaultController extends Controller {
 	public function helloAction(Request $request) {
 		$content = new ArticleNode();
 		$content->setBody('olala');
-		$content->setH5pContent([ 'id1' => 'inline', 'id2' => 'bottom-left', 'id3' => 'bottom-right' ]);
+		$content->setH5pContent([
+			3     => 'sidebar-left',
+			'id1' => 'inline',
+			'id2' => 'bottom-left',
+			'id3' => 'bottom-right'
+		]);
 		
 		$manager = $this->get('doctrine.orm.default_entity_manager');
-		$manager->persist($content);
-		$manager->flush();
+//		$manager->persist($content);
+//		$manager->flush();
 		
-		return new JsonResponse('Ok man');
+		$repo    = $this->getDoctrine()->getRepository(ArticleNode::class);
+		$article = $repo->find('4DOS-0000-0000-00OT-EJ17');
+		
+		$testArray = [ 0 => 'number', '0' => 'letter' ];
+		
+		return new JsonResponse($article->getH5pContent()[3]);
 	}
 	
 	/**
