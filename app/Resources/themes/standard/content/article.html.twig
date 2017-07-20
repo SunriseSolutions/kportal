@@ -61,9 +61,9 @@
                         <h4>Slug: {{ slug }}</h4>
                         {#{{ dump(scripts) }}#}
                         <p>
-                            {{ dump(settingRaw) }}
+                            {#{{ dump(settingRaw) }}#}
                             {% for content in contentTest %}
-                                {{ dump(content) }}
+                                {#{{ dump(content) }}#}
                             {% endfor %}
                         </p>
                         <p>
@@ -73,10 +73,7 @@
                         <p>
                         <div class="h5p-content" data-content-id="2"></div>
                         </p>
-                        <p>
-                            Many desktop publishing packages and web page editors now use <strong>Lorem Ipsum as their
-                                default model text</strong>, and a search for 'lorem ipsum' will uncover many web
-                        </p>
+                        {{ article.htmlBody | raw }}
                         <H1>AUDIO TEST</H1>
 
                         <p>

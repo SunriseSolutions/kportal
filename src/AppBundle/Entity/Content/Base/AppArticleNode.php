@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Entity\Content\Base;
 
 use AppBundle\Entity\Content\ArticleVocabEntry;
@@ -48,4 +49,33 @@ abstract class AppArticleNode extends ContentNode {
 		$this->vocabEntries->removeElement($item);
 		$item->setArticle(null);
 	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getBlogItems() {
+		return $this->blogItems;
+	}
+	
+	/**
+	 * @param ArrayCollection $blogItems
+	 */
+	public function setBlogItems($blogItems) {
+		$this->blogItems = $blogItems;
+	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getVocabEntries() {
+		return $this->vocabEntries;
+	}
+	
+	/**
+	 * @param ArrayCollection $vocabEntries
+	 */
+	public function setVocabEntries($vocabEntries) {
+		$this->vocabEntries = $vocabEntries;
+	}
+	
 }

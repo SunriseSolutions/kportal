@@ -18,6 +18,10 @@ abstract class AppIndividualEntity extends ContentEntity {
 		parent::__construct();
 	}
 	
+	public function getName() {
+		return $this->owner->getFirstname() . ' ' . $this->owner->getLastname();
+	}
+	
 	/**
 	 * @var User
 	 */

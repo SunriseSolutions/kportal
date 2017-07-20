@@ -25,7 +25,7 @@ abstract class AppBlogItem {
 	protected $id;
 	
 	function __construct() {
- 	}
+	}
 	
 	/**
 	 * @var BlogNode
@@ -136,4 +136,5 @@ abstract class AppBlogItem {
 	public function setContent($content) {
 		$this->content = $content;
 	}
+	
 }

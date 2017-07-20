@@ -19,6 +19,14 @@ abstract class AppContentNode {
 		$this->createdAt = new \DateTime();
 	}
 	
+	public function getAbstractContent() {
+		if( ! empty($this->abstract)) {
+			return $this->abstract;
+		}
+		
+		return '<p>' . substr(strip_tags($this->getHtmlBody()), 0, 255) . '... </p>';
+	}
+	
 	/**
 	 * ID_REF
 	 * @ORM\Id
@@ -52,6 +60,12 @@ abstract class AppContentNode {
 	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
 	protected $container = false;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string",length=255, nullable=true)
+	 */
+	protected $abstract;
 	
 	/**
 	 * ID_REF
@@ -276,5 +290,19 @@ abstract class AppContentNode {
 	 */
 	public function setTitle($title) {
 		$this->title = $title;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getAbstract() {
+		return $this->abstract;
+	}
+	
+	/**
+	 * @param string $abstract
+	 */
+	public function setAbstract($abstract) {
+		$this->abstract = $abstract;
 	}
 }

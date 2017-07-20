@@ -37,6 +37,8 @@ class ContentNodeController extends Controller {
 		$articleRepo = $registry->getRepository(ArticleNode::class);
 		$entityRepo  = $registry->getRepository(ContentEntity::class);
 		$entity      = $entityRepo->findOneBy([ 'slug' => $entitySlug ]);
+		$manager     = $this->get('doctrine.orm.default_entity_manager');
+		
 		if(empty($entity)) {
 			throw new NotFoundHttpException();
 		}
@@ -55,7 +57,7 @@ class ContentNodeController extends Controller {
 			$contentTest[] = json_decode($content['jsonContent']);
 		}
 		
-		return $this->render('content/node.html.twig', [
+		return $this->render('content/article.html.twig', [
 			'contentTest' => $contentTest,
 			'styles'      => $h5p->getStyles(),
 			'scripts'     => $h5p->getScripts(),

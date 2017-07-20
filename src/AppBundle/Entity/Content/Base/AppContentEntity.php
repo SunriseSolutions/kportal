@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Entity\Content\Base;
 
 use AppBundle\Entity\Content\ContentNode;
@@ -11,55 +12,52 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /** @ORM\MappedSuperclass */
-class AppContentEntity
-{
-    /**
-     * ID_REF
-     * @ORM\Id
-     * @ORM\Column(type="string", length=24)
-     * @ORM\GeneratedValue(strategy="CUSTOM")
-     * @ORM\CustomIdGenerator(class="AppBundle\Doctrine\ORM\RandomIdGenerator")
-     */
-    protected $id;
-
-    function __construct()
-    {
-        $this->contentNodes = new ArrayCollection();
-    }
-    
+abstract class AppContentEntity {
+	/**
+	 * ID_REF
+	 * @ORM\Id
+	 * @ORM\Column(type="string", length=24)
+	 * @ORM\GeneratedValue(strategy="CUSTOM")
+	 * @ORM\CustomIdGenerator(class="AppBundle\Doctrine\ORM\RandomIdGenerator")
+	 */
+	protected $id;
+	
+	function __construct() {
+		$this->contentNodes = new ArrayCollection();
+	}
+	
+	public abstract function getName();
+	
 	protected $owner;
-    
-    /**
-     * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentNode", mappedBy="owner", cascade={"persist","merge"})
-     */
-    protected $contentNodes;
-
-    public function addContentNode(ContentNode $poc)
-    {
-        $this->contentNodes->add($poc);
-        $poc->setOwner($this);
-    }
-
-    public function removeContentNode(ContentNode $poc)
-    {
-        $this->contentNodes->removeElement($poc);
-        $poc->setOwner(null);
-    }
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=128, nullable=true)
-     */
-    protected $slug;
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentNode", mappedBy="owner", cascade={"persist","merge"})
+	 */
+	protected $contentNodes;
+	
+	public function addContentNode(ContentNode $poc) {
+		$this->contentNodes->add($poc);
+		$poc->setOwner($this);
+	}
+	
+	public function removeContentNode(ContentNode $poc) {
+		$this->contentNodes->removeElement($poc);
+		$poc->setOwner(null);
+	}
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=128, nullable=true)
+	 */
+	protected $slug;
+	
+	/**
+	 * @return mixed
+	 */
+	public function getId() {
+		return $this->id;
+	}
 	
 	/**
 	 * @return ArrayCollection
@@ -71,10 +69,10 @@ class AppContentEntity
 	/**
 	 * @param ArrayCollection $contentNodes
 	 */
-	public function setContentNodes( $contentNodes ) {
+	public function setContentNodes($contentNodes) {
 		$this->contentNodes = $contentNodes;
 	}
- 
+	
 	
 	/**
 	 * @return string
@@ -86,8 +84,8 @@ class AppContentEntity
 	/**
 	 * @param string $slug
 	 */
-	public function setSlug( $slug ) {
+	public function setSlug($slug) {
 		$this->slug = $slug;
 	}
-
+	
 }
