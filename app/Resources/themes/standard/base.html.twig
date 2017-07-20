@@ -420,10 +420,12 @@
                                                         .scrollTop(
                                                             phraseObj
                                                                 .offset().top - 40);
-                                                    phraseObj
-                                                        .css({
-                                                            'color': 'darkred'
-                                                        });
+//                                                    phraseObj
+//                                                        .css({
+//                                                            'color': 'darkred'
+//                                                        });
+
+                                                    phraseObj.addClass('phrase-played');
                                                     phraseObj
                                                         .show();
                                                 }
@@ -471,14 +473,18 @@
                                     $('.startPlaylist').button('reset');
                                     var phraselist = playlist[plid];
                                     for (var i = 1; i < phraseIndex + 1; i++) {
-                                        phraselist[i][0].css({
-                                            'color': 'darkred'
-                                        }).show();
+//                                        phraselist[i][0].css({
+//                                            'color': 'darkred'
+//                                        }).show();
+
+                                        phraselist[i][0].addClass('phrase-played').show();
+
                                         // iterate subphrase
                                         for (var j = 1; j < phraselist[i].length; j++) {
-                                            phraselist[i][j].css({
-                                                'color': 'darkred'
-                                            }).show();
+//                                            phraselist[i][j].css({
+//                                                'color': 'darkred'
+//                                            }).show();
+                                            phraselist[i][j].addClass('phrase-played').show();
                                         }
                                     }
                                     for (var i = phraseIndex + 1; i < phraselist.length; i++) {
