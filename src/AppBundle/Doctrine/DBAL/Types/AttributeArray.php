@@ -16,6 +16,7 @@ class AttributeArray extends Type {
 		foreach($value as $itemKey => $itemValue) {
 			$value[ $itemKey ] = '{' . $itemKey . '}' . '=>' . '[' . $itemValue . ']';
 		}
+		
 		$attribute = implode(',', $value);
 		
 		return $attribute;
