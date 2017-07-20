@@ -37,6 +37,12 @@ abstract class AppContentNode {
 	protected $id;
 	
 	/**
+	 * @var array
+	 * @ORM\Column(type="attribute_array", nullable=true)
+	 */
+	protected $h5pContent;
+	
+	/**
 	 * @var ContentEntity
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentEntity",inversedBy="contentNodes")
 	 * @ORM\JoinColumn(name="id_owner", referencedColumnName="id", onDelete="CASCADE")
@@ -305,4 +311,19 @@ abstract class AppContentNode {
 	public function setAbstract($abstract) {
 		$this->abstract = $abstract;
 	}
+	
+	/**
+	 * @return array
+	 */
+	public function getH5pContent() {
+		return $this->h5pContent;
+	}
+	
+	/**
+	 * @param array $h5pContent
+	 */
+	public function setH5pContent($h5pContent) {
+		$this->h5pContent = $h5pContent;
+	}
+	
 }

@@ -50,7 +50,7 @@ doctrine:
         #     path:     "%database_path%"
         types:
             json: Sonata\Doctrine\Types\JsonType
-#            attribute_array:  AppBundle\Doctrine\DBAL\Types\AttributeArray
+            attribute_array:  AppBundle\Doctrine\DBAL\Types\AttributeArray
 
             
     orm:
