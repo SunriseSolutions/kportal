@@ -50,6 +50,180 @@ abstract class AppArticleNode extends ContentNode {
 		$item->setArticle(null);
 	}
 	
+	
+	/**
+	 * @var string
+	 */
+	protected $topLeft;
+	
+	/**
+	 * @var string
+	 */
+	protected $topMiddle;
+	
+	/**
+	 * @var string
+	 */
+	protected $topRight;
+	
+	/**
+	 * @var string
+	 */
+	protected $main;
+	
+	/**
+	 * @var string
+	 */
+	protected $sideLeft;
+	
+	/**
+	 * @var string
+	 */
+	protected $sideRight;
+	
+	/**
+	 * @var string
+	 */
+	protected $bottomLeft;
+	
+	/**
+	 * @var string
+	 */
+	protected $bottomRight;
+	
+	/**
+	 * @var string
+	 */
+	protected $bottomMiddle;
+	
+	/**
+	 * @return string
+	 */
+	public function getTopLeft() {
+		return $this->topLeft;
+	}
+	
+	/**
+	 * @param string $topLeft
+	 */
+	public function setTopLeft($topLeft) {
+		$this->topLeft = $topLeft;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getTopMiddle() {
+		return $this->topMiddle;
+	}
+	
+	/**
+	 * @param string $topMiddle
+	 */
+	public function setTopMiddle($topMiddle) {
+		$this->topMiddle = $topMiddle;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getTopRight() {
+		return $this->topRight;
+	}
+	
+	/**
+	 * @param string $topRight
+	 */
+	public function setTopRight($topRight) {
+		$this->topRight = $topRight;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getMain() {
+		return $this->main;
+	}
+	
+	/**
+	 * @param string $main
+	 */
+	public function setMain($main) {
+		$this->main = $main;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getSideLeft() {
+		return $this->sideLeft;
+	}
+	
+	/**
+	 * @param string $sideLeft
+	 */
+	public function setSideLeft($sideLeft) {
+		$this->sideLeft = $sideLeft;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getSideRight() {
+		return $this->sideRight;
+	}
+	
+	/**
+	 * @param string $sideRight
+	 */
+	public function setSideRight($sideRight) {
+		$this->sideRight = $sideRight;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getBottomLeft() {
+		return $this->bottomLeft;
+	}
+	
+	/**
+	 * @param string $bottomLeft
+	 */
+	public function setBottomLeft($bottomLeft) {
+		$this->bottomLeft = $bottomLeft;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getBottomRight() {
+		return $this->bottomRight;
+	}
+	
+	/**
+	 * @param string $bottomRight
+	 */
+	public function setBottomRight($bottomRight) {
+		$this->bottomRight = $bottomRight;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getBottomMiddle() {
+		return $this->bottomMiddle;
+	}
+	
+	/**
+	 * @param string $bottomMiddle
+	 */
+	public function setBottomMiddle($bottomMiddle) {
+		$this->bottomMiddle = $bottomMiddle;
+	}
+	
+	
+	
 	/**
 	 * @return ArrayCollection
 	 */

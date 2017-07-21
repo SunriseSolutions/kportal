@@ -42,4 +42,58 @@ class ArticleNode extends AppArticleNode {
 	 */
 	protected $vocabEntries;
 	
+	/**
+	 * @var string
+	 * @ORM\Column(type="text",nullable=true)
+	 */
+	protected $topLeft;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="text",nullable=true)
+	 */
+	protected $topMiddle;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="text",nullable=true)
+	 */
+	protected $topRight;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="text")
+	 */
+	protected $main;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="text",nullable=true)
+	 */
+	protected $sideLeft;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="text",nullable=true)
+	 */
+	protected $sideRight;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="text",nullable=true)
+	 */
+	protected $bottomLeft;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="text",nullable=true)
+	 */
+	protected $bottomRight;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="text",nullable=true)
+	 */
+	protected $bottomMiddle;
+	
 }
