@@ -83,263 +83,28 @@
                                 {#{{ dump(scripts) }}#}
                                 <p>
                                     {#{{ dump(settingRaw) }}#}
-                                    {% for content in contentTest %}
-                                        {#{{ dump(content) }}#}
-                                    {% endfor %}
+                                    {#{% for content in contentTest %}#}
+                                    {#{{ dump(content) }}#}
+                                    {#{% endfor %}#}
                                 </p>
                                 {{ article.htmlBody | raw }}
-                                <H1>AUDIO TEST</H1>
 
-                                <p>
-                                    <button id="startPlaylist2" class="btn startPlaylist" data-playstrat="once"
-                                            data-playlist="playlist2a">Start
-                                        Playslit 2A - Strategy Once
-                                    </button>
-                                </p>
-                                <div id="playlist2a" class="playlist " data-audioalias="taxi1-l01d01">
-                                    <div class="message">
-
-                                    </div>
-                                    <span data-audioalias="taxi1-l01d01p01">
-                                <span class="test" data-audioalias="fr-bonjour"
-                                      data-content="parent popup do nha">- <strong>B<span
-                                                class="text-underlined">o</span>njour </strong>
-                                </span>
-                                <span class="test" data-audioalias="fr-monsieur">Monsieur.
-                                </span>
-                            </span>
-                                    <span data-audioalias="taxi1-l01d01p02">
-	<span data-audioalias="vous">Vous </span>
-	<span data-audioalias="vous">vous</span><span id="subphrase1-2-4" data-audioalias="fr-appeler">&#x203F;appelez ..... ?</span>
-</span>
-                                    <span data-audioalias="taxi1-l01d01p03">
-	<span data-audioalias="fr-doucet"><br/>- Doucet, </span>
-	<span data-audioalias="fr-yves-doucet">Yves Doucet.</span>
-</span>
-                                    <span data-audioalias="taxi1-l01d01p04">
-	<span data-audioalias="fr-et"> Et </span>
-	<span data-audioalias="fr-voici">voici </span>
-	<span data-audioalias="fr-ma">ma  </span>
-	<span data-audioalias="fr-femme">femme </span>
-	<span data-audioalias="fr-Alice">Alice </span>
-</span>
-                                    <span data-audioalias="taxi1-l01d01p05">
-	<span data-audioalias="bonjour"><br/>- Bonjour </span>
-	<span data-audioalias="madame">Madame. </span>
-</span></div>
-
-
-                                <p>
-                                    <button id="startPlaylist2" class="btn startPlaylist" data-playstrat="once"
-                                            data-playlist="playlist2">Start Playslit
-                                        2 - Strategy Once
-                                    </button>
-                                </p>
-                                <div id="playlist2" class="playlist " data-audioalias="taxi1-l01d01">
-                                    <div class="message"></div>
-                                    <span id="phrase1-1" data-audioalias="taxi1-l01d01p01">
-       <span class="test" data-audioalias="fr-bonjour" data-content="parent popup do nha">- <strong>B<span
-                       class="text-underlined">o</span>njour </strong></span>
-       <span class="test" data-audioalias="fr-monsieur">Monsieur. </span>
-</span>
-                                    <span data-audioalias="taxi1-l01d01p02">
-	<span data-audioalias="vous">Vous </span>
-	<span data-audioalias="vous">vous</span><span id="subphrase1-2-4" data-audioalias="fr-appeler">&#x203F;appelez ..... ?</span>
-</span>
-                                    <span data-audioalias="taxi1-l01d01p03">
-	<span data-audioalias="fr-doucet"><br/>- Doucet, </span>
-	<span data-audioalias="fr-yves-doucet">Yves Doucet.</span>
-</span>
-                                    <span data-audioalias="taxi1-l01d01p04">
-	<span data-audioalias="fr-et"> Et </span>
-	<span data-audioalias="fr-voici">voici </span>
-	<span data-audioalias="fr-ma">ma  </span>
-	<span data-audioalias="fr-femme">femme </span>
-	<span data-audioalias="fr-Alice">Alice </span>
-</span>
-                                    <span data-audioalias="taxi1-l01d01p05">
-	<span data-audioalias="bonjour"><br/>- Bonjour </span>
-	<span data-audioalias="madame">Madame. </span>
-</span></div>
-                                </section>
-
-                                <button class="btn btn-primary" value="Current Time"
-                                        onclick="alert(SAudioConfig.currentTime);">
-                                    CLICK TO GET CURRENT
-                                    TIME
-                                </button>
-                                <p>
-                                    <button id="startPlaylist3" class="btn startPlaylist" data-playstrat="repeat"
-                                            data-playlist="playlist3">Start
-                                        Playlist - Strategy Repeat
-                                    </button>
-                                </p>
-                                <div id="playlist3" class="playlist " data-audioalias="taxi1-l01d01">
-                                    <div class="message"></div>
-                                    <span data-audioalias="taxi1-l01d01p01">
-       <span class="test" data-audioalias="fr-bonjour" data-content="parent popup do nha">- <strong>B<span
-                       class="text-underlined">o</span>njour </strong></span>
-       <span class="test" data-audioalias="fr-monsieur">Testing Monsieur. </span>
-</span>
-                                    <span data-audioalias="taxi1-l01d01p02">
-	<span data-audioalias="vous">Vous </span>
-	<span data-audioalias="vous">vous</span>
-	<span data-audioalias="fr-appeler">&#x203F;appelez ..... ?</span>
-</span>
-                                    <span data-audioalias="taxi1-l01d01p03">
-	<span data-audioalias="fr-doucet"><br/>- Doucet, </span>
-	<span data-audioalias="fr-yves-doucet">Yves Doucet.</span>
-</span>
-                                    <span data-audioalias="taxi1-l01d01p04">
-	<span data-audioalias="fr-et"> Et </span>
-	<span data-audioalias="fr-voici">voici </span>
-	<span data-audioalias="fr-ma">ma  </span>
-	<span data-audioalias="fr-femme">femme </span>
-	<span data-audioalias="fr-Alice">Alice </span>
-</span>
-                                    <span data-audioalias="taxi1-l01d01p05">
-	<span data-audioalias="bonjour"><br/>- Bonjour </span>
-	<span data-audioalias="madame">Madame. </span>
-</span>
-                                </div>
-                                <h1> KBUCODE READY ???? </h1> {kbucode anh.yeu.em.hahahah-hohoo-hihihi}
-                                <hr/>
-                                <p>
-                                    <button id="startPlaylist4" class="btn startPlaylist" data-playstrat="Sharesrc"
-                                            data-playlist="playlist4"
-                                            data-clicktoplay-text="Click to playyy" data-playing-text="Click to pause">
-                                        Start -
-                                        Strategy Sharesrc
-                                    </button>
-                                </p>
-                                <div id="playlist4" class="playlist " data-audioalias="taxi1-l01d01" data-seekable="1">
-                                    <div class="message"></div>
-                                    <div data-audioalias="#" data-audiorange="0;-1"> 0 giay dau</div>
-                                    <div data-audioalias="#" data-audiorange="2;-1"> sau 2 giay</div>
-                                    <div data-audioalias="#" data-audiorange="4.123;-1"> sau 4.123 giay</div>
-                                </div>
-
-                                <hr/>
-
-                                <div class="pause btn btn-default">pause</div>
-                                <div data-audioalias="taxi1-l01d01p01" data-audiorange="0;3"> 3 giay dau
-                                    <span class="test" title="im here for tooltip too"
-                                          data-content="parent popup do nha">- <strong>B<span
-                                                    class="text-underlined">o</span>njour </strong></span>
-                                    <span class="test"><span title="tooltip">test 222 Monsieur. </span></span>
-                                </div>
-                                <div data-audioalias="taxi1-l01d01p02">
-                                    Vous
-                                    vous
-                                    <span data-audioalias="fr-appeler">&#x203F;appelez ..... ?</span>
-                                </div>
-                                <div data-audioalias="taxi1-l01d01p03">
-                                    <span data-audioalias="fr-doucet"><br/>- Doucet, </span>
-                                    <span data-audioalias="fr-yves-doucet">Yves Doucet.</span>
-                                </div>
-
-
-                                <div data-audioalias="taxi1-l01d01p04">
-                                    <span data-audioalias="fr-et"> Et </span>
-                                    <span data-audioalias="fr-voici">voici </span>
-                                    <span data-audioalias="fr-ma">ma  </span>
-                                    <span data-audioalias="fr-femme">femme </span>
-                                    <span data-audioalias="fr-Alice">Alice </span>
-                                </div>
-                                <a class="srtab-jump" href="#profile/messagesSUB/profileGRANDCHILD">profile/messagesSUB/profileGRANDCHILD</a>
-                                <div data-audioalias="taxi1-l01d01p05">
-                                    <span data-audioalias="bonjour"><br/>- Bonjour </span>
-                                    <span data-audioalias="madame">Madame. </span>
-                                </div>
-
-                                <button id="test" class="btn server-data" data-playstrat="repeat"
-                                        data-playlist="playlist2">
-                                    Start - Strategy Repeat
-                                </button>
-                                </p>
-                                <div id="page-1" class="presentation manual-start show-positions" data-pagenext="1"
-                                     data-pagejump="" data-delay="1000"
-                                     data-mode="auto">
-                                    <div data-position="1" data-delay="1000">dummy text 1</div>
-                                    <div data-position="2" data-delay="3000" data-audioalias="taxi1-l01d01p04"
-                                         data-audiodelay="2000">dummy text 2
-                                    </div>
-                                    <div data-position="3" data-delay="1000">dummy text 3
-                                        <ol>
-                                            <li>bullet 1</li>
-                                            <li data-position="4">bullet 2</li>
-                                            <li>bullet 3</li>
-                                        </ol>
-                                    </div>
-                                    <div data-position="5" class="page-back"></div>
-                                    <div data-position="6" data-mode="click" data-pagejump="2"></div>
-                                    <div data-position="6">You will be redirected to another page</div>
-                                    <div data-position="7"></div>
-                                </div>
-
-                                <hr/>
-                                <p>
-                                    <i>
-                                        Far far away, behind the word mountains, far from the countries Vokalia and
-                                        Consonantia,
-                                        there live the blind texts. Separated they live in Bookmarksgrove right at the
-                                        coast of
-                                        the Semantics, a large language ocean. A small river named Duden flows by their
-                                        place
-                                        and supplies it with the necessary regelialia. It is a paradisematic country, in
-                                        which
-                                        roasted parts of sentences fly into your mouth.
-                                    </i>
-                                </p>
-                                <p>
-                                    The Big Oxmox advised her not to do so, because there were thousands of bad Commas,
-                                    wild
-                                    Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. She
-                                    packed her
-                                    seven versalia, put her initial into the belt and made herself on the way. When she
-                                    reached
-                                    the first hills of the Italic Mountains, she had a last view back on the skyline of
-                                    her
-                                    hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own
-                                    road,
-                                    the Line Lane. Pityful a rethoric question ran over her cheek,
-                                </p>
-                                <p>
-                                    Two driven jocks help fax my big quiz. Quick, Baz, get my woven flax jodhpurs! "Now
-                                    fax quiz
-                                    Jack!" my brave ghost pled. Five quacking zephyrs jolt my wax bed. Flummoxed by job,
-                                    kvetching W. zaps Iraq. Cozy sphinx waves quart jug of bad milk. A very bad quack
-                                    might jinx
-                                    zippy fowls. Few quips galvanized the mock jury box. Quick brown dogs jump over the
-                                    lazy
-                                    fox. The jay, pig, fox, zebra, and my wolves quack! Blowzy red vixens fight for a
-                                    quick
-                                    jump. Joaquin Phoenix was gazed by MTV for luck. A wizard’s job is to vex chumps
-                                    quickly in
-                                    fog. Watch "Jeopardy!", Alex Trebek's fun TV quiz game. Woven silk pyjamas exchanged
-                                    for
-                                    blue quartz. Brawny gods just
-                                </p>
-                                <p>
-                                    Brick quiz whangs jumpy veldt fox. Bright vixens jump; dozy fowl quack. Quick
-                                    wafting
-                                    zephyrs vex bold Jim. Quick zephyrs blow, vexing daft Jim. Sex-charged fop blew my
-                                    junk TV
-                                    quiz. How quickly daft jumping zebras vex.
-                                </p>
                             </div>
                         </div>
                         <hr/>
                         <div class="row">
                             <div class="col-lg-6">
                                 <p>
-                                <div class="h5p-content" data-content-id="1"></div>
+                                    {% for id, position in h5pContentIds if position == 'bottom-left' %}
+                                <div class="h5p-content" data-content-id="{{ id }}"></div>
+                                {% endfor %}
                                 </p>
-                                <br/><br/><br/>
                             </div>
                             <div class="col-lg-6">
                                 <p>
-                                <div class="h5p-content" data-content-id="2"></div>
+                                    {% for id, position in h5pContentIds if position == 'bottom-right' %}
+                                <div class="h5p-content" data-content-id="{{ id }}"></div>
+                                {% endfor %}
                                 </p>
                             </div>
                         </div>
@@ -359,6 +124,7 @@
                             </div>
                         </div>
 
+                        {#
                         <div class="row">
                             <div class="col-lg-12">
                                 <h2>Comments:</h2>
@@ -455,12 +221,9 @@
                                         </p>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
-
-
+                        #}
                     </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@ use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class ContentNodeAdmin extends BaseAdmin {
+class ArticleNodeAdmin extends BaseAdmin {
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper

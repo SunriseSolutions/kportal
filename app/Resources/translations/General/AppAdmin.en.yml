@@ -1,21 +1,9 @@
 user:
     email_exists: This email has already been used by another user.
+
 dashboard:
-    sales_partner_consumer_channel_partner: B2C Channel Partner
-    sales_partner_business_channel_partner: B2B Channel Partner
-    channel_partner_employee: App Employee
-    employee: App Employee
-    business_employer: Manage Employers
-    channel_partner_business_employer: Employer Info
-    product: Products
-    company: Manage Entities
-    sales_partner: Manage Sales Partners
-    channel_partner: Manage Channel Partners
-    consumer_channel_partner: B2C Channel Partners
-    business_channel_partner: B2B Channel Partners
-    clinic: Manage Clinics/Centres
-    principal: Manage Principals
-    order: Manage Orders
+    content_node: Content Node
+    article_node: Article Node
     organisation: Manage Companies
     invitation: Manage Invitations
     candidate: Manage Applicants
@@ -67,6 +55,7 @@ filter:
     label_order_number: Order Number
 list:
     label_id: ID/Serial Number
+    label_slug: Slug
     label_pin_code: Pin Code
     label_payment_mode: Payment Mode
     label_dob: DOB
@@ -194,6 +183,8 @@ list:
     label_home_logo: Homepage Featured
 
 form:
+    label_html_body: HTML Body
+    label_body: Body
     label_email_address: Email Address
     label_pin_code: Pin Code
     label_setting__date_format: Date Format
@@ -355,39 +346,5 @@ form:
     label_work_location: Work Location(s)
 
 breadcrumb:
-    link_business_employee_list: Employees
-    link_business_order_list: Orders
-    link_business_employer_list: Employers
-    link_channel_partner_employer_voucher_product_list: Place Order
-    link_business_channel_partner_list: B2B Channel Partners
-    link_consumer_order_list: View B2C Orders
-    link_clinic_principal_list: Principal's Clinic List
-    link_clinic_principal_create: Assign a Clinic to Principal
-    link_channel_partner_list: Channel Partner List
-    link_channel_partner_create: Add Channel Partner
-    link_organisation_list: Company List
-    link_order_list: Order List
-    link_channel_partner_user_list: CP User List
-    link_channel_partner_user_create: Add CP User
-    link_channel_partner_voucher_product_list: CP Voucher Products
-    link_payment_list: Invoice List
-    link_sales_partner_list: Sales Partner List
-    link_principal_list: Principal List
-    link_product_list: Product List
-    link_order_item_list: Product Report
-    link_product_create: Create New Product
-    link_channel_partner_employer_list: Employer List
-    link_channel_partner_employer_create: Create Employer
-    link_c_p_employee_visit_list: Employee Visits
-    link_organisation_create: Create new Entity
-    link_business_benefit_create: Create Benefit
-    link_business_benefit_list: Benefits
-    link_channel_partner_employer_non_voucher_product_list: Company's Benefits
-    link_business_employee_visit_list: Employee Visits
-    link_non_voucher_product_list: Non-voucher Product List
-    link_business_employee_create: Create Employee
-    link_consumer_channel_partner_list: B2C Channel Partners
-    link_sales_partner_consumer_channel_partner_list: Sales Force's B2C Channel Partners
-    link_sales_partner_consumer_channel_partner_create: Create B2C Channel Partner under Sales Force
-    link_sales_partner_business_channel_partner_list: B2B Channel Partner List
-    link_sales_partner_business_channel_partner_create: B2B Channel Partner
+    link_content_node_list: Content Node
+

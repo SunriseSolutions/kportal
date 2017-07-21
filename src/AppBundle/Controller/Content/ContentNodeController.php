@@ -47,27 +47,32 @@ class ContentNodeController extends Controller {
 			throw new NotFoundHttpException();
 		}
 		
-		$h5p     = $this->get('app.h5p');
-		$h5pHtml = $h5p->getHtml([ 1, 2 ]);
+		$h5pContentIds = $article->getH5pContent();
+		
+		$h5p = $this->get('app.h5p');
+		
+		$h5pContentIdArray = array_keys($h5pContentIds);
+		$h5pHtml           = $h5p->getHtml($h5pContentIdArray);
 		
 		$settings    = json_encode($h5p->getSettings());
 		$setting     = $h5p->getSettings();
-		$contentTest = [];
-		foreach($setting['contents'] as $content) {
-			$contentTest[] = json_decode($content['jsonContent']);
-		}
+//		$contentTest = [];
+//		foreach($setting['contents'] as $content) {
+//			$contentTest[] = json_decode($content['jsonContent']);
+//		}
 		
 		return $this->render('content/article.html.twig', [
-			'contentTest' => $contentTest,
-			'styles'      => $h5p->getStyles(),
-			'scripts'     => $h5p->getScripts(),
-			'settingRaw'  => $h5p->getSettings(),
-			'h5pHtml'     => $h5pHtml,
-			'h5pSettings' => $settings,
-			'entitySlug'  => $entitySlug,
-			'slug'        => $articleSlug,
-			'entity'      => $entity,
-			'article'     => $article
+//			'contentTest'   => $contentTest,
+			'styles'        => $h5p->getStyles(),
+			'scripts'       => $h5p->getScripts(),
+			'settingRaw'    => $h5p->getSettings(),
+			'h5pHtml'       => $h5pHtml,
+			'h5pSettings'   => $settings,
+			'entitySlug'    => $entitySlug,
+			'slug'          => $articleSlug,
+			'entity'        => $entity,
+			'article'       => $article,
+			'h5pContentIds' => $h5pContentIds
 		]);
 	}
 	

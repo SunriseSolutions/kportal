@@ -1,5 +1,5 @@
 services:
-    app.admin.payment:
+    app.admin.content_node:
         class: AppBundle\Admin\Content\ContentNodeAdmin
         arguments: [~, AppBundle\Entity\Content\ContentNode, AppBundle:Admin/Content/ContentNodeAdmin]
         calls:
@@ -10,4 +10,13 @@ services:
 #            - [addChild, ['@app.admin.product_clinics']]
             - [setTranslationDomain, ['AppAdmin']]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: dashboard.content, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
+            - { name: sonata.admin, manager_type: orm, label: dashboard.content_node, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
+
+    app.admin.content_article_node:
+        class: AppBundle\Admin\Content\ContentNodeAdmin
+        arguments: [~, AppBundle\Entity\Content\ArticleNode, AppBundle:Admin/Content/ArticleNodeAdmin]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['AppAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.article_node, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }

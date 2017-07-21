@@ -103,12 +103,19 @@ class H5PService extends BaseService {
 		if(is_array($ids)) {
 			foreach($ids as $id) {
 				$content = $this->getContent($id);
-				$html    = $this->addAssets($content);
+				if( ! empty($content)) {
+					$html = $this->addAssets($content);
+				} else {
+					$html = '';
+				}
 			}
 		} else {
 			$content = $this->getContent($ids);
-			
-			return $this->addAssets($content);
+			if( ! empty($content)) {
+				$html = $this->addAssets($content);
+			} else {
+				$html = '';
+			}
 		}
 		
 		return $html;
@@ -129,7 +136,8 @@ class H5PService extends BaseService {
 		$content = $core->loadContent($id);
 		
 		if( ! $content) {
-			return sprintf('Cannot find H5P content with id: %d.', $id);
+//			return sprintf('Cannot find H5P content with id: %d.', $id);
+			return null;
 		}
 		
 		$content['language'] = $this->getLanguage();
