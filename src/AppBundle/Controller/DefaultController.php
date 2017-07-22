@@ -33,7 +33,11 @@ class DefaultController extends Controller {
 		
 		$testArray = [ 0 => 'number', '0' => 'letter' ];
 		
-		return new JsonResponse($article->getH5pContent()[3]);
+//		return new JsonResponse($article->getH5pContent()[3]);
+		$code = '[h5p id="1" label="Cau hoi nhanh so 1"]';
+		return new JsonResponse($this->get('app.string')->parseShortCode($code, 'h5p'))
+		;
+		
 	}
 	
 	/**

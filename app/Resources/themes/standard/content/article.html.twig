@@ -74,39 +74,8 @@
                             </h3>
                         </div>
                         {#{{ h5pSettings }}#}
-                        <div class="row">
-                            <div class="col-sm-12">
-
-                                <h1> Theme: Default views/content/piece.html.twig </h1>
-                                <h2>Entity: {{ entity.owner.username }}</h2>
-                                <h4>Slug: {{ slug }}</h4>
-                                {#{{ dump(scripts) }}#}
-                                <p>
-                                    {#{{ dump(settingRaw) }}#}
-                                    {#{% for content in contentTest %}#}
-                                    {#{{ dump(content) }}#}
-                                    {#{% endfor %}#}
-                                </p>
-                                {{ article.htmlBody | raw }}
-
-                            </div>
-                        </div>
-                        <hr/>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <p>
-                                    {% for id, position in h5pContentIds if position == 'bottom-left' %}
-                                <div class="h5p-content" data-content-id="{{ id }}"></div>
-                                {% endfor %}
-                                </p>
-                            </div>
-                            <div class="col-lg-6">
-                                <p>
-                                    {% for id, position in h5pContentIds if position == 'bottom-right' %}
-                                <div class="h5p-content" data-content-id="{{ id }}"></div>
-                                {% endfor %}
-                                </p>
-                            </div>
+                        <div class="article-content">
+                            {{ article.htmlBody | raw }}
                         </div>
                         <hr/>
                         <div class="row">
@@ -117,13 +86,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="small text-right">
-                                    <h5>Stats:</h5>
-                                    <div><i class="fa fa-comments-o"> </i> 56 comments</div>
-                                    <i class="fa fa-eye"> </i> 144 views
+                                    {#<h5>Stats:</h5>#}
+                                    {#<div><i class="fa fa-comments-o"> </i> 56 comments</div>#}
+                                    {#<i class="fa fa-eye"> </i> 144 views#}
                                 </div>
                             </div>
                         </div>
-
                         {#
                         <div class="row">
                             <div class="col-lg-12">
@@ -224,6 +192,7 @@
                             </div>
                         </div>
                         #}
+
                     </div>
                 </div>
             </div>

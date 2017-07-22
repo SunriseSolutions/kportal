@@ -53,4 +53,51 @@ class ArticleNodeAdmin extends BaseAdmin {
 			->end();
 		
 	}
+	
+	
+	/**
+	 * @param ArticleNode $object
+	 */
+	public function preValidate($object) {
+		$bodyContent = '
+                            <div class="row">
+                                <div class="col-sm-12">
+                                %s
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                %s
+                                </div>
+                                <div class="col-lg-6">
+                                %s
+                                </div>
+                            </div>';
+		$object->setBody(sprintf($bodyContent, $object->getMain(), $object->getBottomLeft(), $object->getBottomRight()));
+		$object->setHtmlBody($object->getBody());
+	}
+	
+	/**
+	 * @param ArticleNode $object
+	 */
+	public function postPersist($object) {
+
+//		$container->get( 'app.admin.candidate' )->update( $candidate );
+//		$this->getModelManager()->update( $object );
+//		$this->getModelManager()->update( $object );
+		
+	}
+	
+	/**
+	 * @param ArticleNode $object
+	 */
+	public function postUpdate($object) {
+
+//		$container->get( 'app.admin.candidate' )->update( $candidate );
+//		$this->getModelManager()->update( $object );
+//		$this->getModelManager()->update( $object );
+		
+	}
+	
 }
