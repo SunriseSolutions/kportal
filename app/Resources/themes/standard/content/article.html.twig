@@ -40,6 +40,26 @@
 //                    $('body').removeClass('body-small')
                 }
             });
+
+
+            $('.btn-content').on('click', function (e) {
+                _h5pId = $(this).data('h5ptarget');
+                var $h5p = $('#h5p_' + _h5pId);
+                var $h5pActive = $('.h5p-app-active');
+
+                if ($h5p.hasClass('h5p-app-active')) {
+                    $h5p.addClass('hidden');
+                    $h5p.removeClass('h5p-app-active');
+
+                } else {
+                    $h5pActive.addClass('hidden');
+                    $h5pActive.removeClass('h5p-app-active');
+
+                    $h5p.removeClass('hidden');
+                    $h5p.addClass('h5p-app-active');
+                }
+
+            });
         });
 
     </script>

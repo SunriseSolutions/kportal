@@ -74,8 +74,26 @@ class ArticleNodeAdmin extends BaseAdmin {
                                 %s
                                 </div>
                             </div>';
-		$object->setBody(sprintf($bodyContent, $object->getMain(), $object->getBottomLeft(), $object->getBottomRight()));
-		$object->setHtmlBody($object->getBody());
+		
+		$bodyContent = sprintf($bodyContent, $object->getMain(), $object->getBottomLeft(), $object->getBottomRight());
+		
+		$object->setBody($bodyContent);
+		$stringService = $this->getConfigurationPool()->getContainer()->get('app.string');
+		
+		$shortcodeCount    = 0;
+		$htmlReplaceFormat = '<p><button data-h5ptarget="%1$d" class="btn-content btn btn-default">%3$s</button></p> <p>  <div class="h5p-content hidden" id="h5p_%1$d" data-content-id="%2$d"></div> </p>';
+		$h5pIds            = [];
+		while( ! empty($shortcodeData = $stringService->parseShortCode($bodyContent, 'h5p'))) {
+			$shortcodeCount ++;
+			
+			$htmlReplace = sprintf($htmlReplaceFormat, $shortcodeCount, $shortcodeData['attributes']['id'], $shortcodeData['attributes']['label']);
+			
+			$bodyContent                    = str_replace($shortcodeData['tag'], $htmlReplace, $bodyContent);
+			$h5pIds[ $shortcodeData['attributes']['id'] ] = null;
+		}
+		
+		$object->setHtmlBody($bodyContent);
+		$object->setH5pContent($h5pIds);
 	}
 	
 	/**

@@ -46,29 +46,30 @@ class StringService {
 		$openTagPos  = strpos($content, '[' . $shortcode);
 		$closeTagPos = strpos($content, ']');
 		
-		$attributes = [];
+		$shortcodeData = [];
 		
 		if($closeTagPos > $openTagPos && $openTagPos > - 1) {
-			$tag               = trim(substr($content, $openTagPos, $closeTagPos - $openTagPos));
-			$attributes['tag'] = $tag;
-		}
-		$lastPos                  = 0;
-		$attributes['attributes'] = [];
-		
-		while(($equalSignPos = strpos($innerCode, '=', $lastPos)) > - 1) {
-			$key = trim(substr($innerCode, $lastPos, $equalSignPos - $lastPos));
+			$tag                  = trim(substr($content, $openTagPos, $closeTagPos - $openTagPos + 1));
+			$shortcodeData['tag'] = $tag;
 			
-			$openQuotePos  = strpos($innerCode, '"', $equalSignPos) + 1;
-			$closeQuotePos = strpos($innerCode, '"', $openQuotePos);
+			$lastPos                     = 0;
+			$shortcodeData['attributes'] = [];
 			
-			$value = substr($innerCode, $openQuotePos, $closeQuotePos - $openQuotePos);
-			
-			$lastPos = $closeQuotePos + 1;
-			
-			$attribute                = [ $key => $value ];
-			$attributes['attributes'] = $attribute;
-		}
+			while(($equalSignPos = strpos($innerCode, '=', $lastPos)) > - 1) {
+				$key = trim(substr($innerCode, $lastPos, $equalSignPos - $lastPos));
+				
+				$openQuotePos  = strpos($innerCode, '&quot;', $equalSignPos) + 6;
+				$closeQuotePos = strpos($innerCode, '&quot;', $openQuotePos);
+				
+				$value = substr($innerCode, $openQuotePos, $closeQuotePos - $openQuotePos);
+				
+				$lastPos = $closeQuotePos + 6;
 
+//			$attribute                = [ $key => $value ];
+				$shortcodeData['attributes'][ $key ] = $value;
+			}
+			
+		}
 
 //		$innerCodeParts = explode(' ', $innerCode);
 
@@ -80,6 +81,6 @@ class StringService {
 //			$attributes[ $attributeKey ] = $attributeValue;
 //		}
 		
-		return $attributes;
+		return $shortcodeData;
 	}
 }
