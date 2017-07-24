@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Entity\H5P;
 
 use AppBundle\Entity\H5P\Base\AppContent;
@@ -27,12 +28,25 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  *
  */
-abstract class Content extends AppContent
-{
-    function __construct()
-    {
-        parent::__construct();
-        
-    }
-
+abstract class Content extends AppContent {
+	function __construct() {
+		parent::__construct();
+	}
+	
+	/**
+	 * @var array
+	 */
+	protected $libraries;
+	
+	public function initiateDependencies(array $libraryObjs) {
+		foreach($libraryObjs as $key => $lib) {
+			$contentLibrary = new ContentLibrary();
+			$contentLibrary->setContent($this);
+			$contentLibrary->setLibrary($lib);
+			$contentLibrary->setPosition($key + 1);
+			
+			$this->addContentLibrary($contentLibrary);
+		}
+	}
+	
 }

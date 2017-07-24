@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity\H5P\Base;
 
+use AppBundle\Entity\H5P\Content;
+use AppBundle\Entity\H5P\Dependency;
 use AppBundle\Entity\H5P\Library;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,7 +16,6 @@ use Hateoas\Configuration\Annotation as Hateoas;
 class AppContentLibrary {
 	
 	function __construct() {
-		$this->dependencyType = 'preloaded';
 	}
 	
 	/**
@@ -26,7 +27,7 @@ class AppContentLibrary {
 	protected $library;
 	
 	/**
-	 * @var Library
+	 * @var Content
 	 * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\H5P\Content",inversedBy="contentLibraries")
 	 * @ORM\JoinColumn(name="id_content", referencedColumnName="id", onDelete="CASCADE")
@@ -49,7 +50,7 @@ class AppContentLibrary {
 	 * @var string
 	 * @ORM\Column(type="string", length=31, options={"default":"preloaded"})
 	 */
-	protected $dependencyType;
+	protected $dependencyType = Dependency::TYPE_PRELOADED;
 	
 	/**
 	 * @return Library
@@ -65,19 +66,6 @@ class AppContentLibrary {
 		$this->library = $library;
 	}
 	
-	/**
-	 * @return Library
-	 */
-	public function getContent() {
-		return $this->content;
-	}
-	
-	/**
-	 * @param Library $content
-	 */
-	public function setContent($content) {
-		$this->content = $content;
-	}
 	
 	/**
 	 * @return string
@@ -93,5 +81,45 @@ class AppContentLibrary {
 		$this->dependencyType = $dependencyType;
 	}
 	
+	/**
+	 * @return Content
+	 */
+	public function getContent() {
+		return $this->content;
+	}
 	
+	/**
+	 * @param Content $content
+	 */
+	public function setContent($content) {
+		$this->content = $content;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isDropCSS() {
+		return $this->dropCSS;
+	}
+	
+	/**
+	 * @param bool $dropCSS
+	 */
+	public function setDropCSS($dropCSS) {
+		$this->dropCSS = $dropCSS;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getPosition() {
+		return $this->position;
+	}
+	
+	/**
+	 * @param int $position
+	 */
+	public function setPosition($position) {
+		$this->position = $position;
+	}
 }

@@ -20,11 +20,6 @@ abstract class AppContentMultiChoice extends Content {
 	const MINOR_VERSION = 9;
 	const PATCH_VERSION = 2;
 	
-	/**
-	 * @var array
-	 */
-	protected $libraries;
-	
 	function __construct() {
 		parent::__construct();
 		// initiate default versioning
@@ -76,6 +71,12 @@ abstract class AppContentMultiChoice extends Content {
 				'majorVersion' => 1,
 				'minorVersion' => 2,
 				'patchVersion' => 2
+			],
+			[
+				'machineName'  => self::MACHINE_NAME,
+				'majorVersion' => self::MAJOR_VERSION,
+				'minorVersion' => self::MINOR_VERSION,
+				'patchVersion' => self::PATCH_VERSION
 			]
 		
 		];

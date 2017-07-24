@@ -4,6 +4,8 @@ namespace AppBundle\Admin\H5P\ContentType\MultiChoice;
 
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice;
+use AppBundle\Entity\H5P\Library;
+use Doctrine\Common\Collections\ArrayCollection;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -43,5 +45,18 @@ class ContentMultiChoiceAdmin extends BaseAdmin {
 		$object->setFiltered('test Params');
 		$object->setTitle('test Title');
 		$object->setSlug('slug');
+		
+		$container = $this->getConfigurationPool()->getContainer();
+		$libRepo   = $container->get('doctrine')->getRepository(Library::class);
+		$libraries = [];
+		foreach($object->getLibraries() as $lib) {
+			$libraries[] = $libRepo->findOneBy([
+				'machineName'  => $lib['machineName'],
+				'majorVersion' => $lib['majorVersion'],
+				'minorVersion' => $lib['minorVersion'],
+				'patchVersion' => $lib['patchVersion'],
+			]);
+		}
+		$object->initiateDependencies($libraries);
 	}
 }
