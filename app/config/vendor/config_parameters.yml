@@ -1,8 +1,8 @@
 
 parameters:
 #    sonata.media.provider.youtube.class: Application\Sonata\MediaBundle\Provider\AppYouTubeProvider
-#    sonata.media.provider.image.class: Application\Sonata\MediaBundle\Provider\AppImageProvider
-#    sonata.media.provider.file.class: Application\Sonata\MediaBundle\Provider\AppFileProvider
+    sonata.media.provider.image.class: AppBundle\Service\Media\Provider\AppImageProvider
+    sonata.media.provider.file.class: AppBundle\Service\Media\Provider\AppFileProvider
 #    sonata.media.manager.media.class: AppBundle\Entity\Media\AppMediaManager
 
 #    sonata.media.admin.media.class: Application\Sonata\MediaBundle\Admin\AppMediaAdmin

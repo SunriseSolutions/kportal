@@ -1,8 +1,8 @@
 <?php
-namespace AppBundle\Entity\H5P\ContentType;
+namespace AppBundle\Entity\H5P\ContentType\MultiChoice;
 
 use AppBundle\Entity\H5P\Base\AppContent;
-use AppBundle\Entity\H5P\ContentType\Base\AppContentMultiChoice;
+use AppBundle\Entity\H5P\ContentType\MultiChoice\Base\AppContentMultiChoice;
 use AppBundle\Entity\Media\Base\AppGallery;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
@@ -32,5 +32,12 @@ class ContentMultiChoice extends AppContentMultiChoice
         parent::__construct();
         
     }
+	
+	/**
+	 * @var MultiChoiceMedia
+	 * One Customer has One Cart.
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia", mappedBy="content", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+    protected $multichoiceMedia;
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity\H5P\ContentType\Base;
+namespace AppBundle\Entity\H5P\ContentType\MultiChoice\Base;
 
 use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\H5P\ContentLibrary;
@@ -80,5 +80,37 @@ abstract class AppContentMultiChoice extends Content {
 		
 		];
 	}
+	
+	
+	protected $multichoiceMedia;
+	
+	/**
+	 * @return mixed
+	 */
+	public function getMultichoiceMedia() {
+		return $this->multichoiceMedia;
+	}
+	
+	/**
+	 * @param mixed $multichoiceMedia
+	 */
+	public function setMultichoiceMedia($multichoiceMedia) {
+		$this->multichoiceMedia = $multichoiceMedia;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getLibraries() {
+		return $this->libraries;
+	}
+	
+	/**
+	 * @param array $libraries
+	 */
+	public function setLibraries($libraries) {
+		$this->libraries = $libraries;
+	}
+	
 	
 }

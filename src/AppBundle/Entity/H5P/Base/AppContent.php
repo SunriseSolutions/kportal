@@ -154,7 +154,7 @@ abstract class AppContent {
 	 * @var string
 	 * @ORM\Column(type="string", length=127)
 	 */
-	protected $embedType;
+	protected $embedType = 'div';
 	
 	/**
 	 * @var string

@@ -14,7 +14,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @ORM\Table(name="h5p__content")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"multichoice" = "AppBundle\Entity\H5P\ContentType\ContentMultiChoice"})
+ * @ORM\DiscriminatorMap({"multichoice" = "AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice"})
  *
  * @Hateoas\Relation(
  *  "self",
