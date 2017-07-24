@@ -93,7 +93,7 @@ class ArticleNodeAdmin extends BaseAdmin {
 		}
 		
 		$object->setHtmlBody($bodyContent);
-		$object->setH5pContent($h5pIds);
+//		$object->setH5pContent($h5pIds);
 	}
 	
 	/**

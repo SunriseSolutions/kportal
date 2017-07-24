@@ -65,14 +65,14 @@ class ContentNodeController extends Controller {
 //			'contentTest'   => $contentTest,
 			'styles'        => $h5p->getStyles(),
 			'scripts'       => $h5p->getScripts(),
-			'settingRaw'    => $h5p->getSettings(),
-			'h5pHtml'       => $h5pHtml,
+//			'settingRaw'    => $h5p->getSettings(),
+//			'h5pHtml'       => $h5pHtml,
 			'h5pSettings'   => $settings,
-			'entitySlug'    => $entitySlug,
-			'slug'          => $articleSlug,
+//			'entitySlug'    => $entitySlug,
+//			'slug'          => $articleSlug,
 			'entity'        => $entity,
 			'article'       => $article,
-			'h5pContentIds' => $h5pContentIds
+//			'h5pContentIds' => $h5pContentIds
 		]);
 	}
 	

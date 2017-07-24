@@ -2,6 +2,7 @@ user:
     email_exists: This email has already been used by another user.
 
 dashboard:
+    h5p_content: H5P Content
     content_node: Content Node
     article_node: Article Node
     organisation: Manage Companies

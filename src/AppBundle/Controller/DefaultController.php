@@ -33,20 +33,8 @@ class DefaultController extends Controller {
 		
 		$testArray = [ 0 => 'number', '0' => 'letter' ];
 
-//		return new JsonResponse($article->getH5pContent()[3]);
-		$code           = 'Day la mot cai Quiz [h5p id=&quot;1&quot;    label=&quot;Cau hoi nhanh so 1&quot;] ok ahihi';
-		$shortcodeData  = $this->get('app.string')->parseShortCode($code, 'h5p');
-		$data           = str_replace($shortcodeData['tag'], '<strong>replaced</strong>', $code);
-		$shortcodeData2 = $this->get('app.string')->parseShortCode($data, 'h5p');
-		if( ! empty($shortcodeData2)) {
-			$data .= ' emptyyyyyyyyyyyyyyyy ';
-		} else {
-			$data = str_replace($shortcodeData2['tag'], '<strong>replaced</strong>', $code);
-		}
-		
-		$response = [ $data ];
-		
-		return new JsonResponse($response);
+		return new JsonResponse($article->getH5pContent()[3]);
+
 		
 	}
 	

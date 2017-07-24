@@ -4,6 +4,7 @@ namespace AppBundle\Entity\Content\Base;
 
 use AppBundle\Entity\Content\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
+use AppBundle\Entity\Content\ContentNodeH5P;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,7 +17,8 @@ use Hateoas\Configuration\Annotation as Hateoas;
 abstract class AppContentNode {
 	
 	function __construct() {
-		$this->createdAt = new \DateTime();
+		$this->createdAt       = new \DateTime();
+		$this->h5pContentItems = new ArrayCollection();
 	}
 	
 	public function getAbstractContent() {
@@ -36,293 +38,381 @@ abstract class AppContentNode {
 	 */
 	protected $id;
 	
+	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentNodeH5P", mappedBy="contentNode", cascade={"all"}, orphanRemoval=true)
+	 */
+	protected $h5pContentItems;
+	
+	public function addH5PContentItem(ContentNodeH5P $h5p) {
+		$this->h5pContentItems->add($h5p);
+		$h5p->setContentNode($this);
+	}
+	
+	public function removeH5PContentItem(ContentNodeH5P $h5p) {
+		$this->h5pContentItems->remove($h5p);
+		$h5p->setContentNode(null);
+	}
+	
 	/**
 	 * @var array
 	 * @ORM\Column(type="attribute_array", nullable=true)
 	 */
-	protected $h5pContent;
+	protected
+		$h5pContent;
 	
 	/**
 	 * @var ContentEntity
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentEntity",inversedBy="contentNodes")
 	 * @ORM\JoinColumn(name="id_owner", referencedColumnName="id", onDelete="CASCADE")
 	 */
-	protected $owner;
+	protected
+		$owner;
 	
 	/**
 	 * @var \DateTime
 	 * @ORM\Column(type="datetime", options={"default": 0})
 	 */
-	protected $createdAt;
+	protected
+		$createdAt;
 	
 	/**
 	 * @var \DateTime
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
-	protected $updatedAt;
+	protected
+		$updatedAt;
 	
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
-	protected $container = false;
+	protected
+		$container = false;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string",length=255, nullable=true)
 	 */
-	protected $abstract;
+	protected
+		$abstract;
 	
 	/**
 	 * ID_REF
 	 * @var string
 	 * @ORM\Column(type="string", length=24, nullable=true)
 	 */
-	protected $topic;
+	protected
+		$topic;
 	
 	/**
 	 * ID_REF
 	 * @var string
 	 * @ORM\Column(type="string", length=24, nullable=true)
 	 */
-	protected $rootTopic;
+	protected
+		$rootTopic;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=128, nullable=true)
 	 */
-	protected $slug;
+	protected
+		$slug;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=256, nullable=true)
 	 */
-	protected $publicUrl;
+	protected
+		$publicUrl;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=2, options={"default":"en"} ,  nullable=true)
 	 */
-	protected $locale = 'en';
+	protected
+		$locale = 'en';
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
-	protected $title;
+	protected
+		$title;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="text")
 	 */
-	protected $body;
+	protected
+		$body;
 	
 	/**
 	 * @var string
 	 * @ORM\Column(type="text", nullable=true)
 	 */
-	protected $htmlBody;
+	protected
+		$htmlBody;
 	
 	/**
 	 * @return mixed
 	 */
-	public function getId() {
+	public
+	function getId() {
 		return $this->id;
 	}
 	
 	/**
 	 * @return string
 	 */
-	public function getTopic() {
+	public
+	function getTopic() {
 		return $this->topic;
 	}
 	
 	/**
 	 * @param string $topic
 	 */
-	public function setTopic($topic) {
+	public
+	function setTopic(
+		$topic
+	) {
 		$this->topic = $topic;
 	}
 	
 	/**
 	 * @return string
 	 */
-	public function getLocale() {
+	public
+	function getLocale() {
 		return $this->locale;
 	}
 	
 	/**
 	 * @param string $locale
 	 */
-	public function setLocale($locale) {
+	public
+	function setLocale(
+		$locale
+	) {
 		$this->locale = $locale;
 	}
 	
 	/**
 	 * @return string
 	 */
-	public function getBody() {
+	public
+	function getBody() {
 		return $this->body;
 	}
 	
 	/**
 	 * @param string $body
 	 */
-	public function setBody($body) {
+	public
+	function setBody(
+		$body
+	) {
 		$this->body = $body;
 	}
 	
 	/**
 	 * @return string
 	 */
-	public function getRootTopic() {
+	public
+	function getRootTopic() {
 		return $this->rootTopic;
 	}
 	
 	/**
 	 * @param string $rootTopic
 	 */
-	public function setRootTopic($rootTopic) {
+	public
+	function setRootTopic(
+		$rootTopic
+	) {
 		$this->rootTopic = $rootTopic;
 	}
 	
 	/**
 	 * @return bool
 	 */
-	public function isContainer() {
+	public
+	function isContainer() {
 		return $this->container;
 	}
 	
 	/**
 	 * @param bool $container
 	 */
-	public function setContainer($container) {
+	public
+	function setContainer(
+		$container
+	) {
 		$this->container = $container;
 	}
 	
 	/**
 	 * @return AppContentEntity
 	 */
-	public function getOwner() {
+	public
+	function getOwner() {
 		return $this->owner;
 	}
 	
 	/**
 	 * @param AppContentEntity $owner
 	 */
-	public function setOwner($owner) {
+	public
+	function setOwner(
+		$owner
+	) {
 		$this->owner = $owner;
 	}
 	
 	/**
 	 * @return string
 	 */
-	public function getSlug() {
+	public
+	function getSlug() {
 		return $this->slug;
 	}
 	
 	/**
 	 * @param string $slug
 	 */
-	public function setSlug($slug) {
+	public
+	function setSlug(
+		$slug
+	) {
 		$this->slug = $slug;
 	}
 	
 	/**
 	 * @return string
 	 */
-	public function getHtmlBody() {
+	public
+	function getHtmlBody() {
 		return $this->htmlBody;
 	}
 	
 	/**
 	 * @param string $htmlBody
 	 */
-	public function setHtmlBody($htmlBody) {
+	public
+	function setHtmlBody(
+		$htmlBody
+	) {
 		$this->htmlBody = $htmlBody;
 	}
 	
 	/**
 	 * @return \DateTime
 	 */
-	public function getCreatedAt() {
+	public
+	function getCreatedAt() {
 		return $this->createdAt;
 	}
 	
 	/**
 	 * @param \DateTime $createdAt
 	 */
-	public function setCreatedAt($createdAt) {
+	public
+	function setCreatedAt(
+		$createdAt
+	) {
 		$this->createdAt = $createdAt;
 	}
 	
 	/**
 	 * @return \DateTime
 	 */
-	public function getUpdatedAt() {
+	public
+	function getUpdatedAt() {
 		return $this->updatedAt;
 	}
 	
 	/**
 	 * @param \DateTime $updatedAt
 	 */
-	public function setUpdatedAt($updatedAt) {
+	public
+	function setUpdatedAt(
+		$updatedAt
+	) {
 		$this->updatedAt = $updatedAt;
 	}
 	
 	/**
 	 * @return string
 	 */
-	public function getPublicUrl() {
+	public
+	function getPublicUrl() {
 		return $this->publicUrl;
 	}
 	
 	/**
 	 * @param string $publicUrl
 	 */
-	public function setPublicUrl($publicUrl) {
+	public
+	function setPublicUrl(
+		$publicUrl
+	) {
 		$this->publicUrl = $publicUrl;
 	}
 	
 	/**
 	 * @return string
 	 */
-	public function getTitle() {
+	public
+	function getTitle() {
 		return $this->title;
 	}
 	
 	/**
 	 * @param string $title
 	 */
-	public function setTitle($title) {
+	public
+	function setTitle(
+		$title
+	) {
 		$this->title = $title;
 	}
 	
 	/**
 	 * @return string
 	 */
-	public function getAbstract() {
+	public
+	function getAbstract() {
 		return $this->abstract;
 	}
 	
 	/**
 	 * @param string $abstract
 	 */
-	public function setAbstract($abstract) {
+	public
+	function setAbstract(
+		$abstract
+	) {
 		$this->abstract = $abstract;
 	}
 	
 	/**
 	 * @return array
 	 */
-	public function getH5pContent() {
+	public
+	function getH5pContent() {
 		return $this->h5pContent;
 	}
 	
 	/**
 	 * @param array $h5pContent
 	 */
-	public function setH5pContent($h5pContent) {
+	public
+	function setH5pContent(
+		$h5pContent
+	) {
 		$this->h5pContent = $h5pContent;
 	}
 	
