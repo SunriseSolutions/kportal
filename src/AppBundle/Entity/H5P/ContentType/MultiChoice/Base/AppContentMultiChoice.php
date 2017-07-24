@@ -4,6 +4,7 @@ namespace AppBundle\Entity\H5P\ContentType\MultiChoice\Base;
 
 use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\H5P\ContentLibrary;
+use AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia;
 use AppBundle\Entity\H5P\Library;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -82,21 +83,16 @@ abstract class AppContentMultiChoice extends Content {
 		];
 	}
 	
-	
+	/**
+	 * @var MultiChoiceMedia
+	 */
 	protected $multichoiceMedia;
 	
 	/**
-	 * @return mixed
+	 * @return MultiChoiceMedia
 	 */
 	public function getMultichoiceMedia() {
 		return $this->multichoiceMedia;
-	}
-	
-	/**
-	 * @param mixed $multichoiceMedia
-	 */
-	public function setMultichoiceMedia($multichoiceMedia) {
-		$this->multichoiceMedia = $multichoiceMedia;
 	}
 	
 	/**

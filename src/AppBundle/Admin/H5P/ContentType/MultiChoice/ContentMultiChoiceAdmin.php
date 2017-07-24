@@ -58,5 +58,7 @@ class ContentMultiChoiceAdmin extends BaseAdmin {
 			]);
 		}
 		$object->initiateDependencies($libraries);
+//		$media = $object->getMultichoiceMedia();
+//		$stop = $media;
 	}
 }

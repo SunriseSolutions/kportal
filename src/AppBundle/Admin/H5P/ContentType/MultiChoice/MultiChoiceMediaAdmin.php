@@ -4,6 +4,8 @@ namespace AppBundle\Admin\H5P\ContentType\MultiChoice;
 
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -35,7 +37,16 @@ class MultiChoiceMediaAdmin extends BaseAdmin {
 //				'context' => 'default'
 //			])
 			->add('media', 'sonata_type_model_autocomplete', array(
-				'property' => 'name'
+				'property' => 'name',
+				'callback' => function($admin, $property, $value) {
+					$datagrid = $admin->getDatagrid();
+					/** @var QueryBuilder $queryBuilder */
+					$queryBuilder = $datagrid->getQuery();
+					$queryBuilder
+						->andWhere($queryBuilder->expr()->eq($queryBuilder->getRootAliases()[0] . '.providerName', ':providerName'))
+						->setParameter('providerName', 'sonata.media.provider.image');
+					$datagrid->setValue($property, null, $value);
+				},
 			));
 		
 		$formMapper

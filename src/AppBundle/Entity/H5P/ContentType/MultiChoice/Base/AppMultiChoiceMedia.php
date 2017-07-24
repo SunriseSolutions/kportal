@@ -39,7 +39,7 @@ abstract class AppMultiChoiceMedia {
 	/**
 	 * @var ContentMultiChoice
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice", inversedBy="multichoiceMedia")
-	 * @ORM\JoinColumn(name="id_h5p_content", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="id_h5p_content", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected $content;
 	

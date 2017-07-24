@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Entity\H5P\ContentType\MultiChoice;
 
 use AppBundle\Entity\H5P\Base\AppContent;
@@ -25,19 +26,27 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  *
  */
-class ContentMultiChoice extends AppContentMultiChoice
-{
-    function __construct()
-    {
-        parent::__construct();
-        
-    }
+class ContentMultiChoice extends AppContentMultiChoice {
+	function __construct() {
+		parent::__construct();
+		
+	}
 	
 	/**
 	 * @var MultiChoiceMedia
 	 * One Customer has One Cart.
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia", mappedBy="content", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
-    protected $multichoiceMedia;
-
+	protected $multichoiceMedia;
+	
+	/**
+	 * @param MultiChoiceMedia $multichoiceMedia
+	 */
+	public function setMultichoiceMedia($multichoiceMedia) {
+		$this->multichoiceMedia = $multichoiceMedia;
+		if( ! empty($multichoiceMedia)) {
+			$multichoiceMedia->setContent($this);
+		}
+	}
+	
 }
