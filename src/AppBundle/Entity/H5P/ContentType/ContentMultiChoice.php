@@ -1,8 +1,8 @@
 <?php
-namespace AppBundle\Entity\H5P;
+namespace AppBundle\Entity\H5P\ContentType;
 
 use AppBundle\Entity\H5P\Base\AppContent;
-use AppBundle\Entity\H5P\Base\AppContentMultiChoice;
+use AppBundle\Entity\H5P\ContentType\Base\AppContentMultiChoice;
 use AppBundle\Entity\Media\Base\AppGallery;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;

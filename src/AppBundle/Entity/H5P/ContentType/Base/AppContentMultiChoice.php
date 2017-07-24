@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity\H5P\Base;
+namespace AppBundle\Entity\H5P\ContentType\Base;
 
 use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\H5P\ContentLibrary;
