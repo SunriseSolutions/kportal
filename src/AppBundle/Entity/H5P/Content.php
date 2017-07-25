@@ -39,6 +39,10 @@ abstract class Content extends AppContent {
 	protected $libraries;
 	
 	public function initiateDependencies(array $libraryObjs) {
+		/**
+		 * @var integer $key
+		 * @var Library $lib
+		 */
 		foreach($libraryObjs as $key => $lib) {
 			$contentLibrary = new ContentLibrary();
 			$contentLibrary->setContent($this);
@@ -46,6 +50,9 @@ abstract class Content extends AppContent {
 			$contentLibrary->setPosition($key + 1);
 			
 			$this->addContentLibrary($contentLibrary);
+			if($lib->getMachineName() === $this->getLibraryVersion()['machineName'] ) {
+				$this->setLibrary($lib);
+			}
 		}
 	}
 	

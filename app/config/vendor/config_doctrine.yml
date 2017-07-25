@@ -86,6 +86,35 @@ doctrine:
 #                        alias: GedmoTranslator # (optional) it will default to the name set for the mapping
 #                        is_bundle: false
 
+                entity_listeners:
+                    entities:
+                        -
+                            class:  "AppBundle\\Entity\\H5P\\Content"
+                            listener:
+                                -
+                                    class: "AppBundle\\Doctrine\\ORM\\Listener\\H5P\\ContentListener"
+                                    event:
+                                        -
+                                            type: postPersist
+                                            method: postPersistHandler
+                                        -
+                                            type: postUpdate
+                                            method: postUpdateHandler
+                                        -
+                                            type: prePersist
+                                            method: prePersistHandler
+                                        -
+                                            type: preUpdate
+                                            method: preUpdateHandler
+                                        -
+                                            type: preRemove
+                                            method: preRemoveHandler
+                                        -
+                                            type: postRemove
+                                            method: postRemoveHandler
+
+
+
 # services to handle doctrine extensions
 # import it in config.yml
 #services:

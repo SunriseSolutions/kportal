@@ -39,6 +39,17 @@ class ContentMultiChoice extends AppContentMultiChoice {
 	 */
 	protected $multichoiceMedia;
 	
+	public function buildParameterObject() {
+		$obj = new \stdClass();
+		if( ! empty($this->multichoiceMedia)) {
+			$obj->media = $this->multichoiceMedia->getJsonObject();
+		} else {
+			$obj->media = new \stdClass();
+		}
+		
+		return $obj;
+	}
+	
 	/**
 	 * @param MultiChoiceMedia $multichoiceMedia
 	 */
@@ -46,6 +57,13 @@ class ContentMultiChoice extends AppContentMultiChoice {
 		$this->multichoiceMedia = $multichoiceMedia;
 		if( ! empty($multichoiceMedia)) {
 			$multichoiceMedia->setContent($this);
+			if($multichoiceMedia->isImage()) {
+				array_unshift($this->libraries, $multichoiceMedia->getImageLib());
+			}
+			
+			if($multichoiceMedia->isYoutube()) {
+				array_unshift($this->libraries, $multichoiceMedia->getFlowplayerLib(), $multichoiceMedia->getVidLib());
+			}
 		}
 	}
 	

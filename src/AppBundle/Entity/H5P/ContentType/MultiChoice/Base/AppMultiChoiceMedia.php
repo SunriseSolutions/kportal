@@ -18,11 +18,21 @@ use Hateoas\Configuration\Annotation as Hateoas;
  */
 abstract class AppMultiChoiceMedia {
 	
-	const MACHINE_NAME = 'H5P.Image';
-	const MAJOR_VERSION = 1;
-	const MINOR_VERSION = 0;
-	const PATCH_VERSION = 8;
-
+	/**
+	 * @var array
+	 */
+	protected $imageLib;
+	
+	/**
+	 * @var array
+	 */
+	protected $flowplayerLib;
+	
+	/**
+	 * @var array
+	 */
+	protected $vidLib;
+	
 	function __construct() {
 //		parent::__construct();
 	}
@@ -83,5 +93,47 @@ abstract class AppMultiChoiceMedia {
 	 */
 	public function getId() {
 		return $this->id;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getImageLib() {
+		return $this->imageLib;
+	}
+	
+	/**
+	 * @param array $imageLib
+	 */
+	public function setImageLib($imageLib) {
+		$this->imageLib = $imageLib;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getFlowplayerLib() {
+		return $this->flowplayerLib;
+	}
+	
+	/**
+	 * @param array $flowplayerLib
+	 */
+	public function setFlowplayerLib($flowplayerLib) {
+		$this->flowplayerLib = $flowplayerLib;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getVidLib() {
+		return $this->vidLib;
+	}
+	
+	/**
+	 * @param array $vidLib
+	 */
+	public function setVidLib($vidLib) {
+		$this->vidLib = $vidLib;
 	}
 }

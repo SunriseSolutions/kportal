@@ -28,6 +28,10 @@ class ContentMultiChoiceAdmin extends BaseAdmin {
 			->with('form.group_general')//            ->add('children')
 		;
 		$formMapper
+			->add('title')
+			->add('slug', null, array(
+				'required' => false
+			))
 			->add('multichoiceMedia', 'sonata_type_admin');
 		
 		$formMapper
@@ -41,11 +45,8 @@ class ContentMultiChoiceAdmin extends BaseAdmin {
 	 */
 	public function preValidate($object) {
 		parent::preValidate($object);
-		$object->setParameters('test Params');
-		$object->setFiltered('test Params');
-		$object->setTitle('test Title');
-		$object->setSlug('slug');
-		
+//		$object->setParameters('test Params');
+//		$object->setFiltered('test Params');
 		$container = $this->getConfigurationPool()->getContainer();
 		$libRepo   = $container->get('doctrine')->getRepository(Library::class);
 		$libraries = [];

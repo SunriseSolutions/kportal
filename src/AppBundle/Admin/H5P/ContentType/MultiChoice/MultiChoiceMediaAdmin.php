@@ -42,9 +42,17 @@ class MultiChoiceMediaAdmin extends BaseAdmin {
 					$datagrid = $admin->getDatagrid();
 					/** @var QueryBuilder $queryBuilder */
 					$queryBuilder = $datagrid->getQuery();
+					$expr         = $queryBuilder->expr();
 					$queryBuilder
-						->andWhere($queryBuilder->expr()->eq($queryBuilder->getRootAliases()[0] . '.providerName', ':providerName'))
-						->setParameter('providerName', 'sonata.media.provider.image');
+						->andWhere(
+							$expr->orX(
+								$expr->eq($queryBuilder->getRootAliases()[0] . '.providerName', ':imageProviderName')
+								,
+								$expr->eq($queryBuilder->getRootAliases()[0] . '.providerName', ':youtubeProviderName')
+							)
+						)
+						->setParameter('imageProviderName', 'sonata.media.provider.image')
+						->setParameter('youtubeProviderName', 'sonata.media.provider.youtube');
 					$datagrid->setValue($property, null, $value);
 				},
 			));

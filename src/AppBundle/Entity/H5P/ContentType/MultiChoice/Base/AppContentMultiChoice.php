@@ -26,12 +26,6 @@ abstract class AppContentMultiChoice extends Content {
 		// initiate default versioning
 		$this->libraries = [
 			[
-				'machineName'  => 'H5P.Image',
-				'majorVersion' => 1,
-				'minorVersion' => 0,
-				'patchVersion' => 28
-			],
-			[
 				'machineName'  => 'EmbeddedJS',
 				'majorVersion' => 1,
 				'minorVersion' => 0,
@@ -73,13 +67,16 @@ abstract class AppContentMultiChoice extends Content {
 				'minorVersion' => 2,
 				'patchVersion' => 2
 			],
-			[
-				'machineName'  => self::MACHINE_NAME,
-				'majorVersion' => self::MAJOR_VERSION,
-				'minorVersion' => self::MINOR_VERSION,
-				'patchVersion' => self::PATCH_VERSION
-			]
-		
+			$this->getLibraryVersion()
+		];
+	}
+	
+	public function getLibraryVersion() {
+		return [
+			'machineName'  => self::MACHINE_NAME,
+			'majorVersion' => self::MAJOR_VERSION,
+			'minorVersion' => self::MINOR_VERSION,
+			'patchVersion' => self::PATCH_VERSION
 		];
 	}
 	

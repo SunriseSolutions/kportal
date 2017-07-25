@@ -15,6 +15,17 @@ use Hateoas\Configuration\Annotation as Hateoas;
 /** @ORM\MappedSuperclass
  */
 abstract class AppContent {
+	
+	const MACHINE_NAME = null;
+	const MAJOR_VERSION = null;
+	const MINOR_VERSION = null;
+	const PATCH_VERSION = null;
+	
+	/**
+	 * @return array
+	 */
+	public abstract function getLibraryVersion();
+	
 	/**
 	 * @var int $id
 	 * @ORM\Id
@@ -28,6 +39,8 @@ abstract class AppContent {
 		$this->createdAt        = new \DateTime();
 		$this->contentLibraries = new ArrayCollection();
 	}
+	
+	public abstract function buildParameterObject();
 	
 	/**
 	 * @var ArrayCollection

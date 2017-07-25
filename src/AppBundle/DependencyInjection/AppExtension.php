@@ -23,8 +23,8 @@ class AppExtension implements ExtensionInterface, CompilerPassInterface
         $definition->addArgument(new Reference('service_container'));
         $definition = $container->getDefinition('sonata.media.provider.file');
         $definition->addArgument(new Reference('service_container'));
-//        $definition = $container->getDefinition('sonata.media.provider.youtube');
-//        $definition->addArgument(new Reference('service_container'));
+        $definition = $container->getDefinition('sonata.media.provider.youtube');
+        $definition->addArgument(new Reference('service_container'));
 
         $definition = $container->getDefinition('sonata.media.manager.media');
         $definition->addArgument(new Reference('service_container'));

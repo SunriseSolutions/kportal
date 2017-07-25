@@ -26,6 +26,7 @@ list:
 form:
     label_html_body: HTML Body
     label_body: Body
+    label_media: Media
     label_email_address: Email Address
     label_title: Title
     label_topic: Topic
@@ -38,8 +39,12 @@ form:
     tab_main_body_info: Main Body
     group_general: General
 
+# H5P Multichoice Media
+    label_multichoice_media: Multichoice Media
+
 
 breadcrumb:
     link_content_node_list: Content Nodes
     link_article_node_list: Article Nodes
-
+    link_content_multi_choice_create: Create H5P MultiChoice Question
+    link_content_multi_choice_list: H5P MultiChoice Questions
