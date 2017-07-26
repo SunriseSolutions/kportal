@@ -54,7 +54,6 @@ class ArticleNodeAdmin extends BaseAdmin {
 		
 	}
 	
-	
 	/**
 	 * @param ArticleNode $object
 	 */
@@ -81,7 +80,7 @@ class ArticleNodeAdmin extends BaseAdmin {
 		$stringService = $this->getConfigurationPool()->getContainer()->get('app.string');
 		
 		$shortcodeCount    = 0;
-		$htmlReplaceFormat = '<p><button data-h5ptarget="%1$d" class="btn-content btn btn-default">%3$s</button></p> <p>  <div class="h5p-content hidden" id="h5p_%1$d" data-content-id="%2$d"></div> </p>';
+		$htmlReplaceFormat = '<button data-h5ptarget="%1$d" class="btn-content btn btn-default">%3$s</button> <br/>  <div class="h5p-content hidden" id="h5p_%1$d" data-content-id="%2$s"></div>';
 		$h5pIds            = [];
 		while( ! empty($shortcodeData = $stringService->parseShortCode($bodyContent, 'h5p'))) {
 			$shortcodeCount ++;
@@ -93,7 +92,7 @@ class ArticleNodeAdmin extends BaseAdmin {
 		}
 		
 		$object->setHtmlBody($bodyContent);
-//		$object->setH5pContent($h5pIds);
+		$object->setH5pContent($h5pIds);
 	}
 	
 	/**

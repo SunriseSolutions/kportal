@@ -1,5 +1,6 @@
 <?php
 
+echo json_encode('http://www.imagefully.com/wp-content/uploads/2015/07/Blue-Eyes-Hot-Girl-Hd-Wallpaper.jpg');
 
 $timestamp = base_convert((string)date_timestamp_get(new DateTime()), 10, 32);
 

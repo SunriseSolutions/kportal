@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Service\H5P;
 
 use AppBundle\Entity\H5P\Content;
@@ -686,12 +687,20 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 		          ->join('content.library', 'library')
 		          ->leftJoin('content.owner', 'owner')
 		          ->where(
-			          $expr->eq('content.id', ':contentId')
+			          $expr->like('content.id', ':contentId')
 		          )
 		          ->setParameter('contentId', $id);
-
-//		$sql = $contentQb->getQuery()->getSQL();
+		
 		$content = $contentQb->getQuery()->setMaxResults(1)->getOneOrNullResult();
+
+//				$sql = $contentQb->getQuery()->getSQL();
+		
+		if( ! empty($content)) {
+			$filePathShortCode = '<filePath=T10D-0000-0000-00OT-LLUF>';
+			
+			$content['params']   = str_replace($filePathShortCode, 'http://www.imagefully.com/wp-content/uploads/2015/07/Blue-Eyes-Hot-Girl-Hd-Wallpaper.jpg', $content['params']);
+			$content['filtered'] = str_replace($filePathShortCode, substr(json_encode('http://www.imagefully.com/wp-content/uploads/2015/07/Blue-Eyes-Hot-Girl-Hd-Wallpaper.jpg'), 1, - 1), $content['filtered']);
+		}
 		
 		return $content;
 	}

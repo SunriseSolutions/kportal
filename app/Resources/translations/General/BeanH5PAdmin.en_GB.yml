@@ -1,0 +1,43 @@
+dashboard:
+    h5p_content_multichoice: MultiChoice
+    h5p_content_multichoice_media: MultiChoice Media
+    h5p_content_multichoice_answer: MultiChoice Answer
+    h5p_content: H5P Content
+
+show:
+    label_status: Status
+filter:
+    label_clinic_organisation_name: Clinic Name
+
+list:
+    label_id: ID/Serial Number en_GB
+    label_slug: Slug
+    label_title: Title
+
+
+form:
+    label_html_body: HTML Body
+    label_body: Body
+    label_media: Media
+    label_email_address: Email Address
+    label_title: Title
+    label_question_text: Question Text
+    label_topic: Topic
+    label_answers: Answers
+    label_auto_check_enabled: Auto Check
+    label_slug: Search Engine Friendly Name
+
+    tab_info: Info
+    tab_main_body_info: Main Body
+    group_general: General
+
+# H5P Multichoice Media
+    label_multichoice_media: Multichoice Media
+    label_auto_check_enabled: Auto check answers
+    label_correct_feedback_text: Correct Answer Feedback
+    label_almost_correct_feedback_text: Almost Correct Answer Feedback
+    label_wrong_feedback_text: Wrong Answer Feedback
+
+breadcrumb:
+    link_content_multi_choice_create: Create H5P MultiChoice Question
+    link_content_multi_choice_list: H5P MultiChoice Questions

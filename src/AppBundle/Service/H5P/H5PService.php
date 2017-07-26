@@ -254,9 +254,6 @@ class H5PService extends BaseService {
 	 * @return array
 	 */
 	public function getContentSettings($content) {
-		// TODO: Implement method.
-		
-		
 		$core            = $this->getH5PInstance('core');
 		$safe_parameters = $core->filterParameters($content);
 //		if ( has_action( 'h5p_alter_filtered_parameters' ) ) {

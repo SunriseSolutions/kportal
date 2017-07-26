@@ -2,10 +2,6 @@ user:
     email_exists: This email has already been used by another user.
 
 dashboard:
-    h5p_content_multichoice: MultiChoice
-    h5p_content_multichoice_media: MultiChoice Media
-    h5p_content_multichoice_answer: MultiChoice Answer
-    h5p_content: H5P Content
     content_node: Content Node
     article_node: Article Node
     organisation: Manage Companies
@@ -48,5 +44,3 @@ form:
 breadcrumb:
     link_content_node_list: Content Nodes
     link_article_node_list: Article Nodes
-    link_content_multi_choice_create: Create H5P MultiChoice Question
-    link_content_multi_choice_list: H5P MultiChoice Questions

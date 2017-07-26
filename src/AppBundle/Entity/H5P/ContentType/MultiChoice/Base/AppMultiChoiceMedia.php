@@ -21,17 +21,32 @@ abstract class AppMultiChoiceMedia {
 	/**
 	 * @var array
 	 */
-	protected $imageLib;
+	protected $imageLib = [
+		'machineName'  => 'H5P.Image',
+		'majorVersion' => 1,
+		'minorVersion' => 0,
+		'patchVersion' => 28
+	];
 	
 	/**
 	 * @var array
 	 */
-	protected $flowplayerLib;
+	protected $flowplayerLib = [
+		'machineName'  => 'flowplayer',
+		'majorVersion' => 1,
+		'minorVersion' => 0,
+		'patchVersion' => 5
+	];
 	
 	/**
 	 * @var array
 	 */
-	protected $vidLib;
+	protected $vidLib = [
+		'machineName'  => 'H5P.Video',
+		'majorVersion' => 1,
+		'minorVersion' => 3,
+		'patchVersion' => 4
+	];
 	
 	function __construct() {
 //		parent::__construct();

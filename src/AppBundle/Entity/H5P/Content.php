@@ -48,9 +48,10 @@ abstract class Content extends AppContent {
 			$contentLibrary->setContent($this);
 			$contentLibrary->setLibrary($lib);
 			$contentLibrary->setPosition($key + 1);
-			
-			$this->addContentLibrary($contentLibrary);
-			if($lib->getMachineName() === $this->getLibraryVersion()['machineName'] ) {
+			if( ! $this->isContentLibraryExisting($contentLibrary)) {
+				$this->addContentLibrary($contentLibrary);
+			}
+			if($lib->getMachineName() === $this->getLibraryVersion()['machineName']) {
 				$this->setLibrary($lib);
 			}
 		}

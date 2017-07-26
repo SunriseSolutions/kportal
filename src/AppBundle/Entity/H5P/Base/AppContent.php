@@ -65,6 +65,23 @@ abstract class AppContent {
 	 */
 	protected $contentLibraries;
 	
+	public function isContentLibraryExisting(ContentLibrary $contentLibrary) {
+		if(empty($this->contentLibraries)) {
+			return false;
+		}
+		
+		/** @var ContentLibrary $clib */
+		foreach($this->contentLibraries as $clib) {
+			if($clib->getLibrary() === $contentLibrary->getLibrary()) {
+				if($clib->getContent() === $this) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
 	public function addContentLibrary(ContentLibrary $contentLibrary) {
 		$this->contentLibraries->add($contentLibrary);
 		$contentLibrary->setContent($this);
@@ -103,9 +120,9 @@ abstract class AppContent {
 	
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer", options={"default":0} )
+	 * @ORM\Column(type="integer", options={"default":1} )
 	 */
-	protected $disable = 0;
+	protected $disable = 1;
 	
 	/**
 	 * @var boolean
@@ -123,9 +140,9 @@ abstract class AppContent {
 	/**
 	 * custom field
 	 * @var string
-	 * @ORM\Column(type="string", length=2, options={"default":"en"}, nullable=true )
+	 * @ORM\Column(type="string", length=5, options={"default":"en_GB"}, nullable=true )
 	 */
-	protected $locale = 'en';
+	protected $locale = 'en_GB';
 	
 	/**
 	 * @var string

@@ -1,0 +1,23 @@
+ui:
+    checkAnswerButton: Check
+    showSolutionButton: Show solution
+    tryAgainButton: Retry
+    tipsLabel: Show tip
+    scoreBarLabel: Score
+    tipAvailable: Tip available
+    feedbackAvailable: Feedback available
+    readFeedback: Read feedback
+    wrongAnswer: Wrong answer
+    correctAnswer: Correct answer
+    feedback: You got @score of @total points
+    shouldCheck: Should have been checked
+    shouldNotCheck: Should not have been checked
+    noInput: Please answer before viewing the solution
+
+dialog:
+    header_finish: Finish ?
+    body_finish: Are you sure you wish to finish ?
+    header_retry: Retry ?
+    body_retry: Are you sure you wish to retry ?
+    cancel_label: No, Go back
+    confirm_Label: Yes, Proceed

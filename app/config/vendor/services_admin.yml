@@ -27,7 +27,7 @@ services:
         arguments: [~, AppBundle\Entity\H5P\Content, AppBundle:Admin/H5P/ContentAdmin]
         calls:
             - [setIvoryCkeditor,['default']]
-            - [setTranslationDomain, ['AppAdmin']]
+            - [setTranslationDomain, ['BeanH5PAdmin']]
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
@@ -36,7 +36,7 @@ services:
         arguments: [~, AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice, AppBundle:Admin/H5P/ContentType/MultiChoice/ContentMultiChoiceAdmin]
         calls:
             - [setIvoryCkeditor,['default']]
-            - [setTranslationDomain, ['AppAdmin']]
+            - [setTranslationDomain, ['BeanH5PAdmin']]
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_multichoice, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
@@ -45,7 +45,7 @@ services:
         arguments: [~, AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia, AppBundle:Admin/H5P/ContentType/MultiChoice/MultiChoiceMediaAdmin]
         calls:
             - [setIvoryCkeditor,['default']]
-            - [setTranslationDomain, ['AppAdmin']]
+            - [setTranslationDomain, ['BeanH5PAdmin']]
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_multichoice_media, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
@@ -54,6 +54,6 @@ services:
         arguments: [~, AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceAnswer, AppBundle:Admin/H5P/ContentType/MultiChoice/MultiChoiceAnswerAdmin]
         calls:
             - [setIvoryCkeditor,['default']]
-            - [setTranslationDomain, ['AppAdmin']]
+            - [setTranslationDomain, ['BeanH5PAdmin']]
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_multichoice_answer, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }

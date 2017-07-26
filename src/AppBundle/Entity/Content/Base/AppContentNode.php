@@ -130,10 +130,10 @@ abstract class AppContentNode {
 	
 	/**
 	 * @var string
-	 * @ORM\Column(type="string", length=2, options={"default":"en"} ,  nullable=true)
+	 * @ORM\Column(type="string", length=5, options={"default":"en_GB"} ,  nullable=true)
 	 */
 	protected
-		$locale = 'en';
+		$locale = 'en_GB';
 	
 	/**
 	 * @var string

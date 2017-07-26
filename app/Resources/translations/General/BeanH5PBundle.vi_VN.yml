@@ -1,0 +1,23 @@
+ui: 
+    checkAnswerButton: Kiểm tra
+    showSolutionButton: Đáp án
+    tryAgainButton: Làm lại
+    tipsLabel: Gợi ý
+    scoreBarLabel: Điểm số
+    tipAvailable: Có thể xem gợi ý
+    feedbackAvailable: Có phản hồi
+    readFeedback: Xem phản hồi
+    wrongAnswer: Lựa chọn không chánh xác
+    correctAnswer: Đây là đáp án,
+    feedback: Bạn được @score trên @total điểm
+    shouldCheck: Đáng ra nên chọn đáp án này
+    shouldNotCheck: Đáng ra không nên chọn
+    noInput: Vui lòng trả lời hết các câu hỏi trước khi xem đáp án
+
+dialog:
+    header_finish: Kết thúc ?
+    body_finish: Bạn chắc là muốn kết thúc bài này?
+    header_retry: Làm lại ?
+    body_retry: Bạn chắc là muốn làm lại ?
+    cancel_label: Không, quay về
+    confirm_Label: Có, làm lại nhé

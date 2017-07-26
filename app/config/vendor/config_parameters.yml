@@ -15,21 +15,29 @@ parameters:
 
     s3_version: latest
 #    s3_sdk_version: 3 no longer permissible
+    locale: en_GB
+    locales:
+        - en_GB
+        - vi_VN
+
+    site_topic:
+        hoc_tieng_phap: tiengphap.local.com
+        hoc_tieng_nhat: tiengnhat.local.com
 
     default_site:
         theme: standard
-        locale: vi
+        locale: en_GB
         file_server: server.local.com:81/file-server
         modules: []
 
     tiengphap.local.com:
         theme: tiengphap
-        locale: vi
+        locale: vi_VN
         file_server: server.local.com:81/file-server
         modules: []
 
     tiengnhat.local.com:
         theme: tiengnhat
-        locale: vi
+        locale: vi_VN
         file_server: server.local.com:81/file-server
         modules: []

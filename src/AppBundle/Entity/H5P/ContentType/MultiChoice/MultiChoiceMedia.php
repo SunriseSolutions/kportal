@@ -24,27 +24,6 @@ class MultiChoiceMedia extends AppMultiChoiceMedia {
 	
 	function __construct() {
 		parent::__construct();
-		
-		$this->imageLib = [
-			'machineName'  => 'H5P.Image',
-			'majorVersion' => 1,
-			'minorVersion' => 0,
-			'patchVersion' => 28
-		];
-		
-		$this->flowplayerLib = [
-			'machineName'  => 'flowplayer',
-			'majorVersion' => 1,
-			'minorVersion' => 0,
-			'patchVersion' => 5
-		];
-		$this->vidLib        = [
-			'machineName'  => 'H5P.Video',
-			'majorVersion' => 1,
-			'minorVersion' => 3,
-			'patchVersion' => 4
-		];
-		
 	}
 	
 	public function isImage() {
@@ -56,9 +35,10 @@ class MultiChoiceMedia extends AppMultiChoiceMedia {
 	}
 	
 	public function getJsonObject() {
-		$obj         = new \stdClass();
-		$obj->params = new \stdClass();
+		$obj = new \stdClass();
+		
 		if( ! empty($this->media)) {
+			$obj->params = new \stdClass();
 			if($this->isImage()) {
 				$obj->params->contentName = "Image";
 				
@@ -70,8 +50,11 @@ class MultiChoiceMedia extends AppMultiChoiceMedia {
 				$obj->params->file->width              = $this->media->getWidth();
 				$obj->params->file->height             = $this->media->getHeight();
 				
-				$obj->params->library      = $this->imageLib['machineName'] . ' ' . $this->imageLib['majorVersion'] . '.' . $this->imageLib['minorVersion'] . '.' . $this->imageLib['patchVersion'];
-				$obj->params->subContentId = rand(1000000, 9999999);
+				$obj->params->alt   = $this->media->getDescription();
+				$obj->params->title = $this->media->getName();
+				
+				$obj->library      = $this->imageLib['machineName'] . ' ' . $this->imageLib['majorVersion'] . '.' . $this->imageLib['minorVersion'] . '.' . $this->imageLib['patchVersion'];
+				$obj->subContentId = rand(1000000, 9999999);
 			}
 			
 		}

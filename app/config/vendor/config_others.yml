@@ -21,9 +21,12 @@ white_october_pagerfanta:
 
 lunetics_locale:
     guessing_order:
-        - router
-        - cookie
-        - browser
+        - domain
+    domain:
+        locale_map:
+            tiengphap.local.com: vi_VN
+            tiengnhat.local.com: vi_VN
+            test.local.com: en_GB
     strict_mode: true
     allowed_locales: '%locales%'
 

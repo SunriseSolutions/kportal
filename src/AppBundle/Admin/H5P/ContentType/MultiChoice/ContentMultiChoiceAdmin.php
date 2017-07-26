@@ -32,9 +32,14 @@ class ContentMultiChoiceAdmin extends BaseAdmin {
 		;
 		$formMapper
 			->add('title')
+			->add('questionText')
 			->add('slug', null, array(
 				'required' => false
 			))
+			->add('autoCheckEnabled')
+			->add('correctFeedbackText')
+			->add('almostCorrectFeedbackText')
+			->add('wrongFeedbackText')
 			->add('multichoiceMedia', 'sonata_type_admin')
 			->add('answers', CollectionType::class,
 				array(
@@ -66,9 +71,45 @@ class ContentMultiChoiceAdmin extends BaseAdmin {
 //		$object->setParameters('test Params');
 //		$object->setFiltered('test Params');
 		$container = $this->getConfigurationPool()->getContainer();
+		$locale    = $container->get('lunetics_locale.domain_guesser')->getIdentifiedLocale();
+		$object->setLocale($locale);
+		
+		$trans = $container->get('translator');
+		$trans->setLocale($locale);
+		
+		////// UI Settings /////
+		$object->setCheckAnswerButtonText($trans->trans('ui.checkAnswerButton', [], 'BeanH5PBundle'));
+		$object->setShowSolutionButtonText($trans->trans('ui.showSolutionButton', [], 'BeanH5PBundle'));
+		$object->setTryAgainButtonText($trans->trans('ui.tryAgainButton', [], 'BeanH5PBundle'));
+		$object->setTipLabelText($trans->trans('ui.tipsLabel', [], 'BeanH5PBundle'));
+		$object->setScoreBarLabelText($trans->trans('ui.scoreBarLabel', [], 'BeanH5PBundle'));
+		$object->setTipAvailableText($trans->trans('ui.tipAvailable', [], 'BeanH5PBundle'));
+		$object->setFeedbackAvailableText($trans->trans('ui.feedbackAvailable', [], 'BeanH5PBundle'));
+		$object->setReadFeedbackText($trans->trans('ui.readFeedback', [], 'BeanH5PBundle'));
+		$object->setWrongAnswerText($trans->trans('ui.wrongAnswer', [], 'BeanH5PBundle'));
+		$object->setCorrectAnswerText($trans->trans('ui.correctAnswer', [], 'BeanH5PBundle'));
+		$object->setFeedbackText($trans->trans('ui.feedback', [], 'BeanH5PBundle'));
+		$object->setShouldCheckText($trans->trans('ui.shouldCheck', [], 'BeanH5PBundle'));
+		$object->setShouldNotCheckText($trans->trans('ui.shouldNotCheck', [], 'BeanH5PBundle'));
+		$object->setNoInputText($trans->trans('ui.noInput', [], 'BeanH5PBundle'));
+		
+		//////// Dialog Settings ////////
+		$object->setConfirmCheckHeaderText($trans->trans('dialog.header_finish', [], 'BeanH5PBundle'));
+		$object->setConfirmCheckBodyText($trans->trans('dialog.body_finish', [], 'BeanH5PBundle'));
+		$object->setConfirmCheckCancelButtonText($trans->trans('dialog.cancel_label', [], 'BeanH5PBundle'));
+		$object->setConfirmCheckConfirmButtonText($trans->trans('dialog.confirm_Label', [], 'BeanH5PBundle'));
+		
+		$object->setConfirmRetryHeaderText($trans->trans('dialog.header_retry', [], 'BeanH5PBundle'));
+		$object->setConfirmRetryBodyText($trans->trans('dialog.body_retry', [], 'BeanH5PBundle'));
+		$object->setConfirmRetryCancelButtonText($trans->trans('dialog.cancel_label', [], 'BeanH5PBundle'));
+		$object->setConfirmRetryConfirmButtonText($trans->trans('dialog.confirm_Label', [], 'BeanH5PBundle'));
+		
 		$libRepo   = $container->get('doctrine')->getRepository(Library::class);
 		$libraries = [];
-		foreach($object->getLibraries() as $lib) {
+		$object->setupLibraries();
+		$object->setMultichoiceMedia($object->getMultichoiceMedia());
+		$objLibs = $object->getLibraries();
+		foreach($objLibs as $lib) {
 			$libraries[] = $libRepo->findOneBy([
 				'machineName'  => $lib['machineName'],
 				'majorVersion' => $lib['majorVersion'],
@@ -76,13 +117,14 @@ class ContentMultiChoiceAdmin extends BaseAdmin {
 				'patchVersion' => $lib['patchVersion'],
 			]);
 		}
+		
 		$object->initiateDependencies($libraries);
 //		$media = $object->getMultichoiceMedia();
 //		$stop = $media;
 		$answers = $object->getAnswers();
 		/** @var MultiChoiceAnswer $answer */
 		foreach($answers as $answer) {
-			$object->addAnswer($answer);
+			$answer->setQuestion($object);
 		}
 	}
 }
