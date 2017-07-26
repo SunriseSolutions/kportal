@@ -1,6 +1,7 @@
 <?php
-namespace AppBundle\Entity\Media;
+namespace AppBundle\Service\Media\Entity;
 
+use AppBundle\Entity\Media\Media;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Sonata\MediaBundle\Entity\MediaManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;

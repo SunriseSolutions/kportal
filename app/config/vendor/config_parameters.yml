@@ -1,9 +1,8 @@
-
 parameters:
     sonata.media.provider.youtube.class: AppBundle\Service\Media\Provider\AppYouTubeProvider
     sonata.media.provider.image.class: AppBundle\Service\Media\Provider\AppImageProvider
     sonata.media.provider.file.class: AppBundle\Service\Media\Provider\AppFileProvider
-#    sonata.media.manager.media.class: AppBundle\Entity\Media\AppMediaManager
+    sonata.media.manager.media.class: AppBundle\Service\Media\Entity\AppMediaManager
 
 #    sonata.media.admin.media.class: Application\Sonata\MediaBundle\Admin\AppMediaAdmin
 #    sonata.media.admin.gallery.class: Application\Sonata\MediaBundle\Admin\AppGalleryAdmin
@@ -12,6 +11,7 @@ parameters:
     max_file_per_user: 7 # 7 files
     video_thumbnail_pos: 3 # at the 3rd second
     video_thumbnail_resolution: 300x225 # width 300, height: 225 px
+    file_server_secret: 20170727lethanhbinhahihihi
 
     s3_version: latest
 #    s3_sdk_version: 3 no longer permissible
