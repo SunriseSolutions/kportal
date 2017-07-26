@@ -4,6 +4,7 @@ namespace AppBundle\Entity\H5P\ContentType\MultiChoice\Base;
 
 use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\H5P\ContentLibrary;
+use AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceAnswer;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia;
 use AppBundle\Entity\H5P\Library;
 use AppBundle\Entity\User\User;
@@ -23,6 +24,7 @@ abstract class AppContentMultiChoice extends Content {
 	
 	function __construct() {
 		parent::__construct();
+		$this->answers = new ArrayCollection();
 		// initiate default versioning
 		$this->libraries = [
 			[
@@ -81,6 +83,21 @@ abstract class AppContentMultiChoice extends Content {
 	}
 	
 	/**
+	 * @var ArrayCollection
+	 */
+	protected $answers;
+	
+	public function addAnswer(MultiChoiceAnswer $answer) {
+		$this->answers->add($answer);
+		$answer->setQuestion($this);
+	}
+	
+	public function removeAnswer(MultiChoiceAnswer $answer) {
+		$this->answers->remove($answer);
+		$answer->setQuestion(null);
+	}
+	
+	/**
 	 * @var MultiChoiceMedia
 	 */
 	protected $multichoiceMedia;
@@ -106,5 +123,17 @@ abstract class AppContentMultiChoice extends Content {
 		$this->libraries = $libraries;
 	}
 	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getAnswers() {
+		return $this->answers;
+	}
 	
+	/**
+	 * @param ArrayCollection $answers
+	 */
+	public function setAnswers($answers) {
+		$this->answers = $answers;
+	}
 }

@@ -33,9 +33,16 @@ class ContentMultiChoice extends AppContentMultiChoice {
 	}
 	
 	/**
+	 * @var ArrayCollection
+	 * One Customer has One Cart.
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceAnswer", mappedBy="question", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $answers;
+	
+	/**
 	 * @var MultiChoiceMedia
 	 * One Customer has One Cart.
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia", mappedBy="content", cascade={"persist","merge"}, orphanRemoval=true)
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia", mappedBy="question", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $multichoiceMedia;
 	
@@ -47,6 +54,12 @@ class ContentMultiChoice extends AppContentMultiChoice {
 			$obj->media = new \stdClass();
 		}
 		
+		$obj->answers = [];
+		/** @var MultiChoiceAnswer $answer */
+		foreach($this->answers as $answer) {
+			$obj->answers[] = $answer->getJsonObject();
+		}
+		
 		return $obj;
 	}
 	
@@ -56,7 +69,7 @@ class ContentMultiChoice extends AppContentMultiChoice {
 	public function setMultichoiceMedia($multichoiceMedia) {
 		$this->multichoiceMedia = $multichoiceMedia;
 		if( ! empty($multichoiceMedia)) {
-			$multichoiceMedia->setContent($this);
+			$multichoiceMedia->setQuestion($this);
 			if($multichoiceMedia->isImage()) {
 				array_unshift($this->libraries, $multichoiceMedia->getImageLib());
 			}

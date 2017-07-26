@@ -5,7 +5,14 @@ full_time: Job Full Time
 security:
     hack_attempt: Are you trying to hack us ?
 form:
-    label_position_roles: Roles in this Organisation
+# MultiChoiceAnswer Embedded Form
+    label_tip: Tip
+    label_text: Text
+    label_correct: Correct
+    label_feedback_chosen: Feedback when selected
+    label_feedback_not_chosen: Feedback when not selected
+
+
     marital_married: Married
     marital_single: Single
     label_geolocation: Address

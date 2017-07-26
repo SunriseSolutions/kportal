@@ -4,6 +4,7 @@ user:
 dashboard:
     h5p_content_multichoice: MultiChoice
     h5p_content_multichoice_media: MultiChoice Media
+    h5p_content_multichoice_answer: MultiChoice Answer
     h5p_content: H5P Content
     content_node: Content Node
     article_node: Article Node
@@ -30,6 +31,7 @@ form:
     label_email_address: Email Address
     label_title: Title
     label_topic: Topic
+    label_answers: Answers
     label_slug: Search Engine Friendly Name
     label_main_content: Main Content
     label_bottom_left: Bottom Left

@@ -1,17 +1,3 @@
-
-action_import_employees_to_benefit: Import Employees To Benefit
-action_assign_product: Assign To Product
-action_receive_payment: Receive & Approve
-action_approve_payment: Approve Only
-action_approve: Approve
-action_issue_payment: Issue Payment
-action_buy_now: Buy now
-action_download_voucher: Download Voucher
-action_mark_paid: Mark as Paid
-action_void: Void Order
-business_employer_registry: Manage Clients
-business_employer_payments: Manage Client Payments
-employee_benefit_registry: Manage Employee Benefits
 flash:
     batch_payment_received: Invoices have been successfully processed
     batch_payment_approved: Vouchers have been approved

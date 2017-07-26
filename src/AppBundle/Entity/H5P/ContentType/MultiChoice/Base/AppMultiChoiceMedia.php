@@ -49,9 +49,9 @@ abstract class AppMultiChoiceMedia {
 	/**
 	 * @var ContentMultiChoice
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice", inversedBy="multichoiceMedia")
-	 * @ORM\JoinColumn(name="id_h5p_content", referencedColumnName="id", onDelete="CASCADE")
+	 * @ORM\JoinColumn(name="id_h5p_multichoice", referencedColumnName="id", onDelete="CASCADE")
 	 */
-	protected $content;
+	protected $question;
 	
 	/**
 	 * @var Media
@@ -63,15 +63,15 @@ abstract class AppMultiChoiceMedia {
 	/**
 	 * @return ContentMultiChoice
 	 */
-	public function getContent() {
-		return $this->content;
+	public function getQuestion() {
+		return $this->question;
 	}
 	
 	/**
-	 * @param ContentMultiChoice $content
+	 * @param ContentMultiChoice $question
 	 */
-	public function setContent($content) {
-		$this->content = $content;
+	public function setQuestion($question) {
+		$this->question = $question;
 	}
 	
 	/**
