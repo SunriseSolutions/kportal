@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Entity\Content\Base;
+namespace AppBundle\Entity\Content\NodeType\Book\Base;
 
-use AppBundle\Entity\Content\ArticleNode;
-use AppBundle\Entity\Content\BlogNode;
-use AppBundle\Entity\Content\BookNode;
+use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
+use AppBundle\Entity\Content\NodeType\Blog\BlogNode;
+use AppBundle\Entity\Content\NodeType\Book\BookNode;
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -30,7 +30,7 @@ abstract class AppBookPageSection {
 	
 	/**
 	 * @var BookNode
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\BookPage",inversedBy="sections")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeType\Book\BookPage",inversedBy="sections")
 	 * @ORM\JoinColumn(name="id_book", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected $page;

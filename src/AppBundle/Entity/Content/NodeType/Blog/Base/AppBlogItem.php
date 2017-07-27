@@ -1,11 +1,10 @@
 <?php
 
-namespace AppBundle\Entity\Content\Base;
+namespace AppBundle\Entity\Content\NodeType\Blog\Base;
 
-use AppBundle\Entity\Content\ArticleNode;
-use AppBundle\Entity\Content\BlogNode;
+use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
+use AppBundle\Entity\Content\NodeType\Blog\BlogNode;
 use AppBundle\Entity\Content\ContentNode;
-use AppBundle\Entity\Dictionary\Entry;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\MediaBundle\Entity\BaseGallery as BaseGallery;
@@ -14,7 +13,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /** @ORM\MappedSuperclass */
-abstract class AppArticleVocabEntry {
+abstract class AppBlogItem {
 	
 	/**
 	 * ID_REF
@@ -26,22 +25,21 @@ abstract class AppArticleVocabEntry {
 	protected $id;
 	
 	function __construct() {
-	
 	}
 	
 	/**
-	 * @var Entry
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dictionary\Entry",inversedBy="articleEntries")
-	 * @ORM\JoinColumn(name="id_entry", referencedColumnName="id", onDelete="CASCADE")
+	 * @var BlogNode
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeType\Blog\BlogNode",inversedBy="items")
+	 * @ORM\JoinColumn(name="id_blog", referencedColumnName="id", onDelete="CASCADE")
 	 */
-	protected $entry;
+	protected $blog;
 	
 	/**
-	 * @var ArticleNode
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ArticleNode",inversedBy="vocabEntries")
-	 * @ORM\JoinColumn(name="id_article", referencedColumnName="id", onDelete="CASCADE")
+	 * @var ContentNode
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentNode" )
+	 * @ORM\JoinColumn(name="id_content_node", referencedColumnName="id", onDelete="CASCADE")
 	 */
-	protected $article;
+	protected $content;
 	
 	/**
 	 * @var \DateTime
@@ -63,31 +61,24 @@ abstract class AppArticleVocabEntry {
 	protected $position = 0;
 	
 	/**
-	 * @return Entry
+	 * @return BlogNode
 	 */
-	public function getEntry() {
-		return $this->entry;
+	public function getBlog() {
+		return $this->blog;
 	}
 	
 	/**
-	 * @param Entry $entry
+	 * @param BlogNode $blog
 	 */
-	public function setEntry($entry) {
-		$this->entry = $entry;
+	public function setBlog($blog) {
+		$this->blog = $blog;
 	}
 	
 	/**
-	 * @return ArticleNode
+	 * @return mixed
 	 */
-	public function getArticle() {
-		return $this->article;
-	}
-	
-	/**
-	 * @param ArticleNode $article
-	 */
-	public function setArticle($article) {
-		$this->article = $article;
+	public function getId() {
+		return $this->id;
 	}
 	
 	/**
@@ -133,10 +124,17 @@ abstract class AppArticleVocabEntry {
 	}
 	
 	/**
-	 * @return mixed
+	 * @return ContentNode
 	 */
-	public function getId() {
-		return $this->id;
+	public function getContent() {
+		return $this->content;
+	}
+	
+	/**
+	 * @param ContentNode $content
+	 */
+	public function setContent($content) {
+		$this->content = $content;
 	}
 	
 }

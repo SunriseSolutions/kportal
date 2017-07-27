@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity\Dictionary\Base;
 
-use AppBundle\Entity\Content\ArticleVocabEntry;
+use AppBundle\Entity\Content\NodeType\Article\ArticleVocabEntry;
 use Bean\Component\Dictionary\Model\Entry;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,7 +27,7 @@ class AppEntry extends Entry {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ArticleVocabEntry", mappedBy="entry", cascade={"all"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeType\Article\ArticleVocabEntry", mappedBy="entry", cascade={"all"}, orphanRemoval=true)
 	 */
 	protected $articleEntries;
 	

@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Entity\Content;
+namespace AppBundle\Entity\Content\NodeType\Article;
 
-use AppBundle\Entity\Content\Base\AppArticleNode;
+use AppBundle\Entity\Content\NodeType\Article\Base\AppArticleNode;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
@@ -32,13 +32,13 @@ class ArticleNode extends AppArticleNode {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\BlogItem", mappedBy="article", cascade={"all"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeType\Blog\BlogItem", mappedBy="article", cascade={"all"}, orphanRemoval=true)
 	 */
 	protected $blogItems;
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ArticleVocabEntry", mappedBy="article", cascade={"all"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeType\Article\ArticleVocabEntry", mappedBy="article", cascade={"all"}, orphanRemoval=true)
 	 */
 	protected $vocabEntries;
 	

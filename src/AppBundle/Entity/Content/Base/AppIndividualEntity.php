@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity\Content\Base;
 
-use AppBundle\Entity\Content\BlogItem;
+use AppBundle\Entity\Content\NodeType\Blog\BlogItem;
 use AppBundle\Entity\Content\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\User\User;

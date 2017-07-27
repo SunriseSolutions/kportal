@@ -1,8 +1,8 @@
 <?php
-namespace AppBundle\Entity\Content;
+namespace AppBundle\Entity\Content\NodeType\Article;
 
-use AppBundle\Entity\Content\Base\AppArticleNode;
-use AppBundle\Entity\Content\Base\AppBlogNode;
+use AppBundle\Entity\Content\NodeType\Article\Base\AppArticleNode;
+use AppBundle\Entity\Content\NodeType\Article\Base\AppArticleVocabEntry;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +11,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="content__node__blog")
+ * @ORM\Table(name="content__node__article_vocab_entry")
  *
  * @Hateoas\Relation(
  *  "self",
@@ -24,7 +24,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  *
  */
-class BlogNode extends AppBlogNode
+class ArticleVocabEntry extends AppArticleVocabEntry
 {
     function __construct()
     {

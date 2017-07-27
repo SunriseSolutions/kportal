@@ -1,9 +1,8 @@
 <?php
-namespace AppBundle\Entity\Content;
+namespace AppBundle\Entity\Content\NodeType\Blog;
 
-use AppBundle\Entity\Content\Base\AppArticleNode;
-use AppBundle\Entity\Content\Base\AppBlogItem;
-use AppBundle\Entity\Content\Base\AppBlogNode;
+ use AppBundle\Entity\Content\NodeType\Blog\Base\AppBlogItem;
+use AppBundle\Entity\Content\NodeType\Blog\Base\AppBlogNode;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;

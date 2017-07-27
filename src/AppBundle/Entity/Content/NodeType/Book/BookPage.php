@@ -1,8 +1,8 @@
 <?php
-namespace AppBundle\Entity\Content;
+namespace AppBundle\Entity\Content\NodeType\Book;
 
-use AppBundle\Entity\Content\Base\AppArticleNode;
-use AppBundle\Entity\Content\Base\AppBookNode;
+use AppBundle\Entity\Content\NodeType\Article\Base\AppArticleNode;
+use AppBundle\Entity\Content\NodeType\Book\Base\AppBookPage;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +11,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="content__node__book")
+ * @ORM\Table(name="content__node__book_page")
  *
  * @Hateoas\Relation(
  *  "self",
@@ -24,7 +24,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  *
  */
-class BookNode extends AppBookNode
+class BookPage extends AppBookPage
 {
     function __construct()
     {

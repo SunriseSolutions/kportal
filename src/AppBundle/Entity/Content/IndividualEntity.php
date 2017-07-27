@@ -1,7 +1,6 @@
 <?php
 namespace AppBundle\Entity\Content;
 
-use AppBundle\Entity\Content\Base\AppArticleNode;
 use AppBundle\Entity\Content\Base\AppIndividualEntity;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;

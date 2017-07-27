@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Entity\Content\Base;
+namespace AppBundle\Entity\Content\NodeType\Book\Base;
 
-use AppBundle\Entity\Content\BlogItem;
-use AppBundle\Entity\Content\BookPage;
+use AppBundle\Entity\Content\NodeType\Blog\BlogItem;
+use AppBundle\Entity\Content\NodeType\Book\BookPage;
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,7 +22,7 @@ abstract class AppBookNode extends ContentNode {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\BookPage", mappedBy="book", cascade={"all"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeType\Book\BookPage", mappedBy="book", cascade={"all"}, orphanRemoval=true)
 	 */
 	protected $pages;
 	

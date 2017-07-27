@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Entity\Content\Base;
+namespace AppBundle\Entity\Content\NodeType\Book\Base;
 
-use AppBundle\Entity\Content\ArticleNode;
-use AppBundle\Entity\Content\BlogNode;
-use AppBundle\Entity\Content\BookNode;
-use AppBundle\Entity\Content\BookPageSection;
+use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
+use AppBundle\Entity\Content\NodeType\Blog\BlogNode;
+use AppBundle\Entity\Content\NodeType\Book\BookNode;
+use AppBundle\Entity\Content\NodeType\Book\BookPageSection;
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -32,14 +32,14 @@ abstract class AppBookPage {
 	
 	/**
 	 * @var BookNode
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\BookNode",inversedBy="pages")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeType\Book\BookNode",inversedBy="pages")
 	 * @ORM\JoinColumn(name="id_book", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected $book;
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\BookPageSection", mappedBy="page", cascade={"all"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeType\Book\BookPageSection", mappedBy="page", cascade={"all"}, orphanRemoval=true)
 	 */
 	protected $sections;
 	
