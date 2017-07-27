@@ -1,9 +1,8 @@
 <?php
-
-namespace AppBundle\Admin\Content;
+namespace AppBundle\Admin\Content\NodeType\Article;
 
 use AppBundle\Admin\BaseAdmin;
-use AppBundle\Entity\Content\ArticleNode;
+use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;

@@ -5,6 +5,7 @@ namespace AppBundle\Admin\H5P\ContentType\MultiChoice;
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceAnswer;
+use AppBundle\Entity\H5P\Dependency;
 use AppBundle\Entity\H5P\Library;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
@@ -110,12 +111,15 @@ class ContentMultiChoiceAdmin extends BaseAdmin {
 		$object->setMultichoiceMedia($object->getMultichoiceMedia());
 		$objLibs = $object->getLibraries();
 		foreach($objLibs as $lib) {
-			$libraries[] = $libRepo->findOneBy([
+			$library                   = array();
+			$library['dependencyType'] = array_key_exists('dependencyType', $lib) ? $lib['dependencyType'] : Dependency::TYPE_PRELOADED;
+			$library['object']         = $libRepo->findOneBy([
 				'machineName'  => $lib['machineName'],
 				'majorVersion' => $lib['majorVersion'],
 				'minorVersion' => $lib['minorVersion'],
 				'patchVersion' => $lib['patchVersion'],
 			]);
+			$libraries[]               = $library;
 		}
 		
 		$object->initiateDependencies($libraries);

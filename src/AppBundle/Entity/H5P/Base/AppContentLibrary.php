@@ -35,6 +35,13 @@ class AppContentLibrary {
 	protected $content;
 	
 	/**
+	 * @var string
+	 * @ORM\Id
+	 * @ORM\Column(type="string", length=31, options={"default":"preloaded"})
+	 */
+	protected $dependencyType = Dependency::TYPE_PRELOADED;
+	
+	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean",name="drop_css", options={"default":false})
 	 */
@@ -45,12 +52,6 @@ class AppContentLibrary {
 	 * @ORM\Column(type="integer")
 	 */
 	protected $position;
-	
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", length=31, options={"default":"preloaded"})
-	 */
-	protected $dependencyType = Dependency::TYPE_PRELOADED;
 	
 	/**
 	 * @return Library

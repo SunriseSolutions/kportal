@@ -13,8 +13,8 @@ services:
             - { name: sonata.admin, manager_type: orm, label: dashboard.content_node, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
     app.admin.content_article_node:
-        class: AppBundle\Admin\Content\ArticleNodeAdmin
-        arguments: [~, AppBundle\Entity\Content\ArticleNode, AppBundle:Admin/Content/ArticleNodeAdmin]
+        class: AppBundle\Admin\Content\NodeType\Article\ArticleNodeAdmin
+        arguments: [~, AppBundle\Entity\Content\NodeType\Article\ArticleNode, AppBundle:Admin/Content/NodeType/Article/ArticleNodeAdmin]
         calls:
             - [setIvoryCkeditor,['default']]
             - [setTranslationDomain, ['AppAdmin']]
@@ -31,6 +31,7 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
+### H5P > MultiChoice ##################################################################
     app.admin.h5p.content_multichoice:
         class: AppBundle\Admin\H5P\ContentType\MultiChoice\ContentMultiChoiceAdmin
         arguments: [~, AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice, AppBundle:Admin/H5P/ContentType/MultiChoice/ContentMultiChoiceAdmin]
@@ -57,3 +58,13 @@ services:
             - [setTranslationDomain, ['BeanH5PAdmin']]
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_multichoice_answer, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+
+### H5P > DragQuestion ##################################################################
+    app.admin.h5p.content_dragquestion:
+        class: AppBundle\Admin\H5P\ContentType\DragQuestion\ContentDragQuestionAdmin
+        arguments: [~, AppBundle\Entity\H5P\ContentType\DragQuestion\ContentDragQuestion, AppBundle:Admin/H5P/ContentType/DragQuestion/ContentDragQuestionAdmin]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['BeanH5PAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_dragquestion, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }

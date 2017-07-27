@@ -77,6 +77,8 @@ abstract class AppContentMultiChoice extends Content {
 				$this->getLibraryVersion()
 			];
 		}
+		
+		return $this->libraries;
 	}
 	
 	public function getLibraryVersion() {

@@ -14,6 +14,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 class AppDependency {
 	
 	const TYPE_PRELOADED = 'preloaded';
+	const TYPE_EDITOR = 'editor';
 	
 	
 	function __construct() {

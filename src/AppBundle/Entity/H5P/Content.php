@@ -15,7 +15,10 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @ORM\Table(name="h5p__content")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"multichoice" = "AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice"})
+ * @ORM\DiscriminatorMap({
+ *     "multichoice" = "AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice",
+ *     "dragquestion" = "AppBundle\Entity\H5P\ContentType\DragQuestion\ContentDragQuestion"
+ * })
  *
  * @Hateoas\Relation(
  *  "self",
@@ -38,15 +41,25 @@ abstract class Content extends AppContent {
 	 */
 	protected $libraries;
 	
+	public abstract function setupLibraries();
+	
+	public function getLibraries() {
+		return $this->setupLibraries();
+	}
+	
 	public function initiateDependencies(array $libraryObjs) {
 		/**
 		 * @var integer $key
 		 * @var Library $lib
 		 */
-		foreach($libraryObjs as $key => $lib) {
+		foreach($libraryObjs as $key => $value) {
+			$dependencyType = $value['dependencyType'];
+			$lib            = $value['object'];
+			
 			$contentLibrary = new ContentLibrary();
 			$contentLibrary->setContent($this);
 			$contentLibrary->setLibrary($lib);
+			$contentLibrary->setDependencyType($dependencyType);
 			$contentLibrary->setPosition($key + 1);
 			if( ! $this->isContentLibraryExisting($contentLibrary)) {
 				$this->addContentLibrary($contentLibrary);

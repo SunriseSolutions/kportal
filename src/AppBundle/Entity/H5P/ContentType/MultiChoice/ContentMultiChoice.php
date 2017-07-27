@@ -32,14 +32,14 @@ class ContentMultiChoice extends AppContentMultiChoice {
 		
 	}
 	
-	/**
-	 * @return array
-	 */
-	public function getLibraries() {
-		$this->setupLibraries();
-		
-		return $this->libraries;
-	}
+//	/**
+//	 * @return array
+//	 */
+//	public function getLibraries() {
+//		$this->setupLibraries();
+//
+//		return $this->libraries;
+//	}
 	
 	public function buildParameterObject() {
 		$obj = new \stdClass();

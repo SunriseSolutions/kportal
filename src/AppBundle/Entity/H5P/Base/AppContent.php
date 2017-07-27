@@ -74,7 +74,9 @@ abstract class AppContent {
 		foreach($this->contentLibraries as $clib) {
 			if($clib->getLibrary() === $contentLibrary->getLibrary()) {
 				if($clib->getContent() === $this) {
-					return true;
+					if($clib->getDependencyType() === $contentLibrary->getDependencyType()) {
+						return true;
+					}
 				}
 			}
 		}
