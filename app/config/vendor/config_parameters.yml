@@ -11,7 +11,6 @@ parameters:
     max_file_per_user: 7 # 7 files
     video_thumbnail_pos: 3 # at the 3rd second
     video_thumbnail_resolution: 300x225 # width 300, height: 225 px
-    file_server_secret: 20170727lethanhbinhahihihi
 
     s3_version: latest
 #    s3_sdk_version: 3 no longer permissible
@@ -27,17 +26,17 @@ parameters:
     default_site:
         theme: standard
         locale: en_GB
-        file_server: server.local.com:81/file-server
+        file_server: server.local.com:81/kportal/web
         modules: []
 
     tiengphap.local.com:
         theme: tiengphap
         locale: vi_VN
-        file_server: server.local.com:81/file-server
+        file_server: server.local.com:81/kportal/web
         modules: []
 
     tiengnhat.local.com:
         theme: tiengnhat
         locale: vi_VN
-        file_server: server.local.com:81/file-server
+        file_server: server.local.com:81/kportal/web
         modules: []

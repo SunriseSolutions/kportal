@@ -38,12 +38,14 @@ class MultiChoiceMedia extends AppMultiChoiceMedia {
 		$obj = new \stdClass();
 		
 		if( ! empty($this->media)) {
-			$obj->params = new \stdClass();
+			$obj->params       = new \stdClass();
+			$obj->subContentId = rand(1000000, 9999999);
+			
 			if($this->isImage()) {
 				$obj->params->contentName = "Image";
 				
 				$obj->params->file                     = new \stdClass();
-				$obj->params->file->path               = sprintf("<filePath=%s>", $this->media->getId());
+				$obj->params->file->path               = sprintf("<filePath=%s>", $this->media->getId() . '.' . $this->media->getExtension());
 				$obj->params->file->mime               = $this->media->getContentType();
 				$obj->params->file->copyright          = new \stdClass();
 				$obj->params->file->copyright->license = 'U';
@@ -53,8 +55,48 @@ class MultiChoiceMedia extends AppMultiChoiceMedia {
 				$obj->params->alt   = $this->media->getDescription();
 				$obj->params->title = $this->media->getName();
 				
-				$obj->library      = $this->imageLib['machineName'] . ' ' . $this->imageLib['majorVersion'] . '.' . $this->imageLib['minorVersion'] . '.' . $this->imageLib['patchVersion'];
-				$obj->subContentId = rand(1000000, 9999999);
+				$obj->library = $this->imageLib['machineName'] . ' ' . $this->imageLib['majorVersion'] . '.' . $this->imageLib['minorVersion'] . '.' . $this->imageLib['patchVersion'];
+			} elseif($this->isYoutube()) {
+				$obj->params->visuals           = new \stdClass();
+				$obj->params->visuals->fit      = false;
+				$obj->params->visuals->controls = true;
+				
+//				$obj->params->visuals->poster            = new \stdClass();
+//				$obj->params->visuals->poster->path      = 'http://test.local.com/001/wordpress/wp-content/uploads/h5p/content/4/images/poster-597763ca40cbc.png';
+//				$obj->params->visuals->poster->mime      = 'image/png';
+//				$obj->params->visuals->poster->copyright = new \stdClass();
+//				$obj->params->visuals->poster->width     = 683;
+//				$obj->params->visuals->poster->height    = 331;
+				
+				$obj->params->playback           = new \stdClass();
+				$obj->params->playback->autoplay = false;
+				$obj->params->playback->loop     = false;
+				
+				$obj->params->l10n                     = new \stdClass();
+				$obj->params->l10n->name               = 'Video';
+				$obj->params->l10n->loading            = 'Video player loading...';
+				$obj->params->l10n->noPlayers          = 'Found no video players that supports the given video format.';
+				$obj->params->l10n->noSources          = 'Video is missing sources.';
+				$obj->params->l10n->aborted            = 'Media playback has been aborted.';
+				$obj->params->l10n->networkFailure     = 'Network failure.';
+				$obj->params->l10n->cannotDecode       = 'Unable to decode media.';
+				$obj->params->l10n->formatNotSupported = 'Video format not supported.';
+				$obj->params->l10n->mediaEncrypted     = 'Media encrypted.';
+				$obj->params->l10n->unknownError       = 'Unknown error.';
+				$obj->params->l10n->invalidYtId        = 'Invalid YouTube ID.';
+				$obj->params->l10n->unknownYtId        = 'Unable to find video with the given YouTube ID.';
+				$obj->params->l10n->restrictedYt       = 'The owner of this video does not allow it to be embedded.';
+				
+				$obj->params->sources       = [];
+				$source                     = new \stdClass();
+				$source->path               = sprintf('https://www.youtube.com/watch?v=%s', $this->media->getProviderReference());
+				$source->mime               = 'video/YouTube';
+				$source->copyright          = new \stdClass();
+				$source->copyright->license = 'U';
+				$obj->params->sources[]     = $source;
+				
+				$obj->params->a11y = [];
+				$obj->library      = $this->vidLib['machineName'] . ' ' . $this->vidLib['majorVersion'] . '.' . $this->vidLib['minorVersion'] . '.' . $this->vidLib['patchVersion'];
 			}
 			
 		}

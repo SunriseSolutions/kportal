@@ -23,7 +23,7 @@ parameters:
         - en
         - vi
 
-
+    file_server_secret: 20170727lethanhbinhahihihi
 
     phpcr_backend:
         logging: true

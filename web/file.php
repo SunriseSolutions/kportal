@@ -2,9 +2,21 @@
 define('CHUNK_SIZE', 1024 * 1024); // Size (in bytes) of tiles chunk
 
 $secret = '20170727lethanhbinhahihihi';
+
 # get file name
-$fileName = $_GET['v'];
-$ext      = $_GET['ext'];
+$fileParam = $_GET['f'];
+if(empty($fileParam)) {
+	header("HTTP/1.0 404 Not Found");
+	die();
+}
+$fileNameExt = explode('.', $fileParam);
+$fileName    = $fileNameExt[0];
+$ext         = $fileNameExt[1];
+
+if(empty($ext) || empty($fileName)) {
+	header("HTTP/1.0 404 Not Found");
+	die();
+}
 
 $hash = hash('md5', $fileName);
 
@@ -43,7 +55,7 @@ $path = $root . '/' . $lev1 . '/' . $lev2 . '/' . $lev3;
 $filePath = $path . '/' . $fileName . '.' . $ext;
 
 if( ! file_exists($filePath)) {
-	$fileServerUrl = 'http://test.local.com:81/kportal/web/app_dev.php/get-file-url/' . $fileName . '?bean-secret-key=20170727lethanhbinhahihihi';
+	$fileServerUrl = 'http://file-server.local.com:81/kportal/web/app_dev.php/get-file-url/' . $fileName . '?bean-secret-key=' . $secret . '&ext=' . $ext;
 	$fileUrl       = file_get_contents($fileServerUrl);
 	
 	if($fileUrl === '{404}') {

@@ -47,7 +47,7 @@ services:
             - [setIvoryCkeditor,['default']]
             - [setTranslationDomain, ['BeanH5PAdmin']]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_multichoice_media, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
+            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_multichoice_media, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
     app.admin.h5p.content_multichoice_answer:
         class: AppBundle\Admin\H5P\ContentType\MultiChoice\MultiChoiceAnswerAdmin
@@ -56,4 +56,4 @@ services:
             - [setIvoryCkeditor,['default']]
             - [setTranslationDomain, ['BeanH5PAdmin']]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_multichoice_answer, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
+            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_multichoice_answer, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }

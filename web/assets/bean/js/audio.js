@@ -35,7 +35,7 @@ function initAudio(alias) {
         var _scache = SAudio.song_cache[alias];
         if (_scache == undefined || _scache == null) {
             SAudio.song_cache[alias] = new Audio(audio_server_url
-                + '/file.php?ext=mp3&alias=' + alias);
+                + '/file.php?ext=mp3&f=' + alias);
         } else {
         }
         song = SAudio.song_cache[alias];

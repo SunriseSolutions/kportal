@@ -44,7 +44,7 @@ class StringService {
 	public function parseShortCode($content, $shortcode) {
 		$innerCode   = $this->getBetween($content, '[' . $shortcode, ']');
 		$openTagPos  = strpos($content, '[' . $shortcode);
-		$closeTagPos = strpos($content, ']');
+		$closeTagPos = strpos($content, ']', $openTagPos);
 		
 		$shortcodeData = [];
 		

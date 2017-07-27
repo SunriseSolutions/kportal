@@ -53,4 +53,10 @@ class SiteService extends BaseService {
 		
 		return $type . '-' . $subdomain . $domain;
 	}
+	
+	public function getFileServerURLWithScheme($type = 'file') {
+		$scheme = $this->container->get('request_stack')->getCurrentRequest()->getScheme() . '://';
+		
+		return $scheme . $this->getFileServerURL($type);
+	}
 }

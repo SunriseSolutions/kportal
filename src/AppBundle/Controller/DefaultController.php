@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Content\ArticleNode;
 use AppBundle\Entity\Content\ContentNode;
+use AppBundle\Entity\Media\Media;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -60,8 +61,13 @@ class DefaultController extends Controller {
 		$secret = $request->query->get('bean-secret-key');
 		if($secret === '20170727lethanhbinhahihihi') {
 			$manager = $this->get('sonata.media.manager.media');
-			$medium  = $manager->find($id);
+			/** @var Media $medium */
+			$medium = $manager->find($id);
 			if(empty($medium)) {
+				return new Response('{404}');
+			}
+			
+			if($medium->getExtension() !== $request->query->get('ext', 'none')) {
 				return new Response('{404}');
 			}
 			

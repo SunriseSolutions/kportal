@@ -127,4 +127,9 @@ class ContentMultiChoiceAdmin extends BaseAdmin {
 			$answer->setQuestion($object);
 		}
 	}
+	
+	public function preUpdate($object) {
+		parent::preUpdate($object);
+		$object->setUpdatedAt(new \DateTime());
+	}
 }

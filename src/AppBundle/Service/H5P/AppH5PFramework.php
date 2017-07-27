@@ -6,6 +6,7 @@ use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\H5P\ContentLibrary;
 use AppBundle\Entity\H5P\Dependency;
 use AppBundle\Entity\H5P\Library;
+use AppBundle\Entity\Media\Media;
 use Doctrine\ORM\Query\Expr\OrderBy;
 use Doctrine\ORM\QueryBuilder;
 use stdClass;
@@ -696,10 +697,19 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 //				$sql = $contentQb->getQuery()->getSQL();
 		
 		if( ! empty($content)) {
-			$filePathShortCode = '<filePath=T10D-0000-0000-00OT-LLUF>';
-			
-			$content['params']   = str_replace($filePathShortCode, 'http://www.imagefully.com/wp-content/uploads/2015/07/Blue-Eyes-Hot-Girl-Hd-Wallpaper.jpg', $content['params']);
-			$content['filtered'] = str_replace($filePathShortCode, substr(json_encode('http://www.imagefully.com/wp-content/uploads/2015/07/Blue-Eyes-Hot-Girl-Hd-Wallpaper.jpg'), 1, - 1), $content['filtered']);
+			$fileServerUrl = $this->container->get('app.site')->getFileServerURLWithScheme();
+			$filePathStart = '<filePath=';
+			$filePathEnd   = '>';
+			while(($filePathStartPos = strpos($content['params'], $filePathStart)) > - 1) {
+				$filePathEndPos      = strpos($content['params'], $filePathEnd);
+				$mediaIdExt          = substr($content['params'], $filePathStartPos += 10, $filePathEndPos - $filePathStartPos);
+				$filePathShortCode   = $filePathStart . $mediaIdExt . $filePathEnd;
+				$mediaUrl            = $fileServerUrl . '/file.php?f=' . $mediaIdExt;
+				$content['params']   = str_replace($filePathShortCode, $mediaUrl, $content['params']);
+				$content['filtered'] = str_replace($filePathShortCode, substr(json_encode($mediaUrl), 1, - 1), $content['filtered']);
+			}
+//			$medium = $this->container->get('doctrine.orm.default_entity_manager')->getRepository(Media::class)->find($mediaId);
+		
 		}
 		
 		return $content;
