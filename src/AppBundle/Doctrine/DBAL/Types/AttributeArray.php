@@ -26,15 +26,16 @@ class AttributeArray extends Type {
 		if(empty($value)) {
 			return array();
 		}
-		$attributes = explode(',', $value);
+		$returnedArray = array();
+		$attributes    = explode(',', $value);
 		foreach($attributes as $attrKey => $attrValue) {
-			$array                                   = explode('=>', $attrValue);
-			$arrayKey                                = $array[0];
-			$arrayValue                              = $array[1];
-			$attributes[ substr($arrayKey, 1, - 1) ] = substr($arrayValue, 1, - 1);
+			$array                                      = explode('=>', $attrValue);
+			$arrayKey                                   = $array[0];
+			$arrayValue                                 = $array[1];
+			$returnedArray[ substr($arrayKey, 1, - 1) ] = substr($arrayValue, 1, - 1);
 		}
 		
-		return $attributes;
+		return $returnedArray;
 	}
 	
 	/**

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\H5P;
 
+use AppBundle\Entity\H5P\Content;
 use AppBundle\Service\BaseService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -238,9 +239,32 @@ class H5PService extends BaseService {
 		}
 		
 		if($embed === 'div') {
-			return '<h1>class-h5p-plugin.php::942</h1><div class="h5p-content" data-content-id="' . $content['id'] . '"></div>';
+			return '<div class="h5p-content" data-content-id="' . $content['id'] . '"></div>';
 		} else {
 			return '<div class="h5p-iframe-wrapper"><iframe id="h5p-iframe-' . $content['id'] . '" class="h5p-iframe" data-content-id="' . $content['id'] . '" style="height:1px" src="about:blank" frameBorder="0" scrolling="no"></iframe></div>';
+		}
+	}
+	
+	public function getContentActualEmbedType(Content $content) {
+		return \H5PCore::determineEmbedType($content->getEmbedType(), $content->getLibrary()->getEmbedTypes());
+	}
+	
+	public function getContentHtml(Content $content, $params = array()) {
+		$embed = \H5PCore::determineEmbedType($content->getEmbedType(), $content->getLibrary()->getEmbedTypes());
+		if(array_key_exists('class', $params)) {
+			$class = ' ' . $params['class'];
+		} else {
+			$class = '';
+		}
+		if(array_key_exists('id', $params)) {
+			$idAttr = ' id="' . $params['id'] . '"';
+		} else {
+			$idAttr = '';
+		}
+		if($embed === 'div') {
+			return '<div' . $idAttr . ' class="h5p-content' . $class . '" data-content-id="' . $content->getId() . '"></div>';
+		} else {
+			return '<div' . $idAttr . ' class="h5p-iframe-wrapper' . $class . '"><iframe id="h5p-iframe-' . $content->getId() . '" class="h5p-iframe" data-content-id="' . $content->getId() . '" style="height:1px" src="about:blank" frameBorder="0" scrolling="no"></iframe></div>';
 		}
 	}
 	
@@ -253,7 +277,10 @@ class H5PService extends BaseService {
 	 *
 	 * @return array
 	 */
-	public function getContentSettings($content) {
+	public
+	function getContentSettings(
+		$content
+	) {
 		$core            = $this->getH5PInstance('core');
 		$safe_parameters = $core->filterParameters($content);
 //		if ( has_action( 'h5p_alter_filtered_parameters' ) ) {
@@ -305,17 +332,26 @@ class H5PService extends BaseService {
 		return $settings;
 	}
 	
-	public function admin_url($hello) {
+	public
+	function admin_url(
+		$hello
+	) {
 		$hello = '';
 		
 		return $hello;
 	}
 	
-	public function plugins_url($hello) {
+	public
+	function plugins_url(
+		$hello
+	) {
 		return $hello;
 	}
 	
-	public function get_option($a, $default) {
+	public
+	function get_option(
+		$a, $default
+	) {
 		return $default;
 	}
 	
@@ -324,7 +360,8 @@ class H5PService extends BaseService {
 	 *
 	 * @since 1.0.0
 	 */
-	public function addCoreAssets() {
+	public
+	function addCoreAssets() {
 		if($this->settings !== null) {
 			return; // Already added
 		}
@@ -363,7 +400,10 @@ class H5PService extends BaseService {
 	 *
 	 * @param array $assets
 	 */
-	public function enqueue_assets(&$assets) {
+	public
+	function enqueue_assets(
+		&$assets
+	) {
 		$abs_url = $this->fullH5PExtensionURL;
 		$rel_url = $this->absoluteH5PExtensionURL;
 		foreach($assets['scripts'] as $script) {
@@ -472,7 +512,8 @@ class H5PService extends BaseService {
 	/**
 	 * @return array
 	 */
-	public function getScripts() {
+	public
+	function getScripts() {
 		return $this->scripts;
 	}
 	
@@ -480,15 +521,36 @@ class H5PService extends BaseService {
 	/**
 	 * @return array
 	 */
-	public function getStyles() {
+	public
+	function getStyles() {
 		return $this->styles;
 	}
 	
 	/**
 	 * @return mixed
 	 */
-	public function getSettings() {
+	public
+	function getSettings() {
 		return $this->settings;
 	}
+	
+	/**
+	 * @return string
+	 */
+	public
+	function getFullH5PExtensionFilePath() {
+		return $this->fullH5PExtensionFilePath;
+	}
+	
+	/**
+	 * @param string $fullH5PExtensionFilePath
+	 */
+	public
+	function setFullH5PExtensionFilePath(
+		$fullH5PExtensionFilePath
+	) {
+		$this->fullH5PExtensionFilePath = $fullH5PExtensionFilePath;
+	}
+	
 	
 }

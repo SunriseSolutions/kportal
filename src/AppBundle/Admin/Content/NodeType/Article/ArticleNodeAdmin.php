@@ -1,8 +1,11 @@
 <?php
+
 namespace AppBundle\Admin\Content\NodeType\Article;
 
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
+use AppBundle\Entity\H5P\Content;
+use AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -76,18 +79,41 @@ class ArticleNodeAdmin extends BaseAdmin {
 		$bodyContent = sprintf($bodyContent, $object->getMain(), $object->getBottomLeft(), $object->getBottomRight());
 		
 		$object->setBody($bodyContent);
-		$stringService = $this->getConfigurationPool()->getContainer()->get('app.string');
 		
-		$shortcodeCount    = 0;
-		$htmlReplaceFormat = '<button data-h5ptarget="%1$d" class="btn-content btn btn-default">%3$s</button> <br/>  <div class="h5p-content hidden" id="h5p_%1$d" data-content-id="%2$s"></div>';
-		$h5pIds            = [];
+		$container      = $this->getConfigurationPool()->getContainer();
+		$stringService  = $container->get('app.string');
+		$h5pService     = $container->get('app.h5p');
+		$h5pContentRepo = $container->get('doctrine')->getRepository(Content::class);
+		$shortcodeCount = 0;
+		
+		$h5pIds = [];
 		while( ! empty($shortcodeData = $stringService->parseShortCode($bodyContent, 'h5p'))) {
 			$shortcodeCount ++;
-			
-			$htmlReplace = sprintf($htmlReplaceFormat, $shortcodeCount, $shortcodeData['attributes']['id'], $shortcodeData['attributes']['label']);
-			
-			$bodyContent                    = str_replace($shortcodeData['tag'], $htmlReplace, $bodyContent);
-			$h5pIds[ $shortcodeData['attributes']['id'] ] = null;
+			/** @var Content $content */
+			$content = $h5pContentRepo->find($shortcodeData['attributes']['id']);
+			if( ! empty($content)) {
+				$embed      = $h5pService->getContentActualEmbedType($content);
+				$hideOnLoad = $embed === 'div';
+				if($content instanceof ContentMultiChoice) {
+					if( ! empty($media = $content->getMultichoiceMedia())) {
+						if($media->isYoutube()) {
+							$hideOnLoad &= false;
+						}
+					}
+				}
+				$htmlReplaceFormat = '<button data-h5ptarget="%1$d" class="btn-content btn btn-default">%2$s</button> <br/> ' . $h5pService->getContentHtml($content, [
+						'class' => $hideOnLoad ? 'hidden' : 'h5p-app-active',
+						'id'    => 'h5p_%1$d'
+					]);
+				
+				$htmlReplace = sprintf($htmlReplaceFormat, $shortcodeCount, $shortcodeData['attributes']['label']);
+				
+				$bodyContent                                  = str_replace($shortcodeData['tag'], $htmlReplace, $bodyContent);
+				$h5pIds[ $shortcodeData['attributes']['id'] ] = null;
+				
+			} else {
+				$bodyContent = str_replace($shortcodeData['tag'], '', $bodyContent);
+			}
 		}
 		
 		$object->setHtmlBody($bodyContent);

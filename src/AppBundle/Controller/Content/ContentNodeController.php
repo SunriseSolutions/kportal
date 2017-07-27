@@ -2,9 +2,9 @@
 
 namespace AppBundle\Controller\Content;
 
-use AppBundle\Entity\Content\ArticleNode;
-use AppBundle\Entity\Content\BlogItem;
-use AppBundle\Entity\Content\BlogNode;
+use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
+use AppBundle\Entity\Content\NodeType\Blog\BlogItem;
+use AppBundle\Entity\Content\NodeType\Blog\BlogNode;
 use AppBundle\Entity\Content\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
 use Pagerfanta\Adapter\DoctrineORMAdapter;

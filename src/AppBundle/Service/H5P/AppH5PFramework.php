@@ -471,7 +471,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 		))->from(Library::class, 'lib')
 		          ->where(
 			          $expr->andX(
-				          $expr->eq('lib.machineName', ':libName'),
+				          $expr->like('lib.machineName', ':libName'),
 				          $expr->eq('lib.majorVersion', ':libMajorVersion'),
 				          $expr->eq('lib.minorVersion', ':libMinorVersion')
 			          )
@@ -494,7 +494,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 		)->from(Dependency::class, 'o')
 		             ->join('o.dependee', 'dependee')
 		             ->join('o.dependency', 'dependency')
-		             ->where($expr->eq('dependency.id', ':dependencyId'))
+		             ->where($expr->like('dependency.id', ':dependencyId'))
 		             ->setParameter('dependencyId', $library['libraryId']);
 		
 		$query        = $dependencyQb->getQuery()->getSQL();
@@ -542,7 +542,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 */
 	public function loadLibrarySemantics($machineName, $majorVersion, $minorVersion) {
 //		global $wpdb;
-		$semantics = $this->getSemanticsFromFile($machineName, $majorVersion, $minorVersion);
+//		$semantics = $this->getSemanticsFromFile($machineName, $majorVersion, $minorVersion);
 //		if ($this->isInDevMode()) {
 //			$semantics = $this->getSemanticsFromFile($name, $majorVersion, $minorVersion);
 //		}
@@ -556,6 +556,18 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 //				$name, $majorVersion, $minorVersion)
 //			);
 //		}
+		$libraryRepo = $this->container->get('doctrine')->getRepository(Library::class);
+		/** @var Library $library */
+		$library = $libraryRepo->findOneBy([
+			'machineName'  => $machineName,
+			'majorVersion' => $majorVersion,
+			'minorVersion' => $minorVersion
+		]);
+		if(empty($library)) {
+			return null;
+		}
+		$semantics = $library->getSemantics();
+		
 		return ($semantics === false ? null : $semantics);
 	}
 	
@@ -757,10 +769,14 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 		          ->join('contentLibrary.content', 'content')
 		          ->join('contentLibrary.library', 'library')
 		          ->where(
-			          $expr->eq('content.id', ':contentId')
-		          )
-		          ->setParameter('contentId', $id)
-		          ->orderBy('contentLibrary.position', 'ASC');
+			          $expr->like('content.id', ':contentId')
+		          );
+		if( ! empty($type)) {
+			$libraryQb->andWhere($expr->like('contentLibrary.dependencyType', $expr->literal($type)));
+		}
+		$libraryQb
+			->setParameter('contentId', $id)
+			->orderBy('contentLibrary.position', 'ASC');
 		
 		return $libraryQb->getQuery()->getResult();
 	}
@@ -905,7 +921,9 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 * Will trigger after the export file is created.
 	 */
 	public function afterExportCreated($content, $filename) {
-		// TODO: Implement afterExportCreated() method.
+		$filePath = $this->container->get('app.h5p')->getFullH5PExtensionFilePath() . '/exports/' . $filename;
+		unlink($filePath);
+		touch($filePath);
 	}
 	
 	/**
