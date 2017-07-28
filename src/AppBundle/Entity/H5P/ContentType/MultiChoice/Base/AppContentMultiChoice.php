@@ -4,8 +4,8 @@ namespace AppBundle\Entity\H5P\ContentType\MultiChoice\Base;
 
 use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\H5P\ContentLibrary;
+use AppBundle\Entity\H5P\ContentMedia;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceAnswer;
-use AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia;
 use AppBundle\Entity\H5P\Library;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,7 +13,6 @@ use Sonata\MediaBundle\Entity\BaseGallery as BaseGallery;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
-
 
 abstract class AppContentMultiChoice extends Content {
 	
@@ -110,7 +109,7 @@ abstract class AppContentMultiChoice extends Content {
 	protected $questionText;
 	
 	/**
-	 * @var MultiChoiceMedia
+	 * @var ContentMedia
 	 */
 	protected $multichoiceMedia;
 	

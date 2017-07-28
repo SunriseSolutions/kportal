@@ -51,8 +51,7 @@ class Media extends AppMedia
 
     function __construct()
     {
-        $this->bannerOrganisations = new ArrayCollection();
-        $this->enabled = true;
+    	parent::__construct();
     }
 
     public function clearGalleryItems()

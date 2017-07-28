@@ -17,6 +17,9 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 abstract class AppContentQuestionSet extends Content {
 	
+	const PROGRESS_DOTS = 'dots';
+	const PROGRESS_TEXTUAL = 'textual';
+	
 	const MACHINE_NAME = 'H5P.QuestionSet';
 	const MAJOR_VERSION = 1;
 	const MINOR_VERSION = 12;
@@ -249,5 +252,7 @@ abstract class AppContentQuestionSet extends Content {
 			'patchVersion' => self::PATCH_VERSION
 		];
 	}
+	
+	
 	
 }

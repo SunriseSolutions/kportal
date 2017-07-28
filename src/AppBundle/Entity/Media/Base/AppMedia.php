@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Media\Base;
 
+use AppBundle\Entity\H5P\ContentMedia;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\Organisation\Organisation;
 use AppBundle\Entity\User\User;
@@ -21,6 +22,11 @@ class AppMedia extends BaseMedia {
 	 */
 	protected $id;
 	
+	function __construct() {
+		$this->mediaH5PContent     = new ArrayCollection();
+		$this->enabled             = true;
+	}
+	
 	/**
 	 * @var Media
 	 */
@@ -33,10 +39,19 @@ class AppMedia extends BaseMedia {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia", mappedBy="media", orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\H5P\ContentMedia", mappedBy="media", orphanRemoval=true)
 	 */
-	protected $mediaH5PMultiChoices;
+	protected $mediaH5PContent;
 	
+	public function addMediaH5PContent(ContentMedia $cMedia) {
+		$this->mediaH5PContent->add($cMedia);
+		$cMedia->setMedia($this);
+	}
+	
+	public function removeMediaH5PContent(ContentMedia $cMedia) {
+		$this->mediaH5PContent->remove($cMedia);
+		$cMedia->setMedia(null);
+	}
 	
 	/**
 	 * @var Organisation
@@ -67,40 +82,6 @@ class AppMedia extends BaseMedia {
 		$this->logoOrganisation = $logoOrganisation;
 	}
 	
-	/**
-	 * @return ArrayCollection
-	 */
-	public function getBannerOrganisations() {
-		return $this->bannerOrganisations;
-	}
-	
-	/**
-	 * @param ArrayCollection $bannerOrganisations
-	 */
-	public function setBannerOrganisations($bannerOrganisations) {
-		$this->bannerOrganisations = $bannerOrganisations;
-	}
-	
-	/**
-	 * @return ArrayCollection
-	 */
-	public function getIntroVideos() {
-		return $this->introVideos;
-	}
-	
-	/**
-	 * @param ArrayCollection $introVideos
-	 */
-	public function setIntroVideos($introVideos) {
-		$this->introVideos = $introVideos;
-	}
-	
-	/**
-	 * @return ArrayCollection
-	 */
-	public function getResumeCandidates() {
-		return $this->resumeCandidates;
-	}
 	
 	/**
 	 * @param ArrayCollection $resumeCandidates
@@ -138,18 +119,16 @@ class AppMedia extends BaseMedia {
 	}
 	
 	/**
-	 * @return CandidateAnswer
+	 * @return ArrayCollection
 	 */
-	public function getVideoAnswer() {
-		return $this->videoAnswer;
+	public function getMediaH5PContent() {
+		return $this->mediaH5PContent;
 	}
 	
 	/**
-	 * @param CandidateAnswer $videoAnswer
+	 * @param ArrayCollection $mediaH5PContent
 	 */
-	public function setVideoAnswer($videoAnswer) {
-		$this->videoAnswer = $videoAnswer;
+	public function setMediaH5PContent($mediaH5PContent) {
+		$this->mediaH5PContent = $mediaH5PContent;
 	}
-	
-	
 }

@@ -1,10 +1,9 @@
 <?php
 
-namespace AppBundle\Entity\H5P\ContentType\MultiChoice\Base;
+namespace AppBundle\Entity\H5P\Base;
 
-use AppBundle\Entity\Content\ContentNodeH5P;
-use AppBundle\Entity\H5P\ContentLibrary;
-use AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice;
+use AppBundle\Entity\H5P\Content;
+use AppBundle\Entity\H5P\Dependency;
 use AppBundle\Entity\H5P\Library;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\User;
@@ -14,9 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-/** @ORM\MappedSuperclass
- */
-abstract class AppMultiChoiceMedia {
+/** @ORM\MappedSuperclass */
+class AppContentMedia {
+	
+	function __construct() {
+	}
 	
 	/**
 	 * @var array
@@ -48,10 +49,6 @@ abstract class AppMultiChoiceMedia {
 		'patchVersion' => 4
 	];
 	
-	function __construct() {
-//		parent::__construct();
-	}
-	
 	/**
 	 * @var int $id
 	 * @ORM\Id
@@ -62,32 +59,11 @@ abstract class AppMultiChoiceMedia {
 	protected $id;
 	
 	/**
-	 * @var ContentMultiChoice
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice", inversedBy="multichoiceMedia")
-	 * @ORM\JoinColumn(name="id_h5p_multichoice", referencedColumnName="id", onDelete="CASCADE")
-	 */
-	protected $question;
-	
-	/**
 	 * @var Media
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Media\Media",inversedBy="mediaH5PMultiChoices")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Media\Media",inversedBy="mediaH5PContent")
 	 * @ORM\JoinColumn(name="id_media", referencedColumnName="id", onDelete="CASCADE", nullable=false)
 	 */
 	protected $media;
-	
-	/**
-	 * @return ContentMultiChoice
-	 */
-	public function getQuestion() {
-		return $this->question;
-	}
-	
-	/**
-	 * @param ContentMultiChoice $question
-	 */
-	public function setQuestion($question) {
-		$this->question = $question;
-	}
 	
 	/**
 	 * @return Media

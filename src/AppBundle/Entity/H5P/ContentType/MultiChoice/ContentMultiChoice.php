@@ -3,6 +3,7 @@
 namespace AppBundle\Entity\H5P\ContentType\MultiChoice;
 
 use AppBundle\Entity\H5P\Base\AppContent;
+use AppBundle\Entity\H5P\ContentMedia;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\Base\AppContentMultiChoice;
 use AppBundle\Entity\Media\Base\AppGallery;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -31,7 +32,7 @@ class ContentMultiChoice extends AppContentMultiChoice {
 		parent::__construct();
 		
 	}
-	
+
 //	/**
 //	 * @return array
 //	 */
@@ -152,9 +153,10 @@ class ContentMultiChoice extends AppContentMultiChoice {
 	protected $answers;
 	
 	/**
-	 * @var MultiChoiceMedia
+	 * @var ContentMedia
 	 * One Customer has One Cart.
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia", mappedBy="question", cascade={"persist","merge"}, orphanRemoval=true)
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\H5P\ContentMedia", cascade={"all"}, orphanRemoval=true)
+	 * @ORM\JoinColumn(name="id_content_media", referencedColumnName="id", onDelete="SET NULL")
 	 */
 	protected $multichoiceMedia;
 	
