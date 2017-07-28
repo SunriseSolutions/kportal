@@ -4,6 +4,7 @@ namespace AppBundle\Entity\Content\Base;
 
 use AppBundle\Entity\Content\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
+use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,11 +21,6 @@ abstract class AppContentNodeH5P {
 	}
 	
 	/**
-	 * ID_REF
-	 */
-	protected $id;
-	
-	/**
 	 * @var ContentNode
 	 * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentNode",inversedBy="h5pContentItems")
@@ -33,7 +29,7 @@ abstract class AppContentNodeH5P {
 	protected $contentNode;
 	
 	/**
-	 * @var ContentNode
+	 * @var Content
 	 * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\H5P\Content",inversedBy="h5pContentItems")
 	 * @ORM\JoinColumn(name="id_h5p_content", referencedColumnName="id", onDelete="CASCADE")
