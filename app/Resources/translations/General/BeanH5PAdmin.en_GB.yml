@@ -1,5 +1,6 @@
 dashboard:
     h5p_content_dragquestion: Drag Question
+    h5p_content_questionset: Question Set
 
     h5p_content_multichoice: MultiChoice
     h5p_content_multichoice_media: MultiChoice Media
@@ -13,7 +14,7 @@ filter:
     label_clinic_organisation_name: Clinic Name
 
 list:
-    label_id: ID/Serial Number en_GB
+    label_id: ID/Serial Number
     label_slug: Slug
     label_title: Title
 

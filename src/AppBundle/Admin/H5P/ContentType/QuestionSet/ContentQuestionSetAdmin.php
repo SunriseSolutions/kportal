@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Admin\H5P\ContentType\DragQuestion;
+namespace AppBundle\Admin\H5P\ContentType\QuestionSet;
 
 use AppBundle\Admin\BaseAdmin;
-use AppBundle\Entity\H5P\ContentType\DragQuestion\ContentQuestionSet;
+use AppBundle\Entity\H5P\ContentType\QuestionSet\ContentQuestionSet;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceAnswer;
 use AppBundle\Entity\H5P\Dependency;
@@ -16,7 +16,7 @@ use Sonata\CoreBundle\Form\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Valid;
 
-class ContentDragQuestionAdmin extends BaseAdmin {
+class ContentQuestionSetAdmin extends BaseAdmin {
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper

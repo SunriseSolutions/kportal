@@ -25,8 +25,6 @@ abstract class AppContentMultiChoice extends Content {
 	function __construct() {
 		parent::__construct();
 		$this->answers = new ArrayCollection();
-		// initiate default versioning
-		$this->setupLibraries();
 	}
 	
 	public function setupLibraries() {

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity\H5P\ContentType\DragQuestion\Base;
+namespace AppBundle\Entity\H5P\ContentType\QuestionSet\Base;
 
 use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\H5P\ContentLibrary;
@@ -15,76 +15,99 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-abstract class AppContentDragQuestion extends Content {
+abstract class AppContentQuestionSet extends Content {
 	
-	const MACHINE_NAME = 'H5P.DragQuestion';
+	const MACHINE_NAME = 'H5P.QuestionSet';
 	const MAJOR_VERSION = 1;
-	const MINOR_VERSION = 9;
-	const PATCH_VERSION = 0;
+	const MINOR_VERSION = 12;
+	const PATCH_VERSION = 2;
 	
 	function __construct() {
 		parent::__construct();
 		// initiate default versioning
+		$this->setupLibraries();
 	}
 	
 	public function setupLibraries() {
 		if(empty($this->libraries)) {
 			$this->libraries = [
 				[
-					'machineName'  => 'H5P.AdvancedText',
-					'majorVersion' => 1,
-					'minorVersion' => 1,
-					'patchVersion' => 2
-				],
-				[
-					'machineName'  => 'H5P.Image',
+					'machineName'  => 'EmbeddedJS',
 					'majorVersion' => 1,
 					'minorVersion' => 0,
-					'patchVersion' => 28
+					'patchVersion' => 4,
+				
 				],
 				[
 					'machineName'  => 'FontAwesome',
 					'majorVersion' => 4,
 					'minorVersion' => 5,
 					'patchVersion' => 4,
+				
 				],
 				[
-					'machineName'  => 'Tether', //// 9
+					'machineName'  => 'Tether',
 					'majorVersion' => 1,
 					'minorVersion' => 0,
 					'patchVersion' => 2,
+				
 				],
 				[
-					'machineName'  => 'Drop', /// 1
+					'machineName'  => 'Drop',
 					'majorVersion' => 1,
 					'minorVersion' => 0,
 					'patchVersion' => 2,
+				
 				],
 				[
-					'machineName'  => 'H5P.Transition', /// 8
+					'machineName'  => 'H5P.Transition',
 					'majorVersion' => 1,
 					'minorVersion' => 0,
 					'patchVersion' => 3,
+				
 				],
 				[
 					'machineName'  => 'H5P.JoubelUI',
 					'majorVersion' => 1,
 					'minorVersion' => 2,
 					'patchVersion' => 13,
+				
 				],
 				[
 					'machineName'  => 'H5P.Question',
 					'majorVersion' => 1,
 					'minorVersion' => 2,
 					'patchVersion' => 2,
+				
+				],
+				[
+					'machineName'  => 'H5P.MultiChoice',
+					'majorVersion' => 1,
+					'minorVersion' => 9,
+					'patchVersion' => 2,
+				
+				],
+				[
+					'machineName'  => 'H5P.Image',
+					'majorVersion' => 1,
+					'minorVersion' => 0,
+					'patchVersion' => 28,
+				
+				],
+				[
+					'machineName'  => 'H5P.AdvancedText',
+					'majorVersion' => 1,
+					'minorVersion' => 1,
+					'patchVersion' => 2,
+				
 				],
 				[
 					'machineName'  => 'jQuery.ui',
 					'majorVersion' => 1,
 					'minorVersion' => 10,
 					'patchVersion' => 19,
+				
 				],
-				//////////////// for editor dependencyType
 				[
 					'machineName'    => 'FontAwesome',
 					'majorVersion'   => 4,
@@ -100,21 +123,21 @@ abstract class AppContentDragQuestion extends Content {
 					'dependencyType' => Dependency::TYPE_EDITOR
 				],
 				[
-					'machineName'    => 'Tether', //// 9
+					'machineName'    => 'Tether',
 					'majorVersion'   => 1,
 					'minorVersion'   => 0,
 					'patchVersion'   => 2,
 					'dependencyType' => Dependency::TYPE_EDITOR
 				],
 				[
-					'machineName'    => 'Drop', /// 1
+					'machineName'    => 'Drop',
 					'majorVersion'   => 1,
 					'minorVersion'   => 0,
 					'patchVersion'   => 2,
 					'dependencyType' => Dependency::TYPE_EDITOR
 				],
 				[
-					'machineName'    => 'H5P.Transition', /// 8
+					'machineName'    => 'H5P.Transition',
 					'majorVersion'   => 1,
 					'minorVersion'   => 0,
 					'patchVersion'   => 3,
@@ -128,7 +151,7 @@ abstract class AppContentDragQuestion extends Content {
 					'dependencyType' => Dependency::TYPE_EDITOR
 				],
 				[
-					'machineName'    => 'H5P.AdvancedText', //////
+					'machineName'    => 'H5P.AdvancedText',
 					'majorVersion'   => 1,
 					'minorVersion'   => 1,
 					'patchVersion'   => 2,
@@ -174,6 +197,41 @@ abstract class AppContentDragQuestion extends Content {
 					'majorVersion'   => 1,
 					'minorVersion'   => 7,
 					'patchVersion'   => 0,
+					'dependencyType' => Dependency::TYPE_EDITOR
+				],
+				[
+					'machineName'  => 'H5P.DragQuestion',
+					'majorVersion' => 1,
+					'minorVersion' => 9,
+					'patchVersion' => 0,
+				
+				],
+				[
+					'machineName'  => 'flowplayer',
+					'majorVersion' => 1,
+					'minorVersion' => 0,
+					'patchVersion' => 5,
+				
+				],
+				[
+					'machineName'  => 'H5P.Video',
+					'majorVersion' => 1,
+					'minorVersion' => 3,
+					'patchVersion' => 4,
+				
+				],
+				[
+					'machineName'    => 'H5PEditor.QuestionSetTextualEditor',
+					'majorVersion'   => 1,
+					'minorVersion'   => 2,
+					'patchVersion'   => 0,
+					'dependencyType' => Dependency::TYPE_EDITOR
+				],
+				[
+					'machineName'    => 'H5PEditor.VerticalTabs',
+					'majorVersion'   => 1,
+					'minorVersion'   => 3,
+					'patchVersion'   => 2,
 					'dependencyType' => Dependency::TYPE_EDITOR
 				],
 				$this->getLibraryVersion()

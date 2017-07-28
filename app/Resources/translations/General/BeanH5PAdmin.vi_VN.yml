@@ -1,5 +1,6 @@
 dashboard:
     h5p_content_dragquestion: Drag Question
+    h5p_content_questionset: Question Set
 
     h5p_content_multichoice: MultiChoice
     h5p_content_multichoice_media: MultiChoice Media

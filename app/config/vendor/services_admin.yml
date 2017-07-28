@@ -68,3 +68,12 @@ services:
             - [setTranslationDomain, ['BeanH5PAdmin']]
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_dragquestion, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
+### H5P > QuestionSet ##################################################################
+    app.admin.h5p.content_questionset:
+        class: AppBundle\Admin\H5P\ContentType\QuestionSet\ContentQuestionSetAdmin
+        arguments: [~, AppBundle\Entity\H5P\ContentType\QuestionSet\ContentQuestionSet, AppBundle:Admin/H5P/ContentType/QuestionSet/ContentQuestionSetAdmin]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['BeanH5PAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_questionset, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }

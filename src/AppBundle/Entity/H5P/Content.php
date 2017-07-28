@@ -17,7 +17,8 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
  *     "multichoice" = "AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice",
- *     "dragquestion" = "AppBundle\Entity\H5P\ContentType\DragQuestion\ContentDragQuestion"
+ *     "dragquestion" = "AppBundle\Entity\H5P\ContentType\DragQuestion\ContentDragQuestion",
+ *     "questionset" = "AppBundle\Entity\H5P\ContentType\QuestionSet\ContentQuestionSet"
  * })
  *
  * @Hateoas\Relation(
@@ -34,6 +35,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 abstract class Content extends AppContent {
 	function __construct() {
 		parent::__construct();
+		$this->setupLibraries();
 	}
 	
 	/**
