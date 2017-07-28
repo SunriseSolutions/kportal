@@ -108,7 +108,7 @@ class ContentMultiChoiceAdmin extends BaseAdmin {
 		$libRepo   = $container->get('doctrine')->getRepository(Library::class);
 		$libraries = [];
 		$object->setupLibraries();
-		$object->setMultichoiceMedia($object->getMultichoiceMedia());
+//		$object->setMultichoiceMedia($object->getMultichoiceMedia());
 		$objLibs = $object->getLibraries();
 		foreach($objLibs as $lib) {
 			$library                   = array();

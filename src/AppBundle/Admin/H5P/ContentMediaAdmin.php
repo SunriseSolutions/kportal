@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Admin\H5P\ContentType\MultiChoice;
+namespace AppBundle\Admin\H5P;
 
 use AppBundle\Admin\BaseAdmin;
-use AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia;
+use AppBundle\Entity\H5P\ContentMedia;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
@@ -12,7 +12,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class MultiChoiceMediaAdmin extends BaseAdmin {
+class ContentMediaAdmin extends BaseAdmin {
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper

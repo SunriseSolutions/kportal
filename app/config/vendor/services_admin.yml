@@ -31,6 +31,15 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
+    app.admin.h5p.content_media:
+        class: AppBundle\Admin\H5P\ContentMediaAdmin
+        arguments: [~, AppBundle\Entity\H5P\ContentMedia, AppBundle:Admin/H5P/ContentMediaAdmin]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['BeanH5PAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_media, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+
 ### H5P > MultiChoice ##################################################################
     app.admin.h5p.content_multichoice:
         class: AppBundle\Admin\H5P\ContentType\MultiChoice\ContentMultiChoiceAdmin
@@ -40,15 +49,6 @@ services:
             - [setTranslationDomain, ['BeanH5PAdmin']]
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_multichoice, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
-
-    app.admin.h5p.content_multichoice_media:
-        class: AppBundle\Admin\H5P\ContentType\MultiChoice\MultiChoiceMediaAdmin
-        arguments: [~, AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia, AppBundle:Admin/H5P/ContentType/MultiChoice/MultiChoiceMediaAdmin]
-        calls:
-            - [setIvoryCkeditor,['default']]
-            - [setTranslationDomain, ['BeanH5PAdmin']]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_multichoice_media, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
     app.admin.h5p.content_multichoice_answer:
         class: AppBundle\Admin\H5P\ContentType\MultiChoice\MultiChoiceAnswerAdmin

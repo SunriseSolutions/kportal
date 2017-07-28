@@ -3,10 +3,10 @@ dashboard:
     h5p_content_questionset: Question Set
 
     h5p_content_multichoice: MultiChoice
-    h5p_content_multichoice_media: MultiChoice Media
     h5p_content_multichoice_answer: MultiChoice Answer
 
     h5p_content: H5P Content
+    h5p_content_media: Content Media
 
 show:
     label_status: Status
