@@ -46,7 +46,7 @@ class ContentQuestionSet extends AppContentQuestionSet {
 		$obj->introPage->backgroundImage->width              = 960;
 		$obj->introPage->backgroundImage->height             = 640;
 		
-		$obj->progressType   = self::PROGRESS_DOTS;
+		$obj->progressType   = self::PROGRESS_TEXTUAL;
 		$obj->passPercentage = 50;
 		$obj->questions      = array();
 		/** @var SetQuestion $question */
@@ -55,7 +55,7 @@ class ContentQuestionSet extends AppContentQuestionSet {
 			$jsonObj               = new \stdClass();
 			$jsonObj->params       = $content->buildParameterObject();
 			$jsonObj->library      = $content->getLibraryVersionString();
-			$jsonObj->subContentId = rand(10, 99) . '_' . $question->getId();
+			$jsonObj->subContentId = rand(10, 99) . '_' . $content->getId();
 			$obj->questions[]      = $jsonObj;
 		}
 		

@@ -156,16 +156,6 @@ sonata_admin:
 #                    - sonata.classification.admin.tag
 #                    - sonata.classification.admin.collection
 #                    - sonata.classification.admin.context
-            jobboard:
-                label: dashboard.jobboard
-                icon: '<i class="fa fa-folder"></i>'
-                items:
-#                    - app.admin.organisation
-#                    - app.admin.listing
-#                    - app.admin.invitation
-#                    - app.admin.candidate
-#                    - app.admin.interview_question_set
-#                    - app.admin.interview_question
             system:
                 label: dashboard.system
                 icon: '<i class="fa fa-users"></i>'
@@ -179,6 +169,10 @@ sonata_admin:
                     - sonata.notification.admin.message
 #                    - bean_location.admin.geolocation
 #                    - app.admin.organisation_location
+            nlp:
+                label: dashboard.nlp
+                icon: '<i class="fa fa-language"></i>'
+
             content:
                 label: dashboard.content
                 icon: '<i class="fa fa-file-text-o"></i>'

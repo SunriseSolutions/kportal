@@ -19,6 +19,10 @@ parameters:
         - en_GB
         - vi_VN
 
+    dictionary_locales:
+        British English: en_GB
+        Vietnamese: vi_VN
+
     site_topic:
         hoc_tieng_phap: tiengphap.local.com
         hoc_tieng_nhat: tiengnhat.local.com

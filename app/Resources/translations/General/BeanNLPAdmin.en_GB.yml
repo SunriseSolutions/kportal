@@ -1,0 +1,42 @@
+dashboard:
+    dictionary_entry: Dict Entry
+
+show:
+    label_status: Status
+filter:
+    label_clinic_organisation_name: Clinic Name
+
+list:
+    label_id: ID/Serial Number
+    label_slug: Slug
+    label_title: Title
+
+
+form:
+    label_h5p_content: H5P Content
+    label_keywords: Keywords
+    label_html_body: HTML Body
+    label_body: Body
+    label_media: Media
+    label_email_address: Email Address
+    label_title: Title
+    label_question_text: Question Text
+    label_topic: Topic
+    label_answers: Answers
+    label_auto_check_enabled: Auto Check
+    label_slug: Search Engine Friendly Name
+
+    label_questions: Questions
+
+    tab_info: Info
+    tab_main_body_info: Main Body
+    group_general: General
+
+# H5P Multichoice Media
+    label_multichoice_media: Multichoice Media
+    label_auto_check_enabled: Auto check answers
+    label_correct_feedback_text: Correct Answer Feedback
+    label_almost_correct_feedback_text: Almost Correct Answer Feedback
+    label_wrong_feedback_text: Wrong Answer Feedback
+
+breadcrumb:
