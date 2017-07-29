@@ -37,6 +37,9 @@ class ContentMultiChoiceAdmin extends BaseAdmin {
 			->add('slug', null, array(
 				'required' => false
 			))
+			->add('keywords', null, array(
+				'required' => false
+			))
 			->add('autoCheckEnabled')
 			->add('correctFeedbackText')
 			->add('almostCorrectFeedbackText')

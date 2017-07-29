@@ -3,9 +3,11 @@
 namespace AppBundle\Admin\H5P\ContentType\QuestionSet;
 
 use AppBundle\Admin\BaseAdmin;
+use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\H5P\ContentType\QuestionSet\ContentQuestionSet;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceAnswer;
+use AppBundle\Entity\H5P\ContentType\QuestionSet\SetQuestion;
 use AppBundle\Entity\H5P\Dependency;
 use AppBundle\Entity\H5P\Library;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -36,7 +38,22 @@ class ContentQuestionSetAdmin extends BaseAdmin {
 			->add('title')
 			->add('slug', null, array(
 				'required' => false
-			));
+			))
+			->add('questions', CollectionType::class,
+				array(
+					'required'    => false,
+					'constraints' => new Valid(),
+//					'label'       => false,
+					//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'
+				), array(
+					'edit'            => 'inline',
+					'inline'          => 'table',
+					//						        'sortable' => 'position',
+					'link_parameters' => [],
+					'admin_code'      => 'app.admin.h5p.content_setquestion',
+					'delete'          => null,
+				)
+			);
 		
 		$formMapper
 			->end()
@@ -61,7 +78,7 @@ class ContentQuestionSetAdmin extends BaseAdmin {
 		$libRepo   = $container->get('doctrine')->getRepository(Library::class);
 		$libraries = [];
 		$object->setupLibraries();
-
+		
 		$objLibs = $object->getLibraries();
 		foreach($objLibs as $lib) {
 			$library                   = array();
@@ -78,6 +95,10 @@ class ContentQuestionSetAdmin extends BaseAdmin {
 		$object->initiateDependencies($libraries);
 //		$media = $object->getMultichoiceMedia();
 //		$stop = $media;
+		/** @var SetQuestion $question */
+		foreach($object->getQuestions() as $question) {
+			$question->setQuestionSet($object);
+		}
 	}
 	
 	public function preUpdate($object) {

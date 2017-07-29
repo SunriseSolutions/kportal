@@ -32,7 +32,7 @@ class ContentMultiChoice extends AppContentMultiChoice {
 		parent::__construct();
 		
 	}
-
+	
 //	/**
 //	 * @return array
 //	 */
@@ -129,12 +129,12 @@ class ContentMultiChoice extends AppContentMultiChoice {
 	
 	
 	/**
-	 * @param MultiChoiceMedia $multichoiceMedia
+	 * @param ContentMedia $multichoiceMedia
 	 */
 	public function setMultichoiceMedia($multichoiceMedia) {
 		$this->multichoiceMedia = $multichoiceMedia;
 		if( ! empty($multichoiceMedia)) {
-			$multichoiceMedia->setQuestion($this);
+//			$multichoiceMedia->setQuestion($this);
 			if($multichoiceMedia->isImage()) {
 				array_unshift($this->libraries, $multichoiceMedia->getImageLib());
 			}

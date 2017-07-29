@@ -4,11 +4,21 @@ namespace AppBundle\Admin\H5P;
 
 use AppBundle\Admin\BaseAdmin;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ContentAdmin extends BaseAdmin {
+	
+	protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+	{
+		// this text filter will be used to retrieve autocomplete fields
+		$datagridMapper
+			->add('title')
+			->add('keywords')
+		;
+	}
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper

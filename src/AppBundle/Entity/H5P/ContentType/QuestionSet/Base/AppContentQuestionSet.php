@@ -6,6 +6,7 @@ use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\H5P\ContentLibrary;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceAnswer;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia;
+use AppBundle\Entity\H5P\ContentType\QuestionSet\SetQuestion;
 use AppBundle\Entity\H5P\Dependency;
 use AppBundle\Entity\H5P\Library;
 use AppBundle\Entity\User\User;
@@ -29,6 +30,7 @@ abstract class AppContentQuestionSet extends Content {
 		parent::__construct();
 		// initiate default versioning
 		$this->setupLibraries();
+		$this->questions = new ArrayCollection();
 	}
 	
 	public function setupLibraries() {
@@ -254,5 +256,33 @@ abstract class AppContentQuestionSet extends Content {
 	}
 	
 	
+	/**
+	 * @var ArrayCollection
+	 */
+	protected $questions;
+	
+	public function addQuestion(SetQuestion $question) {
+		$this->questions->add($question);
+		$question->setQuestionSet($this);
+	}
+	
+	public function removeQuestion(SetQuestion $question) {
+		$this->questions->remove($question);
+		$question->setQuestionSet(null);
+	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getQuestions() {
+		return $this->questions;
+	}
+	
+	/**
+	 * @param ArrayCollection $questions
+	 */
+	public function setQuestions($questions) {
+		$this->questions = $questions;
+	}
 	
 }

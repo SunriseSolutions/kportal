@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\H5P\ContentType\QuestionSet;
 
+use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\H5P\ContentType\QuestionSet\Base\AppContentQuestionSet;
 
 use AppBundle\Entity\H5P\Base\AppContent;
@@ -48,6 +49,14 @@ class ContentQuestionSet extends AppContentQuestionSet {
 		$obj->progressType   = self::PROGRESS_DOTS;
 		$obj->passPercentage = 50;
 		$obj->questions      = array();
+		/** @var SetQuestion $question */
+		foreach($this->questions as $question) {
+			$content               = $question->getH5pContent();
+			$jsonObj               = $content->buildParameterObject();
+			$jsonObj->library      = $content->getLibraryVersionString();
+			$jsonObj->subContentId = rand(10, 99) . '_' . $question->getId();
+			$obj->questions[]      = $jsonObj;
+		}
 		
 		$obj->texts                      = new \stdClass();
 		$obj->texts->prevButton          = 'Previous question';
@@ -91,4 +100,12 @@ class ContentQuestionSet extends AppContentQuestionSet {
 		
 		return $obj;
 	}
+	
+	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\H5P\ContentType\QuestionSet\SetQuestion", mappedBy="questionSet", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $questions;
+	
 }

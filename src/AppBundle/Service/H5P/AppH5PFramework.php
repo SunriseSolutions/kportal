@@ -713,7 +713,7 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 			$filePathStart = '<filePath=';
 			$filePathEnd   = '>';
 			while(($filePathStartPos = strpos($content['params'], $filePathStart)) > - 1) {
-				$filePathEndPos      = strpos($content['params'], $filePathEnd);
+				$filePathEndPos      = strpos($content['params'], $filePathEnd, $filePathStartPos);
 				$mediaIdExt          = substr($content['params'], $filePathStartPos += 10, $filePathEndPos - $filePathStartPos);
 				$filePathShortCode   = $filePathStart . $mediaIdExt . $filePathEnd;
 				$mediaUrl            = $fileServerUrl . '/file.php?f=' . $mediaIdExt;

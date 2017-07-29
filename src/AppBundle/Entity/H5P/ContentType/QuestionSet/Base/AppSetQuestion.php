@@ -27,6 +27,14 @@ abstract class AppSetQuestion {
 	 */
 	protected $id;
 	
+	
+	/**
+	 * @var Content
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\H5P\ContentType\QuestionSet\ContentQuestionSet", cascade={"merge","persist"}, inversedBy="questions")
+	 * @ORM\JoinColumn(name="id_question_set", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+	 */
+	protected $questionSet;
+	
 	/**
 	 * @var Content
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\H5P\Content", cascade={"merge","persist"})
@@ -53,5 +61,19 @@ abstract class AppSetQuestion {
 	 */
 	public function getId() {
 		return $this->id;
+	}
+	
+	/**
+	 * @return Content
+	 */
+	public function getQuestionSet() {
+		return $this->questionSet;
+	}
+	
+	/**
+	 * @param Content $questionSet
+	 */
+	public function setQuestionSet($questionSet) {
+		$this->questionSet = $questionSet;
 	}
 }

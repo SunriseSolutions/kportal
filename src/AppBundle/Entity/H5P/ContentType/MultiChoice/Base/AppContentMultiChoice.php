@@ -78,14 +78,7 @@ abstract class AppContentMultiChoice extends Content {
 		return $this->libraries;
 	}
 	
-	public function getLibraryVersion() {
-		return [
-			'machineName'  => self::MACHINE_NAME,
-			'majorVersion' => self::MAJOR_VERSION,
-			'minorVersion' => self::MINOR_VERSION,
-			'patchVersion' => self::PATCH_VERSION
-		];
-	}
+	
 	
 	
 	/**

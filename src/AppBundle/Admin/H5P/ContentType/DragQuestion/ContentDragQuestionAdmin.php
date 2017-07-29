@@ -36,6 +36,9 @@ class ContentDragQuestionAdmin extends BaseAdmin {
 			->add('title')
 			->add('slug', null, array(
 				'required' => false
+			))
+			->add('keywords', null, array(
+				'required' => false
 			));
 		
 		$formMapper
@@ -61,7 +64,7 @@ class ContentDragQuestionAdmin extends BaseAdmin {
 		$libRepo   = $container->get('doctrine')->getRepository(Library::class);
 		$libraries = [];
 		$object->setupLibraries();
-
+		
 		$objLibs = $object->getLibraries();
 		foreach($objLibs as $lib) {
 			$library                   = array();

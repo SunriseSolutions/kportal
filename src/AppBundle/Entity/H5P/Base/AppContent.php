@@ -22,11 +22,6 @@ abstract class AppContent {
 	const PATCH_VERSION = null;
 	
 	/**
-	 * @return array
-	 */
-	public abstract function getLibraryVersion();
-	
-	/**
 	 * @var int $id
 	 * @ORM\Id
 	 * @ORM\Column(type="string", length=24)
@@ -43,6 +38,26 @@ abstract class AppContent {
 	public abstract function buildParameterObject();
 	
 	/**
+	 * @return array
+	 */
+	public function getLibraryVersion() {
+		return [
+			'machineName'  => $this::MACHINE_NAME,
+			'majorVersion' => $this::MAJOR_VERSION,
+			'minorVersion' => $this::MINOR_VERSION,
+			'patchVersion' => $this::PATCH_VERSION
+		];
+	}
+	
+	public function getLibraryVersionString() {
+		return
+			$this::MACHINE_NAME . ' ' .
+			$this::MAJOR_VERSION . '.' .
+			$this::MINOR_VERSION . '.' .
+			$this::PATCH_VERSION;
+	}
+	
+	/**
 	 * @var ArrayCollection
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentNodeH5P", mappedBy="h5pContent", cascade={"all"}, orphanRemoval=true)
 	 */
@@ -57,7 +72,6 @@ abstract class AppContent {
 		$this->h5pContentItems->remove($h5p);
 		$h5p->setH5pContent(null);
 	}
-	
 	
 	/**
 	 * @var ArrayCollection
@@ -477,5 +491,19 @@ abstract class AppContent {
 	 */
 	public function setTopic($topic) {
 		$this->topic = $topic;
+	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getH5pContentItems() {
+		return $this->h5pContentItems;
+	}
+	
+	/**
+	 * @param ArrayCollection $h5pContentItems
+	 */
+	public function setH5pContentItems($h5pContentItems) {
+		$this->h5pContentItems = $h5pContentItems;
 	}
 }

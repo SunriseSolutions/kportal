@@ -3,7 +3,6 @@
 namespace AppBundle\Admin\H5P\ContentType\MultiChoice;
 
 use AppBundle\Admin\BaseAdmin;
-use AppBundle\Entity\H5P\ContentType\MultiChoice\MultiChoiceMedia;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;

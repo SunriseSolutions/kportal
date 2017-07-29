@@ -30,10 +30,4 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *
  */
 class SetQuestion extends AppSetQuestion {
-	public function buildParameterObject() {
-		$obj                             = new \stdClass();
-
-		
-		return $obj;
-	}
 }

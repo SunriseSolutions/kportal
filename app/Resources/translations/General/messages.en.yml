@@ -12,6 +12,7 @@ form:
     label_feedback_chosen: Feedback when selected
     label_feedback_not_chosen: Feedback when not selected
 
+    label_h5p_content: H5P Content
 
     marital_married: Married
     marital_single: Single

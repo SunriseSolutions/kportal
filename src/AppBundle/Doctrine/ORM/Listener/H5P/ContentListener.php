@@ -30,6 +30,9 @@ class ContentListener {
 		if(empty($object->getSlug())) {
 			$object->setSlug(Slugify::create()->slugify($object->getTitle()));
 		}
+		if(empty($object->getKeywords())) {
+			$object->setKeywords($object->getTitle());
+		}
 	}
 	
 	
