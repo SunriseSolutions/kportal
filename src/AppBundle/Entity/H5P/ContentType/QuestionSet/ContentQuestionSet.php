@@ -52,7 +52,8 @@ class ContentQuestionSet extends AppContentQuestionSet {
 		/** @var SetQuestion $question */
 		foreach($this->questions as $question) {
 			$content               = $question->getH5pContent();
-			$jsonObj               = $content->buildParameterObject();
+			$jsonObj               = new \stdClass();
+			$jsonObj->params       = $content->buildParameterObject();
 			$jsonObj->library      = $content->getLibraryVersionString();
 			$jsonObj->subContentId = rand(10, 99) . '_' . $question->getId();
 			$obj->questions[]      = $jsonObj;
