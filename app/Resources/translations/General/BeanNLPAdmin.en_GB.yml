@@ -1,5 +1,6 @@
 dashboard:
     dictionary_entry: Dict Entry
+    nlp_sense: Sense
 
 show:
     label_status: Status

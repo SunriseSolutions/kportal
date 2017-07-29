@@ -6,6 +6,12 @@ use Bean\Component\NLP\Model\Sense;
 use Doctrine\Common\Collections\ArrayCollection;
 
 abstract class AbstractEntry implements EntryInterface {
+	const TYPE_NOUN = 'NOUN';
+	const TYPE_VERB = 'VERB';
+	const TYPE_PHRASAL_VERB = 'PHRASAL_VERB';
+	const TYPE_SENTENCE = 'SENTENCE';
+	const TYPE_PREPOSITION = 'PREPOSITION';
+	
 	/**
 	 * Primary identifier, details depend on storage layer.
 	 */

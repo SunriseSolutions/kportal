@@ -3,13 +3,16 @@ namespace Bean\Component\NLP\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * Created by PhpStorm.
- * User: Binh
- * Date: 7/19/2017
- * Time: 11:33 AM
- */
 class Sense {
+	
+	/**
+	 * @var string
+	 */
+	protected $abstract;
+	
+	/**
+	 * @var string
+	 */
 	protected $data;
 	
 	/**
@@ -45,5 +48,17 @@ class Sense {
 		$this->entries = $entries;
 	}
 	
+	/**
+	 * @return string
+	 */
+	public function getAbstract() {
+		return $this->abstract;
+	}
 	
+	/**
+	 * @param string $abstract
+	 */
+	public function setAbstract($abstract) {
+		$this->abstract = $abstract;
+	}
 }

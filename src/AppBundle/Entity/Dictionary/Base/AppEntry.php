@@ -3,6 +3,7 @@
 namespace AppBundle\Entity\Dictionary\Base;
 
 use AppBundle\Entity\Content\NodeType\Article\ArticleVocabEntry;
+use AppBundle\Entity\NLP\Sense;
 use Bean\Component\Dictionary\Model\Entry;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -42,6 +43,13 @@ class AppEntry extends Entry {
 	}
 	
 	/**
+	 * @var Sense
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\NLP\Sense",inversedBy="entries")
+	 * @ORM\JoinColumn(name="id_sense", referencedColumnName="id", onDelete="CASCADE")
+	 */
+	protected $sense;
+	
+	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=5)
 	 */
@@ -52,5 +60,31 @@ class AppEntry extends Entry {
 	 * @ORM\Column(type="string", length=255)
 	 */
 	protected $phrase;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $phoneticSymbols;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $briefComment;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=500, nullable=true)
+	 */
+	protected $definition;
+	
+	/**
+	 * Noun, Verb, Phrasal Verb, Sentence
+	 * @var string
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $type;
+	
 	
 }

@@ -1,8 +1,7 @@
 <?php
-
 namespace AppBundle\Entity\NLP;
 
-use AppBundle\Entity\Dictionary\Base\AppSense;
+use AppBundle\Entity\NLP\Base\AppSense;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
