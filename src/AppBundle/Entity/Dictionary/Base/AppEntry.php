@@ -3,15 +3,17 @@
 namespace AppBundle\Entity\Dictionary\Base;
 
 use AppBundle\Entity\Content\NodeType\Article\ArticleVocabEntry;
+use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\NLP\Sense;
-use Bean\Component\Dictionary\Model\Entry;
+use Bean\Component\Dictionary\Model\Entry as Model;
+use AppBundle\Entity\Dictionary\Entry as Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /** @ORM\MappedSuperclass */
-class AppEntry extends Entry {
+class AppEntry extends Model {
 	
 	function __construct() {
 	
@@ -28,6 +30,18 @@ class AppEntry extends Entry {
 	
 	/**
 	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Dictionary\EntryExample", mappedBy="entry", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $examples;
+	
+	/**
+	 * @var Entity
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Dictionary\EntryExample", mappedBy="example", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $exampleEntries;
+	
+	/**
+	 * @var ArrayCollection
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeType\Article\ArticleVocabEntry", mappedBy="entry", cascade={"all"}, orphanRemoval=true)
 	 */
 	protected $articleEntries;
@@ -41,6 +55,14 @@ class AppEntry extends Entry {
 		$this->articleEntries->removeElement($item);
 		$item->setEntry(null);
 	}
+	
+	/**
+	 * @var Media
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Media\Media", cascade={"persist","merge"})
+	 * @ORM\JoinColumn(name="id_audio", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $audio;
+	
 	
 	/**
 	 * @var Sense
@@ -86,5 +108,18 @@ class AppEntry extends Entry {
 	 */
 	protected $type;
 	
+	/**
+	 * @return Media
+	 */
+	public function getAudio() {
+		return $this->audio;
+	}
+	
+	/**
+	 * @param Media $audio
+	 */
+	public function setAudio($audio) {
+		$this->audio = $audio;
+	}
 	
 }

@@ -1,0 +1,13 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+{% block field %}
+    {% set locale = app.request.locale %}
+    {% set translation = object.translation(locale) %}
+    {#<a target="_blank" href="{{ path('admin_app_employer_businessbenefit_employer_businessemployeevisit_list',{'id':object.id}) }}">(View visits)</a>#}
+    {% if translation  is empty %}
+        'N.A'
+    {% else %}
+        <a class="" href="{{ admin.generateObjectUrl('edit', translation) }}">
+            {{ translation.phrase }}
+        </a>
+    {% endif %}
+{% endblock %}

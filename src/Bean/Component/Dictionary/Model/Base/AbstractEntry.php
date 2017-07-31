@@ -11,6 +11,7 @@ abstract class AbstractEntry implements EntryInterface {
 	const TYPE_PHRASAL_VERB = 'PHRASAL_VERB';
 	const TYPE_SENTENCE = 'SENTENCE';
 	const TYPE_PREPOSITION = 'PREPOSITION';
+	const TYPE_INTERJECTION = 'INTERJECTION';
 	
 	/**
 	 * Primary identifier, details depend on storage layer.
@@ -68,30 +69,43 @@ abstract class AbstractEntry implements EntryInterface {
 	}
 	
 	/**
-	 * A list of sample phrases/statements (EntryInterface)
+	 * A list of sample phrases/statements (AbstractEntryExample)
 	 * @var ArrayCollection
 	 */
-	protected $samples;
+	protected $examples;
 	
-	public function addSample(EntryInterface $entry) {
-		$this->samples->add($entry);
-		$entry->setSampleUserEntry($this);
+	public function addExample(AbstractEntryExample $entry) {
+		$this->examples->add($entry);
+		$entry->setEntry($this);
 	}
 	
-	public function removeSample(EntryInterface $entry) {
-		$this->samples->remove($entry);
-		$entry->setSampleUserEntry(null);
+	public function removeExample(AbstractEntryExample $entry) {
+		$this->examples->remove($entry);
+		$entry->setEntry(null);
 	}
+	
+	
+	/**
+	 * A list of sample phrases/statements (AbstractEntryExample)
+	 * @var ArrayCollection
+	 */
+	protected $exampleEntries;
+	
+	public function addExampleEntry(AbstractEntryExample $entry) {
+		$this->exampleEntries->add($entry);
+		$entry->setExample($this);
+	}
+	
+	public function removeExampleEntry(AbstractEntryExample $entry) {
+		$this->exampleEntries->remove($entry);
+		$entry->setExample(null);
+	}
+	
 	
 	/**
 	 * @var EntryInterface
 	 */
 	protected $userEntry;
-	
-	/**
-	 * @var EntryInterface
-	 */
-	protected $sampleUserEntry;
 	
 	/**
 	 * @return mixed

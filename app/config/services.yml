@@ -65,3 +65,10 @@ services:
         class: AppBundle\Service\StringService
         arguments:
             - "@service_container"
+
+################# Security Menu Builder
+    app.admin.security.menu_listener_teacher:
+        class: AppBundle\Admin\Security\MenuBuilderListener\TeacherRoleMBListener
+        arguments: ['@service_container']
+        tags:
+            - { name: kernel.event_listener, event: sonata.admin.event.configure.menu.sidebar, method: addMenuItems }

@@ -226,6 +226,14 @@ sonata_media:
                 small: { width: 100 , quality: 70}
                 big:   { width: 500 , quality: 70}
 
+        ipa_audio:
+            download:
+#                strategy: app.sonata_media.security.user_strategy
+                mode: http
+
+            providers:
+                - sonata.media.provider.file
+
         thumbnail:
             providers:
                 - sonata.media.provider.image

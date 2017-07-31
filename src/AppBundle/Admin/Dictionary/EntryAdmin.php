@@ -8,6 +8,7 @@ use AppBundle\Entity\NLP\Sense;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,7 +20,10 @@ class EntryAdmin extends BaseAdmin {
 			->addIdentifier('id')
 			->add('phrase', 'text', [ 'editable' => true ])
 			->add('locale')
-			->add('sense');
+			->add('translation', null, [
+				'template' => '::admin/dictionary/list__field_translation.html.twig'
+			])
+			->add('sense', null, array( 'associated_property' => 'abstract' ));
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
@@ -29,8 +33,6 @@ class EntryAdmin extends BaseAdmin {
 		
 		// define group zoning
 		/** @var ProxyQuery $productQuery */
-		
-		
 		$formMapper
 			->tab('form.tab_info')
 			->with('form.group_general', [ 'class' => 'col-md-6' ])->end()
@@ -59,6 +61,12 @@ class EntryAdmin extends BaseAdmin {
 				}
 			))
 			->add('phoneticSymbols', null, array( 'required' => false ))
+			->add('audio', MediaType::class, [
+//				'label'    => 'form.label_media',
+				'required' => false,
+				'provider' => 'sonata.media.provider.file',
+				'context'  => 'ipa_audio'
+			])
 			->add('briefComment', null, array( 'required' => false ))
 			->add('definition', TextareaType::class, array( 'required' => false ))
 
@@ -81,7 +89,8 @@ class EntryAdmin extends BaseAdmin {
 					Entry::TYPE_VERB         => Entry::TYPE_VERB,
 					Entry::TYPE_PHRASAL_VERB => Entry::TYPE_PHRASAL_VERB,
 					Entry::TYPE_PREPOSITION  => Entry::TYPE_PREPOSITION,
-					Entry::TYPE_SENTENCE     => Entry::TYPE_SENTENCE
+					Entry::TYPE_SENTENCE     => Entry::TYPE_SENTENCE,
+					Entry::TYPE_INTERJECTION => Entry::TYPE_INTERJECTION
 				],
 				'translation_domain' => $this->translationDomain,
 				'expanded'           => true,

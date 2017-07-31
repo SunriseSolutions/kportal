@@ -1,4 +1,5 @@
 <?php
+
 namespace Bean\Component\Dictionary\Model;
 
 use Bean\Component\Dictionary\Model\Base\AbstractEntry;
@@ -12,7 +13,10 @@ use Bean\Component\Dictionary\Model\Base\EntryInterface;
  */
 class Entry extends AbstractEntry {
 	
-	public function getTranslation($locale) {
+	public function getTranslation($locale = null) {
+		if(empty($locale)) {
+			return null;
+		}
 		$counterparts = $this->sense->getEntries();
 		/** @var EntryInterface $entry */
 		foreach($counterparts as $entry) {

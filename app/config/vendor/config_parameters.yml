@@ -22,6 +22,7 @@ parameters:
     dictionary_locales:
         British English: en_GB
         Vietnamese: vi_VN
+        French: fr_FR
 
     site_topic:
         hoc_tieng_phap: tiengphap.local.com
