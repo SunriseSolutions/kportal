@@ -96,14 +96,14 @@ interface EntryInterface {
 	public function setExamples($samples);
 	
 	/**
-	 * @param EntryInterface $entry
+	 * @param ArrayCollection $entries
 	 */
-	public function setUserEntry($entry);
+	public function setUsageEntries($entries);
 	
 	/**
-	 * @return EntryInterface
+	 * @return ArrayCollection
 	 */
-	public function getUserEntry();
+	public function getUsageEntries();
 	
 	/**
 	 * @param ArrayCollection $usages

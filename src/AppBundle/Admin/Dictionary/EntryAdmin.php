@@ -5,6 +5,7 @@ namespace AppBundle\Admin\Dictionary;
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\Dictionary\Entry;
 use AppBundle\Entity\Dictionary\EntryExample;
+use AppBundle\Entity\Dictionary\EntryUsage;
 use AppBundle\Entity\NLP\Sense;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -23,8 +24,7 @@ class EntryAdmin extends BaseAdmin {
 		// this text filter will be used to retrieve autocomplete fields
 		$datagridMapper
 			->add('id')
-			->add('phrase')
-		;
+			->add('phrase');
 	}
 	
 	
@@ -105,7 +105,7 @@ class EntryAdmin extends BaseAdmin {
 				'choices'            => [
 					Entry::TYPE_NOUN         => Entry::TYPE_NOUN,
 					Entry::TYPE_VERB         => Entry::TYPE_VERB,
-					Entry::TYPE_PHRASAL_VERB => Entry::TYPE_PHRASAL_VERB,
+					Entry::TYPE_PHRASE       => Entry::TYPE_PHRASE,
 					Entry::TYPE_PREPOSITION  => Entry::TYPE_PREPOSITION,
 					Entry::TYPE_SENTENCE     => Entry::TYPE_SENTENCE,
 					Entry::TYPE_INTERJECTION => Entry::TYPE_INTERJECTION
@@ -140,7 +140,21 @@ class EntryAdmin extends BaseAdmin {
 		$formMapper->end();
 		
 		$formMapper->with('form.group_usage');
-		
+		$formMapper->add('usages', CollectionType::class,
+			array(
+				'required'    => false,
+				'constraints' => new Valid(),
+//					'label'       => false,
+				//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'
+			), array(
+				'edit'            => 'inline',
+				'inline'          => 'table',
+				//						        'sortable' => 'position',
+				'link_parameters' => [],
+				'admin_code'      => 'app.admin.bean.dictionary_entry_usage',
+				'delete'          => null,
+			)
+		);
 		$formMapper->end();
 		$formMapper->end();
 	}
@@ -152,9 +166,14 @@ class EntryAdmin extends BaseAdmin {
 	public function preValidate($object) {
 		parent::preValidate($object);
 		$examples = $object->getExamples();
+		$usages   = $object->getUsages();
 		/** @var EntryExample $_example */
 		foreach($examples as $_example) {
 			$_example->setEntry($object);
+		}
+		/** @var EntryUsage $usage */
+		foreach($usages as $usage) {
+			$usage->setEntry($object);
 		}
 	}
 }

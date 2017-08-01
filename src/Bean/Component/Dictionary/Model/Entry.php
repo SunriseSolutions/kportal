@@ -1,5 +1,4 @@
 <?php
-
 namespace Bean\Component\Dictionary\Model;
 
 use Bean\Component\Dictionary\Model\Base\AbstractEntry;

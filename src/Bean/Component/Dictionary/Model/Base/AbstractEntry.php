@@ -8,8 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 abstract class AbstractEntry implements EntryInterface {
 	const TYPE_NOUN = 'NOUN';
 	const TYPE_VERB = 'VERB';
-	const TYPE_PHRASAL_VERB = 'PHRASAL_VERB';
+//	const TYPE_PHRASAL_VERB = 'PHRASAL_VERB';
 	const TYPE_SENTENCE = 'SENTENCE';
+	const TYPE_PHRASE = 'PHRASE';
 	const TYPE_PREPOSITION = 'PREPOSITION';
 	const TYPE_INTERJECTION = 'INTERJECTION';
 	
@@ -53,19 +54,34 @@ abstract class AbstractEntry implements EntryInterface {
 	protected $sense;
 	
 	/**
-	 * A list of (EntryInterface)
+	 * A list of (AbstractEntryUsage)
 	 * @var ArrayCollection
 	 */
 	protected $usages;
 	
-	public function addUsage(EntryInterface $entry) {
-		$this->usages->add($entry);
-		$entry->setUserEntry($this);
+	public function addUsage(AbstractEntryUsage $usage) {
+		$this->usages->add($usage);
+		$usage->setEntry($this);
 	}
 	
-	public function removeUsage(EntryInterface $entry) {
-		$this->usages->remove($entry);
-		$entry->setUserEntry(null);
+	public function removeUsage(AbstractEntryUsage $usage) {
+		$this->usages->remove($usage);
+		$usage->setEntry(null);
+	}
+	
+	/**
+	 * @var ArrayCollection
+	 */
+	protected $usageEntries;
+	
+	public function addUsageEntry(AbstractEntryUsage $entry) {
+		$this->usageEntries->add($entry);
+		$entry->setUsage($this);
+	}
+	
+	public function removeUsageEntry(AbstractEntryUsage $entry) {
+		$this->usageEntries->remove($entry);
+		$entry->setUsage(null);
 	}
 	
 	/**
@@ -99,12 +115,6 @@ abstract class AbstractEntry implements EntryInterface {
 		$this->exampleEntries->remove($entry);
 		$entry->setExample(null);
 	}
-	
-	
-	/**
-	 * @var EntryInterface
-	 */
-	protected $userEntry;
 	
 	/**
 	 * @return mixed
@@ -262,16 +272,16 @@ abstract class AbstractEntry implements EntryInterface {
 	}
 	
 	/**
-	 * @return EntryInterface
+	 * @return ArrayCollection
 	 */
-	public function getUserEntry() {
-		return $this->userEntry;
+	public function getUsageEntries() {
+		return $this->usageEntries;
 	}
 	
 	/**
-	 * @param EntryInterface $userEntry
+	 * @param ArrayCollection $usageEntries
 	 */
-	public function setUserEntry($userEntry) {
-		$this->userEntry = $userEntry;
+	public function setUsageEntries($usageEntries) {
+		$this->usageEntries = $usageEntries;
 	}
 }

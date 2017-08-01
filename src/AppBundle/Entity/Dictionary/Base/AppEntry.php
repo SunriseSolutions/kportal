@@ -30,6 +30,18 @@ class AppEntry extends Model {
 	
 	/**
 	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Dictionary\EntryUsage", mappedBy="entry", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $usages;
+	
+	/**
+	 * @var Entity
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Dictionary\EntryUsage", mappedBy="usage", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $usageEntries;
+	
+	/**
+	 * @var ArrayCollection
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Dictionary\EntryExample", mappedBy="entry", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $examples;
