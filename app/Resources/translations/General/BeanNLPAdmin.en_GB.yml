@@ -12,7 +12,6 @@ list:
     label_slug: Slug
     label_title: Title
 
-
 form:
     label_audio: Audio File
     label_h5p_content: H5P Content
@@ -28,10 +27,14 @@ form:
     label_auto_check_enabled: Auto Check
     label_slug: Search Engine Friendly Name
 
-    label_questions: Questions
+#    label_questions: Questions
+    label_examples: Examples
+    label_usages: Usages
 
     tab_info: Info
-    tab_main_body_info: Main Body
+    tab_example_usage: Examples/Usages
+    group_example: Examples
+    group_usage: Usages
     group_general: General
 
 # H5P Multichoice Media

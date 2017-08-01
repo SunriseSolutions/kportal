@@ -12,6 +12,9 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 /** @ORM\MappedSuperclass */
 class AppUser extends BaseUser {
+	
+	const ROLE_ADMIN = 'ROLE_ADMIN';
+	
 	/**
 	 * @var int
 	 * @ORM\Id

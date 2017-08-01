@@ -32,7 +32,9 @@ class TeacherRoleMBListener {
 		$translator = $this->container->get('translator');
 		$request    = $this->container->get('request_stack')->getCurrentRequest();
 //        $pos = $user->getPosition(['roles' => [Position::ROLE_ADMIN]]);
-		$this->addTeacherMenuItems($menu, $translator);
+		if( ! $user->isAdmin()) {
+			$this->addTeacherMenuItems($menu, $translator);
+		}
 	}
 	
 	private function addTeacherMenuItems(ItemInterface $menu, $translator, $params = array()) {

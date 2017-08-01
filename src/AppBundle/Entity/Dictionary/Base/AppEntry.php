@@ -16,7 +16,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 class AppEntry extends Model {
 	
 	function __construct() {
-	
+		$this->examples = new ArrayCollection();
 	}
 	
 	/**

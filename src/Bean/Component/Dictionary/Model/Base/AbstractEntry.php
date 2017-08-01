@@ -84,7 +84,6 @@ abstract class AbstractEntry implements EntryInterface {
 		$entry->setEntry(null);
 	}
 	
-	
 	/**
 	 * A list of sample phrases/statements (AbstractEntryExample)
 	 * @var ArrayCollection
@@ -206,18 +205,33 @@ abstract class AbstractEntry implements EntryInterface {
 	}
 	
 	/**
-	 * @return mixed
+	 * @return ArrayCollection
 	 */
-	public function getSamples() {
-		return $this->samples;
+	public function getExamples() {
+		return $this->examples;
 	}
 	
 	/**
-	 * @param mixed $samples
+	 * @param ArrayCollection $examples
 	 */
-	public function setSamples($samples) {
-		$this->samples = $samples;
+	public function setExamples($examples) {
+		$this->examples = $examples;
 	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getExampleEntries() {
+		return $this->exampleEntries;
+	}
+	
+	/**
+	 * @param ArrayCollection $exampleEntries
+	 */
+	public function setExampleEntries($exampleEntries) {
+		$this->exampleEntries = $exampleEntries;
+	}
+	
 	
 	/**
 	 * @return string
@@ -259,19 +273,5 @@ abstract class AbstractEntry implements EntryInterface {
 	 */
 	public function setUserEntry($userEntry) {
 		$this->userEntry = $userEntry;
-	}
-	
-	/**
-	 * @return EntryInterface
-	 */
-	public function getSampleUserEntry() {
-		return $this->sampleUserEntry;
-	}
-	
-	/**
-	 * @param EntryInterface $sampleUserEntry
-	 */
-	public function setSampleUserEntry($sampleUserEntry) {
-		$this->sampleUserEntry = $sampleUserEntry;
 	}
 }

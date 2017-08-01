@@ -5,6 +5,9 @@ full_time: Job Full Time
 security:
     hack_attempt: Are you trying to hack us ?
 form:
+# Dictionary
+    label_example_entry: Example Entry
+
 # MultiChoiceAnswer Embedded Form
     label_tip: Tip
     label_text: Text

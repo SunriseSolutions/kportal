@@ -32,6 +32,8 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  *
  */
-class User extends AppUser
-{
+class User extends AppUser {
+	public function isAdmin() {
+		return $this->hasRole(self::ROLE_ADMIN) || $this->hasRole(self::ROLE_SUPER_ADMIN);
+	}
 }

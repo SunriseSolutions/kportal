@@ -24,7 +24,9 @@ class SenseAdmin extends BaseAdmin {
 		$listMapper
 			->addIdentifier('id')
 			->add('abstract')
-			->add('entries');
+			->add('entries', null, array( 'associated_property' => 'phrase' ))
+		
+		;
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {

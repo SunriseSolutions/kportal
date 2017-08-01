@@ -31,6 +31,15 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.dictionary_entry, group: nlp, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
+    app.admin.bean.dictionary_entry_example:
+        class: AppBundle\Admin\Dictionary\EntryExampleAdmin
+        arguments: [~, AppBundle\Entity\Dictionary\EntryExample, AppBundle:Admin/Dictionary/EntryExampleAdmin]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['BeanNLPAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.dictionary_entry, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+
 ### Bean NLP ##################################################################
     app.admin.bean.nlp_sense:
         class: AppBundle\Admin\NLP\SenseAdmin

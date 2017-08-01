@@ -4,16 +4,29 @@ namespace AppBundle\Admin\Dictionary;
 
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\Dictionary\Entry;
+use AppBundle\Entity\Dictionary\EntryExample;
 use AppBundle\Entity\NLP\Sense;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\CoreBundle\Form\Type\CollectionType;
 use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Valid;
 
 class EntryAdmin extends BaseAdmin {
+	
+	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+		// this text filter will be used to retrieve autocomplete fields
+		$datagridMapper
+			->add('id')
+			->add('phrase')
+		;
+	}
+	
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
@@ -38,7 +51,12 @@ class EntryAdmin extends BaseAdmin {
 			->with('form.group_general', [ 'class' => 'col-md-6' ])->end()
 			->with('form.group_extra', [ 'class' => 'col-md-6' ])->end()
 			//->with('form.group_job_locations', ['class' => 'col-md-4'])->end()
-			->end();
+			->end()
+			->tab('form.tab_example_usage')
+			->with('form.group_example', [ 'class' => 'col-md-6' ])->end()
+			->with('form.group_usage', [ 'class' => 'col-md-6' ])->end()
+			//->with('form.group_job_locations', ['class' => 'col-md-4'])->end()
+			->end();;
 		
 		$formMapper
 			->tab('form.tab_info')
@@ -100,5 +118,43 @@ class EntryAdmin extends BaseAdmin {
 		$formMapper->end();
 		$formMapper->end(); // end tab
 		
+		$formMapper
+			->tab('form.tab_example_usage')
+			->with('form.group_example')//            ->add('children')
+		;
+		$formMapper->add('examples', CollectionType::class,
+			array(
+				'required'    => false,
+				'constraints' => new Valid(),
+//					'label'       => false,
+				//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'
+			), array(
+				'edit'            => 'inline',
+				'inline'          => 'table',
+				//						        'sortable' => 'position',
+				'link_parameters' => [],
+				'admin_code'      => 'app.admin.bean.dictionary_entry_example',
+				'delete'          => null,
+			)
+		);
+		$formMapper->end();
+		
+		$formMapper->with('form.group_usage');
+		
+		$formMapper->end();
+		$formMapper->end();
+	}
+	
+	
+	/**
+	 * @param Entry $object
+	 */
+	public function preValidate($object) {
+		parent::preValidate($object);
+		$examples = $object->getExamples();
+		/** @var EntryExample $_example */
+		foreach($examples as $_example) {
+			$_example->setEntry($object);
+		}
 	}
 }

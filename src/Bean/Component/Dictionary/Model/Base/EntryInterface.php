@@ -86,14 +86,14 @@ interface EntryInterface {
 	public function setSense($sense);
 	
 	/**
-	 * @return mixed
+	 * @return ArrayCollection
 	 */
-	public function getSamples();
+	public function getExamples();
 	
 	/**
-	 * @param mixed $samples
+	 * @param ArrayCollection $samples
 	 */
-	public function setSamples($samples);
+	public function setExamples($samples);
 	
 	/**
 	 * @param EntryInterface $entry
@@ -116,14 +116,14 @@ interface EntryInterface {
 	public function getUsages();
 	
 	/**
-	 * @param EntryInterface
+	 * @param ArrayCollection
 	 */
-	public function setSampleUserEntry($entry);
+	public function setExampleEntries($entries);
 	
 	
 	/**
-	 * @return EntryInterface
+	 * @return ArrayCollection
 	 */
-	public function getSampleUserEntry();
+	public function getExampleEntries();
 	
 }
