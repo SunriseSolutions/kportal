@@ -16,7 +16,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="content__node__layout_inline")
+ * @ORM\Table(name="content__layout_inline")
  *
  */
 class InlineLayout extends AppInlineLayout {
@@ -29,4 +29,11 @@ class InlineLayout extends AppInlineLayout {
 	public function buildHtml() {
 		// TODO: Implement buildHtml() method.
 	}
+	/**
+	 * @var RootLayout
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeLayout\RootLayout",inversedBy="inlineLayouts")
+	 * @ORM\JoinColumn(name="id_root_container", referencedColumnName="id", onDelete="CASCADE")
+	 */
+	protected $rootContainer;
+	
 }

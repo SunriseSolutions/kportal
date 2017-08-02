@@ -15,7 +15,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="content__node__layout_row")
+ * @ORM\Table(name="content__layout_row")
  *
  */
 class RowLayout extends AppRowLayout {
@@ -24,8 +24,14 @@ class RowLayout extends AppRowLayout {
 		parent::__construct();
 	}
 	
-	
 	public function buildHtml() {
 		// TODO: Implement buildHtml() method.
 	}
+	
+	/**
+	 * @var RootLayout
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeLayout\RootLayout",inversedBy="rows")
+	 * @ORM\JoinColumn(name="id_root_container", referencedColumnName="id", onDelete="CASCADE")
+	 */
+	protected $rootContainer;
 }

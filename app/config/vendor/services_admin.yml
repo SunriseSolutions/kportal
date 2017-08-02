@@ -12,6 +12,43 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.content_node, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
+    app.admin.content_layout_root:
+        class: AppBundle\Admin\Content\NodeLayout\RootLayoutAdmin
+        arguments: [~, AppBundle\Entity\Content\NodeLayout\RootLayout, AppBundle:Admin/Content/NodeLayout/RootLayoutAdmin]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['AppAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.content_layout_root, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+    app.admin.content_layout_generic:
+        class: AppBundle\Admin\Content\NodeLayout\GenericLayoutAdmin
+        arguments: [~, AppBundle\Entity\Content\NodeLayout\GenericLayout, AppBundle:Admin/Content/NodeLayout/GenericLayoutAdmin]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['AppAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.content_layout_generic, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+    app.admin.content_layout_column:
+        class: AppBundle\Admin\Content\NodeLayout\ColumnLayoutAdmin
+        arguments: [~, AppBundle\Entity\Content\NodeLayout\ColumnLayout, AppBundle:Admin/Content/NodeLayout/ColumnLayoutAdmin]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['AppAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.content_layout_column, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+    app.admin.content_layout_row:
+        class: AppBundle\Admin\Content\NodeLayout\RowLayoutAdmin
+        arguments: [~, AppBundle\Entity\Content\NodeLayout\RowLayout, AppBundle:Admin/Content/NodeLayout/RowLayoutAdmin]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['AppAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.content_layout_row, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+
+
+
+
+
     app.admin.content_article_node:
         class: AppBundle\Admin\Content\NodeType\Article\ArticleNodeAdmin
         arguments: [~, AppBundle\Entity\Content\NodeType\Article\ArticleNode, AppBundle:Admin/Content/NodeType/Article/ArticleNodeAdmin]

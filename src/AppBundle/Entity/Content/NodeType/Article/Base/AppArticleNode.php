@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Content\NodeType\Article\Base;
 
+use AppBundle\Entity\Content\NodeLayout\RootLayout;
 use AppBundle\Entity\Content\NodeType\Article\ArticleVocabEntry;
 use AppBundle\Entity\Content\NodeType\Blog\BlogItem;
 use AppBundle\Entity\Content\ContentNode;
@@ -17,6 +18,7 @@ abstract class AppArticleNode extends ContentNode {
 	function __construct() {
 		parent::__construct();
 		$this->blogItems = new ArrayCollection();
+		$this->layout    = new RootLayout();
 	}
 	
 	/**
@@ -205,7 +207,6 @@ abstract class AppArticleNode extends ContentNode {
 	public function setBottomMiddle($bottomMiddle) {
 		$this->bottomMiddle = $bottomMiddle;
 	}
-	
 	
 	
 	/**

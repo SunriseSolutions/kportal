@@ -15,7 +15,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="content__node__layout_root")
+ * @ORM\Table(name="content__layout_root")
  *
  */
 class RootLayout extends AppRootLayout {
@@ -23,6 +23,4 @@ class RootLayout extends AppRootLayout {
 	function __construct() {
 		parent::__construct();
 	}
-	
-	
 }

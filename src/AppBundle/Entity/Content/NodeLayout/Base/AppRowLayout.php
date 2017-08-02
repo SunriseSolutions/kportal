@@ -3,6 +3,7 @@ namespace AppBundle\Entity\Content\NodeLayout\Base;
 
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\Content\NodeLayout\GenericLayout;
+use AppBundle\Entity\Content\NodeLayout\RootLayout;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,7 +14,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 abstract class AppRowLayout extends GenericLayout {
 	function __construct() {
+		parent::__construct();
 
 	}
-	
 }

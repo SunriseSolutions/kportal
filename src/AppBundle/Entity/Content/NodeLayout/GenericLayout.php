@@ -14,7 +14,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="content__node__layout_generic")
+ * @ORM\Table(name="content__layout_generic")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"column" = "AppBundle\Entity\Content\NodeLayout\ColumnLayout", "row" = "AppBundle\Entity\Content\NodeLayout\RowLayout", "inline" = "AppBundle\Entity\Content\NodeLayout\InlineLayout"})

@@ -73,7 +73,7 @@ abstract class AppContentNode {
 	
 	/**
 	 * @var RootLayout
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Content\NodeLayout\RootLayout", mappedBy="node", orphanRemoval=true)
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Content\NodeLayout\RootLayout", mappedBy="node", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $layout;
 	
@@ -444,12 +444,6 @@ abstract class AppContentNode {
 		return $this->layout;
 	}
 	
-	/**
-	 * @param RootLayout $layout
-	 */
-	public function setLayout($layout) {
-		$this->layout = $layout;
-	}
 	
 	
 }

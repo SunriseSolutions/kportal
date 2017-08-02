@@ -3,12 +3,22 @@
 namespace AppBundle\Admin\Content\NodeType\Article;
 
 use AppBundle\Admin\BaseAdmin;
+use AppBundle\Entity\Content\NodeLayout\ColumnLayout;
+use AppBundle\Entity\Content\NodeLayout\GenericLayout;
+use AppBundle\Entity\Content\NodeLayout\RootLayout;
+use AppBundle\Entity\Content\NodeLayout\RowLayout;
 use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
 use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice;
+use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\QueryBuilder;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
+use Sonata\AdminBundle\Form\Type\ModelType;
+use Sonata\CoreBundle\Form\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\Valid;
 
 class ArticleNodeAdmin extends BaseAdmin {
 	
@@ -29,7 +39,8 @@ class ArticleNodeAdmin extends BaseAdmin {
 		$isAdmin   = $this->isAdmin();
 		$container = $this->getConfigurationPool()->getContainer();
 //		$position  = $container->get( 'app.user' )->getPosition();
-		
+		/** @var ArticleNode $subject */
+		$subject = $this->getSubject();
 		// define group zoning
 		/** @var ProxyQuery $productQuery */
 		$formMapper
@@ -40,11 +51,75 @@ class ArticleNodeAdmin extends BaseAdmin {
 			->add('title', null, array())
 			->add('topic', null, array())
 			->add('slug', null, array())
-			->add('main', CKEditorType::class, [
-				'label' => 'form.label_main_content'
-			])
-			->add('bottomLeft', CKEditorType::class)
-			->add('bottomRight', CKEditorType::class)
+//			->add('layout.children', ModelAutocompleteType::class, array(
+////				'label'              => 'form.label_example_entry',
+//				'property'           => 'name',
+//				'to_string_callback' => function(GenericLayout $entity, $property) {
+//					return $entity->getName();
+//				},
+//				'required'           => true,
+//				'multiple'           => true
+//			))
+		;
+		if( ! empty($subject)) {
+			if( ! empty($subject->getId())) {
+				$rootLayoutId = $subject->getLayout()->getId();
+				/** @var QueryBuilder $childrenQuery */
+				$childrenQuery = $this->getModelManager()->createQuery(GenericLayout::class);
+				/** @var Expr $expr */
+				$expr = $childrenQuery->expr();
+				$childrenQuery->where($expr->eq($childrenQuery->getRootAliases()[0] . '.rootContainer', $expr->literal($rootLayoutId)));
+//				$sql = $childrenQuery->getQuery()->getSQL();
+				$formMapper->add('layout.children', ModelType::class, array(
+//					'label' => 'form.label_work_location',
+						'property' => 'name',
+						
+						'btn_add'     => false,
+						// todo: errrrrr this is just not working
+						'required'    => false,
+						'constraints' => new Valid(),
+						'multiple'    => true,
+						'query'       => $childrenQuery
+					)
+				);
+			}
+		}
+		$formMapper->add('layout.columns', CollectionType::class,
+			array(
+				'required'    => false,
+				'constraints' => new Valid(),
+//					'label'       => false,
+				//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'
+			), array(
+				'edit'            => 'inline',
+				'inline'          => 'table',
+				//						        'sortable' => 'position',
+				'link_parameters' => [],
+				'admin_code'      => 'app.admin.content_layout_column',
+				'delete'          => null,
+			)
+		)
+			->add('layout.rows', CollectionType::class,
+				array(
+					'required'    => false,
+					'constraints' => new Valid(),
+//					'label'       => false,
+					//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'
+				), array(
+					'edit'            => 'inline',
+					'inline'          => 'table',
+					//						        'sortable' => 'position',
+					'link_parameters' => [],
+					'admin_code'      => 'app.admin.content_layout_row',
+					'delete'          => null,
+				)
+			)
+
+//			->add('main', CKEditorType::class, [
+//				'label' => 'form.label_main_content'
+//			])
+//			->add('bottomLeft', CKEditorType::class)
+//			->add('bottomRight', CKEditorType::class)
 
 //			->add('body', CKEditorType::class)
 //			->add('htmlBody')
@@ -54,6 +129,24 @@ class ArticleNodeAdmin extends BaseAdmin {
 			->end()
 			->end();
 		
+	}
+	
+	/** @param  ArticleNode $instance */
+	public function setSubject($instance) {
+		parent::setSubject($instance);
+		if(empty($instance->getLayout())) {
+			$instance->setLayout(new RootLayout());
+		}
+	}
+	
+	public function getNewInstance() {
+		/** @var ArticleNode $instance */
+		$instance = parent::getNewInstance();
+		if(empty($instance->getLayout())) {
+			$instance->setLayout(new RootLayout());
+		}
+		
+		return $instance;
 	}
 	
 	/**
@@ -118,6 +211,19 @@ class ArticleNodeAdmin extends BaseAdmin {
 		
 		$object->setHtmlBody($bodyContent);
 		$object->setH5pContent($h5pIds);
+		
+		$columns = $object->getColumns();
+		/** @var ColumnLayout $column */
+		foreach($columns as $column) {
+			$column->setRootContainer($object->getLayout());
+		}
+		
+		$rows = $object->getRows();
+		/** @var RowLayout $row */
+		foreach($rows as $row) {
+			$row->setRootContainer($object->getLayout());
+		}
+		
 	}
 	
 	/**

@@ -29,6 +29,13 @@ abstract class AppGenericLayout {
 	}
 	
 	/**
+	 * @var RootLayout
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeLayout\RootLayout")
+	 * @ORM\JoinColumn(name="id_root_container", referencedColumnName="id", onDelete="CASCADE")
+	 */
+	protected $rootContainer;
+	
+	/**
 	 * @return mixed
 	 */
 	public function getId() {
@@ -117,6 +124,48 @@ abstract class AppGenericLayout {
 	 */
 	public function setChildren($children) {
 		$this->children = $children;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getPosition() {
+		return $this->position;
+	}
+	
+	/**
+	 * @param int $position
+	 */
+	public function setPosition($position) {
+		$this->position = $position;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getName() {
+		return $this->name;
+	}
+	
+	/**
+	 * @param string $name
+	 */
+	public function setName($name) {
+		$this->name = $name;
+	}
+	
+	/**
+	 * @return RootLayout
+	 */
+	public function getRootContainer() {
+		return $this->rootContainer;
+	}
+	
+	/**
+	 * @param RootLayout $rootContainer
+	 */
+	public function setRootContainer($rootContainer) {
+		$this->rootContainer = $rootContainer;
 	}
 	
 }
