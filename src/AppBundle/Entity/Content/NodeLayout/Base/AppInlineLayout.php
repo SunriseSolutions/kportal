@@ -2,6 +2,7 @@
 namespace AppBundle\Entity\Content\NodeLayout\Base;
 
 use AppBundle\Entity\Content\ContentNode;
+use AppBundle\Entity\Content\NodeLayout\GenericLayout;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,30 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-/** @ORM\MappedSuperclass */
-abstract class App2ColumnLayout {
-	/**
-	 * ID_REF
-	 * @ORM\Id
-	 * @ORM\Column(type="string", length=24)
-	 * @ORM\GeneratedValue(strategy="CUSTOM")
-	 * @ORM\CustomIdGenerator(class="AppBundle\Doctrine\ORM\RandomIdGenerator")
-	 */
-	protected $id;
-	
+abstract class AppInlineLayout extends GenericLayout {
 	function __construct() {
 
-	}
-	
-	public abstract function getName();
-	
-	protected $owner;
-	
-	/**
-	 * @return mixed
-	 */
-	public function getId() {
-		return $this->id;
 	}
 	
 }

@@ -5,6 +5,7 @@ namespace AppBundle\Entity\Content\Base;
 use AppBundle\Entity\Content\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\Content\ContentNodeH5P;
+use AppBundle\Entity\Content\NodeLayout\RootLayout;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -69,6 +70,12 @@ abstract class AppContentNode {
 	 */
 	protected
 		$owner;
+	
+	/**
+	 * @var RootLayout
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Content\NodeLayout\RootLayout", mappedBy="node", orphanRemoval=true)
+	 */
+	protected $layout;
 	
 	/**
 	 * @var \DateTime
@@ -415,5 +422,34 @@ abstract class AppContentNode {
 	) {
 		$this->h5pContent = $h5pContent;
 	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getH5pContentItems() {
+		return $this->h5pContentItems;
+	}
+	
+	/**
+	 * @param ArrayCollection $h5pContentItems
+	 */
+	public function setH5pContentItems($h5pContentItems) {
+		$this->h5pContentItems = $h5pContentItems;
+	}
+	
+	/**
+	 * @return RootLayout
+	 */
+	public function getLayout() {
+		return $this->layout;
+	}
+	
+	/**
+	 * @param RootLayout $layout
+	 */
+	public function setLayout($layout) {
+		$this->layout = $layout;
+	}
+	
 	
 }

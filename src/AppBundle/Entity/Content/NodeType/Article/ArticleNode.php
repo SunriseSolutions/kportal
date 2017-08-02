@@ -32,12 +32,6 @@ class ArticleNode extends AppArticleNode {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeType\Blog\BlogItem", mappedBy="article", cascade={"all"}, orphanRemoval=true)
-	 */
-	protected $blogItems;
-	
-	/**
-	 * @var ArrayCollection
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeType\Article\ArticleVocabEntry", mappedBy="article", cascade={"all"}, orphanRemoval=true)
 	 */
 	protected $vocabEntries;

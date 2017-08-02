@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /** @ORM\MappedSuperclass */
-abstract class App3ColumnLayout {
+abstract class AppContentPiece {
 	/**
 	 * ID_REF
 	 * @ORM\Id
@@ -24,10 +24,6 @@ abstract class App3ColumnLayout {
 	function __construct() {
 
 	}
-	
-	public abstract function getName();
-	
-	protected $owner;
 	
 	/**
 	 * @return mixed

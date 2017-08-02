@@ -22,22 +22,6 @@ abstract class AppArticleNode extends ContentNode {
 	/**
 	 * @var ArrayCollection
 	 */
-	protected $blogItems;
-	
-	public function addBlogItem(BlogItem $item) {
-		$this->blogItems->add($item);
-		$item->setArticle($this);
-	}
-	
-	public function removeBlogItem(BlogItem $item) {
-		$this->blogItems->removeElement($item);
-		$item->setArticle(null);
-	}
-	
-	
-	/**
-	 * @var ArrayCollection
-	 */
 	protected $vocabEntries;
 	
 	public function addVocabEntry(ArticleVocabEntry $item) {
