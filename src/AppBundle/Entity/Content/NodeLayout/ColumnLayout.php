@@ -40,4 +40,10 @@ class ColumnLayout extends AppColumnLayout {
 	 * @ORM\Column(type="integer",options={"default":1})
 	 */
 	protected $span = 1;
+	
+	/**
+	 * @var integer
+	 * @ORM\Column(type="smallint",options={"default":1})
+	 */
+	protected $screenSize = 1;
 }

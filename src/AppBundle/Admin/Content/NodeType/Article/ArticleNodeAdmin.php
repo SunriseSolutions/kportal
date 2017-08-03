@@ -39,13 +39,29 @@ class ArticleNodeAdmin extends BaseAdmin {
 	protected function configureFormFields(FormMapper $formMapper) {
 		$isAdmin   = $this->isAdmin();
 		$container = $this->getConfigurationPool()->getContainer();
-//		$position  = $container->get( 'app.user' )->getPosition();
+		
+		
 		/** @var ArticleNode $subject */
 		$subject = $this->getSubject();
+		
 		// define group zoning
-		/** @var ProxyQuery $productQuery */
 		$formMapper
-			->tab('form.tab_main_body_info')
+			->tab('form.tab_info')
+			->with('form.group_general', [ 'class' => 'col-md-6' ])->end()
+			->with('form.group_extra', [ 'class' => 'col-md-6' ])->end()
+			//->with('form.group_job_locations', ['class' => 'col-md-4'])->end()
+			->end()
+			->tab('form.tab_layout_grid')
+			->with('form.group_column', [ 'class' => 'col-md-7' ])->end()
+			->with('form.group_row', [ 'class' => 'col-md-5' ])->end()
+			->end()
+			->tab('form.tab_layout_inline')
+			->with('form.group_general', [ 'class' => 'col-md-12' ])->end()
+			//->with('form.group_job_locations', ['class' => 'col-md-4'])->end()
+			->end();
+		
+		$formMapper
+			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
 		;
 		$formMapper
@@ -85,6 +101,15 @@ class ArticleNodeAdmin extends BaseAdmin {
 				);
 			}
 		}
+		
+		
+		$formMapper
+			->end()
+			->end();
+		$formMapper
+			->tab('form.tab_layout_grid')
+			->with('form.group_column');
+		
 		$formMapper->add('layout.columns', CollectionType::class,
 			array(
 				'required'    => false,
@@ -99,38 +124,46 @@ class ArticleNodeAdmin extends BaseAdmin {
 				'admin_code'      => 'app.admin.content_layout_column',
 				'delete'          => null,
 			)
+		);
+		$formMapper->end();
+		$formMapper->with('form.group_row');
+		$formMapper->add('layout.rows', CollectionType::class,
+			array(
+				'required'    => false,
+				'constraints' => new Valid(),
+//					'label'       => false,
+				//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'
+			), array(
+				'edit'            => 'inline',
+				'inline'          => 'table',
+				//						        'sortable' => 'position',
+				'link_parameters' => [],
+				'admin_code'      => 'app.admin.content_layout_row',
+				'delete'          => null,
+			)
+		);
+		$formMapper
+			->end()
+			->end();
+		
+		$formMapper
+			->tab('form.tab_layout_inline')
+			->with('form.group_general');
+		$formMapper->add('layout.inlineLayouts', CollectionType::class,
+			array(
+				'required'    => false,
+				'constraints' => new Valid(),
+//					'label'       => false,
+				//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'
+			), array(
+				'edit'            => 'inline',
+				'inline'          => 'table',
+				//						        'sortable' => 'position',
+				'link_parameters' => [],
+				'admin_code'      => 'app.admin.content_layout_inline',
+				'delete'          => null,
+			)
 		)
-			->add('layout.rows', CollectionType::class,
-				array(
-					'required'    => false,
-					'constraints' => new Valid(),
-//					'label'       => false,
-					//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'
-				), array(
-					'edit'            => 'inline',
-					'inline'          => 'table',
-					//						        'sortable' => 'position',
-					'link_parameters' => [],
-					'admin_code'      => 'app.admin.content_layout_row',
-					'delete'          => null,
-				)
-			)
-			
-			->add('layout.inlineLayouts', CollectionType::class,
-				array(
-					'required'    => false,
-					'constraints' => new Valid(),
-//					'label'       => false,
-					//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'
-				), array(
-					'edit'            => 'inline',
-					'inline'          => 'table',
-					//						        'sortable' => 'position',
-					'link_parameters' => [],
-					'admin_code'      => 'app.admin.content_layout_inline',
-					'delete'          => null,
-				)
-			)
 
 //			->add('main', CKEditorType::class, [
 //				'label' => 'form.label_main_content'

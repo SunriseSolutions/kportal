@@ -15,6 +15,11 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 abstract class AppColumnLayout extends GenericLayout {
 	
+	const SCREEN_PHONE = 1;
+	const SCREEN_TABLET = 2;
+	const SCREEN_DESKTOP = 3;
+	const SCREEN_LARGER_DESKTOP = 4;
+	
 	function __construct() {
 		parent::__construct();
 	}
@@ -23,6 +28,11 @@ abstract class AppColumnLayout extends GenericLayout {
 	 * @var integer
 	 */
 	protected $span;
+	
+	/**
+	 * @var integer
+	 */
+	protected $screenSize;
 	
 	/**
 	 * @return int
@@ -36,5 +46,19 @@ abstract class AppColumnLayout extends GenericLayout {
 	 */
 	public function setSpan($span) {
 		$this->span = $span;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getScreenSize() {
+		return $this->screenSize;
+	}
+	
+	/**
+	 * @param int $screenSize
+	 */
+	public function setScreenSize($screenSize) {
+		$this->screenSize = $screenSize;
 	}
 }

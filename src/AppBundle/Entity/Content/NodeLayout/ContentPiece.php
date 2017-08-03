@@ -1,9 +1,10 @@
 <?php
 
-namespace AppBundle\Entity\Content\NodeLayout\Base;
+namespace AppBundle\Entity\Content\NodeLayout;
 
 use AppBundle\Entity\Content\ContentNode;
-use AppBundle\Entity\Content\NodeLayout\GenericLayout;
+use AppBundle\Entity\Content\NodeLayout\Base\AppContentPiece;
+use AppBundle\Entity\Content\NodeLayout\Base\AppGenericLayout;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,16 +13,19 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-abstract class AppInlineLayout extends GenericLayout {
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="content__piece")
+ *
+ */
+class ContentPiece extends AppContentPiece {
+	
 	function __construct() {
 		parent::__construct();
-		$this->contentPieces = new ArrayCollection();
 	}
 	
-	/**
-	 * @var ArrayCollection
-	 */
-	protected $contentPieces;
+	public function buildHtml() {
 	
+	}
 	
 }

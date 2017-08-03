@@ -27,8 +27,15 @@ class InlineLayout extends AppInlineLayout {
 	
 	
 	public function buildHtml() {
-		// TODO: Implement buildHtml() method.
+	
 	}
+	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeLayout\ContentPiece", mappedBy="layout", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $contentPieces;
+	
 	/**
 	 * @var RootLayout
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeLayout\RootLayout",inversedBy="inlineLayouts")

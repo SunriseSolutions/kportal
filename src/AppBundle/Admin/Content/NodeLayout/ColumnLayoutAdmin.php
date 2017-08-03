@@ -14,6 +14,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Valid;
 
@@ -36,15 +37,36 @@ class ColumnLayoutAdmin extends GenericLayoutAdmin {
 		$isAdmin   = $this->isAdmin();
 		$container = $this->getConfigurationPool()->getContainer();
 //		$position  = $container->get( 'app.user' )->getPosition();
-		
+		$spanChoices = [
+			'1' => 1,
+			'2' => 2,
+			'3' => 3,
+			'4' => 4,
+			'5' => 5,
+			'6' => 6,
+		];
+		$screenSizes = [
+			ColumnLayout::SCREEN_PHONE          => 1,
+			ColumnLayout::SCREEN_TABLET         => 2,
+			ColumnLayout::SCREEN_DESKTOP        => 3,
+			ColumnLayout::SCREEN_LARGER_DESKTOP => 4,
+		];
 		
 		$formMapper
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
 		;
 		$formMapper->add('name')
-			->add('span');
-		
+		           ->add('span', ChoiceType::class, array(
+			           'required'           => true,
+			           'choices'            => $spanChoices,
+			           'translation_domain' => $this->translationDomain
+		           ))
+		           ->add('screenSize', ChoiceType::class, array(
+			           'required'           => true,
+			           'choices'            => $screenSizes,
+			           'translation_domain' => $this->translationDomain
+		           ));
 		$formMapper->add('parent', ModelType::class, array(
 //					'label' => 'form.label_work_location',
 				'property' => 'name',
