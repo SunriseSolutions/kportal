@@ -18,7 +18,8 @@ abstract class AppArticleNode extends ContentNode {
 	function __construct() {
 		parent::__construct();
 		$this->blogItems = new ArrayCollection();
-		$this->layout    = new RootLayout();
+		$this->setLayout(new RootLayout());
+		
 	}
 	
 	/**

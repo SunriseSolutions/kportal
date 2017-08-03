@@ -11,7 +11,7 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Valid;
 
-class RowLayoutAdmin extends GenericLayoutAdmin {
+class InlineLayoutAdmin extends GenericLayoutAdmin {
 	protected $parentAssociationMapping = 'rootContainer';
 	
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {

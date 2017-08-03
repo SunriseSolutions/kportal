@@ -4,6 +4,7 @@ namespace AppBundle\Entity\Content;
 
 use AppBundle\Entity\Content\Base\AppContentNode;
 use AppBundle\Entity\Content\NodeLayout\ColumnLayout;
+use AppBundle\Entity\Content\NodeLayout\InlineLayout;
 use AppBundle\Entity\Content\NodeLayout\RootLayout;
 use AppBundle\Entity\Content\NodeLayout\RowLayout;
 use AppBundle\Entity\NLP\Sense;
@@ -67,5 +68,22 @@ abstract class ContentNode extends AppContentNode {
 	
 	public function getRows() {
 		return $this->layout->getRows();
+	}
+	
+	
+	public function addInlineLayout(InlineLayout $layout) {
+		$this->layout->addInlineLayout($layout);
+	}
+	
+	public function removeInlineLayout(InlineLayout $layout) {
+		$this->layout->removeInlineLayout($layout);
+	}
+	
+	public function setInlineLayouts($layouts) {
+		$this->layout->setInlineLayouts($layouts);
+	}
+	
+	public function getInlineLayouts() {
+		return $this->layout->getInlineLayouts();
 	}
 }

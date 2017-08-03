@@ -5,6 +5,7 @@ namespace AppBundle\Admin\Content\NodeType\Article;
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\Content\NodeLayout\ColumnLayout;
 use AppBundle\Entity\Content\NodeLayout\GenericLayout;
+use AppBundle\Entity\Content\NodeLayout\InlineLayout;
 use AppBundle\Entity\Content\NodeLayout\RootLayout;
 use AppBundle\Entity\Content\NodeLayout\RowLayout;
 use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
@@ -111,6 +112,22 @@ class ArticleNodeAdmin extends BaseAdmin {
 					//						        'sortable' => 'position',
 					'link_parameters' => [],
 					'admin_code'      => 'app.admin.content_layout_row',
+					'delete'          => null,
+				)
+			)
+			
+			->add('layout.inlineLayouts', CollectionType::class,
+				array(
+					'required'    => false,
+					'constraints' => new Valid(),
+//					'label'       => false,
+					//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'
+				), array(
+					'edit'            => 'inline',
+					'inline'          => 'table',
+					//						        'sortable' => 'position',
+					'link_parameters' => [],
+					'admin_code'      => 'app.admin.content_layout_inline',
 					'delete'          => null,
 				)
 			)
@@ -222,6 +239,12 @@ class ArticleNodeAdmin extends BaseAdmin {
 		/** @var RowLayout $row */
 		foreach($rows as $row) {
 			$row->setRootContainer($object->getLayout());
+		}
+		
+		$inlineLayouts = $object->getInlineLayouts();
+		/** @var InlineLayout $layout */
+		foreach($inlineLayouts as $layout) {
+			$layout->setRootContainer($object->getLayout());
 		}
 		
 	}

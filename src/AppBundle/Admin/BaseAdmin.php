@@ -126,10 +126,10 @@ abstract class BaseAdmin extends AbstractAdmin {
 		
 		$isDirectParentAccess = $this->isDirectParentAccess($parentClass, $subjectAdminCodes);
 		$parentAdmin          = $this->getParent();
-		
+		$rootAlias            = $query->getRootAliases()[0];
 		if($isDirectParentAccess) {
 			if($this->verifyDirectParent($parentAdmin->getSubject())) {
-				$query->andWhere($expr->eq('o.' . $this->getParentAssociationMapping(), $parentAdmin->getSubject()->getId()));
+				$query->andWhere($expr->eq($rootAlias . '.' . $this->getParentAssociationMapping(), $parentAdmin->getSubject()->getId()));
 				
 				return $query;
 			};
@@ -149,7 +149,7 @@ abstract class BaseAdmin extends AbstractAdmin {
 //                    definitely null =>
 //                    $indirectParentAdmin = $childAdmin->getParent();
 					if(get_class($indirectParent) === $parentClass) {
-						$query->andWhere($expr->eq('o.' . $childAdmin->getParentAssociationMapping(), $indirectParent->getId()));
+						$query->andWhere($expr->eq($rootAlias . '.' . $childAdmin->getParentAssociationMapping(), $indirectParent->getId()));
 						
 						return $query;
 					}
@@ -158,7 +158,7 @@ abstract class BaseAdmin extends AbstractAdmin {
 			} else {
 				// Indirect Parent but with direct access NOT Ajax call
 				$childAdmin = $pool->getAdminByAdminCode($request->attributes->get('_sonata_admin'));
-				$query->andWhere($expr->eq('o.' . $childAdmin->getParentAssociationMapping(), $request->attributes->get('id')));
+				$query->andWhere($expr->eq($rootAlias . '.' . $childAdmin->getParentAssociationMapping(), $request->attributes->get('id')));
 				
 				return $query;
 			}
