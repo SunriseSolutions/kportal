@@ -1,5 +1,4 @@
 <?php
-
 namespace AppBundle\Admin\Content\NodeLayout;
 
 use AppBundle\Admin\BaseAdmin;
@@ -11,8 +10,8 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Valid;
 
-class InlineLayoutAdmin extends GenericLayoutAdmin {
-	protected $parentAssociationMapping = 'rootContainer';
+class ContentPieceAdmin extends GenericLayoutAdmin {
+	protected $parentAssociationMapping = 'layout';
 	
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
 		// this text filter will be used to retrieve autocomplete fields
@@ -23,11 +22,7 @@ class InlineLayoutAdmin extends GenericLayoutAdmin {
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
-			->addIdentifier('id')->add('_action', 'actions', array(
-				'actions' => array(
-					'content_pieces' => array( 'template' => '::admin/content/layout/list__action__inline_layout_content_pieces.html.twig' ),
-				)
-			));
+			->addIdentifier('id');
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
@@ -36,23 +31,13 @@ class InlineLayoutAdmin extends GenericLayoutAdmin {
 //		$position  = $container->get( 'app.user' )->getPosition();
 		
 		// define group zoning
-		$formMapper
+ 		$formMapper
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
 		;
-		$formMapper->add('name');
+		$formMapper->add('raw')
+		;
 		
-		$formMapper->add('parent', ModelType::class, array(
-//					'label' => 'form.label_work_location',
-				'property' => 'name',
-				
-				'btn_add'     => false,
-				'required'    => false,
-				'constraints' => new Valid(),
-				'multiple'    => false,
-				'query'       => $this->getParentQuery()
-			)
-		);
 		
 		
 		$formMapper

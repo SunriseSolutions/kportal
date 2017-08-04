@@ -18,6 +18,7 @@ services:
         calls:
             - [setIvoryCkeditor,['default']]
             - [setTranslationDomain, ['AppAdmin']]
+            - [addChild, ['@app.admin.content_layout_inline']]
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.content_layout_root, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
     app.admin.content_layout_generic:
@@ -50,8 +51,17 @@ services:
         calls:
             - [setIvoryCkeditor,['default']]
             - [setTranslationDomain, ['AppAdmin']]
+            - [addChild, ['@app.admin.content_layout_content_piece']]
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.content_layout_inline, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+    app.admin.content_layout_content_piece:
+        class: AppBundle\Admin\Content\NodeLayout\ContentPieceAdmin
+        arguments: [~, AppBundle\Entity\Content\NodeLayout\ContentPiece, AppBundle:Admin/Content/NodeLayout/ContentPieceAdmin]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['AppAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.content_layout_content_piece, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
 
 

@@ -21,6 +21,9 @@ list:
 
 
 form:
+    label_screen_size: Screen
+    label_span: Span
+
     label_html_body: HTML Body
     label_body: Body
     label_media: Media

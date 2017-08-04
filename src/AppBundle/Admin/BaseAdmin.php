@@ -45,6 +45,10 @@ abstract class BaseAdmin extends AbstractAdmin {
 	public function toString($object) {
 		if(method_exists($object, 'getTitle')) {
 			return $object->getTitle();
+		} elseif(method_exists($object, 'getName')) {
+			return $object->getName();
+		} else {
+			return $object->getId();
 		}
 		
 		return parent::toString($object);

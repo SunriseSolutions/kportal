@@ -33,7 +33,14 @@ class ArticleNodeAdmin extends BaseAdmin {
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
 			->addIdentifier('id')
-			->add('slug', 'text', [ 'editable' => true ]);
+			->add('slug', 'text', [ 'editable' => true ])
+			->add('_action', 'actions', array(
+				'actions' => array(
+//                'show' => array(),
+//                    'edit' => array(),
+					'inline_layouts' => array( 'template' => '::admin/content/list__action__node_inline_layouts.html.twig' ),
+				)
+			));
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
@@ -230,7 +237,7 @@ class ArticleNodeAdmin extends BaseAdmin {
 		$shortcodeCount = 0;
 		
 		$h5pIds = [];
-		while( ! empty($shortcodeData = $stringService->parseShortCode($bodyContent, 'h5p'))) {
+		while( false && ! empty($shortcodeData = $stringService->parseShortCode($bodyContent, 'h5p'))) {
 			$shortcodeCount ++;
 			/** @var Content $content */
 			$content = $h5pContentRepo->find($shortcodeData['attributes']['id']);
@@ -248,12 +255,12 @@ class ArticleNodeAdmin extends BaseAdmin {
 						'class' => $hideOnLoad ? 'hidden' : 'h5p-app-active',
 						'id'    => 'h5p_%1$d'
 					]);
-				
-				$htmlReplace = sprintf($htmlReplaceFormat, $shortcodeCount, $shortcodeData['attributes']['label']);
-				
-				$bodyContent                                  = str_replace($shortcodeData['tag'], $htmlReplace, $bodyContent);
-				$h5pIds[ $shortcodeData['attributes']['id'] ] = null;
-				
+				if( ! empty($shortcodeData)) {
+//					$htmlReplace = sprintf($htmlReplaceFormat, $shortcodeCount, $shortcodeData['attributes']['label']);
+//
+//					$bodyContent                                  = str_replace($shortcodeData['tag'], $htmlReplace, $bodyContent);
+//					$h5pIds[ $shortcodeData['attributes']['id'] ] = null;
+				}
 			} else {
 				$bodyContent = str_replace($shortcodeData['tag'], '', $bodyContent);
 			}
