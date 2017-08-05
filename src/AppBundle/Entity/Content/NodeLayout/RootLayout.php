@@ -23,4 +23,15 @@ class RootLayout extends AppRootLayout {
 	function __construct() {
 		parent::__construct();
 	}
+	
+	public function buildHtml() {
+		$html     = '';
+		$children = $this->children;
+		/** @var GenericLayout $child */
+		foreach($children as $child) {
+			$html .= $child->buildHtml();
+		}
+		
+		return $html;
+	}
 }

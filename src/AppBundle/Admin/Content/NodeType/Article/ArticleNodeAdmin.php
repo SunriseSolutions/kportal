@@ -4,6 +4,7 @@ namespace AppBundle\Admin\Content\NodeType\Article;
 
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\Content\NodeLayout\ColumnLayout;
+use AppBundle\Entity\Content\NodeLayout\ContentPiece;
 use AppBundle\Entity\Content\NodeLayout\GenericLayout;
 use AppBundle\Entity\Content\NodeLayout\InlineLayout;
 use AppBundle\Entity\Content\NodeLayout\RootLayout;
@@ -225,11 +226,16 @@ class ArticleNodeAdmin extends BaseAdmin {
                                 %s
                                 </div>
                             </div>';
-		
-		$bodyContent = sprintf($bodyContent, $object->getMain(), $object->getBottomLeft(), $object->getBottomRight());
-		
-		$object->setBody($bodyContent);
-		
+
+//		$bodyContent = sprintf($bodyContent, $object->getMain(), $object->getBottomLeft(), $object->getBottomRight());
+//
+//		$object->setBody($bodyContent);
+		$layout         = $object->getLayout();
+		$layoutChildren = $layout->getChildren();
+		/** @var GenericLayout $child */
+		foreach($layoutChildren as $child) {
+			$child->setRoot($layout);
+		}
 		
 		$columns = $object->getColumns();
 		/** @var ColumnLayout $column */
@@ -249,6 +255,7 @@ class ArticleNodeAdmin extends BaseAdmin {
 			$layout->setRootContainer($object->getLayout());
 		}
 		
+		$object->setContent($object->getLayout()->buildHtml());
 	}
 	
 	/**
@@ -258,8 +265,7 @@ class ArticleNodeAdmin extends BaseAdmin {
 
 //		$container->get( 'app.admin.candidate' )->update( $candidate );
 //		$this->getModelManager()->update( $object );
-//		$this->getModelManager()->update( $object );
-		
+		$this->updateProperties($object);
 	}
 	
 	/**
@@ -270,7 +276,22 @@ class ArticleNodeAdmin extends BaseAdmin {
 //		$container->get( 'app.admin.candidate' )->update( $candidate );
 //		$this->getModelManager()->update( $object );
 //		$this->getModelManager()->update( $object );
-		
+		$this->updateProperties($object);
 	}
 	
+	private function updateProperties(ArticleNode $object) {
+		$inlineLayouts = $object->getInlineLayouts();
+		$h5pIds        = [];
+		/** @var InlineLayout $layout */
+		foreach($inlineLayouts as $layout) {
+			/** @var ContentPiece $piece */
+			foreach($layout->getContentPieces() as $piece) {
+				if( ! empty($piece->getH5pContent())) {
+					$h5pIds = array_merge($h5pIds, $piece->getH5pContent());
+				}
+			}
+		}
+		$object->setH5pContent($h5pIds);
+		$this->getModelManager()->update($object);
+	}
 }

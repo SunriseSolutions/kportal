@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Entity\Content\NodeLayout;
 
 use AppBundle\Entity\Content\ContentNode;
@@ -25,7 +26,11 @@ class RowLayout extends AppRowLayout {
 	}
 	
 	public function buildHtml() {
-		// TODO: Implement buildHtml() method.
+		$childHtml = $this->buildChildHtml();
+		$rowClass  = 'row';
+		$html      = '<div class = "' . $rowClass . '" >' . $childHtml . '</div>';
+		
+		return $html;
 	}
 	
 	/**

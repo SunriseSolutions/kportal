@@ -3,6 +3,7 @@
 namespace AppBundle\Doctrine\ORM\Listener\Content\NodeLayout;
 
 use AppBundle\Entity\Content\NodeLayout\ContentPiece;
+use AppBundle\Entity\Content\NodeShortcode\H5pShortcodeHandler;
 use AppBundle\Entity\Content\NodeShortcode\ShortcodeFactory;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -30,6 +31,7 @@ class ContentPieceListener {
 		$shortcodeFactory = $this->container->get('app.shortcode_factory');
 		$results          = $shortcodeFactory->process($object->getContent(), $shortcodes, $escaped);
 		$object->setContent(end($results)['content']);
+		$object->setH5pContent($h5pIds = $shortcodeFactory::getResult($results, H5pShortcodeHandler::PROPERTY_H5PIDS));
 	}
 	
 	public function prePersistHandler(ContentPiece $object, LifecycleEventArgs $event) {

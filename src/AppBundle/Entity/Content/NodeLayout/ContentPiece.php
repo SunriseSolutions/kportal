@@ -25,7 +25,11 @@ class ContentPiece extends AppContentPiece {
 	}
 	
 	public function buildHtml() {
+		return $this->content;
+	}
 	
+	public function getRootLayout() {
+		return $this->getLayout()->getRootContainer();
 	}
 	
 }

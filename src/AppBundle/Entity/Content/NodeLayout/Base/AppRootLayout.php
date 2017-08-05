@@ -45,6 +45,7 @@ abstract class AppRootLayout {
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeLayout\RowLayout", mappedBy="rootContainer", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $rows;
+	
 	public function addRow(RowLayout $layout) {
 		$this->rows->add($layout);
 		$layout->setRootContainer($this);
@@ -70,6 +71,7 @@ abstract class AppRootLayout {
 		$this->columns->remove($layout);
 		$layout->setRootContainer(null);
 	}
+	
 	/**
 	 * @var ArrayCollection
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeLayout\InlineLayout", mappedBy="rootContainer", cascade={"persist","merge"}, orphanRemoval=true)
@@ -89,6 +91,7 @@ abstract class AppRootLayout {
 	/**
 	 * @var ArrayCollection
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeLayout\GenericLayout", mappedBy="root", cascade={"persist","merge"}, orphanRemoval=true)
+	 * @ORM\OrderBy({"position" = "ASC"})
 	 */
 	protected $children;
 	

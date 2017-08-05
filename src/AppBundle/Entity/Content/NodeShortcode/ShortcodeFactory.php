@@ -42,4 +42,12 @@ class ShortcodeFactory {
 		return $results;
 	}
 	
+	public static function getResult($results = array(), $key) {
+		/** @var array $result */
+		foreach($results as $result) {
+			if(array_key_exists($key, $result)) {
+				return $result[ $key ];
+			}
+		}
+	}
 }

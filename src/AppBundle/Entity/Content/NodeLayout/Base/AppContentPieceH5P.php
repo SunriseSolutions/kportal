@@ -1,9 +1,10 @@
 <?php
 
-namespace AppBundle\Entity\Content\Base;
+namespace AppBundle\Entity\Content\NodeLayout\Base;
 
 use AppBundle\Entity\Content\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
+use AppBundle\Entity\Content\NodeLayout\ContentPiece;
 use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
@@ -14,19 +15,19 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /** @ORM\MappedSuperclass */
-abstract class AppContentNodeH5P {
+abstract class AppContentPieceH5P {
 	
 	function __construct() {
 		$this->createdAt = new \DateTime();
 	}
 	
 	/**
-	 * @var ContentNode
+	 * @var ContentPiece
 	 * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentNode",inversedBy="h5pContentItems")
-	 * @ORM\JoinColumn(name="id_content_node", referencedColumnName="id", onDelete="CASCADE")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeLayout\ContentPiece",inversedBy="h5pContentItems")
+	 * @ORM\JoinColumn(name="id_content_piece", referencedColumnName="id", onDelete="CASCADE")
 	 */
-	protected $contentNode;
+	protected $contentPiece;
 	
 	/**
 	 * @var Content
@@ -49,17 +50,17 @@ abstract class AppContentNodeH5P {
 	protected $updatedAt;
 	
 	/**
-	 * @return ContentNode
+	 * @return ContentPiece
 	 */
-	public function getContentNode() {
-		return $this->contentNode;
+	public function getContentPiece() {
+		return $this->contentPiece;
 	}
 	
 	/**
-	 * @param ContentNode $contentNode
+	 * @param ContentPiece $contentPiece
 	 */
-	public function setContentNode($contentNode) {
-		$this->contentNode = $contentNode;
+	public function setContentPiece($contentPiece) {
+		$this->contentPiece = $contentPiece;
 	}
 	
 	/**

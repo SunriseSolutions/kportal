@@ -4,7 +4,7 @@ namespace AppBundle\Entity\Content\Base;
 
 use AppBundle\Entity\Content\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
-use AppBundle\Entity\Content\ContentNodeH5P;
+use AppBundle\Entity\Content\ContentPieceH5P;
 use AppBundle\Entity\Content\NodeLayout\RootLayout;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
@@ -18,8 +18,8 @@ use Hateoas\Configuration\Annotation as Hateoas;
 abstract class AppContentNode {
 	
 	function __construct() {
-		$this->createdAt       = new \DateTime();
-		$this->h5pContentItems = new ArrayCollection();
+		$this->createdAt = new \DateTime();
+		
 	}
 	
 	public function getAbstractContent() {
@@ -27,7 +27,7 @@ abstract class AppContentNode {
 			return $this->abstract;
 		}
 		
-		return '<p>' . substr(strip_tags($this->getHtmlBody()), 0, 255) . '... </p>';
+		return '<p>' . substr(strip_tags($this->getContent()), 0, 255) . '... </p>';
 	}
 	
 	/**
@@ -38,30 +38,6 @@ abstract class AppContentNode {
 	 * @ORM\CustomIdGenerator(class="AppBundle\Doctrine\ORM\RandomIdGenerator")
 	 */
 	protected $id;
-	
-	
-	/**
-	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentNodeH5P", mappedBy="contentNode", cascade={"all"}, orphanRemoval=true)
-	 */
-	protected $h5pContentItems;
-	
-	public function addH5PContentItem(ContentNodeH5P $h5p) {
-		$this->h5pContentItems->add($h5p);
-		$h5p->setContentNode($this);
-	}
-	
-	public function removeH5PContentItem(ContentNodeH5P $h5p) {
-		$this->h5pContentItems->remove($h5p);
-		$h5p->setContentNode(null);
-	}
-	
-	/**
-	 * @var array
-	 * @ORM\Column(type="attribute_array", nullable=true)
-	 */
-	protected
-		$h5pContent;
 	
 	/**
 	 * @var ContentEntity
@@ -76,6 +52,13 @@ abstract class AppContentNode {
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Content\NodeLayout\RootLayout", mappedBy="node", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $layout;
+	
+	/**
+	 * @var array
+	 * @ORM\Column(type="attribute_array", nullable=true)
+	 */
+	protected
+		$h5pContent;
 	
 	/**
 	 * @var \DateTime
@@ -151,17 +134,17 @@ abstract class AppContentNode {
 	
 	/**
 	 * @var string
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text",nullable=true)
 	 */
 	protected
-		$body;
+		$rawContent;
 	
 	/**
 	 * @var string
-	 * @ORM\Column(type="text", nullable=true)
+	 * @ORM\Column(type="text")
 	 */
 	protected
-		$htmlBody;
+		$content;
 	
 	/**
 	 * @return mixed
@@ -210,19 +193,30 @@ abstract class AppContentNode {
 	/**
 	 * @return string
 	 */
-	public
-	function getBody() {
-		return $this->body;
+	public function getRawContent() {
+		return $this->rawContent;
 	}
 	
 	/**
-	 * @param string $body
+	 * @param string $rawContent
 	 */
-	public
-	function setBody(
-		$body
-	) {
-		$this->body = $body;
+	public function setRawContent($rawContent) {
+		$this->rawContent = $rawContent;
+	}
+	
+	
+	/**
+	 * @return string
+	 */
+	public function getContent() {
+		return $this->content;
+	}
+	
+	/**
+	 * @param string $content
+	 */
+	public function setContent($content) {
+		$this->content = $content;
 	}
 	
 	/**
@@ -297,23 +291,6 @@ abstract class AppContentNode {
 		$this->slug = $slug;
 	}
 	
-	/**
-	 * @return string
-	 */
-	public
-	function getHtmlBody() {
-		return $this->htmlBody;
-	}
-	
-	/**
-	 * @param string $htmlBody
-	 */
-	public
-	function setHtmlBody(
-		$htmlBody
-	) {
-		$this->htmlBody = $htmlBody;
-	}
 	
 	/**
 	 * @return \DateTime
@@ -406,44 +383,23 @@ abstract class AppContentNode {
 	}
 	
 	/**
-	 * @return array
-	 */
-	public
-	function getH5pContent() {
-		return $this->h5pContent;
-	}
-	
-	/**
-	 * @param array $h5pContent
-	 */
-	public
-	function setH5pContent(
-		$h5pContent
-	) {
-		$this->h5pContent = $h5pContent;
-	}
-	
-	/**
-	 * @return ArrayCollection
-	 */
-	public function getH5pContentItems() {
-		return $this->h5pContentItems;
-	}
-	
-	/**
-	 * @param ArrayCollection $h5pContentItems
-	 */
-	public function setH5pContentItems($h5pContentItems) {
-		$this->h5pContentItems = $h5pContentItems;
-	}
-	
-	/**
 	 * @return RootLayout
 	 */
 	public function getLayout() {
 		return $this->layout;
 	}
 	
+	/**
+	 * @return array
+	 */
+	public function getH5pContent() {
+		return $this->h5pContent;
+	}
 	
-	
+	/**
+	 * @param array $h5pContent
+	 */
+	public function setH5pContent($h5pContent) {
+		$this->h5pContent = $h5pContent;
+	}
 }

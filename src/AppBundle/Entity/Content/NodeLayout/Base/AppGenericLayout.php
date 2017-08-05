@@ -59,6 +59,7 @@ abstract class AppGenericLayout {
 	/**
 	 * @var ArrayCollection
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeLayout\GenericLayout", mappedBy="parent", cascade={"persist","merge"}, orphanRemoval=true)
+	 * @ORM\OrderBy({"position" = "ASC"})
 	 */
 	protected $children;
 	

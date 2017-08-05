@@ -7,6 +7,8 @@ use AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice;
 
 class H5pShortcodeHandler extends AbstractShortcodeHandler {
 	
+	const PROPERTY_H5PIDS = 'h5pIds';
+	
 	public function process($content, $escaped = false) {
 		$container      = $this->container;
 		$stringService  = $container->get('app.string');
@@ -15,7 +17,7 @@ class H5pShortcodeHandler extends AbstractShortcodeHandler {
 		$shortcodeCount = 0;
 		
 		$h5pIds = [];
-		while(false && ! empty($shortcodeData = $stringService->parseShortCode($content, 'h5p'))) {
+		while( ! empty($shortcodeData = $this->parseShortCode($content, 'h5p'))) {
 			$shortcodeCount ++;
 			/** @var Content $h5pContent */
 			$h5pContent = $h5pContentRepo->find($shortcodeData['attributes']['id']);

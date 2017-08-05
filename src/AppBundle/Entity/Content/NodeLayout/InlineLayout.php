@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Entity\Content\NodeLayout;
 
 use AppBundle\Entity\Content\ContentNode;
@@ -27,7 +28,13 @@ class InlineLayout extends AppInlineLayout {
 	
 	
 	public function buildHtml() {
-	
+		$html = '';
+		/** @var ContentPiece $piece */
+		foreach($this->contentPieces as $piece) {
+			$html .= $piece->buildHtml();
+		}
+		
+		return $html;
 	}
 	
 	/**
@@ -42,5 +49,19 @@ class InlineLayout extends AppInlineLayout {
 	 * @ORM\JoinColumn(name="id_root_container", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected $rootContainer;
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getContentPieces() {
+		return $this->contentPieces;
+	}
+	
+	/**
+	 * @param ArrayCollection $contentPieces
+	 */
+	public function setContentPieces($contentPieces) {
+		$this->contentPieces = $contentPieces;
+	}
 	
 }

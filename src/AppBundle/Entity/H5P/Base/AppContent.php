@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity\H5P\Base;
 
-use AppBundle\Entity\Content\ContentNodeH5P;
+use AppBundle\Entity\Content\ContentPieceH5P;
 use AppBundle\Entity\H5P\ContentLibrary;
 use AppBundle\Entity\H5P\Library;
 use AppBundle\Entity\User\User;
@@ -59,16 +59,16 @@ abstract class AppContent {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentNodeH5P", mappedBy="h5pContent", cascade={"all"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeLayout\ContentPieceH5P", mappedBy="h5pContent", cascade={"all"}, orphanRemoval=true)
 	 */
 	protected $h5pContentItems;
 	
-	public function addH5PContentItem(ContentNodeH5P $h5p) {
+	public function addH5PContentItem(ContentPieceH5P $h5p) {
 		$this->h5pContentItems->add($h5p);
 		$h5p->setH5pContent($this);
 	}
 	
-	public function removeH5PContentItem(ContentNodeH5P $h5p) {
+	public function removeH5PContentItem(ContentPieceH5P $h5p) {
 		$this->h5pContentItems->remove($h5p);
 		$h5p->setH5pContent(null);
 	}

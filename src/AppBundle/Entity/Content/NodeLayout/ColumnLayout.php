@@ -25,7 +25,25 @@ class ColumnLayout extends AppColumnLayout {
 	}
 	
 	public function buildHtml() {
-		return '';
+		$childHtml = $this->buildChildHtml();
+		switch($this->screenSize) {
+			case self::SCREEN_LARGER_DESKTOP:
+				$size = 'lg';
+				break;
+			case self::SCREEN_DESKTOP:
+				$size = 'md';
+				break;
+			case self::SCREEN_TABLET:
+				$size = 'sm';
+				break;
+			default:
+				$size = 'xs';
+				break;
+		}
+		$colClass = 'col-' . $size . '-' . $this->span;
+		$html     = '<div class = "' . $colClass . '" >' . $childHtml . '</div>';
+		
+		return $html;
 	}
 	
 	/**

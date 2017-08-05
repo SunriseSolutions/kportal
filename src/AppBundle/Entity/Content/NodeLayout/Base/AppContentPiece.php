@@ -3,6 +3,7 @@
 namespace AppBundle\Entity\Content\NodeLayout\Base;
 
 use AppBundle\Entity\Content\ContentNode;
+use AppBundle\Entity\Content\NodeLayout\ContentPieceH5P;
 use AppBundle\Entity\Content\NodeLayout\InlineLayout;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
@@ -24,7 +25,7 @@ abstract class AppContentPiece {
 	protected $id;
 	
 	function __construct() {
-	
+		$this->h5pContentItems = new ArrayCollection();
 	}
 	
 	/**
@@ -32,6 +33,23 @@ abstract class AppContentPiece {
 	 */
 	public function getId() {
 		return $this->id;
+	}
+	
+	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeLayout\ContentPieceH5P", mappedBy="contentPiece", cascade={"all"}, orphanRemoval=true)
+	 */
+	protected $h5pContentItems;
+	
+	public function addH5PContentItem(ContentPieceH5P $h5p) {
+		$this->h5pContentItems->add($h5p);
+		$h5p->setContentPiece($this);
+	}
+	
+	public function removeH5PContentItem(ContentPieceH5P $h5p) {
+		$this->h5pContentItems->remove($h5p);
+		$h5p->setContentPiece(null);
 	}
 	
 	/**
@@ -46,6 +64,13 @@ abstract class AppContentPiece {
 	 * @ORM\Column(type="attribute_array",nullable=true)
 	 */
 	protected $shortcodes;
+	
+	/**
+	 * @var array
+	 * @ORM\Column(type="attribute_array", nullable=true)
+	 */
+	protected
+		$h5pContent;
 	
 	/**
 	 * @var string
@@ -131,5 +156,33 @@ abstract class AppContentPiece {
 	 */
 	public function setShortcodes($shortcodes) {
 		$this->shortcodes = $shortcodes;
+	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getH5pContentItems() {
+		return $this->h5pContentItems;
+	}
+	
+	/**
+	 * @param ArrayCollection $h5pContentItems
+	 */
+	public function setH5pContentItems($h5pContentItems) {
+		$this->h5pContentItems = $h5pContentItems;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getH5pContent() {
+		return $this->h5pContent;
+	}
+	
+	/**
+	 * @param array $h5pContent
+	 */
+	public function setH5pContent($h5pContent) {
+		$this->h5pContent = $h5pContent;
 	}
 }

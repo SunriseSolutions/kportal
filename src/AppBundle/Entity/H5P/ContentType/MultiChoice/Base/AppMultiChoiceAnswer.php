@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity\H5P\ContentType\MultiChoice\Base;
 
-use AppBundle\Entity\Content\ContentNodeH5P;
+use AppBundle\Entity\Content\ContentPieceH5P;
 use AppBundle\Entity\H5P\ContentLibrary;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice;
 use AppBundle\Entity\H5P\Library;
