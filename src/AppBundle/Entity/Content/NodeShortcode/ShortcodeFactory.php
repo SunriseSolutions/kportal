@@ -3,20 +3,43 @@
 namespace AppBundle\Entity\Content\NodeShortcode;
 
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 class ShortcodeFactory {
 	
-	private static $supportedShortcodes = array( 'h5p', 'html' );
+	public static $supportedShortcodes = array( 'h5p' => 'h5p', 'html' => 'html' );
 	
-	public static function process($html, $shortcodes = array()) {
+	public static $shortCodeHandlers = array();
+	
+	protected static $container;
+	
+	function __construct(ContainerInterface $container) {
+		self::$container = $container;
+	}
+	
+	public static function process($html, $shortcodes = array(), $escaped = false) {
 		if(empty($shortcodes)) {
 			$shortcodes = self::$supportedShortcodes;
 		}
+		$results = [];
 		foreach($shortcodes as $shortcode) {
-			$shortcodeClass = __NAMESPACE__ . '\\' . ucfirst($shortcode) . 'Shortcode';
-			$html           = $shortcodeClass::process($html);
+			if( ! array_key_exists($shortcode, self::$shortCodeHandlers)) {
+				$shortCodeHandlerClass = __NAMESPACE__ . '\\' . ucfirst($shortcode) . 'ShortcodeHandler';
+				/** @var AbstractShortcodeHandler $shortCodeHandler */
+				$shortCodeHandler = new $shortCodeHandlerClass;
+				$shortCodeHandler->setContainer(self::$container);
+				self::$shortCodeHandlers[ $shortcode ] = $shortCodeHandler;
+			} else {
+				/** @var AbstractShortcodeHandler $shortCodeHandler */
+				$shortCodeHandler = self::$shortCodeHandlers[ $shortcode ];
+			}
+			/** @var array $result */
+			$result     = $shortCodeHandler->process($html, $escaped);
+			$html       = $result['content'];
+			$results [] = $result;
 		}
 		
-		return $html;
+		return $results;
 	}
 	
 }

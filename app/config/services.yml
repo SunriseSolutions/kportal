@@ -66,6 +66,11 @@ services:
         arguments:
             - "@service_container"
 
+    app.shortcode_factory:
+        class: AppBundle\Entity\Content\NodeShortcode\ShortcodeFactory
+        arguments:
+            - "@service_container"
+
 ################# Security Menu Builder
     app.admin.security.menu_listener_teacher:
         class: AppBundle\Admin\Security\MenuBuilderListener\TeacherRoleMBListener

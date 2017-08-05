@@ -289,7 +289,7 @@ abstract class AppContentMultiChoice extends Content {
 	////////////// end of Confirm Dialog Settings //////////////
 	
 	/**
-	 * @return MultiChoiceMedia
+	 * @return ContentMedia
 	 */
 	public function getMultichoiceMedia() {
 		return $this->multichoiceMedia;

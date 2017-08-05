@@ -230,44 +230,6 @@ class ArticleNodeAdmin extends BaseAdmin {
 		
 		$object->setBody($bodyContent);
 		
-		$container      = $this->getConfigurationPool()->getContainer();
-		$stringService  = $container->get('app.string');
-		$h5pService     = $container->get('app.h5p');
-		$h5pContentRepo = $container->get('doctrine')->getRepository(Content::class);
-		$shortcodeCount = 0;
-		
-		$h5pIds = [];
-		while( false && ! empty($shortcodeData = $stringService->parseShortCode($bodyContent, 'h5p'))) {
-			$shortcodeCount ++;
-			/** @var Content $content */
-			$content = $h5pContentRepo->find($shortcodeData['attributes']['id']);
-			if( ! empty($content)) {
-				$embed      = $h5pService->getContentActualEmbedType($content);
-				$hideOnLoad = $embed === 'div';
-				if($content instanceof ContentMultiChoice) {
-					if( ! empty($media = $content->getMultichoiceMedia())) {
-						if($media->isYoutube()) {
-							$hideOnLoad &= false;
-						}
-					}
-				}
-				$htmlReplaceFormat = '<button data-h5ptarget="%1$d" class="btn-content btn btn-default">%2$s</button> <br/> ' . $h5pService->getContentHtml($content, [
-						'class' => $hideOnLoad ? 'hidden' : 'h5p-app-active',
-						'id'    => 'h5p_%1$d'
-					]);
-				if( ! empty($shortcodeData)) {
-//					$htmlReplace = sprintf($htmlReplaceFormat, $shortcodeCount, $shortcodeData['attributes']['label']);
-//
-//					$bodyContent                                  = str_replace($shortcodeData['tag'], $htmlReplace, $bodyContent);
-//					$h5pIds[ $shortcodeData['attributes']['id'] ] = null;
-				}
-			} else {
-				$bodyContent = str_replace($shortcodeData['tag'], '', $bodyContent);
-			}
-		}
-		
-		$object->setHtmlBody($bodyContent);
-		$object->setH5pContent($h5pIds);
 		
 		$columns = $object->getColumns();
 		/** @var ColumnLayout $column */

@@ -1,6 +1,12 @@
 services:
-    app_h5p_content_doctrine_entity_listener:
+    app_h5p__content__doctrine_entity_listener:
         class: AppBundle\Doctrine\ORM\Listener\H5P\ContentListener
+        arguments: ['@service_container']
+        tags:
+            - { name: doctrine.orm.entity_listener }
+
+    app_content__node_layout__content_piece__doctrine_entity_listener:
+        class: AppBundle\Doctrine\ORM\Listener\Content\NodeLayout\ContentPieceListener
         arguments: ['@service_container']
         tags:
             - { name: doctrine.orm.entity_listener }
