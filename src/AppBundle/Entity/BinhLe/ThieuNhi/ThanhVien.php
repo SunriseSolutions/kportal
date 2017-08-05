@@ -14,6 +14,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ThanhVien {
 	
+	public static $christianNames = [
+		'PHÊ-RÔ'   => 'Peter',
+		'PHAO-LÔ'  => 'Paul',
+		'GIUSE'    => 'Joseph',
+		'TÊ-RÊ-SA' => 'Therese',
+		'MARIA'    => 'Mary',
+		'ANNA'     => 'Anne',
+	];
+	
 	const PHAN_DOAN_CHIEN = 'PHAN_DOAN_CHIEN';
 	const PHAN_DOAN_AU = 'PHAN_DOAN_AU';
 	const PHAN_DOAN_THIEU = 'PHAN_DOAN_THIEU';
@@ -22,7 +31,15 @@ class ThanhVien {
 	const DU_TRUONG = 'DU_TRUONG';
 	const HUYNH_TRUONG = 'HUYNH_TRUONG';
 	
-	private $danhSachChiDoan = [
+	public static $danhSachPhanDoan = [
+		self::PHAN_DOAN_CHIEN => self::PHAN_DOAN_CHIEN,
+		self::PHAN_DOAN_AU => self::PHAN_DOAN_AU,
+		self::PHAN_DOAN_THIEU => self::PHAN_DOAN_THIEU,
+		self::PHAN_DOAN_NGHIA => self::PHAN_DOAN_NGHIA,
+		self::PHAN_DOAN_TONG_DO => self::PHAN_DOAN_TONG_DO,
+	];
+	
+	public static $danhSachChiDoan = [
 		4  => self::PHAN_DOAN_CHIEN,
 		5  => self::PHAN_DOAN_CHIEN,
 		6  => self::PHAN_DOAN_CHIEN,
@@ -63,6 +80,12 @@ class ThanhVien {
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\PhanBo", mappedBy="thanhVien", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $phanBoHangNam;
+	
+	/**
+	 * @var \DateTime
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	protected $dob;
 	
 	/**
 	 * @var integer
@@ -128,6 +151,42 @@ class ThanhVien {
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
+	protected $soDienThoai;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $soDienThoaiMe;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $soDienThoaiBo;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $soDienThoaiNha;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $diaChiThuongTru;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $diaChiTamTru;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
 	protected $phanDoan;
 	
 	/**
@@ -153,34 +212,6 @@ class ThanhVien {
 	 * @ORM\Column(type="string", nullable=true,length=255)
 	 */
 	protected $christianname;
-	
-	/**
-	 * @return array
-	 */
-	public function getDanhSachChiDoan() {
-		return $this->danhSachChiDoan;
-	}
-	
-	/**
-	 * @param array $danhSachChiDoan
-	 */
-	public function setDanhSachChiDoan($danhSachChiDoan) {
-		$this->danhSachChiDoan = $danhSachChiDoan;
-	}
-	
-	/**
-	 * @return ArrayCollection
-	 */
-	public function getCacBangDiem() {
-		return $this->cacBangDiem;
-	}
-	
-	/**
-	 * @param ArrayCollection $cacBangDiem
-	 */
-	public function setCacBangDiem($cacBangDiem) {
-		$this->cacBangDiem = $cacBangDiem;
-	}
 	
 	/**
 	 * @return int
@@ -392,5 +423,115 @@ class ThanhVien {
 		$this->lastname = $lastname;
 	}
 	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getPhanBoHangNam() {
+		return $this->phanBoHangNam;
+	}
 	
+	/**
+	 * @param ArrayCollection $phanBoHangNam
+	 */
+	public function setPhanBoHangNam($phanBoHangNam) {
+		$this->phanBoHangNam = $phanBoHangNam;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getSoDienThoai() {
+		return $this->soDienThoai;
+	}
+	
+	/**
+	 * @param string $soDienThoai
+	 */
+	public function setSoDienThoai($soDienThoai) {
+		$this->soDienThoai = $soDienThoai;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getSoDienThoaiMe() {
+		return $this->soDienThoaiMe;
+	}
+	
+	/**
+	 * @param string $soDienThoaiMe
+	 */
+	public function setSoDienThoaiMe($soDienThoaiMe) {
+		$this->soDienThoaiMe = $soDienThoaiMe;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getSoDienThoaiBo() {
+		return $this->soDienThoaiBo;
+	}
+	
+	/**
+	 * @param string $soDienThoaiBo
+	 */
+	public function setSoDienThoaiBo($soDienThoaiBo) {
+		$this->soDienThoaiBo = $soDienThoaiBo;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getSoDienThoaiNha() {
+		return $this->soDienThoaiNha;
+	}
+	
+	/**
+	 * @param string $soDienThoaiNha
+	 */
+	public function setSoDienThoaiNha($soDienThoaiNha) {
+		$this->soDienThoaiNha = $soDienThoaiNha;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getDiaChiThuongTru() {
+		return $this->diaChiThuongTru;
+	}
+	
+	/**
+	 * @param string $diaChiThuongTru
+	 */
+	public function setDiaChiThuongTru($diaChiThuongTru) {
+		$this->diaChiThuongTru = $diaChiThuongTru;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getDiaChiTamTru() {
+		return $this->diaChiTamTru;
+	}
+	
+	/**
+	 * @param string $diaChiTamTru
+	 */
+	public function setDiaChiTamTru($diaChiTamTru) {
+		$this->diaChiTamTru = $diaChiTamTru;
+	}
+	
+	/**
+	 * @return \DateTime
+	 */
+	public function getDob() {
+		return $this->dob;
+	}
+	
+	/**
+	 * @param \DateTime $dob
+	 */
+	public function setDob($dob) {
+		$this->dob = $dob;
+	}
 }

@@ -12,7 +12,7 @@ imports:
     - { resource: vendor/services_doctrine.yml }
     - { resource: vendor/services_admin.yml }
 
-
+    - { resource: vendor/services_admin_binhle.yml }
 
 framework:
     #esi:             ~

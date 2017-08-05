@@ -141,6 +141,9 @@ sonata_admin:
 #            - { position: left, type: app.admin.dashboard_block }
 #       If no groups are configured, CmfRoutingBundle::dashboard.cmf shall be used as the default group for CMF Bundles.
         groups:
+            binhle:
+                label: dashboard.binhle
+                icon: '<i class="fa fa-behance"></i>'
             media:
                 label: dashboard.media
                 icon: '<i class="fa fa-video-camera"></i>'

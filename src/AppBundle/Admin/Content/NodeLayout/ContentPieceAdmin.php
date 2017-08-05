@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Admin\Content\NodeLayout;
 
 use AppBundle\Admin\BaseAdmin;
@@ -16,8 +17,7 @@ class ContentPieceAdmin extends GenericLayoutAdmin {
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
 		// this text filter will be used to retrieve autocomplete fields
 		$datagridMapper
-			->add('id')
-			->add('name');
+			->add('id');
 	}
 	
 	protected function configureListFields(ListMapper $listMapper) {
@@ -31,13 +31,31 @@ class ContentPieceAdmin extends GenericLayoutAdmin {
 //		$position  = $container->get( 'app.user' )->getPosition();
 		
 		// define group zoning
- 		$formMapper
+		$formMapper
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
 		;
-		$formMapper->add('raw')
-		;
-		
+		$formMapper
+//			->add('raw')
+			->add('content', 'sonata_formatter_type', array(
+//				'event_dispatcher'     => $formMapper->getEventDispatcher(), // not working
+				'format_field'         => 'formatter',
+				'format_field_options' => array(
+					'choices' => array(
+						'text'     => 'text',
+						'markdown' => 'markdown',
+						'rawhtml'  => 'rawhtml',
+						'richhtml' => 'richhtml'
+					),
+					'data'    => 'markdown',
+				),
+				'source_field'         => 'raw',
+				'source_field_options' => array(
+					'attr' => array( 'class' => 'span10', 'rows' => 20 )
+				),
+				'listener'             => false,
+				'target_field'         => 'content'
+			));
 		
 		
 		$formMapper

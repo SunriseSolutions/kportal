@@ -118,4 +118,18 @@ abstract class AppContentPiece {
 	public function setLayout($layout) {
 		$this->layout = $layout;
 	}
+	
+	/**
+	 * @return array
+	 */
+	public function getShortcodes() {
+		return $this->shortcodes;
+	}
+	
+	/**
+	 * @param array $shortcodes
+	 */
+	public function setShortcodes($shortcodes) {
+		$this->shortcodes = $shortcodes;
+	}
 }
