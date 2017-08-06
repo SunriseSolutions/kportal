@@ -27,7 +27,9 @@ class ContentPieceAdmin extends GenericLayoutAdmin {
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
-			->addIdentifier('id');
+			->addIdentifier('id')
+			->addIdentifier('layout.name')
+		;
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
