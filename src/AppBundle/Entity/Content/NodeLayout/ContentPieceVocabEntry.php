@@ -1,8 +1,8 @@
 <?php
-namespace AppBundle\Entity\Content\NodeType\Article;
 
-use AppBundle\Entity\Content\NodeType\Article\Base\AppArticleNode;
-use AppBundle\Entity\Content\NodeType\Article\Base\AppArticleVocabEntry;
+namespace AppBundle\Entity\Content\NodeLayout;
+
+use AppBundle\Entity\Content\NodeLayout\Base\AppContentPieceVocabEntry;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +11,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="content__node__article_vocab_entry")
+ * @ORM\Table(name="content__pieces_vocab_entries")
  *
  * @Hateoas\Relation(
  *  "self",
@@ -24,12 +24,10 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  *
  */
-class ArticleVocabEntry extends AppArticleVocabEntry
-{
-    function __construct()
-    {
-        parent::__construct();
-        
-    }
-
+class ContentPieceVocabEntry extends AppContentPieceVocabEntry {
+	function __construct() {
+		parent::__construct();
+		
+	}
+	
 }

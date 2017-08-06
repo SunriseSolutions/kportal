@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity\Content\NodeType\Article\Base;
+namespace AppBundle\Entity\Content\NodeLayout\Base;
 
 use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
 use AppBundle\Entity\Content\NodeType\Blog\BlogNode;
@@ -14,7 +14,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /** @ORM\MappedSuperclass */
-abstract class AppArticleVocabEntry {
+abstract class AppContentPieceVocabEntry {
 	
 	/**
 	 * ID_REF
@@ -26,22 +26,22 @@ abstract class AppArticleVocabEntry {
 	protected $id;
 	
 	function __construct() {
-	
+		$this->createdAt = new \DateTime();
 	}
 	
 	/**
 	 * @var Entry
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dictionary\Entry",inversedBy="articleEntries")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dictionary\Entry",inversedBy="contentPieceEntries")
 	 * @ORM\JoinColumn(name="id_entry", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected $entry;
 	
 	/**
 	 * @var ArticleNode
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeType\Article\ArticleNode",inversedBy="vocabEntries")
-	 * @ORM\JoinColumn(name="id_article", referencedColumnName="id", onDelete="CASCADE")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeLayout\ContentPiece",inversedBy="vocabEntries")
+	 * @ORM\JoinColumn(name="id_content_piece", referencedColumnName="id", onDelete="CASCADE")
 	 */
-	protected $article;
+	protected $contentPiece;
 	
 	/**
 	 * @var \DateTime
@@ -79,15 +79,15 @@ abstract class AppArticleVocabEntry {
 	/**
 	 * @return ArticleNode
 	 */
-	public function getArticle() {
-		return $this->article;
+	public function getContentPiece() {
+		return $this->contentPiece;
 	}
 	
 	/**
-	 * @param ArticleNode $article
+	 * @param ArticleNode $contentPiece
 	 */
-	public function setArticle($article) {
-		$this->article = $article;
+	public function setContentPiece($contentPiece) {
+		$this->contentPiece = $contentPiece;
 	}
 	
 	/**

@@ -4,6 +4,7 @@ namespace AppBundle\Entity\Content\NodeLayout\Base;
 
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\Content\NodeLayout\ContentPieceH5P;
+use AppBundle\Entity\Content\NodeLayout\ContentPieceVocabEntry;
 use AppBundle\Entity\Content\NodeLayout\InlineLayout;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
@@ -35,6 +36,21 @@ abstract class AppContentPiece {
 		return $this->id;
 	}
 	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeLayout\ContentPieceVocabEntry", mappedBy="contentPiece", cascade={"all"}, orphanRemoval=true)
+	 */
+	protected $vocabEntries;
+	
+	public function addVocabEntry(ContentPieceVocabEntry $item) {
+		$this->vocabEntries->add($item);
+		$item->setContentPiece($this);
+	}
+	
+	public function removeVocabEntry(ContentPieceVocabEntry $item) {
+		$this->vocabEntries->removeElement($item);
+		$item->setContentPiece(null);
+	}
 	
 	/**
 	 * @var ArrayCollection
@@ -184,5 +200,19 @@ abstract class AppContentPiece {
 	 */
 	public function setH5pContent($h5pContent) {
 		$this->h5pContent = $h5pContent;
+	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getVocabEntries() {
+		return $this->vocabEntries;
+	}
+	
+	/**
+	 * @param ArrayCollection $vocabEntries
+	 */
+	public function setVocabEntries($vocabEntries) {
+		$this->vocabEntries = $vocabEntries;
 	}
 }

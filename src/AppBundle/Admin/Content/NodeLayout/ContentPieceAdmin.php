@@ -4,12 +4,14 @@ namespace AppBundle\Admin\Content\NodeLayout;
 
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\Content\NodeLayout\ContentPiece;
+use AppBundle\Entity\Content\NodeLayout\ContentPieceVocabEntry;
 use AppBundle\Entity\Content\NodeShortcode\ShortcodeFactory;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
+use Sonata\CoreBundle\Form\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Valid;
@@ -44,6 +46,23 @@ class ContentPieceAdmin extends GenericLayoutAdmin {
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
 		;
+		
+		$formMapper->add('vocabEntries', CollectionType::class,
+			array(
+				'required'    => false,
+				'constraints' => new Valid(),
+//					'label'       => false,
+				//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'
+			), array(
+				'edit'            => 'inline',
+				'inline'          => 'table',
+				//						        'sortable' => 'position',
+				'link_parameters' => [],
+				'admin_code'      => 'app.admin.content_layout_content_piece_vocab_entry',
+				'delete'          => null,
+			)
+		);
+		
 		$formMapper
 			->add('shortcodes', ChoiceType::class, array(
 				'required'           => true,
@@ -77,5 +96,17 @@ class ContentPieceAdmin extends GenericLayoutAdmin {
 			->end()
 			->end();
 		
+	}
+	
+	
+	/**
+	 * @param ContentPiece $object
+	 */
+	public function preValidate($object) {
+		$vocabEntries = $object->getVocabEntries();
+		/** @var ContentPieceVocabEntry $vocabEntry */
+		foreach($vocabEntries as $vocabEntry) {
+			$vocabEntry->setContentPiece($object);
+		}
 	}
 }

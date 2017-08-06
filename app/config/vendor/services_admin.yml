@@ -62,6 +62,14 @@ services:
             - [setTranslationDomain, ['AppAdmin']]
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.content_layout_content_piece, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+    app.admin.content_layout_content_piece_vocab_entry:
+        class: AppBundle\Admin\Content\NodeLayout\ContentPieceVocabEntryAdmin
+        arguments: [~, AppBundle\Entity\Content\NodeLayout\ContentPieceVocabEntry, AppBundle:Admin/Content/NodeLayout/ContentPieceVocabEntryAdmin]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['AppAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.content_layout_content_piece_vocab_entry, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
 
 

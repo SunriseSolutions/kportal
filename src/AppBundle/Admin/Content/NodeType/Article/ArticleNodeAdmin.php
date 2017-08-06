@@ -211,25 +211,8 @@ class ArticleNodeAdmin extends BaseAdmin {
 	 * @param ArticleNode $object
 	 */
 	public function preValidate($object) {
-		$bodyContent = '
-                            <div class="row">
-                                <div class="col-sm-12">
-                                %s
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                %s
-                                </div>
-                                <div class="col-lg-6">
-                                %s
-                                </div>
-                            </div>';
 
-//		$bodyContent = sprintf($bodyContent, $object->getMain(), $object->getBottomLeft(), $object->getBottomRight());
 //
-//		$object->setBody($bodyContent);
 		$layout         = $object->getLayout();
 		$layoutChildren = $layout->getChildren();
 		/** @var GenericLayout $child */

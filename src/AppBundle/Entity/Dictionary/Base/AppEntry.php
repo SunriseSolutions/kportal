@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Dictionary\Base;
 
+use AppBundle\Entity\Content\NodeLayout\ContentPieceVocabEntry;
 use AppBundle\Entity\Content\NodeType\Article\ArticleVocabEntry;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\NLP\Sense;
@@ -54,17 +55,17 @@ class AppEntry extends Model {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeType\Article\ArticleVocabEntry", mappedBy="entry", cascade={"all"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeLayout\ContentPieceVocabEntry", mappedBy="entry", cascade={"all"}, orphanRemoval=true)
 	 */
-	protected $articleEntries;
+	protected $contentPieceEntries;
 	
-	public function addArticleEntry(ArticleVocabEntry $item) {
-		$this->articleEntries->add($item);
+	public function addArticleEntry(ContentPieceVocabEntry $item) {
+		$this->contentPieceEntries->add($item);
 		$item->setEntry($this);
 	}
 	
-	public function removeArticleEntry(ArticleVocabEntry $item) {
-		$this->articleEntries->removeElement($item);
+	public function removeArticleEntry(ContentPieceVocabEntry $item) {
+		$this->contentPieceEntries->removeElement($item);
 		$item->setEntry(null);
 	}
 	

@@ -22,18 +22,4 @@ abstract class AppArticleNode extends ContentNode {
 		
 	}
 	
-	/**
-	 * @var ArrayCollection
-	 */
-	protected $vocabEntries;
-	
-	public function addVocabEntry(ArticleVocabEntry $item) {
-		$this->vocabEntries->add($item);
-		$item->setArticle($this);
-	}
-	
-	public function removeVocabEntry(ArticleVocabEntry $item) {
-		$this->vocabEntries->removeElement($item);
-		$item->setArticle(null);
-	}
 }
