@@ -52,6 +52,7 @@ class ContentPieceAdmin extends GenericLayoutAdmin {
 		$formMapper->add('vocabEntries', CollectionType::class,
 			array(
 				'required'    => false,
+				
 				'constraints' => new Valid(),
 //					'label'       => false,
 				//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'

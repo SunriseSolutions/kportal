@@ -18,6 +18,7 @@ class AppEntry extends Model {
 	
 	function __construct() {
 		$this->examples = new ArrayCollection();
+		$this->usages   = new ArrayCollection();
 	}
 	
 	/**

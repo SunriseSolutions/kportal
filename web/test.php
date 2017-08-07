@@ -1,38 +1,11 @@
-<?php
-$servername = "127.0.0.1:3306";
-$username   = "root";
-$password   = "";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, 'c_wordpress');
-
-// Check connection
-if($conn->connect_error) {
-	die("Connection failed: " . $conn->connect_error);
-}
-
-$sql    = "SELECT library_id,name,major_version,minor_version,patch_version, weight, drop_css, dependency_type FROM `wp_h5p_contents_libraries` JOIN `wp_h5p_libraries` ON `wp_h5p_contents_libraries`.`library_id` = `wp_h5p_libraries`.`id` WHERE `content_id` = 3 ORDER BY `weight` ASC";
-$result = $conn->query($sql);
-
-if($result->num_rows > 0) {
-	// output data of each row
-	echo '<pre>[';
-	while($row = $result->fetch_assoc()) {
-//		echo "Lib Id: " . $row["library_id"]. " - Name: " . $row["name"]. " " . $row["major_version"]. "<br>";
-		echo sprintf('[
-					\'machineName\'    => \'%1$s\',
-					\'majorVersion\'   => %2$d,
-					\'minorVersion\'   => %3$d,
-					\'patchVersion\'   => %4$d,
-					%5$s
-				', $row['name'], $row["major_version"], $row["minor_version"], $row["patch_version"], $row['dependency_type'] === 'editor' ? "'dependencyType' => Dependency::TYPE_EDITOR" : "");
-		echo '],';
-	}
-	echo '
-	$this->getLibraryVersion()
-			] </pre>';
-} else {
-	echo "0 results";
-}
-
-$conn->close();
+<form name="form1" method="post" autocomplete="off" action="https://eclaim.ihp.com.sg/eclaim/Login.asp">
+                        <input type="hidden" name="hidLogin">
+                        <input name="txtUserID" type="text" onkeypress="submitForm(event);" autocomplete="off" placeholder="Enter Your User ID:" value="">
+                        <input name="txtPassword" type="password" onkeypress="submitForm(event);" value="" autocomplete="off" placeholder="Enter Your Password:">
+						<input type="hidden" name="hidUCR1">
+						<input type="hidden" name="hidUCR2">
+                        <input name="btnSubmit" type="submit" onclick="">
+						<script language="JavaScript">
+						                 document.form1.txtUserID.focus();
+						</script>
+                    </form>
