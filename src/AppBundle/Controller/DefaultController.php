@@ -59,15 +59,19 @@ class DefaultController extends Controller {
 	 */
 	public function getFileAction(Request $request, $id) {
 		$secret = $request->query->get('bean-secret-key');
-		if($secret === '20170727lethanhbinhahihihi') {
+		if($secret === $this->getParameter('file_server_secret')) {
 			$manager = $this->get('sonata.media.manager.media');
 			/** @var Media $medium */
 			$medium = $manager->find($id);
 			if(empty($medium)) {
 				return new Response('{404}');
 			}
-			
-			if($medium->getExtension() !== $request->query->get('ext', 'none')) {
+			$ext = $medium->getExtension();
+			if($ext === 'mpga') {
+				$metaData = $medium->getProviderMetadata();
+				$ext      = explode('.', $metaData['filename'])[1];
+			}
+			if($ext !== $request->query->get('ext', 'none')) {
 				return new Response('{404}');
 			}
 			

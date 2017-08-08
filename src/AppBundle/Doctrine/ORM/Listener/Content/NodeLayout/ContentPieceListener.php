@@ -40,13 +40,13 @@ class ContentPieceListener {
 		$vocabEntries = $object->getVocabEntries();
 		/** @var ContentPieceVocabEntry $vocabEntry */
 		foreach($vocabEntries as $vocabEntry) {
-			$html             = '<button data-html="true" type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="auto top" data-title="%2$s" data-content="%3$s">%1$s</button>';
+			$html             = '<button data-html="true" type="button" class="vocab-entry-popover btn btn-default" data-container="body" data-toggle="popover" data-placement="auto top" data-title="%2$s" data-content="%3$s">%1$s</button>';
 			$entry            = $vocabEntry->getEntry();
 			$translationEntry = $entry->getTranslation($request->getLocale());
 			$actionButtonHtml = "<a class='btn btn-info' href='" . $router->generate('entry_detail', [ 'entry' => $entry->getId() ]) . "' target='_blank'>" . $trans->trans('page.detail') . "</a>";
 			$actionButtonHtml .= "   ";
 			if( ! empty($entryAudio = $entry->getAudio())) {
-				$actionButtonHtml .= "<a class='btn btn-info' href='" . $router->generate('entry_detail', [ 'entry' => $entry->getId() ]) . "' target='_blank'> <i class='fa fa-volume-up' aria-hidden='true'></i> </a>";
+				$actionButtonHtml .= "<span class='vocab-entry-popover-audio btn btn-primary' data-audioalias='" . $entryAudio->getId() . "' target='_blank'> <i class='fa fa-volume-up' aria-hidden='true'></i> </span>";
 //				$mediaUrl            = $fileServerUrl . '/file.php?f=' . $mediaIdExt;
 			
 			}

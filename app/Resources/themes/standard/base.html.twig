@@ -321,6 +321,13 @@
     <script>
         (function ($) {
 
+            $(document).on("click", ".vocab-entry-popover-audio", function() {
+                var audioalias = $(this).data('audioalias');
+                stopAudio();
+                initAudio(audioalias);
+                playAudio();
+            });
+
             /* ----------------------------------------------- */
             /* ----------------------------------------------- */
             /* OnLoad Page */
