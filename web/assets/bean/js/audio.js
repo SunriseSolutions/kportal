@@ -17,6 +17,7 @@ var song_list = [];
 var song_index;
 var song = null;
 var auto_next = false;
+
 function playOnEnded(_auto_next) {
     auto_next = _auto_next;
 }
@@ -35,7 +36,7 @@ function initAudio(alias) {
         var _scache = SAudio.song_cache[alias];
         if (_scache == undefined || _scache == null) {
             SAudio.song_cache[alias] = new Audio(audio_server_url
-                + '/file.php?ext=mp3&f=' + alias);
+                + '/file.php?f=' + alias + '.mp3');
         } else {
         }
         song = SAudio.song_cache[alias];
@@ -66,6 +67,7 @@ function playAudio() {
         song.play();
     }
 }
+
 function stopAudio() {
     if (song != undefined && song != null) {
         song.pause();
@@ -94,6 +96,7 @@ function repeatPhrase(list, begin, end, _repeatfinishCallBack, _delay) {
 }
 
 var phraseCurrentIndex = [];
+
 function playPhraseList(_plist, index_to_play, _onendedCallBack,
                         _phraseEffectCallBack, _delay, _type, _shared) {
     setTimeout(

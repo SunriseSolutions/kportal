@@ -1,7 +1,6 @@
 page:
-    all_jobs: All Jobs
-    video_interview: Video Interview
-full_time: Job Full Time
+    detail: Detail
+
 security:
     hack_attempt: Are you trying to hack us ?
 form:

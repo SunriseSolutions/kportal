@@ -77,7 +77,6 @@ class AppEntry extends Model {
 	 */
 	protected $audio;
 	
-	
 	/**
 	 * @var Sense
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\NLP\Sense",inversedBy="entries")

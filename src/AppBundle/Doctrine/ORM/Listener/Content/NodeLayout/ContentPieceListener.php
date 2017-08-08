@@ -23,6 +23,8 @@ class ContentPieceListener {
 	
 	private function updateProperties(ContentPiece $object) {
 		$request    = $this->container->get('request_stack')->getCurrentRequest();
+		$router     = $this->container->get('router');
+		$trans      = $this->container->get('translator');
 		$shortcodes = $object->getShortcodes();
 		$formatter  = $object->getFormatter();
 		$escaped    = false;
@@ -38,11 +40,18 @@ class ContentPieceListener {
 		$vocabEntries = $object->getVocabEntries();
 		/** @var ContentPieceVocabEntry $vocabEntry */
 		foreach($vocabEntries as $vocabEntry) {
-			$html             = '<button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="right" data-content="%s">%s</button>';
+			$html             = '<button data-html="true" type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="auto top" data-title="%2$s" data-content="%3$s">%1$s</button>';
 			$entry            = $vocabEntry->getEntry();
 			$translationEntry = $entry->getTranslation($request->getLocale());
+			$actionButtonHtml = "<a class='btn btn-info' href='" . $router->generate('entry_detail', [ 'entry' => $entry->getId() ]) . "' target='_blank'>" . $trans->trans('page.detail') . "</a>";
+			$actionButtonHtml .= "   ";
+			if( ! empty($entryAudio = $entry->getAudio())) {
+				$actionButtonHtml .= "<a class='btn btn-info' href='" . $router->generate('entry_detail', [ 'entry' => $entry->getId() ]) . "' target='_blank'> <i class='fa fa-volume-up' aria-hidden='true'></i> </a>";
+//				$mediaUrl            = $fileServerUrl . '/file.php?f=' . $mediaIdExt;
+			
+			}
 			if( ! empty($translationEntry)) {
-				$content = str_replace($phrase = $entry->getPhrase(), sprintf($html, $translationEntry->getPhrase(), $phrase), $object->getContent());
+				$content = str_replace($phrase = $entry->getPhrase(), sprintf($html, $phrase, $translationEntry->getPhrase(), $actionButtonHtml), $object->getContent());
 				$object->setContent($content);
 			}
 		}
