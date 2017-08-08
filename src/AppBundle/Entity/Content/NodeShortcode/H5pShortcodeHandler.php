@@ -17,7 +17,7 @@ class H5pShortcodeHandler extends AbstractShortcodeHandler {
 		$shortcodeCount = 0;
 		
 		$h5pIds = [];
-		while( ! empty($shortcodeData = $this->parseShortCode($content, 'h5p'))) {
+		while( ! empty($shortcodeData = $this->parseShortCode($content, 'h5p', $escaped))) {
 			$shortcodeCount ++;
 			/** @var Content $h5pContent */
 			$h5pContent = $h5pContentRepo->find($shortcodeData['attributes']['id']);

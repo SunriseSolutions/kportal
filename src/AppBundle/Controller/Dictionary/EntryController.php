@@ -26,7 +26,7 @@ class EntryController extends Controller {
 	
 	
 	/**
-	 * @Route("/{entry}", name="entry_detail")
+	 * @Route("/entry/{entry}", name="entry_detail")
 	 */
 	public function entryDetailAction(Entry $entry, Request $request) {
 		//$scripts = \H5PCore::$scripts;
@@ -34,11 +34,13 @@ class EntryController extends Controller {
 		$registry    = $this->getDoctrine();
 		$articleRepo = $registry->getRepository(ArticleNode::class);
 		$entityRepo  = $registry->getRepository(ContentEntity::class);
-
+		
 		$manager     = $this->get('doctrine.orm.default_entity_manager');
+		$translation = $entry->getTranslation($request->getLocale());
 		
-		
-		return $this->render('default/index.html.twig', [
+		return $this->render('dictionary/entry.html.twig', [
+			'entry'       => $entry,
+			'translation' => $translation,
 //			'contentTest'   => $contentTest,
 //			'h5pContentIds' => $h5pContentIds
 		]);

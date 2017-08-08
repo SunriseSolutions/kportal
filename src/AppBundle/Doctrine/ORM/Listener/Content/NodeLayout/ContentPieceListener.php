@@ -43,13 +43,14 @@ class ContentPieceListener {
 			$html             = '<button data-html="true" type="button" class="vocab-entry-popover btn btn-default" data-container="body" data-toggle="popover" data-placement="auto top" data-title="%2$s" data-content="%3$s">%1$s</button>';
 			$entry            = $vocabEntry->getEntry();
 			$translationEntry = $entry->getTranslation($request->getLocale());
-			$actionButtonHtml = "<a class='btn btn-info' href='" . $router->generate('entry_detail', [ 'entry' => $entry->getId() ]) . "' target='_blank'>" . $trans->trans('page.detail') . "</a>";
-			$actionButtonHtml .= "   ";
+			$actionButtonHtml = "";
 			if( ! empty($entryAudio = $entry->getAudio())) {
-				$actionButtonHtml .= "<span class='vocab-entry-popover-audio btn btn-primary' data-audioalias='" . $entryAudio->getId() . "' target='_blank'> <i class='fa fa-volume-up' aria-hidden='true'></i> </span>";
+				$actionButtonHtml .= "<span class='vocab-entry-popover-audio btn btn-primary' data-audioalias='" . $entryAudio->getId() . "'>  <i class='fa fa-volume-up' aria-hidden='true'> " . ($entry->getPhoneticSymbols() ?: '') . " </i> </span>";
 //				$mediaUrl            = $fileServerUrl . '/file.php?f=' . $mediaIdExt;
-			
+				$actionButtonHtml .= "   ";
 			}
+			$actionButtonHtml .= "<a class='btn btn-info' href='" . $router->generate('entry_detail', [ 'entry' => $entry->getId() ]) . "' target='_blank'>" . $trans->trans('page.detail') . "</a>";
+			
 			if( ! empty($translationEntry)) {
 				$content = str_replace($phrase = $entry->getPhrase(), sprintf($html, $phrase, $translationEntry->getPhrase(), $actionButtonHtml), $object->getContent());
 				$object->setContent($content);

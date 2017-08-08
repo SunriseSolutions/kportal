@@ -12,7 +12,7 @@ abstract class AbstractShortcodeHandler {
 	 */
 	protected $container;
 	
-	public function parseShortCode($content, $shortcode) {
+	public function parseShortCode($content, $shortcode, $escaped = false) {
 		$innerCode   = $this->container->get('app.string')->getBetween($content, '[' . $shortcode, ']');
 		$openTagPos  = strpos($content, '[' . $shortcode);
 		$closeTagPos = strpos($content, ']', $openTagPos);
@@ -25,16 +25,24 @@ abstract class AbstractShortcodeHandler {
 			
 			$lastPos                     = 0;
 			$shortcodeData['attributes'] = [];
+			if($escaped === true) {
+				$quoteStr       = '&quot;';
+				$quoteStrLength = 6;
+			} else {
+				$quoteStr       = '"';
+				$quoteStrLength = 1;
+			}
 			
-			while(($equalSignPos = strpos($innerCode, '=', $lastPos)) > - 1) {
+			$innerCodeLength = strlen($innerCode);
+			while(($lastPos < $innerCodeLength) && ($equalSignPos = strpos($innerCode, '=', $lastPos)) > - 1) {
 				$key = trim(substr($innerCode, $lastPos, $equalSignPos - $lastPos));
 				
-				$openQuotePos  = strpos($innerCode, '&quot;', $equalSignPos) + 6;
-				$closeQuotePos = strpos($innerCode, '&quot;', $openQuotePos);
+				$openQuotePos  = strpos($innerCode, $quoteStr, $equalSignPos) + $quoteStrLength;
+				$closeQuotePos = strpos($innerCode, $quoteStr, $openQuotePos);
 				
 				$value = substr($innerCode, $openQuotePos, $closeQuotePos - $openQuotePos);
 				
-				$lastPos = $closeQuotePos + 6;
+				$lastPos = $closeQuotePos + $quoteStrLength;
 
 //			$attribute                = [ $key => $value ];
 				$shortcodeData['attributes'][ $key ] = $value;

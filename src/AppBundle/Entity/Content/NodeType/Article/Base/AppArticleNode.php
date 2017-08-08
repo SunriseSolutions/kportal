@@ -14,7 +14,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 abstract class AppArticleNode extends ContentNode {
-	
+
 	function __construct() {
 		parent::__construct();
 		$this->blogItems = new ArrayCollection();
