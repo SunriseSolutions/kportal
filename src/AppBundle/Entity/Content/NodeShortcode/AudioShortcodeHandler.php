@@ -18,9 +18,9 @@ class AudioShortcodeHandler extends AbstractShortcodeHandler {
 		while( ! empty($shortcodeData = $this->parseShortCode($content, 'audio', $escaped))) {
 			$shortcodeCount ++;
 			
-			$htmlReplaceFormat = '<span class="btn btn-default playAudioOnClick" data-audioalias="%1$s">%2$s</span>';
+			$htmlReplaceFormat = '<span class="btn btn-default playAudioOnClick" data-audioalias="%1$s"><i class="fa fa-volume-up" aria-hidden="true"> %2$s </i></span>';
 			if( ! empty($shortcodeData)) {
-				$htmlReplace = sprintf($htmlReplaceFormat, $shortcodeData['attributes']['id'], $shortcodeData['attributes']['label']);
+				$htmlReplace = sprintf($htmlReplaceFormat, $shortcodeData['attributes']['id'], array_key_exists('label', $shortcodeData['attributes']) ? $shortcodeData['attributes']['label'] : '');
 				$content     = str_replace($shortcodeData['tag'], $htmlReplace, $content);
 			}
 			
