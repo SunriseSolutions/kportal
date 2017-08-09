@@ -59,7 +59,7 @@ abstract class AppContent {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeLayout\ContentPieceH5P", mappedBy="h5pContent", cascade={"all"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentPiece\ContentPieceH5P", mappedBy="h5pContent", cascade={"all"}, orphanRemoval=true)
 	 */
 	protected $h5pContentItems;
 	

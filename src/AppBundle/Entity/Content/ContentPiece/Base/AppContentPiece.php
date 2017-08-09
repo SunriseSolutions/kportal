@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Entity\Content\NodeLayout\Base;
+namespace AppBundle\Entity\Content\ContentPiece\Base;
 
 use AppBundle\Entity\Content\ContentNode;
-use AppBundle\Entity\Content\NodeLayout\ContentPieceH5P;
-use AppBundle\Entity\Content\NodeLayout\ContentPieceVocabEntry;
+use AppBundle\Entity\Content\ContentPiece\ContentPieceH5P;
+use AppBundle\Entity\Content\ContentPiece\ContentPieceVocabEntry;
 use AppBundle\Entity\Content\NodeLayout\InlineLayout;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
@@ -38,7 +38,7 @@ abstract class AppContentPiece {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeLayout\ContentPieceVocabEntry", mappedBy="contentPiece", cascade={"all"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentPiece\ContentPieceVocabEntry", mappedBy="contentPiece", cascade={"all"}, orphanRemoval=true)
 	 */
 	protected $vocabEntries;
 	
@@ -54,7 +54,7 @@ abstract class AppContentPiece {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeLayout\ContentPieceH5P", mappedBy="contentPiece", cascade={"all"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentPiece\ContentPieceH5P", mappedBy="contentPiece", cascade={"all"}, orphanRemoval=true)
 	 */
 	protected $h5pContentItems;
 	

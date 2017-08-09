@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Controller\Admin\Content\NodeLayout;
+namespace AppBundle\Controller\Admin\Content\ContentPiece;
 
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ContentPieceVocabEntryAdminController extends CRUDController {
+class ContentPieceAdminController extends CRUDController {
 
 }

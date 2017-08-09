@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Entity\Content\NodeLayout;
+namespace AppBundle\Entity\Content\ContentPiece;
 
-use AppBundle\Entity\Content\NodeLayout\Base\AppContentPieceVocabEntry;
+use AppBundle\Entity\Content\ContentPiece\Base\AppContentPieceVocabEntry;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;

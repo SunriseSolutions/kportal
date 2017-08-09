@@ -1,10 +1,11 @@
 <?php
 
-namespace AppBundle\Admin\Content\NodeLayout;
+namespace AppBundle\Admin\Content\ContentPiece;
 
 use AppBundle\Admin\BaseAdmin;
-use AppBundle\Entity\Content\NodeLayout\ContentPiece;
-use AppBundle\Entity\Content\NodeLayout\ContentPieceVocabEntry;
+use AppBundle\Admin\Content\NodeLayout\GenericLayoutAdmin;
+use AppBundle\Entity\Content\ContentPiece\ContentPiece;
+use AppBundle\Entity\Content\ContentPiece\ContentPieceVocabEntry;
 use AppBundle\Entity\Content\NodeShortcode\ShortcodeFactory;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -16,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Valid;
 
-class ContentPieceAdmin extends GenericLayoutAdmin {
+class ContentPieceAdmin extends BaseAdmin {
 	protected $parentAssociationMapping = 'layout';
 	
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {

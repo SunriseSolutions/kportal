@@ -1,8 +1,8 @@
 <?php
-namespace AppBundle\Entity\Content\NodeLayout;
+namespace AppBundle\Entity\Content\ContentPiece;
 
 use AppBundle\Entity\Content\Base\AppContentNode;
-use AppBundle\Entity\Content\NodeLayout\Base\AppContentPieceH5P;
+use AppBundle\Entity\Content\ContentPiece\Base\AppContentPieceH5P;
 use AppBundle\Entity\NLP\Sense;
 use AppBundle\Entity\User\User;
 use Doctrine\ORM\Mapping as ORM;

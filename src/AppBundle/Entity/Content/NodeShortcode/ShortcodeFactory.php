@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ShortcodeFactory {
 	
-	public static $supportedShortcodes = array( 'h5p' => 'h5p', 'html' => 'html' );
+	public static $supportedShortcodes = array( 'h5p' => 'h5p', 'audio' => 'audio', 'playlist' => 'playlist' );
 	
 	public static $shortCodeHandlers = array();
 	

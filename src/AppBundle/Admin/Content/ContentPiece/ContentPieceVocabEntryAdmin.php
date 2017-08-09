@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Admin\Content\NodeLayout;
+namespace AppBundle\Admin\Content\ContentPiece;
 
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\Content\NodeLayout\ContentPiece;

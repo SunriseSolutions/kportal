@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Entity\Content\NodeLayout\Base;
+namespace AppBundle\Entity\Content\ContentPiece\Base;
 
 use AppBundle\Entity\Content\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
-use AppBundle\Entity\Content\NodeLayout\ContentPiece;
+use AppBundle\Entity\Content\ContentPiece\ContentPiece;
 use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
@@ -24,7 +24,7 @@ abstract class AppContentPieceH5P {
 	/**
 	 * @var ContentPiece
 	 * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeLayout\ContentPiece",inversedBy="h5pContentItems")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentPiece\ContentPiece",inversedBy="h5pContentItems")
 	 * @ORM\JoinColumn(name="id_content_piece", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected $contentPiece;

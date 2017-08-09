@@ -237,6 +237,13 @@ sonata_media:
             providers:
                 - sonata.media.provider.file
 
+        audio_file:
+            download:
+#                strategy: app.sonata_media.security.user_strategy
+                mode: http
+            providers:
+                - sonata.media.provider.file
+
         thumbnail:
             providers:
                 - sonata.media.provider.image
@@ -244,22 +251,14 @@ sonata_media:
                 small: { width: 100 , quality: 70}
 #                big:   { width: 500 , quality: 70}
 
-        sonata_collection:
-            providers:
-                - sonata.media.provider.image
+#        sonata_collection:
+#            providers:
+#                - sonata.media.provider.image
+#            formats:
+#                preview: { width: 100, quality: 100}
+#                wide:    { width: 820, quality: 100}
 
-            formats:
-                preview: { width: 100, quality: 100}
-                wide:    { width: 820, quality: 100}
 
-        job_industry:
-            providers:
-                - sonata.media.provider.image
-
-            formats:
-                preview: { width: 100, quality: 100}
-                wide:    { width: 820, quality: 100}
-                
 #    cdn:
 #        server:
 #            path: /uploads/media # http://media.sonata-project.org/
@@ -315,6 +314,7 @@ sonata_media:
 
 #            generator: app.sonata.media.generator.default
             allowed_extensions:
+                - mp3
                 - mp4
                 # Defaults:
                 - pdf
@@ -336,6 +336,7 @@ sonata_media:
                 - csv
                 - xml
             allowed_mime_types:
+                - audio/mpeg
                 - video/mp4
                 - application/vnd.openxmlformats-officedocument.wordprocessingml.document
                 # Defaults:

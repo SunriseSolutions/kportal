@@ -114,10 +114,10 @@ doctrine:
                                             method: postRemoveHandler
 
                         -
-                            class:  "AppBundle\\Entity\\Content\\NodeLayout\\ContentPiece"
+                            class:  "AppBundle\\Entity\\Content\\ContentPiece\\ContentPiece"
                             listener:
                                 -
-                                    class: "AppBundle\\Doctrine\\ORM\\Listener\\Content\\NodeLayout\\ContentPieceListener"
+                                    class: "AppBundle\\Doctrine\\ORM\\Listener\\Content\\ContentPiece\\ContentPieceListener"
                                     event:
                                         -
                                             type: postPersist

@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Doctrine\ORM\Listener\Content\NodeLayout;
+namespace AppBundle\Doctrine\ORM\Listener\Content\ContentPiece;
 
-use AppBundle\Entity\Content\NodeLayout\ContentPiece;
-use AppBundle\Entity\Content\NodeLayout\ContentPieceVocabEntry;
+use AppBundle\Entity\Content\ContentPiece\ContentPiece;
+use AppBundle\Entity\Content\ContentPiece\ContentPieceVocabEntry;
 use AppBundle\Entity\Content\NodeShortcode\H5pShortcodeHandler;
 use AppBundle\Entity\Content\NodeShortcode\ShortcodeFactory;
 use Cocur\Slugify\Slugify;

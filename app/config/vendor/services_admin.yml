@@ -55,16 +55,16 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.content_layout_inline, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
     app.admin.content_layout_content_piece:
-        class: AppBundle\Admin\Content\NodeLayout\ContentPieceAdmin
-        arguments: [~, AppBundle\Entity\Content\NodeLayout\ContentPiece, AppBundle:Admin/Content/NodeLayout/ContentPieceAdmin]
+        class: AppBundle\Admin\Content\ContentPiece\ContentPieceAdmin
+        arguments: [~, AppBundle\Entity\Content\ContentPiece\ContentPiece, AppBundle:Admin/Content/ContentPiece/ContentPieceAdmin]
         calls:
             - [setIvoryCkeditor,['default']]
             - [setTranslationDomain, ['AppAdmin']]
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.content_layout_content_piece, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
     app.admin.content_layout_content_piece_vocab_entry:
-        class: AppBundle\Admin\Content\NodeLayout\ContentPieceVocabEntryAdmin
-        arguments: [~, AppBundle\Entity\Content\NodeLayout\ContentPieceVocabEntry, AppBundle:Admin/Content/NodeLayout/ContentPieceVocabEntryAdmin]
+        class: AppBundle\Admin\Content\ContentPiece\ContentPieceVocabEntryAdmin
+        arguments: [~, AppBundle\Entity\Content\ContentPiece\ContentPieceVocabEntry, AppBundle:Admin/Content/ContentPiece/ContentPieceVocabEntryAdmin]
         calls:
             - [setIvoryCkeditor,['default']]
             - [setTranslationDomain, ['AppAdmin']]

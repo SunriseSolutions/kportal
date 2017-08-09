@@ -3,6 +3,7 @@
 namespace AppBundle\Entity\Content\NodeLayout;
 
 use AppBundle\Entity\Content\ContentNode;
+use AppBundle\Entity\Content\ContentPiece\ContentPiece;
 use AppBundle\Entity\Content\NodeLayout\Base\AppColumnLayout;
 use AppBundle\Entity\Content\NodeLayout\Base\AppGenericLayout;
 use AppBundle\Entity\Content\NodeLayout\Base\AppInlineLayout;
@@ -39,7 +40,7 @@ class InlineLayout extends AppInlineLayout {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeLayout\ContentPiece", mappedBy="layout", cascade={"persist","merge"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentPiece\ContentPiece", mappedBy="layout", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $contentPieces;
 	

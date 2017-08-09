@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity\Content\NodeLayout\Base;
+namespace AppBundle\Entity\Content\ContentPiece\Base;
 
 use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
 use AppBundle\Entity\Content\NodeType\Blog\BlogNode;
@@ -38,7 +38,7 @@ abstract class AppContentPieceVocabEntry {
 	
 	/**
 	 * @var ArticleNode
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeLayout\ContentPiece",inversedBy="vocabEntries")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentPiece\ContentPiece",inversedBy="vocabEntries")
 	 * @ORM\JoinColumn(name="id_content_piece", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected $contentPiece;

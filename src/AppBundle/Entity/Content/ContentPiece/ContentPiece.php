@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Entity\Content\NodeLayout;
+namespace AppBundle\Entity\Content\ContentPiece;
 
 use AppBundle\Entity\Content\ContentNode;
-use AppBundle\Entity\Content\NodeLayout\Base\AppContentPiece;
+use AppBundle\Entity\Content\ContentPiece\Base\AppContentPiece;
 use AppBundle\Entity\Content\NodeLayout\Base\AppGenericLayout;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
