@@ -1,0 +1,241 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% for style in styles %}
+        <link rel="stylesheet" href="{{ style }}"/>
+    {% endfor %}
+
+    {#<link rel='stylesheet' id='h5p-cachedassets-532072e10b6e5351315fce011ff12cbf5bdac6f9-css'  href='http://localhost/001/wordpress/wp-content/uploads/h5p/cachedassets/532072e10b6e5351315fce011ff12cbf5bdac6f9.css?ver=4.7.5' type='text/css' media='all' />#}
+
+    <style>
+    </style>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+
+    <script>
+        H5PIntegration = {{ h5pSettings | raw }}
+    </script>
+
+
+    {% for script in scripts %}
+        <script type='text/javascript' src='{{ script }}'></script>
+    {% endfor %}
+
+    {#<script type='text/javascript' src='http://localhost/001/wordpress/wp-content/uploads/h5p/cachedassets/532072e10b6e5351315fce011ff12cbf5bdac6f9.js?ver=4.7.5'></script>#}
+
+    <script>
+
+        $(document).ready(function () {
+            if ($(this).width() < 1024) {
+                $('body').addClass('mini-navbar')
+            } else {
+//                $('body').removeClass('body-small')
+            }
+
+            // Minimalize menu when screen is less than 768px
+            $(window).bind("resize", function () {
+                if ($(this).width() < 1024) {
+                    $('body').addClass('mini-navbar')
+                } else {
+//                    $('body').removeClass('body-small')
+                }
+            });
+
+
+            $('.btn-content').on('click', function (e) {
+                _h5pId = $(this).data('h5ptarget');
+                var $h5p = $('#h5p_' + _h5pId);
+                var $h5pActive = $('.h5p-app-active');
+
+                if ($h5p.hasClass('h5p-app-active')) {
+                    $h5p.addClass('hidden');
+                    $h5p.removeClass('h5p-app-active');
+
+                } else {
+                    $h5pActive.addClass('hidden');
+                    $h5pActive.removeClass('h5p-app-active');
+
+                    $h5p.removeClass('hidden');
+                    $h5p.addClass('h5p-app-active');
+                }
+
+            });
+        });
+
+    </script>
+    <script>
+
+
+    </script>
+    <script>
+        jQuery(document).ready(function ($) {
+//            $('#h5p-mcq0').text('testing ahihi');
+        });
+    </script>
+
+
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content  animated fadeInRight article">
+        <div class="row">
+            <div class="col-sm-8 col-lg-8 col-lg-offset-1">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="pull-right">
+                            <button class="btn btn-white btn-xs" type="button">Model</button>
+                            <button class="btn btn-white btn-xs" type="button">Publishing</button>
+                            <button class="btn btn-white btn-xs" type="button">Modern</button>
+                        </div>
+                        <div class="text-center article-title">
+                            <span class="text-muted"><i class="fa fa-clock-o"></i> 28th Oct 2015</span>
+                            <h3>
+                                {{ article.title }}
+                            </h3>
+                        </div>
+                        {#{{ h5pSettings }}#}
+                        <div class="article-content row">
+                            {{ article.content | raw }}
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Tags:</h5>
+                                <button class="btn btn-primary btn-xs" type="button">Model</button>
+                                <button class="btn btn-white btn-xs" type="button">Publishing</button>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="small text-right">
+                                    {#<h5>Stats:</h5>#}
+                                    {#<div><i class="fa fa-comments-o"> </i> 56 comments</div>#}
+                                    {#<i class="fa fa-eye"> </i> 144 views#}
+                                </div>
+                            </div>
+                        </div>
+                        {#
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h2>Comments:</h2>
+                                <div class="social-feed-box">
+                                    <div class="social-avatar">
+                                        <a href="" class="pull-left">
+                                            <img alt="image" src="{{ asset('themes/standard/img/a1.jpg') }}">
+                                        </a>
+                                        <div class="media-body">
+                                            <a href="#">
+                                                Andrew Williams
+                                            </a>
+                                            <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                                        </div>
+                                    </div>
+                                    <div class="social-body">
+                                        <p>
+                                            Many desktop publishing packages and web page editors now use Lorem Ipsum as
+                                            their
+                                            default model text, and a search for 'lorem ipsum' will uncover many web
+                                            sites still
+                                            default model text.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="social-feed-box">
+                                    <div class="social-avatar">
+                                        <a href="" class="pull-left">
+                                            <img alt="image" src="{{ asset('themes/standard/img/a2.jpg') }}">
+                                        </a>
+                                        <div class="media-body">
+                                            <a href="#">
+                                                Michael Novek
+                                            </a>
+                                            <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                                        </div>
+                                    </div>
+                                    <div class="social-body">
+                                        <p>
+                                            Many desktop publishing packages and web page editors now use Lorem Ipsum as
+                                            their
+                                            default model text, and a search for 'lorem ipsum' will uncover many web
+                                            sites still
+                                            default model text, and a search for 'lorem ipsum' will uncover many web
+                                            sites still
+                                            in their infancy. Packages and web page editors now use Lorem Ipsum as their
+                                            default model text.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="social-feed-box">
+                                    <div class="social-avatar">
+                                        <a href="" class="pull-left">
+                                            <img alt="image" src="{{ asset('themes/standard/img/a3.jpg') }}">
+                                        </a>
+                                        <div class="media-body">
+                                            <a href="#">
+                                                Alice Mediater
+                                            </a>
+                                            <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                                        </div>
+                                    </div>
+                                    <div class="social-body">
+                                        <p>
+                                            Many desktop publishing packages and web page editors now use Lorem Ipsum as
+                                            their
+                                            default model text, and a search for 'lorem ipsum' will uncover many web
+                                            sites still
+                                            in their infancy. Packages and web page editors now use Lorem Ipsum as their
+                                            default model text.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="social-feed-box">
+                                    <div class="social-avatar">
+                                        <a href="" class="pull-left">
+                                            <img alt="image" src="{{ asset('themes/standard/img/a5.jpg') }}">
+                                        </a>
+                                        <div class="media-body">
+                                            <a href="#">
+                                                Monica Flex
+                                            </a>
+                                            <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                                        </div>
+                                    </div>
+                                    <div class="social-body">
+                                        <p>
+                                            Many desktop publishing packages and web page editors now use Lorem Ipsum as
+                                            their
+                                            default model text, and a search for 'lorem ipsum' will uncover many web
+                                            sites still
+                                            in their infancy. Packages and web page editors now use Lorem Ipsum as their
+                                            default model text.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        #}
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-lg-2">
+                <div class="ibox text-center">
+                    <div class="ibox-content">
+                        <h3>Advertising</h3>
+                        hello how are you doing <br/>
+                        hello how are you doing <br/>
+                        hello how are you doing <br/>hello how are you doing <br/>hello how are you doing <br/>hello how
+                        are you doing <br/>hello how are you doing <br/>hello how are you doing <br/>hello how are you
+                        doing <br/>hello how are you doing <br/>hello how are you doing <br/>hello how are you doing
+                        <br/>hello how are you doing <br/>hello how are you doing <br/>hello how are you doing <br/>hello
+                        how are you doing <br/>hello how are you doing <br/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
+

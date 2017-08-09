@@ -6,15 +6,18 @@ use AppBundle\Entity\Content\ArticleNode;
 use AppBundle\Entity\Content\BlogNode;
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Service\SiteService;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AppExtension extends \Twig_Extension {
 	private $generator;
 	private $siteService;
+	private $requestStack;
 	
-	public function __construct(UrlGeneratorInterface $generator, SiteService $siteService) {
-		$this->generator   = $generator;
-		$this->siteService = $siteService;
+	public function __construct(UrlGeneratorInterface $generator, SiteService $siteService, RequestStack $requestStack) {
+		$this->generator    = $generator;
+		$this->siteService  = $siteService;
+		$this->requestStack = $requestStack;
 	}
 	
 	/**
@@ -30,8 +33,15 @@ class AppExtension extends \Twig_Extension {
 					'isUrlGenerationSafe'
 				)
 			)),
-			new \Twig_SimpleFunction('fileServerURL', array( $this, 'getFileServerURL' ), array())
+			new \Twig_SimpleFunction('fileServerURL', array( $this, 'getFileServerURL' ), array()),
+			new \Twig_SimpleFunction('isCurrentPage', array( $this, 'isCurrentPage' ), array())
 		);
+	}
+	
+	public function isCurrentPage($path) {
+		$attributes = $this->requestStack->getCurrentRequest()->attributes;
+		
+		return $path === $this->generator->generate($attributes->get('_route'), $attributes->get('_route_params'), UrlGeneratorInterface::ABSOLUTE_PATH);
 	}
 	
 	public function getFileServerURL($type = 'file') {

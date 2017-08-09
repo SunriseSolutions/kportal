@@ -3,6 +3,7 @@
 namespace AppBundle\Admin\Content\NodeType\Article;
 
 use AppBundle\Admin\BaseAdmin;
+use AppBundle\Entity\Content\ContentEntity\IndividualEntity;
 use AppBundle\Entity\Content\NodeLayout\ColumnLayout;
 use AppBundle\Entity\Content\NodeLayout\ContentPiece;
 use AppBundle\Entity\Content\NodeLayout\GenericLayout;
@@ -76,6 +77,26 @@ class ArticleNodeAdmin extends BaseAdmin {
 			->add('title', null, array())
 			->add('topic', null, array())
 			->add('slug', null, array())
+			->add('owner', ModelAutocompleteType::class, array(
+					'property'           => 'slug',
+					'to_string_callback' => function(IndividualEntity $entity, $property) {
+						return $entity->getSlug();
+					},
+					'callback'           => function($admin, $property, $value) {
+						$datagrid = $admin->getDatagrid();
+						/** @var QueryBuilder $queryBuilder */
+						$queryBuilder = $datagrid->getQuery();
+						$expr         = $queryBuilder->expr();
+						$queryBuilder
+							->andWhere(
+								$expr->eq($queryBuilder->getRootAliases()[0] . '.enabled', ':trueValue')
+							)
+							->setParameter('trueValue', true);
+						$datagrid->setValue($property, null, $value);
+					},
+				)
+			)
+
 //			->add('layout.children', ModelAutocompleteType::class, array(
 ////				'label'              => 'form.label_example_entry',
 //				'property'           => 'name',

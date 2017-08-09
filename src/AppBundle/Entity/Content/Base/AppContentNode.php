@@ -2,9 +2,9 @@
 
 namespace AppBundle\Entity\Content\Base;
 
-use AppBundle\Entity\Content\ContentEntity;
+use AppBundle\Entity\Content\ContentEntity\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
-use AppBundle\Entity\Content\ContentPieceH5P;
+use AppBundle\Entity\Content\ContentPiece\ContentPieceH5P;
 use AppBundle\Entity\Content\NodeLayout\RootLayout;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
@@ -41,7 +41,7 @@ abstract class AppContentNode {
 	
 	/**
 	 * @var ContentEntity
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentEntity",inversedBy="contentNodes")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentEntity\ContentEntity",inversedBy="contentNodes")
 	 * @ORM\JoinColumn(name="id_owner", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected

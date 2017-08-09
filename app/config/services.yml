@@ -31,7 +31,7 @@ services:
 
     app.twig:
         class: AppBundle\Twig\AppExtension
-        arguments: ['@router.default','@app.site']
+        arguments: ['@router.default','@app.site','@request_stack']
         tags:
             - {name: 'twig.extension'}
 

@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {#{% for style in styles %}#}
+    {#<link rel="stylesheet" href="{{ style }}"/>#}
+    {#{% endfor %}#}
+
+    {#<link rel='stylesheet' id='h5p-cachedassets-532072e10b6e5351315fce011ff12cbf5bdac6f9-css'  href='http://localhost/001/wordpress/wp-content/uploads/h5p/cachedassets/532072e10b6e5351315fce011ff12cbf5bdac6f9.css?ver=4.7.5' type='text/css' media='all' />#}
+
+    <style>
+    </style>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    {#{% for script in scripts %}#}
+    {#<script type='text/javascript' src='{{ script }}'></script>#}
+    {#{% endfor %}#}
+
+    {#<script type='text/javascript' src='http://localhost/001/wordpress/wp-content/uploads/h5p/cachedassets/532072e10b6e5351315fce011ff12cbf5bdac6f9.js?ver=4.7.5'></script>#}
+
+    <script>
+        {#H5PIntegration = {{ h5pSettings | raw }}#}
+    </script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $('#h5p-mcq0').text('testing ahihi');
+        });
+    </script>
+
+
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper wrapper-content  animated fadeInRight blog">
+        <div class="row">
+            <div class="col-lg-5">
+                {% for item in items %}
+                    {% if loop.index is odd %}
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                {#<a href="{{ path('content_article',{'entitySlug':item.article.owner.slug,'articleSlug':item.article.slug}) }}" class="btn-link">#}
+                                <a href="{{ generateContentPath(item.content) }}" class="btn-link">
+                                    <h2>
+                                        {{ item.content.title }}
+                                    </h2>
+                                </a>
+                                <div class="small m-b-xs">
+                                    <strong>{{ item.content.owner.name }}</strong> <span class="text-muted"><i class="fa fa-clock-o"></i> {{ item.content.createdAt | date('d M Y') }}</span>
+                                </div>
+                                    {#{{ dump(blog) }}#}
+                                {{ item.content.abstractContent|raw }}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {#<h5>Tags:</h5>#}
+                                        {#<button class="btn btn-primary btn-xs" type="button">Model</button>#}
+                                        {#<button class="btn btn-white btn-xs" type="button">Publishing</button>#}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="small text-right">
+                                            {#<h5>Stats:</h5>#}
+                                            {#<div><i class="fa fa-comments-o"> </i> 56 comments</div>#}
+                                            {#<i class="fa fa-eye"> </i> {{ item.content.viewCount }} views#}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="col-lg-5">
+                {% for item in items %}
+                    {% if loop.index is even %}
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <a href="{{ path('content_article',{'entitySlug':item.article.entity.slug,'articleSlug':item.article.slug}) }}"
+                                   class="btn-link">
+                                    <h2>
+                                        {{ item.article.title }}
+                                    </h2>
+                                </a>
+                                <div class="small m-b-xs">
+                                    <strong>Adam Novak</strong> <span class="text-muted"><i class="fa fa-clock-o"></i> 28th Oct 2015</span>
+                                </div>
+                                <p>
+                                    {{ dump(blog) }}
+                                    English. Many desktop publishing packages and web page editors now use Lorem Ipsum
+                                    as their default model text, and a search for 'lorem ipsum' will uncover many web
+                                </p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5>Tags:</h5>
+                                        <button class="btn btn-primary btn-xs" type="button">Model</button>
+                                        <button class="btn btn-white btn-xs" type="button">Publishing</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="small text-right">
+                                            <h5>Stats:</h5>
+                                            <div><i class="fa fa-comments-o"> </i> 56 comments</div>
+                                            <i class="fa fa-eye"> </i> 144 views
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="text-center">
+            <div class="btn-group">
+
+                <div class="pagerfanta">
+                    {{ pagerfanta(pager) }}
+                </div>
+
+                <button class="btn btn-white" type="button"><i class="fa fa-chevron-left"></i></button>
+                <button class="btn btn-white">1</button>
+                <button class="btn btn-white  active">2</button>
+                <button class="btn btn-white">3</button>
+                <button class="btn btn-white">4</button>
+                <button class="btn btn-white">5</button>
+                <button class="btn btn-white">6</button>
+                <button class="btn btn-white">7</button>
+                <button class="btn btn-white" type="button"><i class="fa fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
+

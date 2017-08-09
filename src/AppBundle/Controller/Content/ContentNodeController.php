@@ -5,7 +5,7 @@ namespace AppBundle\Controller\Content;
 use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
 use AppBundle\Entity\Content\NodeType\Blog\BlogItem;
 use AppBundle\Entity\Content\NodeType\Blog\BlogNode;
-use AppBundle\Entity\Content\ContentEntity;
+use AppBundle\Entity\Content\ContentEntity\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -52,26 +52,30 @@ class ContentNodeController extends Controller {
 		$h5p = $this->get('app.h5p');
 		
 		$h5pContentIdArray = array_keys($h5pContentIds);
-		$h5pHtml           = $h5p->getHtml($h5pContentIdArray);
-		
-		$settings    = json_encode($h5p->getSettings());
-		$setting     = $h5p->getSettings();
+		if( ! empty($h5pContentIdArray)) {
+			$h5pHtml = $h5p->getHtml($h5pContentIdArray);
+			
+			$settings = json_encode($h5p->getSettings());
+			$setting  = $h5p->getSettings();
 //		$contentTest = [];
 //		foreach($setting['contents'] as $content) {
 //			$contentTest[] = json_decode($content['jsonContent']);
 //		}
+		} else {
+			$settings = json_encode([]);
+		}
 		
 		return $this->render('content/article.html.twig', [
 //			'contentTest'   => $contentTest,
-			'styles'        => $h5p->getStyles(),
-			'scripts'       => $h5p->getScripts(),
+			'styles'      => $h5p->getStyles(),
+			'scripts'     => $h5p->getScripts(),
 //			'settingRaw'    => $h5p->getSettings(),
 //			'h5pHtml'       => $h5pHtml,
-			'h5pSettings'   => $settings,
+			'h5pSettings' => $settings,
 //			'entitySlug'    => $entitySlug,
 //			'slug'          => $articleSlug,
-			'entity'        => $entity,
-			'article'       => $article,
+			'entity'      => $entity,
+			'article'     => $article,
 //			'h5pContentIds' => $h5pContentIds
 		]);
 	}

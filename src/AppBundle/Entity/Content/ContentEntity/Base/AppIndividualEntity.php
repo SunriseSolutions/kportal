@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Entity\Content\Base;
+namespace AppBundle\Entity\Content\ContentEntity\Base;
 
 use AppBundle\Entity\Content\NodeType\Blog\BlogItem;
-use AppBundle\Entity\Content\ContentEntity;
+use AppBundle\Entity\Content\ContentEntity\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;

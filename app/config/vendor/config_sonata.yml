@@ -402,15 +402,15 @@ sonata_user:
     class:
         group: AppBundle\Entity\User\Group
         user:  AppBundle\Entity\User\User
-#    admin:
+    admin:
 #        group:
 #            class:                ~
 #            controller:           'SonataAdminBundle:CRUD'
 #            translation:          SonataUserBundle
-#        user:
-#            class:                Application\Sonata\UserBundle\Admin\AppUserAdmin
-#            controller:           'ApplicationSonataUserBundle:Admin/User'
-#            translation:          SonataUserBundle
+        user:
+            class:                AppBundle\Admin\User\UserAdmin
+            controller:           'AppBundle:Admin/User/User'
+            translation:          SonataUserBundle
 
 sonata_doctrine_phpcr_admin:
 #    templates:

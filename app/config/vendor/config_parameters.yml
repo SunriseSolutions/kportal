@@ -34,14 +34,16 @@ parameters:
         file_server: server.local.com:81/kportal/web
         modules: []
 
-    tiengphap.local.com:
+    tiengphap.org:
         theme: tiengphap
         locale: vi_VN
+        topic: hoc_tieng_phap
         file_server: server.local.com:81/kportal/web
         modules: []
 
     tiengnhat.local.com:
         theme: tiengnhat
         locale: vi_VN
+        topic: hoc_tieng_nhat
         file_server: server.local.com:81/kportal/web
         modules: []

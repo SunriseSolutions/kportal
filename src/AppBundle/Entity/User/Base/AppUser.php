@@ -29,7 +29,7 @@ class AppUser extends BaseUser {
 	
 	/**
 	 * One Customer has One Cart.
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Content\IndividualEntity", mappedBy="owner")
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Content\ContentEntity\IndividualEntity", mappedBy="owner")
 	 */
 	private $individualEntity;
 	

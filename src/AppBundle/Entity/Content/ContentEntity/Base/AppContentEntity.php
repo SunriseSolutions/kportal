@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity\Content\Base;
+namespace AppBundle\Entity\Content\ContentEntity\Base;
 
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\Media\Media;
@@ -46,6 +46,13 @@ abstract class AppContentEntity {
 		$poc->setOwner(null);
 	}
 	
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":true})
+	 */
+	protected $enabled = true;
+	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=128, nullable=true)
@@ -88,4 +95,31 @@ abstract class AppContentEntity {
 		$this->slug = $slug;
 	}
 	
+	/**
+	 * @return mixed
+	 */
+	public function getOwner() {
+		return $this->owner;
+	}
+	
+	/**
+	 * @param mixed $owner
+	 */
+	public function setOwner($owner) {
+		$this->owner = $owner;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isEnabled() {
+		return $this->enabled;
+	}
+	
+	/**
+	 * @param bool $enabled
+	 */
+	public function setEnabled($enabled) {
+		$this->enabled = $enabled;
+	}
 }

@@ -101,13 +101,14 @@ class H5PService extends BaseService {
 	}
 	
 	public function getHtml($ids) {
+		$html = '';
 		if(is_array($ids)) {
 			foreach($ids as $id) {
 				$content = $this->getContent($id);
 				if( ! empty($content)) {
 					$html = $this->addAssets($content);
 				} else {
-					$html = '';
+
 				}
 			}
 		} else {
@@ -115,7 +116,7 @@ class H5PService extends BaseService {
 			if( ! empty($content)) {
 				$html = $this->addAssets($content);
 			} else {
-				$html = '';
+			
 			}
 		}
 		

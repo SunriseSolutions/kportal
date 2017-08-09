@@ -1,7 +1,7 @@
 <?php
-namespace AppBundle\Entity\Content;
+namespace AppBundle\Entity\Content\ContentEntity;
 
-use AppBundle\Entity\Content\Base\AppIndividualEntity;
+use AppBundle\Entity\Content\ContentEntity\Base\AppIndividualEntity;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;

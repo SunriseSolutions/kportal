@@ -2,6 +2,8 @@ user:
     email_exists: This email has already been used by another user.
 
 dashboard:
+    content_entity: Content Entity
+    content_individual_entity: Individual Entity
     content_node: Content Node
     article_node: Article Node
     organisation: Manage Companies
