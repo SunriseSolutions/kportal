@@ -115,4 +115,202 @@ class PhanBo {
 	 */
 	protected $phanDoan;
 	
+	/**
+	 * @return ThanhVien
+	 */
+	public function getThanhVien() {
+		return $this->thanhVien;
+	}
+	
+	/**
+	 * @param ThanhVien $thanhVien
+	 */
+	public function setThanhVien($thanhVien) {
+		$this->thanhVien = $thanhVien;
+	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getBangDiem() {
+		return $this->bangDiem;
+	}
+	
+	/**
+	 * @param ArrayCollection $bangDiem
+	 */
+	public function setBangDiem($bangDiem) {
+		$this->bangDiem = $bangDiem;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getNamHoc() {
+		return $this->namHoc;
+	}
+	
+	/**
+	 * @param int $namHoc
+	 */
+	public function setNamHoc($namHoc) {
+		$this->namHoc = $namHoc;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getChiDoan() {
+		return $this->chiDoan;
+	}
+	
+	/**
+	 * @param int $chiDoan
+	 */
+	public function setChiDoan($chiDoan) {
+		$this->chiDoan = $chiDoan;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isDuBi() {
+		return $this->duBi;
+	}
+	
+	/**
+	 * @param bool $duBi
+	 */
+	public function setDuBi($duBi) {
+		$this->duBi = $duBi;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isThieuNhi() {
+		return $this->thieuNhi;
+	}
+	
+	/**
+	 * @param bool $thieuNhi
+	 */
+	public function setThieuNhi($thieuNhi) {
+		$this->thieuNhi = $thieuNhi;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isDuTruong() {
+		return $this->duTruong;
+	}
+	
+	/**
+	 * @param bool $duTruong
+	 */
+	public function setDuTruong($duTruong) {
+		$this->duTruong = $duTruong;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isHuynhTruong() {
+		return $this->huynhTruong;
+	}
+	
+	/**
+	 * @param bool $huynhTruong
+	 */
+	public function setHuynhTruong($huynhTruong) {
+		$this->huynhTruong = $huynhTruong;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isChiDoanTruong() {
+		return $this->chiDoanTruong;
+	}
+	
+	/**
+	 * @param bool $chiDoanTruong
+	 */
+	public function setChiDoanTruong($chiDoanTruong) {
+		$this->chiDoanTruong = $chiDoanTruong;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isPhanDoanTruong() {
+		return $this->phanDoanTruong;
+	}
+	
+	/**
+	 * @param bool $phanDoanTruong
+	 */
+	public function setPhanDoanTruong($phanDoanTruong) {
+		$this->phanDoanTruong = $phanDoanTruong;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isXuDoanTruong() {
+		return $this->xuDoanTruong;
+	}
+	
+	/**
+	 * @param bool $xuDoanTruong
+	 */
+	public function setXuDoanTruong($xuDoanTruong) {
+		$this->xuDoanTruong = $xuDoanTruong;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isXuDoanPhoNoi() {
+		return $this->xuDoanPhoNoi;
+	}
+	
+	/**
+	 * @param bool $xuDoanPhoNoi
+	 */
+	public function setXuDoanPhoNoi($xuDoanPhoNoi) {
+		$this->xuDoanPhoNoi = $xuDoanPhoNoi;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isXuDoanPhoNgoai() {
+		return $this->xuDoanPhoNgoai;
+	}
+	
+	/**
+	 * @param bool $xuDoanPhoNgoai
+	 */
+	public function setXuDoanPhoNgoai($xuDoanPhoNgoai) {
+		$this->xuDoanPhoNgoai = $xuDoanPhoNgoai;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getPhanDoan() {
+		return $this->phanDoan;
+	}
+	
+	/**
+	 * @param string $phanDoan
+	 */
+	public function setPhanDoan($phanDoan) {
+		$this->phanDoan = $phanDoan;
+	}
+
+	
+	
 }

@@ -4,24 +4,29 @@ namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
+use Bean\Bundle\CoreBundle\Service\StringService;
+
+use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\QueryBuilder;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+
+use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\CoreBundle\Form\Type\DatePickerType;
+use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
+use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\CoreBundle\Form\Type\BooleanType;
+use Sonata\CoreBundle\Form\Type\CollectionType;
+use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\DoctrineORMAdminBundle\Datagrid;
+use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Valid;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
-class ThanhVienAdmin extends BaseAdmin {
-	
-	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
-		// this text filter will be used to retrieve autocomplete fields
-		$datagridMapper
-			->add('id')
-			->add('name')
-			->add('chiDoan')
-		;
-	}
+class PhanBoAdmin extends BaseAdmin {
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$danhSachChiDoan = [
@@ -45,23 +50,20 @@ class ThanhVienAdmin extends BaseAdmin {
 		
 		$listMapper
 //			->addIdentifier('id')
-//			->addIdentifier('christianname', null, array())
-			->addIdentifier('name', null, array())
-			->add('dob', null, array( 'editable' => true ))
-			->add('soDienThoai', null, array())
-			->add('diaChiThuongTru', null, array( 'editable' => true ))
+			->addIdentifier('id', null, array())
+			->add('thanhVien', null, array( 'associated_property' => 'name' ))
+			->add('namHoc', 'text')
 			->add('chiDoan', 'choice', array(
 				'editable' => true,
 //				'class' => 'Vendor\ExampleBundle\Entity\ExampleStatus',
 				'choices' => $danhSachChiDoan,
 			))
-			->add('namHoc', 'text', array( 'editable' => true ));
+		;
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
 		$isAdmin   = $this->isAdmin();
 		$container = $this->getConfigurationPool()->getContainer();
-//		$position  = $container->get( 'app.user' )->getPosition();
 		
 		$danhSachChiDoan = [
 			'Chiên Con 4 tuổi'    => 4,
@@ -82,40 +84,24 @@ class ThanhVienAdmin extends BaseAdmin {
 			'Dự Trưởng (19 tuổi)' => 19,
 		];
 		
-		// define group zoning
-		
-		
 		$formMapper
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
 		;
 		$formMapper
-			->add('christianname', ChoiceType::class, array(
-				'required'           => true,
-				'choices'            => ThanhVien::$christianNames,
-				'translation_domain' => $this->translationDomain
+			->add('thanhVien', ModelAutocompleteType::class, array(
+				'property'           => 'name',
+				'to_string_callback' => function(ThanhVien $entity, $property) {
+					return $entity->getName();
+				},
+			
 			))
-			->add('firstname', null, array())
-			->add('middlename', null, array())
-			->add('lastname', null, array())
-			->add('phanDoan', ChoiceType::class, array(
-				'choices'            => ThanhVien::$danhSachPhanDoan,
-				'translation_domain' => $this->translationDomain
-			))
+			->add('namHoc')
 			->add('chiDoan', ChoiceType::class, array(
 				'placeholder'        => 'Chọn Chi Đoàn',
 				'choices'            => $danhSachChiDoan,
 				'translation_domain' => $this->translationDomain
-			))
-			->add('namHoc', null, array( 'required' => true ))
-			->add('huynhTruong', null, array())
-			->add('dob', DatePickerType::class, array(
-				'format' => 'dd/MM/yyyy',
-			))
-			->add('soDienThoai', null, array( 'required' => false ))
-			->add('soDienThoaiMe', null, array( 'required' => false ))
-			->add('soDienThoaiBo', null, array( 'required' => false ))
-			->add('diaChiThuongTru', null, array( 'required' => true ));
+			));
 		
 		$formMapper
 			->end()
@@ -130,14 +116,5 @@ class ThanhVienAdmin extends BaseAdmin {
 		if( ! empty($object->isHuynhTruong())) {
 			$object->setThieuNhi(false);
 		}
-		$christianName = $object->getChristianname();
-		if( ! empty($christianName)) {
-			$cNames        = array_flip(ThanhVien::$christianNames);
-			$christianName = $cNames[ $christianName ];
-		}
-		$lastname   = $object->getLastname() ?: '';
-		$middlename = $object->getMiddlename() ?: '';
-		$firstname  = $object->getFirstname() ?: '';
-		$object->setName($christianName . ' ' . $lastname . ' ' . $middlename . ' ' . $firstname);
 	}
 }

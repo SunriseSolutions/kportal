@@ -32,10 +32,10 @@ class ThanhVien {
 	const HUYNH_TRUONG = 'HUYNH_TRUONG';
 	
 	public static $danhSachPhanDoan = [
-		self::PHAN_DOAN_CHIEN => self::PHAN_DOAN_CHIEN,
-		self::PHAN_DOAN_AU => self::PHAN_DOAN_AU,
-		self::PHAN_DOAN_THIEU => self::PHAN_DOAN_THIEU,
-		self::PHAN_DOAN_NGHIA => self::PHAN_DOAN_NGHIA,
+		self::PHAN_DOAN_CHIEN   => self::PHAN_DOAN_CHIEN,
+		self::PHAN_DOAN_AU      => self::PHAN_DOAN_AU,
+		self::PHAN_DOAN_THIEU   => self::PHAN_DOAN_THIEU,
+		self::PHAN_DOAN_NGHIA   => self::PHAN_DOAN_NGHIA,
 		self::PHAN_DOAN_TONG_DO => self::PHAN_DOAN_TONG_DO,
 	];
 	
@@ -86,6 +86,12 @@ class ThanhVien {
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $dob;
+	
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $namHoc;
 	
 	/**
 	 * @var integer
@@ -188,6 +194,12 @@ class ThanhVien {
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $phanDoan;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true,length=512)
+	 */
+	protected $name;
 	
 	/**
 	 * @var string
@@ -534,4 +546,76 @@ class ThanhVien {
 	public function setDob($dob) {
 		$this->dob = $dob;
 	}
+	
+	/**
+	 * @return array
+	 */
+	public static function getChristianNames() {
+		return self::$christianNames;
+	}
+	
+	/**
+	 * @param array $christianNames
+	 */
+	public static function setChristianNames($christianNames) {
+		self::$christianNames = $christianNames;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public static function getDanhSachPhanDoan() {
+		return self::$danhSachPhanDoan;
+	}
+	
+	/**
+	 * @param array $danhSachPhanDoan
+	 */
+	public static function setDanhSachPhanDoan($danhSachPhanDoan) {
+		self::$danhSachPhanDoan = $danhSachPhanDoan;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public static function getDanhSachChiDoan() {
+		return self::$danhSachChiDoan;
+	}
+	
+	/**
+	 * @param array $danhSachChiDoan
+	 */
+	public static function setDanhSachChiDoan($danhSachChiDoan) {
+		self::$danhSachChiDoan = $danhSachChiDoan;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getNamHoc() {
+		return $this->namHoc;
+	}
+	
+	/**
+	 * @param int $namHoc
+	 */
+	public function setNamHoc($namHoc) {
+		$this->namHoc = $namHoc;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getName() {
+		return $this->name;
+	}
+	
+	/**
+	 * @param string $name
+	 */
+	public function setName($name) {
+		$this->name = $name;
+	}
+	
+	
 }

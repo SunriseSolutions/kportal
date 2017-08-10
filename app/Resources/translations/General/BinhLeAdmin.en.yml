@@ -2,7 +2,9 @@ user:
     email_exists: This email has already been used by another user.
 
 dashboard:
-    binhle_thieunhi_thanhvien: Thanh Vien
+    binhle_thieunhi_thanhvien: Thành Viên
+    binhle_thieunhi_phanbo: Phân Bổ
+    binhle_thieunhi_bangdiem: Bảng Điểm
 
 show:
     label_status: Status
@@ -14,7 +16,17 @@ list:
     label_slug: Slug
     label_title: Title
 
-
+    label_christianname: Tên Thánh
+    label_firstname: Tên gọi
+    label_middlename: Tên lót
+    label_lastname: Họ
+    label_chi_doan: Chi Đoàn
+    label_nam_hoc: Năm Học
+    label_dob: Sanh thần
+    label_so_dien_thoai: SĐT
+    label_so_dien_thoai_me: SĐT Mẹ
+    label_so_dien_thoai_bo: SĐT Bố
+    label_dia_chi_thuong_tru: Đ/c thường trú
 form:
     label_screen_size: Screen
     label_span: Span

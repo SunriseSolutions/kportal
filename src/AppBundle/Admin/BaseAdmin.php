@@ -2,14 +2,8 @@
 
 namespace AppBundle\Admin;
 
-use AppBundle\Entity\ChannelPartner\ChannelPartner;
-use AppBundle\Entity\ChannelPartner\ChannelPartnerProduct;
-use AppBundle\Entity\Principal\Clinic;
-use AppBundle\Entity\SalesPartner\SalesAccount;
-use Application\Bean\OrganisationBundle\Entity\Position;
 use Bean\Bundle\CoreBundle\Service\StringService;
 
-use Application\Bean\OrganisationBundle\Entity\Organisation;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
