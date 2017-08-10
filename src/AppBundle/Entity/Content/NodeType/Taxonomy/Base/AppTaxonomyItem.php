@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Entity\Content\NodeType\Taxonomy\Base;
 
 use AppBundle\Entity\Content\ContentNode;
@@ -63,6 +64,13 @@ abstract class AppTaxonomyItem {
 	 *
 	 */
 	protected $position = 0;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=256, nullable=true)
+	 */
+	protected
+		$title;
 	
 	/**
 	 * @return TaxonomyNode
@@ -134,4 +142,17 @@ abstract class AppTaxonomyItem {
 		$this->content = $content;
 	}
 	
+	/**
+	 * @return string
+	 */
+	public function getTitle() {
+		return $this->title;
+	}
+	
+	/**
+	 * @param string $title
+	 */
+	public function setTitle($title) {
+		$this->title = $title;
+	}
 }
