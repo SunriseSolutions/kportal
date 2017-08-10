@@ -14,6 +14,9 @@ use Hateoas\Configuration\Annotation as Hateoas;
 /** @ORM\MappedSuperclass */
 abstract class AppTaxonomyContext {
 	
+	const TYPE_TAG = 'TAG';
+	const TYPE_CATEGORY = 'CATEGORY';
+	
 	function __construct() {
 		$this->taxonomies = new ArrayCollection();
 		
@@ -57,6 +60,28 @@ abstract class AppTaxonomyContext {
 	 */
 	protected
 		$slug;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=128, nullable=true)
+	 */
+	protected
+		$type;
+	
+	/**
+	 * @return string
+	 */
+	public function getType() {
+		return $this->type;
+	}
+	
+	/**
+	 * @param string $type
+	 */
+	public function setType($type) {
+		$this->type = $type;
+	}
+	
 	
 	/**
 	 * @return ArrayCollection

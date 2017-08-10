@@ -3,6 +3,7 @@
 namespace AppBundle\Entity\Content\NodeType\Taxonomy\Base;
 
 use AppBundle\Entity\Content\ContentNode;
+use AppBundle\Entity\Content\NodeType\Taxonomy\TaxonomyContext;
 use AppBundle\Entity\Content\NodeType\Taxonomy\TaxonomyItem;
 use AppBundle\Entity\Content\NodeType\Taxonomy\TaxonomyNode;
 use AppBundle\Entity\User\User;
@@ -39,7 +40,7 @@ abstract class AppTaxonomyNode extends ContentNode {
 	
 	
 	/**
-	 * @var TaxonomyNode
+	 * @var TaxonomyContext
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeType\Taxonomy\TaxonomyContext",inversedBy="taxonomies")
 	 * @ORM\JoinColumn(name="id_taxonomy_context", referencedColumnName="id", onDelete="CASCADE")
 	 */

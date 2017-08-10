@@ -6,6 +6,7 @@ use AppBundle\Entity\Content\ContentEntity\ContentEntity;
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\Content\ContentPiece\ContentPieceH5P;
 use AppBundle\Entity\Content\NodeLayout\RootLayout;
+use AppBundle\Entity\Content\NodeType\Taxonomy\TaxonomyItem;
 use AppBundle\Entity\Media\Media;
 use AppBundle\Entity\User\Base\AppUser;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -38,6 +39,22 @@ abstract class AppContentNode {
 	 * @ORM\CustomIdGenerator(class="AppBundle\Doctrine\ORM\RandomIdGenerator")
 	 */
 	protected $id;
+	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeType\Taxonomy\TaxonomyItem", mappedBy="content", cascade={"all"}, orphanRemoval=true)
+	 */
+	protected $taxonomyItems;
+	
+	public function addTaxonomyItem(TaxonomyItem $item) {
+		$this->taxonomyItems->add($item);
+		$item->setContent($this);
+	}
+	
+	public function removeTaxonomyItem(TaxonomyItem $item) {
+		$this->taxonomyItems->removeElement($item);
+		$item->setContent(null);
+	}
 	
 	/**
 	 * @var ContentEntity
@@ -256,7 +273,7 @@ abstract class AppContentNode {
 	}
 	
 	/**
-	 * @return AppContentEntity
+	 * @return ContentEntity
 	 */
 	public
 	function getOwner() {
@@ -264,7 +281,7 @@ abstract class AppContentNode {
 	}
 	
 	/**
-	 * @param AppContentEntity $owner
+	 * @param ContentEntity $owner
 	 */
 	public
 	function setOwner(

@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Entity\Content\NodeType\Taxonomy;
 
 use AppBundle\Entity\Content\NodeType\Blog\Base\AppBlogNode;
@@ -24,12 +25,14 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  *
  */
-class TaxonomyNode extends AppTaxonomyNode
-{
-    function __construct()
-    {
-        parent::__construct();
-        
-    }
-
+class TaxonomyNode extends AppTaxonomyNode {
+	function __construct() {
+		parent::__construct();
+		
+	}
+	
+	public function getType() {
+		return $this->context->getType();
+	}
+	
 }

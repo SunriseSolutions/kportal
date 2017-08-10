@@ -41,7 +41,7 @@ abstract class AppTaxonomyItem {
 	
 	/**
 	 * @var ContentNode
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentNode" )
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentNode", inversedBy="taxonomyItems" )
 	 * @ORM\JoinColumn(name="id_content_node", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected $content;

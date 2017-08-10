@@ -54,7 +54,7 @@
 {% set currentPath = path(app.request.attributes.get('_route'),
 app.request.attributes.get('_route_params')) %}
 {% set bangChuCaiPath = path('content_article',{'entitySlug':'peterbean', 'articleSlug':'bang-chu-cai'}) %}
-{% set isBangChuCaiActive = isCurrentPage(bangChuCaiPath) %}
+{#{% set isBangChuCaiActive = isCurrentPage(bangChuCaiPath) %}#}
 <body>
 <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
@@ -87,7 +87,8 @@ app.request.attributes.get('_route_params')) %}
                                 class="nav-label">Nhập môn tiếng Pháp</span> <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level collapse">
-                        <li{{ isBangChuCaiActive is not empty?' class="active"':'' }}><a href="{{ bangChuCaiPath }}"><i
+                        {#{{ isBangChuCaiActive is not empty?' class="active"':'' }}#}
+                        <li><a href="{{ bangChuCaiPath }}"><i
                                         class="fa fa-font"></i> Bảng chữ cái</a></li>
                         <li><a href="#"><i class="fa fa-commenting"></i> Nguyên âm mũi</a></li>
                         <li><a href="dashboard_3.html"><i class="fa fa-volume-up"></i> Nguyên tắc ghép âm</a></li>

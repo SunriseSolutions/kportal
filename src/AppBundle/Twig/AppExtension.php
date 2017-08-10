@@ -2,9 +2,9 @@
 
 namespace AppBundle\Twig;
 
-use AppBundle\Entity\Content\ArticleNode;
-use AppBundle\Entity\Content\BlogNode;
 use AppBundle\Entity\Content\ContentNode;
+use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
+use AppBundle\Entity\Content\NodeType\Blog\BlogNode;
 use AppBundle\Service\SiteService;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
