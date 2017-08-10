@@ -63,11 +63,15 @@ app.request.attributes.get('_route_params')) %}
                 <li class="nav-header">
                     <div class="dropdown profile-element">
                         <a href="{{ path('homepage') }}">
-                            <span class="clear"> <span class="block m-t-xs"> <strong
-                                            class="font-bold">Học Tiếng Pháp</strong>
-                             </span>
+                            <span class="clear">
+                                <span class="block m-t-xs">
+                                    <strong
+                                            class="font-bold">Học Tiếng Pháp
+                                    </strong>
+                                </span>
                                 {#<span class="text-muted text-xs block">Art Director <b#}
-                                {#class="caret"></b></span> </span> #}
+                                {#class="caret"></b></span>  #}
+                            </span>
                         </a>
                         {#<ul class="dropdown-menu animated fadeInRight m-t-xs">#}
                         {#<li><a href="#">Logout</a></li>#}
@@ -77,12 +81,12 @@ app.request.attributes.get('_route_params')) %}
                         IN+
                     </div>
                 </li>
-                <li class="active">
+                <li class="menu-item">
                     <a href="#">
                         <i class="fa fa-wheelchair"></i> <span
                                 class="nav-label">Nhập môn tiếng Pháp</span> <span class="fa arrow"></span>
                     </a>
-                    <ul class="nav nav-second-level collapse in">
+                    <ul class="nav nav-second-level collapse">
                         <li{{ isBangChuCaiActive is not empty?' class="active"':'' }}><a href="{{ bangChuCaiPath }}"><i
                                         class="fa fa-font"></i> Bảng chữ cái</a></li>
                         <li><a href="#"><i class="fa fa-commenting"></i> Nguyên âm mũi</a></li>
@@ -549,6 +553,14 @@ app.request.attributes.get('_route_params')) %}
                             }
                         });
 
+                    $('.menu-item').hover(
+                        function (e) {
+                            $(this).addClass('active');
+                            $(this).children('ul').addClass('in');
+                        }, function (e) {
+                            $(this).removeClass('active');
+                            $(this).children('ul').removeClass('in');
+                        });
                 }
             );
             /* OnLoad Window */

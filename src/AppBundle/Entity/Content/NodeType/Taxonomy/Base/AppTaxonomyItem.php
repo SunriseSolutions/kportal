@@ -1,26 +1,23 @@
 <?php
+namespace AppBundle\Entity\Content\NodeType\Taxonomy\Base;
 
-namespace AppBundle\Entity\Content\NodeType\Blog\Base;
-
-use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
-use AppBundle\Entity\Content\NodeType\Blog\BlogNode;
 use AppBundle\Entity\Content\ContentNode;
-use AppBundle\Entity\User\User;
+use AppBundle\Entity\Content\NodeType\Taxonomy\TaxonomyNode;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\MediaBundle\Entity\BaseGallery as BaseGallery;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-/** ORM\MappedSuperclass */
-abstract class AppBlogItem {
+/** @ORM\MappedSuperclass */
+abstract class AppTaxonomyItem {
 	
 	/**
 	 * ID_REF
-	 * ORM\Id
-	 * ORM\Column(type="string", length=24)
-	 * ORM\GeneratedValue(strategy="CUSTOM")
-	 * ORM\CustomIdGenerator(class="AppBundle\Doctrine\ORM\RandomIdGenerator")
+	 * @ORM\Id
+	 * @ORM\Column(type="string", length=24)
+	 * @ORM\GeneratedValue(strategy="CUSTOM")
+	 * @ORM\CustomIdGenerator(class="AppBundle\Doctrine\ORM\RandomIdGenerator")
 	 */
 	protected $id;
 	
@@ -28,57 +25,57 @@ abstract class AppBlogItem {
 	}
 	
 	/**
-	 * @var BlogNode
-	 * ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeType\Blog\BlogNode",inversedBy="items")
-	 * ORM\JoinColumn(name="id_blog", referencedColumnName="id", onDelete="CASCADE")
+	 * @return mixed
 	 */
-	protected $blog;
+	public function getId() {
+		return $this->id;
+	}
+	
+	/**
+	 * @var TaxonomyNode
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\NodeType\Taxonomy\TaxonomyNode",inversedBy="items")
+	 * @ORM\JoinColumn(name="id_blog", referencedColumnName="id", onDelete="CASCADE")
+	 */
+	protected $taxonomy;
 	
 	/**
 	 * @var ContentNode
-	 * ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentNode" )
-	 * ORM\JoinColumn(name="id_content_node", referencedColumnName="id", onDelete="CASCADE")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\ContentNode" )
+	 * @ORM\JoinColumn(name="id_content_node", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected $content;
 	
 	/**
 	 * @var \DateTime
-	 * ORM\Column(type="datetime", options={"default": 0})
+	 * @ORM\Column(type="datetime", options={"default": 0})
 	 */
 	protected $createdAt;
 	
 	/**
 	 * @var \DateTime
-	 * ORM\Column(type="datetime", nullable=true)
+	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $updatedAt;
 	
 	/**
 	 * @var integer
-	 * ORM\Column(type="integer",options={"unsigned":true})
+	 * @ORM\Column(type="integer",options={"unsigned":true})
 	 *
 	 */
 	protected $position = 0;
 	
 	/**
-	 * @return BlogNode
+	 * @return TaxonomyNode
 	 */
-	public function getBlog() {
-		return $this->blog;
+	public function getTaxonomy() {
+		return $this->taxonomy;
 	}
 	
 	/**
-	 * @param BlogNode $blog
+	 * @param TaxonomyNode $taxonomy
 	 */
-	public function setBlog($blog) {
-		$this->blog = $blog;
-	}
-	
-	/**
-	 * @return mixed
-	 */
-	public function getId() {
-		return $this->id;
+	public function setTaxonomy($taxonomy) {
+		$this->taxonomy = $taxonomy;
 	}
 	
 	/**

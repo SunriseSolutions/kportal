@@ -9,8 +9,8 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="content__node__blog")
+ * ORM\Entity
+ * ORM\Table(name="content__node__blog")
  *
  * @Hateoas\Relation(
  *  "self",

@@ -21,7 +21,7 @@ abstract class AppBlogNode extends ContentNode {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeType\Blog\BlogItem", mappedBy="blog", cascade={"all"}, orphanRemoval=true)
+	 * ORM\OneToMany(targetEntity="AppBundle\Entity\Content\NodeType\Blog\BlogItem", mappedBy="blog", cascade={"all"}, orphanRemoval=true)
 	 */
 	protected $items;
 	

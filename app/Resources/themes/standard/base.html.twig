@@ -320,7 +320,7 @@
     <script>
         (function ($) {
 
-            $(document).on("click", ".vocab-entry-popover-audio", function() {
+            $(document).on("click", ".vocab-entry-popover-audio", function () {
                 var audioalias = $(this).data('audioalias');
                 stopAudio();
                 initAudio(audioalias);
@@ -604,6 +604,15 @@
                                     + methodName + '.js', function () {
                                 });
                             }
+                        });
+
+                    $('.menu-item').hover(
+                        function (e) {
+                            $(this).addClass('active');
+                            $(this).children('ul').addClass('in');
+                        }, function (e) {
+                            $(this).removeClass('active');
+                            $(this).children('ul').removeClass('in');
                         });
 
                 }

@@ -1,8 +1,8 @@
 <?php
-namespace AppBundle\Entity\Content\NodeType\Blog;
+namespace AppBundle\Entity\Content\NodeType\Taxonomy;
 
- use AppBundle\Entity\Content\NodeType\Blog\Base\AppBlogItem;
 use AppBundle\Entity\Content\NodeType\Blog\Base\AppBlogNode;
+use AppBundle\Entity\Content\NodeType\Taxonomy\Base\AppTaxonomyNode;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,8 +10,8 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
- * ORM\Entity
- * ORM\Table(name="content__node__blog_item")
+ * @ORM\Entity
+ * @ORM\Table(name="content__node__taxonomy")
  *
  * @Hateoas\Relation(
  *  "self",
@@ -24,7 +24,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * )
  *
  */
-class BlogItem extends AppBlogItem
+class TaxonomyNode extends AppTaxonomyNode
 {
     function __construct()
     {
