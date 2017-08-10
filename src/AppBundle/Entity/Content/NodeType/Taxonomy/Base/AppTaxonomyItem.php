@@ -23,6 +23,7 @@ abstract class AppTaxonomyItem {
 	protected $id;
 	
 	function __construct() {
+		$this->createdAt = new \DateTime();
 	}
 	
 	/**

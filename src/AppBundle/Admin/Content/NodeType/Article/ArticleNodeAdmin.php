@@ -5,12 +5,13 @@ namespace AppBundle\Admin\Content\NodeType\Article;
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\Content\ContentEntity\IndividualEntity;
 use AppBundle\Entity\Content\NodeLayout\ColumnLayout;
-use AppBundle\Entity\Content\NodeLayout\ContentPiece;
+use AppBundle\Entity\Content\ContentPiece\ContentPiece;
 use AppBundle\Entity\Content\NodeLayout\GenericLayout;
 use AppBundle\Entity\Content\NodeLayout\InlineLayout;
 use AppBundle\Entity\Content\NodeLayout\RootLayout;
 use AppBundle\Entity\Content\NodeLayout\RowLayout;
 use AppBundle\Entity\Content\NodeType\Article\ArticleNode;
+use AppBundle\Entity\Content\NodeType\Taxonomy\TaxonomyItem;
 use AppBundle\Entity\H5P\Content;
 use AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice;
 use Doctrine\ORM\Query\Expr;
@@ -117,8 +118,9 @@ class ArticleNodeAdmin extends BaseAdmin {
 				$childrenQuery->where($expr->eq($childrenQuery->getRootAliases()[0] . '.rootContainer', $expr->literal($rootLayoutId)));
 //				$sql = $childrenQuery->getQuery()->getSQL();
 				$formMapper->add('layout.children', ModelType::class, array(
+						'translation_domain' => $this->translationDomain,
 //					'label' => 'form.label_work_location',
-						'property' => 'name',
+						'property'           => 'name',
 						
 						'btn_add'     => false,
 						// todo: errrrrr this is just not working
@@ -134,7 +136,25 @@ class ArticleNodeAdmin extends BaseAdmin {
 		
 		$formMapper
 			->end()
-			->end();
+			->with('form.group_extra');//            ->add('children')
+		$formMapper->add('taxonomyItems', CollectionType::class,
+			array(
+				'required'    => false,
+				'constraints' => new Valid(),
+//					'label'       => false,
+				//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'
+			), array(
+				'edit'            => 'inline',
+				'inline'          => 'table',
+				//						        'sortable' => 'position',
+				'link_parameters' => [],
+				'admin_code'      => 'app.admin.content_taxonomy_item',
+				'delete'          => null,
+			)
+		);
+		
+		$formMapper->end()->end();
+		
 		$formMapper
 			->tab('form.tab_layout_grid')
 			->with('form.group_column');
@@ -257,6 +277,12 @@ class ArticleNodeAdmin extends BaseAdmin {
 		/** @var InlineLayout $layout */
 		foreach($inlineLayouts as $layout) {
 			$layout->setRootContainer($object->getLayout());
+		}
+		
+		$taxonomyItems = $object->getTaxonomyItems();
+		/** @var TaxonomyItem $item */
+		foreach($taxonomyItems as $item) {
+			$item->setContent($object);
 		}
 		
 		$object->setContent($object->getLayout()->buildHtml());

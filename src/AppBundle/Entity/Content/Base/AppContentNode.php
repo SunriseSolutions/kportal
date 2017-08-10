@@ -19,8 +19,8 @@ use Hateoas\Configuration\Annotation as Hateoas;
 abstract class AppContentNode {
 	
 	function __construct() {
-		$this->createdAt = new \DateTime();
-		
+		$this->createdAt     = new \DateTime();
+		$this->taxonomyItems = new ArrayCollection();
 	}
 	
 	public function getAbstractContent() {
@@ -418,5 +418,19 @@ abstract class AppContentNode {
 	 */
 	public function setH5pContent($h5pContent) {
 		$this->h5pContent = $h5pContent;
+	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getTaxonomyItems() {
+		return $this->taxonomyItems;
+	}
+	
+	/**
+	 * @param ArrayCollection $taxonomyItems
+	 */
+	public function setTaxonomyItems($taxonomyItems) {
+		$this->taxonomyItems = $taxonomyItems;
 	}
 }

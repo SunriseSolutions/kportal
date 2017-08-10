@@ -102,9 +102,13 @@
                         <hr/>
                         <div class="row">
                             <div class="col-md-6">
-                                <h5>Taxonomies:</h5>
-                                <button class="btn btn-primary btn-xs" type="button">Model</button>
-                                <button class="btn btn-white btn-xs" type="button">Publishing</button>
+                                {% if article.taxonomyItems | length > 0 %}
+                                    <h5>Taxonomies:</h5>
+                                    {% for item in article.taxonomyItems %}
+                                        <button class="btn btn-white btn-xs"
+                                                type="button">{{ item.taxonomy.title }}</button>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                             <div class="col-md-6">
                                 <div class="small text-right">

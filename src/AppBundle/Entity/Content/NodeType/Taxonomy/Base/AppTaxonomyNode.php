@@ -47,18 +47,39 @@ abstract class AppTaxonomyNode extends ContentNode {
 	protected $context;
 	
 	/**
-	 * @return TaxonomyNode
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true, options={"default":true})
+	 */
+	protected $enabled = true;
+	
+	/**
+	 * @return bool
+	 */
+	public function isEnabled() {
+		return $this->enabled;
+	}
+	
+	/**
+	 * @return TaxonomyContext
 	 */
 	public function getContext() {
 		return $this->context;
 	}
 	
 	/**
-	 * @param TaxonomyNode $context
+	 * @param TaxonomyContext $context
 	 */
 	public function setContext($context) {
 		$this->context = $context;
 	}
+	
+	/**
+	 * @param bool $enabled
+	 */
+	public function setEnabled($enabled) {
+		$this->enabled = $enabled;
+	}
+	
 	
 	/**
 	 * @return ArrayCollection

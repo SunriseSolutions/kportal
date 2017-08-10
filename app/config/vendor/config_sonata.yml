@@ -144,6 +144,9 @@ sonata_admin:
             binhle:
                 label: dashboard.binhle
                 icon: '<i class="fa fa-behance"></i>'
+            h5p:
+                label: dashboard.h5p
+                icon: '<i class="fa fa-question-circle-o"></i>'
             media:
                 label: dashboard.media
                 icon: '<i class="fa fa-video-camera"></i>'
@@ -315,7 +318,7 @@ sonata_media:
 #            generator: app.sonata.media.generator.default
             allowed_extensions:
                 - mp3
-                - mp4
+#                - mp4
                 # Defaults:
                 - pdf
                 - txt
@@ -337,7 +340,7 @@ sonata_media:
                 - xml
             allowed_mime_types:
                 - audio/mpeg
-                - video/mp4
+#                - video/mp4
                 - application/vnd.openxmlformats-officedocument.wordprocessingml.document
                 # Defaults:
                 - application/pdf

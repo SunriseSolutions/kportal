@@ -111,6 +111,31 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.article_node, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
+    app.admin.content_taxonomy_node:
+        class: AppBundle\Admin\Content\NodeType\Taxonomy\TaxonomyNodeAdmin
+        arguments: [~, AppBundle\Entity\Content\NodeType\Taxonomy\TaxonomyNode, ~]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['AppAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.taxonomy_node, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
+    app.admin.content_taxonomy_context:
+        class: AppBundle\Admin\Content\NodeType\Taxonomy\TaxonomyContextAdmin
+        arguments: [~, AppBundle\Entity\Content\NodeType\Taxonomy\TaxonomyContext, ~]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['AppAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.taxonomy_node, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+    app.admin.content_taxonomy_item:
+        class: AppBundle\Admin\Content\NodeType\Taxonomy\TaxonomyItemAdmin
+        arguments: [~, AppBundle\Entity\Content\NodeType\Taxonomy\TaxonomyItem, ~]
+        calls:
+            - [setIvoryCkeditor,['default']]
+            - [setTranslationDomain, ['AppAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.taxonomy_item, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+
 ### Bean Dictionary ##################################################################
     app.admin.bean.dictionary_entry:
         class: AppBundle\Admin\Dictionary\EntryAdmin
@@ -159,7 +184,7 @@ services:
             - [setIvoryCkeditor,['default']]
             - [setTranslationDomain, ['BeanH5PAdmin']]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
+            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content, group: h5p, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
     app.admin.h5p.content_media:
         class: AppBundle\Admin\H5P\ContentMediaAdmin
@@ -178,7 +203,7 @@ services:
             - [setIvoryCkeditor,['default']]
             - [setTranslationDomain, ['BeanH5PAdmin']]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_multichoice, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
+            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_multichoice, group: h5p, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
     app.admin.h5p.content_multichoice_answer:
         class: AppBundle\Admin\H5P\ContentType\MultiChoice\MultiChoiceAnswerAdmin
@@ -197,7 +222,7 @@ services:
             - [setIvoryCkeditor,['default']]
             - [setTranslationDomain, ['BeanH5PAdmin']]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_dragquestion, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
+            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_dragquestion, group: h5p, label_translator_strategy: sonata.admin.label.strategy.underscore }
 ### H5P > QuestionSet ##################################################################
     app.admin.h5p.content_questionset:
         class: AppBundle\Admin\H5P\ContentType\QuestionSet\ContentQuestionSetAdmin
@@ -206,7 +231,7 @@ services:
             - [setIvoryCkeditor,['default']]
             - [setTranslationDomain, ['BeanH5PAdmin']]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_questionset, group: content, label_translator_strategy: sonata.admin.label.strategy.underscore }
+            - { name: sonata.admin, manager_type: orm, label: dashboard.h5p_content_questionset, group: h5p, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
     app.admin.h5p.content_setquestion:
         class: AppBundle\Admin\H5P\ContentType\QuestionSet\SetQuestionAdmin

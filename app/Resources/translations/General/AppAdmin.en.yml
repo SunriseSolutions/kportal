@@ -6,6 +6,7 @@ dashboard:
     content_individual_entity: Individual Entity
     content_node: Content Node
     article_node: Article Node
+    taxonomy_node: Taxonomy Node
     organisation: Manage Companies
     invitation: Manage Invitations
     candidate: Manage Applicants
@@ -41,7 +42,9 @@ form:
     tab_info: Info
     tab_main_body_info: Main Body
     group_general: General
-
+    group_extra: Extra
+#    Taxonomy
+    label_taxonomy_items: Taxonomy Items
 # H5P Multichoice Media
     label_multichoice_media: Multichoice Media
 

@@ -5,6 +5,7 @@ flash:
     create_candidate_successfully: The New Candidate has been created successfully
 dashboard:
     binhle: Bean Project
+    h5p: H5P Content
     nlp: Natural Language Processing
     miscellaneous: Miscellaneous
     manage_admin: Manage Admin
