@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity\H5P\Base;
 
-use AppBundle\Entity\Content\ContentPieceH5P;
+use AppBundle\Entity\Content\ContentPiece\ContentPieceH5P;
 use AppBundle\Entity\H5P\ContentLibrary;
 use AppBundle\Entity\H5P\Library;
 use AppBundle\Entity\User\User;
