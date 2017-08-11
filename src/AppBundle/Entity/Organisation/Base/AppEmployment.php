@@ -24,4 +24,31 @@ class AppEmployment extends Employment {
 	protected
 		$id;
 	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean",options={"default":true} )
+	 */
+	protected $enabled = true;
+	
+	/**
+	 * @return bool
+	 */
+	public function isEnabled() {
+		return $this->enabled;
+	}
+	
+	/**
+	 * @param bool $enabled
+	 */
+	public function setEnabled($enabled) {
+		$this->enabled = $enabled;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getId() {
+		return $this->id;
+	}
+	
 }
