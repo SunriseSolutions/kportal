@@ -9,6 +9,7 @@ use AppBundle\Entity\Employer\BusinessEmployer;
 use AppBundle\Entity\SalesPartner\SalesPartner;
 use AppBundle\Entity\SalesPartner\SalesPartnerBusinessChannelPartner;
 use AppBundle\Entity\SalesPartner\SalesPartnerConsumerChannelPartner;
+use AppBundle\Entity\User\User;
 use Application\Bean\OrganisationBundle\Entity\Organisation;
 use Application\Bean\OrganisationBundle\Entity\Position;
 use Application\Sylius\OrderBundle\Entity\Payment;
@@ -16,7 +17,7 @@ use Knp\Menu\ItemInterface;
 use Sonata\AdminBundle\Event\ConfigureMenuEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class TeacherRoleMBListener {
+class HuynhTruongRoleMBListener {
 	/**
 	 * @var ContainerInterface
 	 */
@@ -32,17 +33,20 @@ class TeacherRoleMBListener {
 		$translator = $this->container->get('translator');
 		$request    = $this->container->get('request_stack')->getCurrentRequest();
 //        $pos = $user->getPosition(['roles' => [Position::ROLE_ADMIN]]);
-		if( ! $user->isAdmin()) {
-//			$this->addTeacherMenuItems($menu, $translator);
+		if($user->hasRole(User::ROLE_HUYNH_TRUONG)) {
+			$menu->setChildren([]);
+			$this->addThanhVienMenuItems($menu, $translator);
 		}
 	}
 	
-	private function addTeacherMenuItems(ItemInterface $menu, $translator, $params = array()) {
-		$menu->addChild('add csam', array(
-			'route'           => 'admin_app_user_user_list',
+	private function addThanhVienMenuItems(ItemInterface $menu, $translator, $params = array()) {
+		$menu->addChild('list thanhvien', array(
+			'route'           => 'admin_app_binhle_thieunhi_thanhvien_thieuNhi',
 //			'routeParameters' => [ 'id' => $salesPartnerId ],
 			'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
-		))->setLabel($translator->trans('dashboard.list_user', [], 'SonataAdminBundle'));
+		))->setLabel($translator->trans('dashboard.list_thieunhi_xudoan', [], 'BinhLeAdmin'));
+		
+		
 	}
 	
 }

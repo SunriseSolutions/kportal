@@ -1,7 +1,7 @@
 services:
     app.admin.binhle_thieunhi_thanhvien:
         class: AppBundle\Admin\BinhLe\ThieuNhi\ThanhVienAdmin
-        arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien, ~]
+        arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien, AppBundle:Admin/BinhLe/ThieuNhi/ThanhVienAdmin]
         calls:
 #            - [setRouteBuilder,['@sonata.admin.route.path_info_slashes']]
             - [setIvoryCkeditor,['default']]

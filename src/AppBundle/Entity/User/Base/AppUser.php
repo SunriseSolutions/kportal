@@ -14,6 +14,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 class AppUser extends BaseUser {
 	
 	const ROLE_ADMIN = 'ROLE_ADMIN';
+	const ROLE_HUYNH_TRUONG = 'ROLE_HUYNH_TRUONG';
 	
 	/**
 	 * @var int

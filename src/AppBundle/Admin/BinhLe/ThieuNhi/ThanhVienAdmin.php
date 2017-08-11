@@ -4,23 +4,60 @@ namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
+use Doctrine\ORM\QueryBuilder;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ThanhVienAdmin extends BaseAdmin {
+	protected $action = '';
+	
+	public function setAction($action) {
+		$this->action = $action;
+	}
+	
+	public function getTemplate($name) {
+		if($name === 'list-thieu-nhi') {
+		
+		}
+		
+		return parent::getTemplate($name);
+	}
+	
+	
+	public function configureRoutes(RouteCollection $collection) {
+//		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
+		$collection->add('thieuNhi', 'thieu-nhi/list');
+		
+		parent::configureRoutes($collection);
+	}
 	
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
 		// this text filter will be used to retrieve autocomplete fields
 		$datagridMapper
 			->add('id')
 			->add('name')
-			->add('chiDoan')
-		;
+			->add('chiDoan');
+	}
+	
+	public function createQuery($context = 'list') {
+		/** @var ProxyQuery $query */
+		$query = parent::createQuery($context);
+		/** @var QueryBuilder $qb */
+		$qb        = $query->getQueryBuilder();
+		$expr      = $qb->expr();
+		$rootAlias = $qb->getRootAliases()[0];
+		if($this->action === 'list-thieu-nhi') {
+			$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
+		}
+		
+		return $query;
 	}
 	
 	protected function configureListFields(ListMapper $listMapper) {
@@ -53,7 +90,7 @@ class ThanhVienAdmin extends BaseAdmin {
 			->add('chiDoan', 'choice', array(
 				'editable' => true,
 //				'class' => 'Vendor\ExampleBundle\Entity\ExampleStatus',
-				'choices' => $danhSachChiDoan,
+				'choices'  => $danhSachChiDoan,
 			))
 			->add('namHoc', 'text', array( 'editable' => true ));
 	}

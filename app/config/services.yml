@@ -77,3 +77,9 @@ services:
         arguments: ['@service_container']
         tags:
             - { name: kernel.event_listener, event: sonata.admin.event.configure.menu.sidebar, method: addMenuItems }
+
+    app.admin.security.menu_listener_huynhtruong:
+        class: AppBundle\Admin\Security\MenuBuilderListener\HuynhTruongRoleMBListener
+        arguments: ['@service_container']
+        tags:
+            - { name: kernel.event_listener, event: sonata.admin.event.configure.menu.sidebar, method: addMenuItems }

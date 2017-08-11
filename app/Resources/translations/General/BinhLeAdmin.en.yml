@@ -5,6 +5,7 @@ dashboard:
     binhle_thieunhi_thanhvien: Thành Viên
     binhle_thieunhi_phanbo: Phân Bổ
     binhle_thieunhi_bangdiem: Bảng Điểm
+    list_thieunhi_xudoan: Thiếu-nhi toàn Xứ-đoàn
 
 show:
     label_status: Status
