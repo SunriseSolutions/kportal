@@ -39,7 +39,7 @@ abstract class AppContentPieceH5P {
 	
 	/**
 	 * @var \DateTime
-	 * @ORM\Column(type="datetime", options={"default": 0})
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $createdAt;
 	
