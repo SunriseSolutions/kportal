@@ -16,6 +16,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\CoreBundle\Form\Type\BooleanType;
 use Sonata\CoreBundle\Form\Type\CollectionType;
@@ -27,6 +28,28 @@ use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
 class PhanBoAdmin extends BaseAdmin {
+	
+	public function getTemplate($name) {
+		if($name === 'list') {
+			return '::admin/binhle/thieu-nhi/phan-bo/list.html.twig';
+		}
+		
+		return parent::getTemplate($name);
+	}
+	
+	
+	public function configureRoutes(RouteCollection $collection) {
+//		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
+		parent::configureRoutes($collection);
+	}
+	
+	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+		// this text filter will be used to retrieve autocomplete fields
+		$datagridMapper
+			->add('id')
+			->add('chiDoan');
+	}
+	
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$danhSachChiDoan = [
@@ -52,13 +75,12 @@ class PhanBoAdmin extends BaseAdmin {
 //			->addIdentifier('id')
 			->addIdentifier('id', null, array())
 			->add('thanhVien', null, array( 'associated_property' => 'name' ))
-			->add('namHoc', 'text')
+			->add('namHoc', null, array( 'associated_property' => 'id' ))
 			->add('chiDoan', 'choice', array(
 				'editable' => true,
 //				'class' => 'Vendor\ExampleBundle\Entity\ExampleStatus',
-				'choices' => $danhSachChiDoan,
-			))
-		;
+				'choices'  => $danhSachChiDoan,
+			));
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
@@ -96,7 +118,9 @@ class PhanBoAdmin extends BaseAdmin {
 				},
 			
 			))
-			->add('namHoc')
+			->add('namHoc', ModelType::class, array(
+				'property' => 'id'
+			))
 			->add('chiDoan', ChoiceType::class, array(
 				'placeholder'        => 'Chọn Chi Đoàn',
 				'choices'            => $danhSachChiDoan,

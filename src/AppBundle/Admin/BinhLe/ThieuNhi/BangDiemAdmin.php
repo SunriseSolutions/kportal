@@ -3,6 +3,7 @@
 namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BaseAdmin;
+use AppBundle\Entity\BinhLe\ThieuNhi\BangDiem;
 use Bean\Bundle\CoreBundle\Service\StringService;
 
 use Doctrine\ORM\Query\Expr;
@@ -26,13 +27,62 @@ use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
 class BangDiemAdmin extends BaseAdmin {
 	
+	/**
+	 * @var integer
+	 */
+	protected $namHoc;
+	
+	public function getTemplate($name) {
+		if($name === 'list') {
+			return '::admin/binhle/thieu-nhi/bang-diem/list.html.twig';
+		}
+		
+		return parent::getTemplate($name);
+	}
+	
+	public function configureRoutes(RouteCollection $collection) {
+		$collection->add('bangDiemImport', 'import/{namHoc}');
+		parent::configureRoutes($collection);
+	}
+	
+	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+		// this text filter will be used to retrieve autocomplete fields
+		$datagridMapper
+			->add('id');
+	}
+	
+	public function isGranted($name, $object = null) {
+		if(empty($this->namHoc)) {
+			if(in_array($name, [ 'LIST', 'SHOW' ])) {
+				return true;
+			}
+			
+			return false;
+		}
+		
+		if($name === 'IMPORT') {
+
+//			return true;
+		} elseif($name === 'CREATE') {
+		
+		}
+		
+		return parent::isGranted($name, $object);
+	}
+	
+	public function createQuery($context = 'list') {
+		/** @var ProxyQuery $query */
+		$query = parent::createQuery($context);
+		
+		return $query;
+	}
+	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
 //			->addIdentifier('id')
 			->addIdentifier('id', null, array())
-			->add('namHoc','text')
-			->add('chiDoan')
-		;
+			->add('namHoc', 'text')
+			->add('chiDoan');
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
@@ -77,11 +127,23 @@ class BangDiemAdmin extends BaseAdmin {
 	}
 	
 	/**
-	 * @param ThanhVien $object
+	 * @param BangDiem $object
 	 */
 	public function preValidate($object) {
-		if( ! empty($object->isHuynhTruong())) {
-			$object->setThieuNhi(false);
-		}
 	}
+	
+	/**
+	 * @return integer
+	 */
+	public function getNamHoc() {
+		return $this->namHoc;
+	}
+	
+	/**
+	 * @param integer $namHoc
+	 */
+	public function setNamHoc($namHoc) {
+		$this->namHoc = $namHoc;
+	}
+	
 }

@@ -31,6 +31,14 @@ class PhanBo {
 	
 	/**
 	 * @var ThanhVien
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\NamHoc",inversedBy="phanBoHangNam")
+	 * @ORM\JoinColumn(name="nam_hoc", referencedColumnName="id", onDelete="CASCADE")
+	 */
+	protected
+		$namHoc;
+	
+	/**
+	 * @var ThanhVien
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien",inversedBy="phanBoHangNam")
 	 * @ORM\JoinColumn(name="id_thanh_vien", referencedColumnName="id", onDelete="CASCADE")
 	 */
@@ -42,12 +50,6 @@ class PhanBo {
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\BangDiem", mappedBy="phanBo", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $bangDiem;
-	
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $namHoc;
 	
 	/**
 	 * @var integer

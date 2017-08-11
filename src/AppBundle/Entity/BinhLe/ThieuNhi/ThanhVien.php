@@ -15,12 +15,14 @@ use Doctrine\ORM\Mapping as ORM;
 class ThanhVien {
 	
 	public static $christianNames = [
-		'PHÊ-RÔ'   => 'Peter',
-		'PHAO-LÔ'  => 'Paul',
-		'GIUSE'    => 'Joseph',
-		'TÊ-RÊ-SA' => 'Therese',
-		'MARIA'    => 'Mary',
-		'ANNA'     => 'Anne',
+		'PHÊ-RÔ'         => 'Peter',
+		'PHAO-LÔ'        => 'Paul',
+		'GIUSE'          => 'Joseph',
+		'TÊ-RÊ-SA'       => 'Therese',
+		'MARIA'          => 'Mary',
+		'ANNA'           => 'Anne',
+		'MARIA MADALENA' => 'Mary Magdalene',
+		'MARTINO DE PORRES'         => 'Martin de Porres'
 	];
 	
 	const PHAN_DOAN_CHIEN = 'PHAN_DOAN_CHIEN';
