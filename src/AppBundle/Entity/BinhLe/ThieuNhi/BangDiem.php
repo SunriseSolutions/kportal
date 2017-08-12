@@ -98,6 +98,12 @@ class BangDiem {
 	 * @var  float
 	 * @ORM\Column(type="float", nullable=true)
 	 */
+	protected $tbCC;
+	
+	/**
+	 * @var  float
+	 * @ORM\Column(type="float", nullable=true)
+	 */
 	protected $quizTerm1;
 	
 	/**
@@ -116,6 +122,12 @@ class BangDiem {
 	 * @var  float
 	 * @ORM\Column(type="float", nullable=true)
 	 */
+	protected $tbTerm1;
+	
+	/**
+	 * @var  float
+	 * @ORM\Column(type="float", nullable=true)
+	 */
 	protected $quizTerm2;
 	
 	/**
@@ -129,6 +141,12 @@ class BangDiem {
 	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $finalTerm2;
+	
+	/**
+	 * @var  float
+	 * @ORM\Column(type="float", nullable=true)
+	 */
+	protected $tbTerm2;
 	
 	/**
 	 * @var  integer
@@ -492,5 +510,47 @@ class BangDiem {
 	 */
 	public function setRemarks($remarks) {
 		$this->remarks = $remarks;
+	}
+	
+	/**
+	 * @return float
+	 */
+	public function getTbCC() {
+		return $this->tbCC;
+	}
+	
+	/**
+	 * @param float $tbCC
+	 */
+	public function setTbCC($tbCC) {
+		$this->tbCC = $tbCC;
+	}
+	
+	/**
+	 * @return float
+	 */
+	public function getTbTerm1() {
+		return $this->tbTerm1;
+	}
+	
+	/**
+	 * @param float $tbTerm1
+	 */
+	public function setTbTerm1($tbTerm1) {
+		$this->tbTerm1 = $tbTerm1;
+	}
+	
+	/**
+	 * @return float
+	 */
+	public function getTbTerm2() {
+		return $this->tbTerm2;
+	}
+	
+	/**
+	 * @param float $tbTerm2
+	 */
+	public function setTbTerm2($tbTerm2) {
+		$this->tbTerm2 = $tbTerm2;
 	}
 }

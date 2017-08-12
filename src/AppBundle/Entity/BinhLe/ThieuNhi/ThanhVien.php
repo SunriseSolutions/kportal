@@ -15,14 +15,73 @@ use Doctrine\ORM\Mapping as ORM;
 class ThanhVien {
 	
 	public static $christianNames = [
-		'PHÊ-RÔ'         => 'Peter',
-		'PHAO-LÔ'        => 'Paul',
-		'GIUSE'          => 'Joseph',
-		'TÊ-RÊ-SA'       => 'Therese',
-		'MARIA'          => 'Mary',
-		'ANNA'           => 'Anne',
-		'MARIA MADALENA' => 'Mary Magdalene',
-		'MARTINO DE PORRES'         => 'Martin de Porres'
+		'PHÊ-RÔ'  => 'Peter',
+		'PHAO-LÔ' => 'Paul',
+		'GIUSE'   => 'Joseph',
+		'LUCA'    => 'Luke',
+		'AN-RÊ'   => 'Andrew',
+		
+		'TÊ-RÊ-SA'          => 'Therese',
+		'MARIA'             => 'Mary',
+		'ANNA'              => 'Anne',
+		'MARIA MADALENA'    => 'Mary Magdalene',
+		'MARTINO DE PORRES' => 'Martin de Porres',
+		
+		
+		'DM VINCENTE' => 'DM VINCENTE',
+		'MARTINO (MARTIN)'      => 'MARTINO',
+		'MARIANNE'    => 'MARIANNE',
+		
+		'ANNA MARIA CLARA' => 'ANNA MARIA CLARA',
+		'MA.TERESA'        => 'MA.TERESA',
+		'GIUSE-MARIA'      => 'GIUSE-MARIA',
+		'M.NELLA'          => 'M.NELLA',
+		'M.MARIE'          => 'M.MARIE',
+		'SILAO'            => 'SILAO',
+		
+		'MARIA-GIUSE'  => 'MARIA-GIUSE',
+		'MARIA-AGATA'  => ' MARIA-AGATA',
+		'MARIA-TERESA' => 'MARIA-TERESA',
+		
+		'MAGARITA'            => 'Margarita',
+		'MARIA-GORETTI'       => 'Maria Goretti',
+		'VINH-SƠN (VINCENTE)' => 'Vincent',
+		'CATARINA'            => 'Catherine',
+		'TÔ-MA'               => 'Thomas',
+		'MICAE'               => 'Michel',
+		'AN-TÔN'              => 'Anthony',
+		'ĐA-MINH'             => 'Dominic',
+		'GIOAN-BAOTIXITA'     => 'John the Baptist',
+		'GIOAN-KIM'           => 'Joachim',
+		'FAUSTINA'            => 'Faustina',
+		'AUGUSTINO'           => 'Augustine of Hippo',
+		'MÁC-TA'              => 'Martha of Bethany',
+		'PHÊ-RÔ ĐA'           => 'Peter Đa',
+		'LUCIA'               => 'Lucy',
+		'CECILIA'             => 'Cecilia',
+		'GIOAN'               => 'John',
+		'AGATA'               => 'Agatha',
+		'PHANXICO'            => 'Francis',
+		'PHANXICO-XAVIE'      => 'Francis Xavier',
+		'PHANXICO-ASSISI'     => 'Francis of Assisi',
+		'GIOAN-KIM-KHẨU'      => 'John Chrysostom',
+		'PHILIPPHE'           => 'Philip',
+		'ELIZABETH'           => 'Elizabeth',
+		'MONICA'              => 'Monica of Hippo',
+		'GIÊ-RA-ĐÔ'           => 'Gerard',
+		'BÊ-NA-ĐÔ'            => 'Bernard of Clairvaux',
+		'AGNES'               => 'Agnes of Rome',
+		'AN-PHÔNG-SÔ'         => 'Alphonsus Maria de\' Liguori',
+		'STEPHANO'            => 'Stephen',
+		'ISAVE'               => 'Elizabeth (Isave)',
+		'EMMANUEL'            => 'Emmanuel',
+		'ALBERTO'             => 'Albertus',
+		'GIOAN-PHAOLO'        => 'John-Paul',
+		'GIOAN-BOSCO'         => 'John Bosco',
+		'ĐA-MINH-SAVIO'       => 'Dominic Savio',
+		'PI-Ô'                => 'Pius',
+	
+	
 	];
 	
 	const PHAN_DOAN_CHIEN = 'PHAN_DOAN_CHIEN';
