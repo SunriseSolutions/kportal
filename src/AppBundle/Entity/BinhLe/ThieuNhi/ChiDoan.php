@@ -33,7 +33,7 @@ class ChiDoan {
 	protected $cotDiemBiLoaiBo = array();
 	
 	/**
-	 * @var ThanhVien
+	 * @var NamHoc
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\NamHoc",inversedBy="chiDoan")
 	 * @ORM\JoinColumn(name="nam_hoc", referencedColumnName="id", onDelete="CASCADE")
 	 */
@@ -88,14 +88,14 @@ class ChiDoan {
 	}
 	
 	/**
-	 * @return ThanhVien
+	 * @return NamHoc
 	 */
 	public function getNamHoc() {
 		return $this->namHoc;
 	}
 	
 	/**
-	 * @param ThanhVien $namHoc
+	 * @param NamHoc $namHoc
 	 */
 	public function setNamHoc($namHoc) {
 		$this->namHoc = $namHoc;

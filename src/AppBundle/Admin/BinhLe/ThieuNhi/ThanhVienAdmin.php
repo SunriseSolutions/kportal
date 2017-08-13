@@ -136,6 +136,7 @@ class ThanhVienAdmin extends BaseAdmin {
 			->add('middlename', null, array())
 			->add('lastname', null, array())
 			->add('phanDoan', ChoiceType::class, array(
+				'placeholder'        => 'Chọn Phân Đoàn',
 				'choices'            => ThanhVien::$danhSachPhanDoan,
 				'translation_domain' => $this->translationDomain
 			))
@@ -146,6 +147,8 @@ class ThanhVienAdmin extends BaseAdmin {
 			))
 			->add('namHoc', null, array( 'required' => true ))
 			->add('huynhTruong', null, array())
+			->add('enabled', null, array())
+			
 			->add('dob', DatePickerType::class, array(
 				'format' => 'dd/MM/yyyy',
 			))

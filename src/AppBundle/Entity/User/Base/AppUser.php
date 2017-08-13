@@ -32,7 +32,12 @@ class AppUser extends BaseUser {
 	 * One Customer has One Cart.
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Content\ContentEntity\IndividualEntity", mappedBy="owner")
 	 */
-	private $individualEntity;
+	protected $individualEntity;
+	
+	/**
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien", mappedBy="user", cascade={"persist","merge"})
+	 */
+	protected $thanhVien;
 	
 	/**
 	 * @var string
@@ -72,5 +77,19 @@ class AppUser extends BaseUser {
 	 */
 	public function setIndividualEntity($individualEntity) {
 		$this->individualEntity = $individualEntity;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getThanhVien() {
+		return $this->thanhVien;
+	}
+	
+	/**
+	 * @param mixed $thanhVien
+	 */
+	public function setThanhVien($thanhVien) {
+		$this->thanhVien = $thanhVien;
 	}
 }

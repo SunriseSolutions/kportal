@@ -154,6 +154,12 @@ class BangDiem {
 	protected $tbTerm2;
 	
 	/**
+	 * @var  float
+	 * @ORM\Column(type="float", nullable=true)
+	 */
+	protected $tbYear;
+	
+	/**
 	 * @var  integer
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
@@ -573,4 +579,20 @@ class BangDiem {
 	public function setTbCCTerm2($tbCCTerm2) {
 		$this->tbCCTerm2 = $tbCCTerm2;
 	}
+	
+	/**
+	 * @return float
+	 */
+	public function getTbYear() {
+		return $this->tbYear;
+	}
+	
+	/**
+	 * @param float $tbYear
+	 */
+	public function setTbYear($tbYear) {
+		$this->tbYear = $tbYear;
+	}
+	
+	
 }

@@ -137,6 +137,13 @@ class ThanhVien {
 	}
 	
 	/**
+	 * @var User
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\User\User", inversedBy="thanhVien", cascade={"persist","merge"})
+	 * @ORM\JoinColumn(name="id_user", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $user;
+	
+	/**
 	 * @var ArrayCollection
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\PhanBo", mappedBy="thanhVien", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
@@ -159,6 +166,12 @@ class ThanhVien {
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $chiDoan;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":true})
+	 */
+	protected $enabled = true;
 	
 	/**
 	 * @var boolean
@@ -697,4 +710,33 @@ class ThanhVien {
 	public function setQuickName($quickName) {
 		$this->quickName = $quickName;
 	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isEnabled() {
+		return $this->enabled;
+	}
+	
+	/**
+	 * @param bool $enabled
+	 */
+	public function setEnabled($enabled) {
+		$this->enabled = $enabled;
+	}
+	
+	/**
+	 * @return User
+	 */
+	public function getUser() {
+		return $this->user;
+	}
+	
+	/**
+	 * @param User $user
+	 */
+	public function setUser($user) {
+		$this->user = $user;
+	}
+	
 }

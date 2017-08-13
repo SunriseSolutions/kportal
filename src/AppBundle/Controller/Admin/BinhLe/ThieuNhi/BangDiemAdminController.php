@@ -5,7 +5,11 @@ namespace AppBundle\Controller\Admin\BinhLe\ThieuNhi;
 use AppBundle\Admin\BinhLe\ThieuNhi\BangDiemAdmin;
 use AppBundle\Admin\BinhLe\ThieuNhi\ThanhVienAdmin;
 use AppBundle\Controller\Admin\BaseCRUDController;
+use AppBundle\Entity\BinhLe\ThieuNhi\BangDiem;
+use AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan;
 use AppBundle\Entity\BinhLe\ThieuNhi\NamHoc;
+use AppBundle\Entity\BinhLe\ThieuNhi\PhanBo;
+use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -90,28 +94,48 @@ class BangDiemAdminController extends BaseCRUDController {
 					if(empty($_lname)) {
 						break;
 					}
-					$_mname       = $phpExcelObject->getActiveSheet()->getCell('D' . $row)->getValue();
-					$_qname       = $phpExcelObject->getActiveSheet()->getCell('E' . $row)->getValue();
-					$_fname       = $phpExcelObject->getActiveSheet()->getCell('F' . $row)->getValue();
+					$_cname    = $phpExcelObject->getActiveSheet()->getCell('B' . $row)->getValue();
+					$_mname    = $phpExcelObject->getActiveSheet()->getCell('D' . $row)->getValue();
+					$_qname    = $phpExcelObject->getActiveSheet()->getCell('E' . $row)->getValue();
+					$_fname    = $phpExcelObject->getActiveSheet()->getCell('F' . $row)->getValue();
+					$_idNumber = trim($phpExcelObject->getActiveSheet()->getCell('A' . $row)->getValue());
 					
-					$_cc1       = $phpExcelObject->getActiveSheet()->getCell('G' . $row)->getValue();
+					$_cc1 = (trim($phpExcelObject->getActiveSheet()->getCell('G' . $row)->getValue()));
+					$_cc2 = (trim($phpExcelObject->getActiveSheet()->getCell('H' . $row)->getValue()));
+					$_cc3 = (trim($phpExcelObject->getActiveSheet()->getCell('I' . $row)->getValue()));
+					$_cc4 = (trim($phpExcelObject->getActiveSheet()->getCell('J' . $row)->getValue()));
+					$_cc5 = (trim($phpExcelObject->getActiveSheet()->getCell('K' . $row)->getValue()));
 					
-					$_idNumber    = trim($phpExcelObject->getActiveSheet()->getCell('A' . $row)->getValue());
+					$_tbCCTerm2  = (trim($phpExcelObject->getActiveSheet()->getCell('L' . $row)->getOldCalculatedValue()));
+					$_quizTerm2  = (trim($phpExcelObject->getActiveSheet()->getCell('M' . $row)->getValue()));
+					$_midTerm2   = (trim($phpExcelObject->getActiveSheet()->getCell('N' . $row)->getValue()));
+					$_finalTerm2 = (trim($phpExcelObject->getActiveSheet()->getCell('O' . $row)->getValue()));
 					
+					$_tbTerm1 = (trim($phpExcelObject->getActiveSheet()->getCell('P' . $row)->getOldCalculatedValue()));
+					$_tbTerm2 = (trim($phpExcelObject->getActiveSheet()->getCell('Q' . $row)->getOldCalculatedValue()));
+					$_phieuLe = (trim($phpExcelObject->getActiveSheet()->getCell('R' . $row)->getValue()));
+					
+					$_tbYear    = (trim($phpExcelObject->getActiveSheet()->getCell('T' . $row)->getOldCalculatedValue()));
+					$_category  = (trim($phpExcelObject->getActiveSheet()->getCell('U' . $row)->getOldCalculatedValue()));
+					$_retention = (trim($phpExcelObject->getActiveSheet()->getCell('V' . $row)->getOldCalculatedValue()));
+					$_awarded   = (trim($phpExcelObject->getActiveSheet()->getCell('W' . $row)->getOldCalculatedValue()));
+					$_chiDoan   = (trim($phpExcelObject->getActiveSheet()->getCell('X' . $row)->getValue()));
+
+
 //					$_dobCell     = $phpExcelObject->getActiveSheet()->getCell('F' . $row);
 //					$_dobString   = $_dobCell->getValue();
-					
+
 //					if(\PHPExcel_Shared_Date::isDateTime($_dobCell)) {
 //						$_dob = new \DateTime('@' . \PHPExcel_Shared_Date::ExcelToPHP($_dobString));
 //					} elseif( ! empty($_dobString)) {
 //						$_dob = \DateTime::createFromFormat('d/m/Y', $_dobString);
 //					}
-					
+
 //					$_gender = $phpExcelObject->getActiveSheet()->getCell('G' . $row)->getValue();
 //					if(strtoupper($_gender) === 'MALE') {
 //						$_gender = 'Male';
 //					}
-					
+
 //					if(strtoupper($_gender) === 'FEMALE') {
 //						$_gender = 'Female';
 //					}
@@ -122,68 +146,79 @@ class BangDiemAdminController extends BaseCRUDController {
 //					$email = $phpExcelObject->getActiveSheet()->getCell('H' . $row)->getValue();
 					
 					
-					$employee = new BusinessEmployee();
-					$employee->setFirstname($_fname);
-					$employee->setLastname($_lname);
-					$employee->setIdNumber($_idNumber);
-					$employee->setEntitlement($_entitlement);
-					$employee->setEmailAddress($email);
+					$bangDiem = new BangDiem();
+					$bangDiem->setAwarded(($_awarded === 'X'));
+					$bangDiem->setGradeRetention($_retention === 'Ở LẠI');
 					
-					if( ! empty($_dob)) {
-						$employee->setDob($_dob);
+					switch($_category) {
+						case 'KHÁ':
+							$_category = BangDiem::KHA;
+							break;
+						case 'GIỎI':
+							$_category = BangDiem::GIOI;
+							break;
+						case 'TRUNG BÌNH':
+							$_category = BangDiem::TRUNG_BINH;
+							break;
+						case 'YẾU':
+							$_category = BangDiem::YEU;
+							break;
 					}
-					if( ! empty($_gender)) {
-						$employee->setGender($_gender);
-					}
+					$bangDiem->setCategory($_category);
+					$bangDiem->setCc1(intval($_cc1));
+					$bangDiem->setCc2(intval($_cc2));
+					$bangDiem->setCc3(intval($_cc3));
+					$bangDiem->setCc4(intval($_cc4));
+					$bangDiem->setCc5(intval($_cc5));
+					$bangDiem->setTbCCTerm2(floatval($_tbCCTerm2));
+					$bangDiem->setQuizTerm2(floatval($_quizTerm2));
+					$bangDiem->setMidTerm2(floatval($_midTerm2));
+					$bangDiem->setFinalTerm2(floatval($_finalTerm2));
 					
-					if(empty($employeeFound = $object->isEmployeeExistent($employee))) {
-						if($type === 'leaver') {
-							$employee->setEnabled(false);
-							$row ++;
-							continue;
-						} else {
-							$object->addEmployee($employee);
-							$employee->setState(BusinessEmployee::STATE_PUBLISHED);
-							$employee->setEnabled(true);
-							$successfulRow ++;
-							$manager->persist($employee);
-						}
+					$bangDiem->setTbTerm2(floatval($_tbTerm2));
+					$bangDiem->setTbTerm1(floatval($_tbTerm1));
+					
+					$bangDiem->setTbYear(floatval($_tbYear));
+					
+					$thanhVien = new ThanhVien();
+					$thanhVien->setFirstname($_fname);
+					$thanhVien->setLastname($_lname);
+					$thanhVien->setMiddlename($_mname);
+					
+					$thanhVien->setQuickName($_qname);
+					$thanhVien->setChristianname($_cname);
+					$thanhVien->setName($_cname . ' ' . $_lname . ' ' . $_mname . ' ' . $_fname);
+					$thanhVien->setThieuNhi(true);
+					$thanhVien->setHuynhTruong(false);
+					$thanhVien->setChiDoan($_chiDoan);
+					$thanhVien->setPhanDoan(ThanhVien::$danhSachChiDoan[ intval($_chiDoan) ]);
+					$thanhVien->setNamHoc(intval($namHoc));
+					
+					if($_idNumber === 'xxx') {
+						$thanhVien->setEnabled(false);
 					} else {
-						if($type === 'leaver') {
-							$row ++;
-							if($employeeFound->isEnabled()) {
-								if($employeeFound->getEmailAddress() !== $employee->getEmailAddress()) {
-									$employeeFound->setEnabled(false);
-									$this->addFlash('sonata_flash_error', 'The email address ' . $employee->getEmailAddress() . ' entered into the resignee list for Employee ID ' . $employee->getIdNumber() . ' is different from the one on our record which is ' . $employeeFound->getEmailAddress());
-								} else {
-									$successfulRow ++;
-									$manager->persist($employeeFound);
-								}
-							}
-							continue;
-						} else {
-							$employeeFound->setEnabled(true);
-						}
-						if($employeeFound->getName() !== $employee->getName() || $employeeFound->getDob() !== $employee->getDob() || $employeeFound->getEntitlement() !== $employee->getEntitlement() || $employeeFound->getGender() !== $employee->getGender() || ! $employeeFound->isEnabled() || $employeeFound->getEmailAddress() !== $employee->getEmailAddress() || $employeeFound->getState() === BusinessEmployee::STATE_DRAFT) {
-							if( ! empty($_dob)) {
-								$employeeFound->setDob($_dob);
-							}
-							if( ! empty($_gender)) {
-								$employeeFound->setGender($_gender);
-							}
-							
-							$employeeFound->setFirstname($_fname);
-							$employeeFound->setLastname($_lname);
-							$employeeFound->setEntitlement($_entitlement);
-//                            $employeeFound->setEnabled(true);
-							$employeeFound->setState(BusinessEmployee::STATE_PUBLISHED);
-
-//                            $manager->persist($employeeFound);
-						}
-						
-						$successfulRow ++;
-						$manager->persist($employeeFound);
+						$thanhVien->setEnabled(true);
 					}
+					
+					
+					$chiDoanRepo = $this->getDoctrine()->getRepository(ChiDoan::class);
+					$namHocRepo  = $this->getDoctrine()->getRepository(NamHoc::class);
+					$namHocObj   = $namHocRepo->find($namHoc);
+					$chiDoan     = $chiDoanRepo->findOneBy([ 'namHoc' => $namHoc, 'name' => intval($_chiDoan) ]);
+					if(empty($chiDoan)) {
+						$chiDoan = new ChiDoan();
+						$chiDoan->setNamHoc($namHocObj);
+						$chiDoan->setPhanDoan(ThanhVien::$danhSachChiDoan[ intval($_chiDoan) ]);
+					}
+					$phanBo = new PhanBo();
+					$phanBo->setPhanDoan(ThanhVien::$danhSachChiDoan[ intval($_chiDoan) ]);
+					$phanBo->setChiDoan($chiDoan);
+					$phanBo->setHuynhTruong(false);
+					$phanBo->setThieuNhi(true);
+					
+					$successfulRow ++;
+					$manager->persist($bangDiem);
+					$manager->persist($thanhVien);
 					$row ++;
 				}
 				try {
@@ -207,7 +242,7 @@ class BangDiemAdminController extends BaseCRUDController {
 			}
 		}
 		
-		return new RedirectResponse($this->generateUrl('admin_app_binhle_thieunhi_thanhvien_thieuNhi', [
+		return new RedirectResponse($this->generateUrl('admin_app_binhle_thieunhi_bangdiem_list', [
 		
 		]));
 	}

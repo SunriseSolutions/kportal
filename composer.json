@@ -89,7 +89,17 @@
         "knplabs/doctrine-behaviors": "^1.4",
         "suncat/mobile-detect-bundle": "^1.0",
         "h5p/h5p-core": "^1.5",
-        "bean-project/organisation": "dev-master"
+
+        "bean-project/organisation": "dev-master",
+
+        "liuggio/excelbundle": "^2.1.0",
+        "nelmio/cors-bundle": "^1.5",
+        "gesdinet/jwt-refresh-token-bundle": "~0.2",
+        "lexik/jwt-authentication-bundle": "^2.1",
+        "knplabs/knp-snappy-bundle": "dev-master"
+
+
+
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

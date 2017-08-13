@@ -14,10 +14,10 @@ parameters:
 
     s3_version: latest
 #    s3_sdk_version: 3 no longer permissible
-    locale: en_GB
-    locales:
-        - en_GB
-        - vi_VN
+#    locale: en_GB
+#    locales:
+#        - en_GB
+#        - vi_VN
 
     dictionary_locales:
         British English: en_GB

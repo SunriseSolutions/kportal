@@ -140,20 +140,6 @@ class PhanBo {
 	}
 	
 	/**
-	 * @return int
-	 */
-	public function getNamHoc() {
-		return $this->namHoc;
-	}
-	
-	/**
-	 * @param int $namHoc
-	 */
-	public function setNamHoc($namHoc) {
-		$this->namHoc = $namHoc;
-	}
-	
-	/**
 	 * @return bool
 	 */
 	public function isDuBi() {

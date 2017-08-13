@@ -46,7 +46,8 @@ class AppKernel extends Kernel
             new JMS\TranslationBundle\JMSTranslationBundle(),
 //            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
 //            new JMS\AopBundle\JMSAopBundle(),
-
+	
+	        new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new Ornicar\GravatarBundle\OrnicarGravatarBundle(),
 
             // for use with Sylius Resource Component
@@ -84,7 +85,13 @@ class AppKernel extends Kernel
 
             new Symfony\Cmf\Bundle\TreeBrowserBundle\CmfTreeBrowserBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(), // needed for use with CmfTreeBrowserBundle
+	
+	        new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
+	        new Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle(),
 
+//            new Gfreeau\Bundle\GetJWTBundle\GfreeauGetJWTBundle(),
+	        new Nelmio\CorsBundle\NelmioCorsBundle(),
+	        
             new Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle(),
             new Symfony\Cmf\Bundle\ResourceBundle\CmfResourceBundle(),
             new Symfony\Cmf\Bundle\ResourceRestBundle\CmfResourceRestBundle(),
