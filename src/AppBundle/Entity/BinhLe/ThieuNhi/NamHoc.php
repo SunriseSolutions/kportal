@@ -29,15 +29,40 @@ class NamHoc {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\PhanBo", mappedBy="namHoc", cascade={"persist","merge"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan", mappedBy="namHoc", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
-	protected $phanBoHangNam;
+	protected $chiDoan;
 	
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean", options={"default":false} )
 	 */
 	protected $enabled = false;
+	
+	/** @var float
+	 * @ORM\Column(type="float", options={"default":5} )
+	 */
+	protected $diemTB = 5;
+	
+	/** @var float
+	 * @ORM\Column(type="float", options={"default":7.5} )
+	 */
+	protected $diemKha = 7.5;
+	
+	/** @var float
+	 * @ORM\Column(type="float", options={"default":8.75} )
+	 */
+	protected $diemGioi = 8.75;
+	
+	/** @var integer
+	 * @ORM\Column(type="integer", options={"default":15} )
+	 */
+	protected $phieuLenLop = 15;
+	
+	/** @var integer
+	 * @ORM\Column(type="integer", options={"default":25} )
+	 */
+	protected $phieuKhenThuong = 25;
 	
 	/**
 	 * @return ArrayCollection
@@ -65,6 +90,90 @@ class NamHoc {
 	 */
 	public function setEnabled($enabled) {
 		$this->enabled = $enabled;
+	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getChiDoan() {
+		return $this->chiDoan;
+	}
+	
+	/**
+	 * @param ArrayCollection $chiDoan
+	 */
+	public function setChiDoan($chiDoan) {
+		$this->chiDoan = $chiDoan;
+	}
+	
+	/**
+	 * @return float
+	 */
+	public function getDiemTB() {
+		return $this->diemTB;
+	}
+	
+	/**
+	 * @param float $diemTB
+	 */
+	public function setDiemTB($diemTB) {
+		$this->diemTB = $diemTB;
+	}
+	
+	/**
+	 * @return float
+	 */
+	public function getDiemKha() {
+		return $this->diemKha;
+	}
+	
+	/**
+	 * @param float $diemKha
+	 */
+	public function setDiemKha($diemKha) {
+		$this->diemKha = $diemKha;
+	}
+	
+	/**
+	 * @return float
+	 */
+	public function getDiemGioi() {
+		return $this->diemGioi;
+	}
+	
+	/**
+	 * @param float $diemGioi
+	 */
+	public function setDiemGioi($diemGioi) {
+		$this->diemGioi = $diemGioi;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getPhieuLenLop() {
+		return $this->phieuLenLop;
+	}
+	
+	/**
+	 * @param int $phieuLenLop
+	 */
+	public function setPhieuLenLop($phieuLenLop) {
+		$this->phieuLenLop = $phieuLenLop;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getPhieuKhenThuong() {
+		return $this->phieuKhenThuong;
+	}
+	
+	/**
+	 * @param int $phieuKhenThuong
+	 */
+	public function setPhieuKhenThuong($phieuKhenThuong) {
+		$this->phieuKhenThuong = $phieuKhenThuong;
 	}
 	
 }

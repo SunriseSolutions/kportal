@@ -12,6 +12,15 @@ web/test.php
 /var/spool/*
 !var/spool/.gitkeep
 
+!web/import
+/web/import/*
+!web/import/.gitkeep
+
+
+!web/import/binhle
+/web/import/binhle/*
+!web/import/binhle/.gitkeep
+
 !web/assets/h5p/extension/cachedassets
 /web/assets/h5p/extension/cachedassets/*
 !web/assets/h5p/extension/cachedassets/.gitkeep

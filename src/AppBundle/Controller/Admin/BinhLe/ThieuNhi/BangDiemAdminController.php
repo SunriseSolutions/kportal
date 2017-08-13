@@ -42,7 +42,7 @@ class BangDiemAdminController extends BaseCRUDController {
 		
 		$manager = $this->get('doctrine.orm.entity_manager');
 		if($request->isMethod('post')) {
-			$fileFieldName = 'employee-list';
+			$fileFieldName = 'bang-diem';
 			if(isset($_FILES[ $fileFieldName ])) {
 				$errors           = array();
 				$file_name        = $_FILES[ $fileFieldName ]['name'];
@@ -51,10 +51,10 @@ class BangDiemAdminController extends BaseCRUDController {
 				$file_type        = $_FILES[ $fileFieldName ]['type'];
 				$explodedFileName = explode('.', $_FILES[ $fileFieldName ]['name']);
 				$file_ext         = strtolower(end($explodedFileName));
-
-//                $filePath = $this->getParameter(
-//                        'kernel.root_dir'
-//                    ) . '/../web/import/employees/' . $id . '_' . $file_name;
+				
+				$filePath = $this->getParameter(
+						'kernel.root_dir'
+					) . '/../web/import/binhle/bang-diem-thieu-nhi-' . $namHoc . '_' . $file_name;
 				
 				file_exists($filePath) ? unlink($filePath) : "";
 				
@@ -73,49 +73,54 @@ class BangDiemAdminController extends BaseCRUDController {
 				} else {
 					$this->addFlash('sonata_flash_error', implode(', ', $errors));
 				}
-				
-				$action = 'processImportedList';
+
+//				$action = 'processImportedList';
 //            } else {
-				$action      = 'done';
-				$conn        = $this->get('database_connection');
-				$updateQuery = 'UPDATE `mhs__employer__employee` SET `state` = \'' . BusinessEmployee::STATE_DRAFT . '\' WHERE `mhs__employer__employee`.`id` = ' . $id;
+//				$action      = 'done';
+//				$conn        = $this->get('database_connection');
+//				$updateQuery = 'UPDATE `mhs__employer__employee` SET `state` = \'' . BusinessEmployee::STATE_DRAFT . '\' WHERE `mhs__employer__employee`.`id` = ' . $id;
 //                $conn->update('mhs__employer__employee', array('state' => BusinessEmployee::STATE_DRAFT), array('id_employer' => $id, 'enabled' => true));
 				
 				$phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
-				$row            = 2;
-				$successfulRow  = 2;
+				$row            = 5;
+				$successfulRow  = 0;
+				
 				while(true) {
-					$_fname = $phpExcelObject->getActiveSheet()->getCell('B' . $row)->getValue();
-					if(empty($_fname)) {
+					$_lname = $phpExcelObject->getActiveSheet()->getCell('C' . $row)->getValue();
+					if(empty($_lname)) {
 						break;
 					}
-					$_lname       = $phpExcelObject->getActiveSheet()->getCell('C' . $row)->getValue();
-					$_idNumber    = trim($phpExcelObject->getActiveSheet()->getCell('D' . $row)->getValue());
-					$_entitlement = $phpExcelObject->getActiveSheet()->getCell('E' . $row)->getValue();
-					$_dobCell     = $phpExcelObject->getActiveSheet()->getCell('F' . $row);
-					$_dobString   = $_dobCell->getValue();
+					$_mname       = $phpExcelObject->getActiveSheet()->getCell('D' . $row)->getValue();
+					$_qname       = $phpExcelObject->getActiveSheet()->getCell('E' . $row)->getValue();
+					$_fname       = $phpExcelObject->getActiveSheet()->getCell('F' . $row)->getValue();
 					
-					if(\PHPExcel_Shared_Date::isDateTime($_dobCell)) {
-						$_dob = new \DateTime('@' . \PHPExcel_Shared_Date::ExcelToPHP($_dobString));
-					} elseif( ! empty($_dobString)) {
-						$_dob = \DateTime::createFromFormat('d/m/Y', $_dobString);
-					}
-					$_gender = $phpExcelObject->getActiveSheet()->getCell('G' . $row)->getValue();
-					if(strtoupper($_gender) === 'MALE') {
-						$_gender = 'Male';
-					}
-					if(strtoupper($_gender) === 'FEMALE') {
-						$_gender = 'Female';
-					}
-					if( ! in_array($_gender, [ 'Male', 'Female' ])) {
-						$_gender = null;
-					}
-					$email = $phpExcelObject->getActiveSheet()->getCell('H' . $row)->getValue();
+					$_cc1       = $phpExcelObject->getActiveSheet()->getCell('G' . $row)->getValue();
 					
-					if($type === 'leaver') {
-						$_idNumber = trim($phpExcelObject->getActiveSheet()->getCell('A' . $row)->getValue());
-						$email     = $phpExcelObject->getActiveSheet()->getCell('B' . $row)->getValue();
-					}
+					$_idNumber    = trim($phpExcelObject->getActiveSheet()->getCell('A' . $row)->getValue());
+					
+//					$_dobCell     = $phpExcelObject->getActiveSheet()->getCell('F' . $row);
+//					$_dobString   = $_dobCell->getValue();
+					
+//					if(\PHPExcel_Shared_Date::isDateTime($_dobCell)) {
+//						$_dob = new \DateTime('@' . \PHPExcel_Shared_Date::ExcelToPHP($_dobString));
+//					} elseif( ! empty($_dobString)) {
+//						$_dob = \DateTime::createFromFormat('d/m/Y', $_dobString);
+//					}
+					
+//					$_gender = $phpExcelObject->getActiveSheet()->getCell('G' . $row)->getValue();
+//					if(strtoupper($_gender) === 'MALE') {
+//						$_gender = 'Male';
+//					}
+					
+//					if(strtoupper($_gender) === 'FEMALE') {
+//						$_gender = 'Female';
+//					}
+//					if( ! in_array($_gender, [ 'Male', 'Female' ])) {
+//						$_gender = null;
+//					}
+
+//					$email = $phpExcelObject->getActiveSheet()->getCell('H' . $row)->getValue();
+					
 					
 					$employee = new BusinessEmployee();
 					$employee->setFirstname($_fname);
@@ -203,7 +208,7 @@ class BangDiemAdminController extends BaseCRUDController {
 		}
 		
 		return new RedirectResponse($this->generateUrl('admin_app_binhle_thieunhi_thanhvien_thieuNhi', [
-
+		
 		]));
 	}
 	

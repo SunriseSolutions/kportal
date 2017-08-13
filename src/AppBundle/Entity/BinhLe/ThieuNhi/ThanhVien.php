@@ -28,9 +28,9 @@ class ThanhVien {
 		'MARTINO DE PORRES' => 'Martin de Porres',
 		
 		
-		'DM VINCENTE' => 'DM VINCENTE',
-		'MARTINO (MARTIN)'      => 'MARTINO',
-		'MARIANNE'    => 'MARIANNE',
+		'DM VINCENTE'      => 'DM VINCENTE',
+		'MARTINO (MARTIN)' => 'MARTINO',
+		'MARIANNE'         => 'MARIANNE',
 		
 		'ANNA MARIA CLARA' => 'ANNA MARIA CLARA',
 		'MA.TERESA'        => 'MA.TERESA',
@@ -255,6 +255,12 @@ class ThanhVien {
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $phanDoan;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true,length=512)
+	 */
+	protected $quickName;
 	
 	/**
 	 * @var string
@@ -678,5 +684,17 @@ class ThanhVien {
 		$this->name = $name;
 	}
 	
+	/**
+	 * @return string
+	 */
+	public function getQuickName() {
+		return $this->quickName;
+	}
 	
+	/**
+	 * @param string $quickName
+	 */
+	public function setQuickName($quickName) {
+		$this->quickName = $quickName;
+	}
 }

@@ -41,13 +41,13 @@
                         <h4 class="modal-title" id="myModalLabel">Import Joiner List</h4>
                     </div>
                     <div class="modal-body">
-                        <p><a class="btn btn-default" href="{{ asset('import/sample/employee-list.xls') }}">Download
+                        <p><a class="btn btn-default" href="{{ asset('import/sample/bang-diem-hk2.xls') }}">Download
                                 sample
                                 excel</a>
                         </p>
                         <form action=" {{ path('admin_app_binhle_thieunhi_bangdiem_bangDiemImport',{'namHoc':admin.namHoc}) }} "
                               method="post" enctype="multipart/form-data">
-                            <input type="file" name="employee-list"/>
+                            <input type="file" name="bang-diem"/>
                             <input type="submit" class="btn btn-primary" value="Submit"/>
                         </form>
                     </div>

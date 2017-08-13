@@ -30,12 +30,12 @@ class PhanBo {
 	}
 	
 	/**
-	 * @var ThanhVien
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\NamHoc",inversedBy="phanBoHangNam")
-	 * @ORM\JoinColumn(name="nam_hoc", referencedColumnName="id", onDelete="CASCADE")
+	 * @var ChiDoan
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan",inversedBy="phanBoHangNam")
+	 * @ORM\JoinColumn(name="id_chi_doan", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected
-		$namHoc;
+		$chiDoan;
 	
 	/**
 	 * @var ThanhVien
@@ -50,12 +50,6 @@ class PhanBo {
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\BangDiem", mappedBy="phanBo", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $bangDiem;
-	
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $chiDoan;
 	
 	/**
 	 * @var boolean
@@ -157,20 +151,6 @@ class PhanBo {
 	 */
 	public function setNamHoc($namHoc) {
 		$this->namHoc = $namHoc;
-	}
-	
-	/**
-	 * @return int
-	 */
-	public function getChiDoan() {
-		return $this->chiDoan;
-	}
-	
-	/**
-	 * @param int $chiDoan
-	 */
-	public function setChiDoan($chiDoan) {
-		$this->chiDoan = $chiDoan;
 	}
 	
 	/**
@@ -312,7 +292,18 @@ class PhanBo {
 	public function setPhanDoan($phanDoan) {
 		$this->phanDoan = $phanDoan;
 	}
-
 	
+	/**
+	 * @return ChiDoan
+	 */
+	public function getChiDoan() {
+		return $this->chiDoan;
+	}
 	
+	/**
+	 * @param ChiDoan $chiDoan
+	 */
+	public function setChiDoan($chiDoanObj) {
+		$this->chiDoan = $chiDoanObj;
+	}
 }
