@@ -177,6 +177,12 @@ class ThanhVien {
 	 * @var boolean
 	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
+	protected $approved = false;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
 	protected $duBi = false;
 	
 	/**
@@ -739,4 +745,17 @@ class ThanhVien {
 		$this->user = $user;
 	}
 	
+	/**
+	 * @return bool
+	 */
+	public function isApproved() {
+		return $this->approved;
+	}
+	
+	/**
+	 * @param bool $approved
+	 */
+	public function setApproved($approved) {
+		$this->approved = $approved;
+	}
 }

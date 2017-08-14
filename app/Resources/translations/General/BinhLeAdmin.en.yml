@@ -2,6 +2,7 @@ user:
     email_exists: This email has already been used by another user.
 
 dashboard:
+    binhle_thieunhi_namhoc: Năm học Giáo-lý
     binhle_thieunhi_thanhvien: Thành Viên
     binhle_thieunhi_phanbo: Phân Bổ
     binhle_thieunhi_bangdiem: Bảng Điểm
@@ -10,12 +11,25 @@ dashboard:
 show:
     label_status: Status
 filter:
-    label_clinic_organisation_name: Clinic Name
-
+    label_phan_bo_phan_doan: Phân Đoàn
+    label_phan_bo_chi_doan_name: Chi Đoàn
+    label_phan_bo_chi_doan_nam_hoc_id: Năm Học
 list:
-    label_id: ID/Serial Number
+    label_id: ID
     label_slug: Slug
     label_title: Title
+    label_tb_year: Điểm cuối năm
+    label_diem_tb: Điểm TB
+    label_diem_kha: Điểm Khá
+    label_diem_gioi: Điểm Giỏi
+    label_phieu_len_lop: Phiếu lên lớp
+    label_phieu_khen_thuong: Phiếu Khen thưởng
+    label_started: Khai giảng
+    label_dang_sh: Đang SH
+    label_enabled: Mở (yes)/Khóa (no)
+    label_category: Xếp loại
+    label_full_name: Họ tên đầy đủ
+
 
     label_christianname: Tên Thánh
     label_firstname: Tên gọi

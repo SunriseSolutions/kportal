@@ -147,6 +147,7 @@ class BangDiemAdminController extends BaseCRUDController {
 					
 					
 					$bangDiem = new BangDiem();
+					$bangDiem->setSundayTickets(intval($_phieuLe));
 					$bangDiem->setAwarded(($_awarded === 'X'));
 					$bangDiem->setGradeRetention($_retention === 'Ở LẠI');
 					
@@ -184,6 +185,7 @@ class BangDiemAdminController extends BaseCRUDController {
 					$thanhVien->setFirstname($_fname);
 					$thanhVien->setLastname($_lname);
 					$thanhVien->setMiddlename($_mname);
+					$thanhVien->setApproved(true);
 					
 					$thanhVien->setQuickName($_qname);
 					$thanhVien->setChristianname($_cname);
@@ -204,20 +206,31 @@ class BangDiemAdminController extends BaseCRUDController {
 					$chiDoanRepo = $this->getDoctrine()->getRepository(ChiDoan::class);
 					$namHocRepo  = $this->getDoctrine()->getRepository(NamHoc::class);
 					$namHocObj   = $namHocRepo->find($namHoc);
-					$chiDoan     = $chiDoanRepo->findOneBy([ 'namHoc' => $namHoc, 'name' => intval($_chiDoan) ]);
+					$chiDoan     = $chiDoanRepo->findOneBy([ 'namHoc' => $namHoc, 'name' => ($_chiDoan) ]);
 					if(empty($chiDoan)) {
 						$chiDoan = new ChiDoan();
 						$chiDoan->setNamHoc($namHocObj);
 						$chiDoan->setPhanDoan(ThanhVien::$danhSachChiDoan[ intval($_chiDoan) ]);
+						$chiDoan->setName(($_chiDoan));
+						$chiDoan->generateId();
+						$manager->persist($chiDoan);
+						$manager->flush($chiDoan);
 					}
+					
 					$phanBo = new PhanBo();
 					$phanBo->setPhanDoan(ThanhVien::$danhSachChiDoan[ intval($_chiDoan) ]);
 					$phanBo->setChiDoan($chiDoan);
+					$phanBo->setThanhVien($thanhVien);
+					$bangDiem->setPhanBo($phanBo);
+					
 					$phanBo->setHuynhTruong(false);
 					$phanBo->setThieuNhi(true);
 					
+					
 					$successfulRow ++;
 					$manager->persist($bangDiem);
+					$manager->persist($phanBo);
+					$manager->persist($chiDoan);
 					$manager->persist($thanhVien);
 					$row ++;
 				}

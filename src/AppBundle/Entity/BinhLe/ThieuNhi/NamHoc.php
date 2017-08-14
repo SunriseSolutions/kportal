@@ -37,6 +37,12 @@ class NamHoc {
 	 * @var boolean
 	 * @ORM\Column(type="boolean", options={"default":false} )
 	 */
+	protected $started = false;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false} )
+	 */
 	protected $enabled = false;
 	
 	/** @var float
@@ -63,20 +69,6 @@ class NamHoc {
 	 * @ORM\Column(type="integer", options={"default":25} )
 	 */
 	protected $phieuKhenThuong = 25;
-	
-	/**
-	 * @return ArrayCollection
-	 */
-	public function getPhanBoHangNam() {
-		return $this->phanBoHangNam;
-	}
-	
-	/**
-	 * @param ArrayCollection $phanBoHangNam
-	 */
-	public function setPhanBoHangNam($phanBoHangNam) {
-		$this->phanBoHangNam = $phanBoHangNam;
-	}
 	
 	/**
 	 * @return mixed
@@ -174,6 +166,20 @@ class NamHoc {
 	 */
 	public function setPhieuKhenThuong($phieuKhenThuong) {
 		$this->phieuKhenThuong = $phieuKhenThuong;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isStarted() {
+		return $this->started;
+	}
+	
+	/**
+	 * @param bool $started
+	 */
+	public function setStarted($started) {
+		$this->started = $started;
 	}
 	
 }

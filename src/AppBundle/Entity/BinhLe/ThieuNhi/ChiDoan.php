@@ -13,12 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="binhle__thieu_nhi__chi_doan")
  */
 class ChiDoan {
+	
 	/**
-	 * ID_REF
 	 * @ORM\Id
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="string")
 	 */
 	protected $id;
+	
+	public function generateId(){
+		$this->id = $this->name.'-'.$this->namHoc->getId();
+	}
 	
 	/**
 	 * @return mixed

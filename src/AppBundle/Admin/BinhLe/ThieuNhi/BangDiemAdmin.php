@@ -4,6 +4,7 @@ namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\BinhLe\ThieuNhi\BangDiem;
+use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
 use Bean\Bundle\CoreBundle\Service\StringService;
 
 use Doctrine\ORM\Query\Expr;
@@ -20,6 +21,7 @@ use Sonata\CoreBundle\Form\Type\BooleanType;
 use Sonata\CoreBundle\Form\Type\CollectionType;
 use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\DoctrineORMAdminBundle\Datagrid;
+use Sonata\DoctrineORMAdminBundle\Filter\Filter;
 use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\Valid;
@@ -46,9 +48,40 @@ class BangDiemAdmin extends BaseAdmin {
 	}
 	
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+		$danhSachChiDoan = [
+			'Chiên Con 4 tuổi'    => 4,
+			'Chiên Con 5 tuổi'    => 5,
+			'Chiên Con 6 tuổi'    => 6,
+			'Ấu Nhi 7 tuổi'       => 7,
+			'Ấu Nhi 8 tuổi'       => 8,
+			'Ấu Nhi 9 tuổi'       => 9,
+			'Thiếu Nhi 10 tuổi'   => 10,
+			'Thiếu Nhi 11 tuổi'   => 11,
+			'Thiếu Nhi 12 tuổi'   => 12,
+			'Nghĩa Sĩ 13 tuổi'    => 13,
+			'Nghĩa Sĩ 14 tuổi'    => 14,
+			'Nghĩa Sĩ 15 tuổi'    => 15,
+			'Tông Đồ 16 tuổi'     => 16,
+			'Tông Đồ 17 tuổi'     => 17,
+			'Tông Đồ 18 tuổi'     => 18,
+			'Dự Trưởng (19 tuổi)' => 19,
+		];
+		
 		// this text filter will be used to retrieve autocomplete fields
 		$datagridMapper
-			->add('id');
+			->add('phanBo.phanDoan', 'doctrine_orm_choice', array(
+				'show_filter' => true,
+			), 'choice', array(
+				'choices' => ThanhVien::$danhSachPhanDoan
+			))
+			->add('phanBo.chiDoan.name', 'doctrine_orm_choice', array(
+				'show_filter' => true,
+			), 'choice', array(
+				'choices' => $danhSachChiDoan
+			))
+			->add('phanBo.chiDoan.namHoc.id', null, array(
+				'show_filter' => true,
+			));
 	}
 	
 	public function isGranted($name, $object = null) {
@@ -80,9 +113,21 @@ class BangDiemAdmin extends BaseAdmin {
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
 //			->addIdentifier('id')
-			->addIdentifier('id', null, array())
-			->add('namHoc', 'text')
-			->add('chiDoan');
+//			->addIdentifier('id', null, array())
+			->add('phanBo.thanhVien.name', null, array(
+				'label' => 'list.label_full_name'
+			))
+			->add('tbYear')
+			->add('category')
+			->add('phanBo.chiDoan.name', null, array(
+				'label' => 'list.label_chi_doan'
+			))
+			->add('phanBo.phanDoan', null, array(
+				'label' => 'list.label_chi_doan'
+			))
+			->add('phanBo.chiDoan.namHoc.id', 'text', array(
+				'label' => 'list.label_nam_hoc'
+			));
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
