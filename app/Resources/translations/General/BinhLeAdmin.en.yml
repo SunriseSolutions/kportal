@@ -31,7 +31,7 @@ list:
     label_khoa_so: Khóa sổ
     label_category: Xếp loại
     label_full_name: Họ tên đầy đủ
-
+    label_name: Tên
 
     label_christianname: Tên Thánh
     label_firstname: Tên gọi

@@ -45,7 +45,7 @@ class ThanhVienAdmin extends BaseAdmin {
 				return '::admin/binhle/thieu-nhi/thanh-vien/list-thieu-nhi.html.twig';
 			}
 			if($this->action === 'chia-doi-thieu-nhi') {
-//				return '::admin/binhle/thieu-nhi/thanh-vien/list-chia-doi-thieu-nhi.html.twig';
+				return '::admin/binhle/thieu-nhi/thanh-vien/list-chia-doi-thieu-nhi.html.twig';
 			}
 		}
 		
