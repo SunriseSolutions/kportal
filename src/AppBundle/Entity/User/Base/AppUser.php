@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\User\Base;
 
+use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
 use AppBundle\Entity\Content\ContentNode;
 use AppBundle\Entity\Media\Media;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -35,6 +36,7 @@ class AppUser extends BaseUser {
 	protected $individualEntity;
 	
 	/**
+	 * @var ThanhVien
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien", mappedBy="user", cascade={"persist","merge"})
 	 */
 	protected $thanhVien;
@@ -80,14 +82,14 @@ class AppUser extends BaseUser {
 	}
 	
 	/**
-	 * @return mixed
+	 * @return ThanhVien
 	 */
 	public function getThanhVien() {
 		return $this->thanhVien;
 	}
 	
 	/**
-	 * @param mixed $thanhVien
+	 * @param ThanhVien $thanhVien
 	 */
 	public function setThanhVien($thanhVien) {
 		$this->thanhVien = $thanhVien;

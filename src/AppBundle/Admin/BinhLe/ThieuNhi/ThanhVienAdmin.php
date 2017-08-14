@@ -9,22 +9,44 @@ use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ThanhVienAdmin extends BaseAdmin {
 	protected $action = '';
+	protected $actionParams = [];
+	
+	/**
+	 * @return array
+	 */
+	public function getActionParams() {
+		return $this->actionParams;
+	}
+	
+	/**
+	 * @param array $actionParams
+	 */
+	public function setActionParams($actionParams) {
+		$this->actionParams = $actionParams;
+	}
 	
 	public function setAction($action) {
 		$this->action = $action;
 	}
 	
 	public function getTemplate($name) {
-		if($name === 'list-thieu-nhi') {
-		
+		if($name === 'list') {
+			if($this->action === 'list-thieu-nhi') {
+				return '::admin/binhle/thieu-nhi/thanh-vien/list-thieu-nhi.html.twig';
+			}
+			if($this->action === 'chia-doi-thieu-nhi') {
+//				return '::admin/binhle/thieu-nhi/thanh-vien/list-chia-doi-thieu-nhi.html.twig';
+			}
 		}
 		
 		return parent::getTemplate($name);
@@ -34,6 +56,7 @@ class ThanhVienAdmin extends BaseAdmin {
 	public function configureRoutes(RouteCollection $collection) {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
 		$collection->add('thieuNhi', 'thieu-nhi/list');
+		$collection->add('thieuNhiChiDoanChiaDoi', 'thieu-nhi/chi-doan/{chiDoan}/chia-doi');
 		
 		parent::configureRoutes($collection);
 	}
@@ -46,6 +69,40 @@ class ThanhVienAdmin extends BaseAdmin {
 			->add('chiDoan');
 	}
 	
+	/**
+	 * @param string    $name
+	 * @param ThanhVien $object
+	 *
+	 * @return bool|mixed
+	 */
+	public function isGranted($name, $object = null) {
+		$container = $this->getConfigurationPool()->getContainer();
+		if($this->isAdmin()) {
+			return true;
+		}
+		
+		if($name === 'DELETE') {
+			return false;
+		}
+		
+		$user = $container->get('app.user')->getUser();
+		if(empty($thanhVien = $user->getThanhVien())) {
+			return false;
+		} elseif($thanhVien->isBQT()) {
+			return true;
+		}
+		
+		
+		if($name === 'LIST') {
+			return true;
+		}
+		
+		return false;
+
+
+//		return parent::isGranted($name, $object);
+	}
+	
 	public function createQuery($context = 'list') {
 		/** @var ProxyQuery $query */
 		$query = parent::createQuery($context);
@@ -56,8 +113,25 @@ class ThanhVienAdmin extends BaseAdmin {
 		if($this->action === 'list-thieu-nhi') {
 			$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
 		}
+		if($this->action === 'chia-doi-thieu-nhi') {
+			$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
+			$qb->join($rootAlias . '.phanBoHangNam', 'phanBo');
+			$qb->join('phanBo.chiDoan', 'chiDoan');
+			$qb->andWhere($expr->eq( 'chiDoan.id', $expr->literal($this->actionParams['chiDoan']->getId())));
+			
+		}
 		
 		return $query;
+	}
+	
+	public function generateUrl($name, array $parameters = array(), $absolute = UrlGeneratorInterface::ABSOLUTE_PATH) {
+		if($this->action === 'list-thieu-nhi') {
+			if($name === 'list') {
+				$name = 'thieuNhi';
+			}
+		}
+		
+		return parent::generateUrl($name, $parameters, $absolute);
 	}
 	
 	protected function configureListFields(ListMapper $listMapper) {
@@ -127,6 +201,7 @@ class ThanhVienAdmin extends BaseAdmin {
 			->with('form.group_general')//            ->add('children')
 		;
 		$formMapper
+			->add('user', ModelAutocompleteType::class, array( 'property' => 'username' ))
 			->add('christianname', ChoiceType::class, array(
 				'required'           => true,
 				'choices'            => ThanhVien::$christianNames,
@@ -148,7 +223,6 @@ class ThanhVienAdmin extends BaseAdmin {
 			->add('namHoc', null, array( 'required' => true ))
 			->add('huynhTruong', null, array())
 			->add('enabled', null, array())
-			
 			->add('dob', DatePickerType::class, array(
 				'format' => 'dd/MM/yyyy',
 			))

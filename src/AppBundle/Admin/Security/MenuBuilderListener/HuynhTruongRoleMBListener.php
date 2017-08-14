@@ -40,11 +40,17 @@ class HuynhTruongRoleMBListener {
 	}
 	
 	private function addThanhVienMenuItems(ItemInterface $menu, $translator, $params = array()) {
-		$menu->addChild('list thanhvien', array(
+		$menu->addChild('list thieu nhi toan xu doan', array(
 			'route'           => 'admin_app_binhle_thieunhi_thanhvien_thieuNhi',
 //			'routeParameters' => [ 'id' => $salesPartnerId ],
 			'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 		))->setLabel($translator->trans('dashboard.list_thieunhi_xudoan', [], 'BinhLeAdmin'));
+		
+		$menu->addChild('chia doi trong chi doan', array(
+			'route'           => 'admin_app_binhle_thieunhi_thanhvien_thieuNhiChiDoanChiaDoi',
+			'routeParameters' => [ 'chiDoan' => '7-2017' ],
+			'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+		))->setLabel($translator->trans('dashboard.thieunhi_chia_doi_chi_doan', [], 'BinhLeAdmin'));
 		
 		
 	}

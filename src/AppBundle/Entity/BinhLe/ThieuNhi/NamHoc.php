@@ -21,10 +21,44 @@ class NamHoc {
 	protected $id;
 	
 	/**
+	 * @param mixed $id
+	 */
+	public function setId($id) {
+		$this->id = $id;
+	}
+	
+	/**
 	 * @return mixed
 	 */
 	public function getId() {
 		return $this->id;
+	}
+	
+	function __construct() {
+		$this->chiDoan = new ArrayCollection();
+	}
+	
+	public function getChiDoanWithNumber($number) {
+		if(is_int($number)) {
+			/** @var ChiDoan $cd */
+			foreach($this->chiDoan as $cd) {
+				if($cd->getNumber() === $number) {
+					return $cd;
+				}
+			}
+			
+			$cd   = new ChiDoan();
+			$cd->setNamHoc($this);
+			$cd->setName('' . $number);
+			$cd->setNumber($number);
+			$cd->setPhanDoan(ThanhVien::$danhSachChiDoan[ $number ]);
+			$cd->generateId();
+			$this->chiDoan->add($cd);
+			
+			return $cd;
+		}
+		
+		return null;
 	}
 	
 	/**
@@ -71,18 +105,19 @@ class NamHoc {
 	protected $phieuKhenThuong = 25;
 	
 	/**
-	 * @return mixed
+	 * @return bool
 	 */
-	public function getEnabled() {
+	public function isEnabled() {
 		return $this->enabled;
 	}
 	
 	/**
-	 * @param mixed $enabled
+	 * @param bool $enabled
 	 */
 	public function setEnabled($enabled) {
 		$this->enabled = $enabled;
 	}
+	
 	
 	/**
 	 * @return ArrayCollection

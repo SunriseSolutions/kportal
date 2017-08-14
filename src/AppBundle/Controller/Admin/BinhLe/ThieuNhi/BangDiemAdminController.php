@@ -94,10 +94,26 @@ class BangDiemAdminController extends BaseCRUDController {
 					if(empty($_lname)) {
 						break;
 					}
-					$_cname    = $phpExcelObject->getActiveSheet()->getCell('B' . $row)->getValue();
-					$_mname    = $phpExcelObject->getActiveSheet()->getCell('D' . $row)->getValue();
-					$_qname    = $phpExcelObject->getActiveSheet()->getCell('E' . $row)->getValue();
-					$_fname    = $phpExcelObject->getActiveSheet()->getCell('F' . $row)->getValue();
+					$_cname = $phpExcelObject->getActiveSheet()->getCell('B' . $row)->getValue();
+					if( ! empty($_cname)) {
+						$_cname = trim($_cname);
+					}
+					
+					$_mname = $phpExcelObject->getActiveSheet()->getCell('D' . $row)->getValue();
+					if( ! empty($_mname)) {
+						$_mname = trim($_mname);
+					}
+					
+					$_qname = $phpExcelObject->getActiveSheet()->getCell('E' . $row)->getValue();
+					if( ! empty($_qname)) {
+						$_qname = trim($_qname);
+					}
+					
+					$_fname = $phpExcelObject->getActiveSheet()->getCell('F' . $row)->getValue();
+					if( ! empty($_fname)) {
+						$_fname = trim($_fname);
+					}
+					
 					$_idNumber = trim($phpExcelObject->getActiveSheet()->getCell('A' . $row)->getValue());
 					
 					$_cc1 = (trim($phpExcelObject->getActiveSheet()->getCell('G' . $row)->getValue()));
@@ -149,7 +165,6 @@ class BangDiemAdminController extends BaseCRUDController {
 					$bangDiem->setSubmitted(true);
 					$bangDiem->setSundayTickets(intval($_phieuLe));
 					$bangDiem->setAwarded(($_awarded === 'X'));
-					$bangDiem->setGradeRetention($_retention === 'Ở LẠI');
 					
 					switch($_category) {
 						case 'KHÁ':
@@ -182,6 +197,18 @@ class BangDiemAdminController extends BaseCRUDController {
 					$bangDiem->setTbYear(floatval($_tbYear));
 					
 					$thanhVien = new ThanhVien();
+					
+					if($_retention === 'Ở LẠI') {
+						$bangDiem->setGradeRetention(true);
+					} elseif(($_retention = trim($phpExcelObject->getActiveSheet()->getCell('V' . $row)->getValue())) === 'Ở LẠI') {
+						$bangDiem->setGradeRetention(true);
+					} elseif($_retention === 'NGHỈ LUÔN') {
+						$bangDiem->setGradeRetention(true);
+						$thanhVien->setEnabled(true);
+					} else {
+						$bangDiem->setGradeRetention(false);
+					}
+					
 					$thanhVien->setFirstname($_fname);
 					$thanhVien->setLastname($_lname);
 					$thanhVien->setMiddlename($_mname);
@@ -212,6 +239,7 @@ class BangDiemAdminController extends BaseCRUDController {
 						$chiDoan->setNamHoc($namHocObj);
 						$chiDoan->setPhanDoan(ThanhVien::$danhSachChiDoan[ intval($_chiDoan) ]);
 						$chiDoan->setName(($_chiDoan));
+						$chiDoan->setNumber(intval($_chiDoan));
 						$chiDoan->generateId();
 						$manager->persist($chiDoan);
 						$manager->flush($chiDoan);
@@ -246,7 +274,7 @@ class BangDiemAdminController extends BaseCRUDController {
 //                        }
 //                    }
 					
-					$this->addFlash('sonata_flash_success', sprintf("%s employee(s) has/have been imported.", $successfulRow - 2));
+					$this->addFlash('sonata_flash_success', sprintf("%s employee(s) has/have been imported.", $successfulRow));
 					
 				} catch(\Exception $exception) {
 					$this->addFlash('sonata_flash_error', $exception->getMessage());

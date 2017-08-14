@@ -57,6 +57,12 @@ class ChiDoan {
 	protected $name;
 	
 	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $number;
+	
+	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
@@ -132,4 +138,20 @@ class ChiDoan {
 	public function setCotDiemBiLoaiBo($cotDiemBiLoaiBo) {
 		$this->cotDiemBiLoaiBo = $cotDiemBiLoaiBo;
 	}
+	
+	/**
+	 * @return int
+	 */
+	public function getNumber() {
+		return $this->number;
+	}
+	
+	/**
+	 * @param int $number
+	 */
+	public function setNumber($number) {
+		$this->number = $number;
+	}
+	
+	
 }

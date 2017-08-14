@@ -29,9 +29,20 @@ class PhanBo {
 		return $this->id;
 	}
 	
+	
+	/**
+	 * @param ChiDoan $chiDoanObj
+	 */
+	public function setChiDoan($chiDoanObj) {
+		$this->chiDoan = $chiDoanObj;
+		if( ! empty($chiDoanObj)) {
+			$this->phanDoan = ThanhVien::$danhSachChiDoan[ $chiDoanObj->getNumber() ];
+		}
+	}
+	
 	/**
 	 * @var ChiDoan
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan",inversedBy="phanBoHangNam")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan",inversedBy="phanBoHangNam", cascade={"persist","merge"})
 	 * @ORM\JoinColumn(name="id_chi_doan", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected
@@ -46,7 +57,7 @@ class PhanBo {
 		$thanhVien;
 	
 	/**
-	 * @var ArrayCollection
+	 * @var BangDiem
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\BangDiem", mappedBy="phanBo", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $bangDiem;
@@ -126,14 +137,14 @@ class PhanBo {
 	}
 	
 	/**
-	 * @return ArrayCollection
+	 * @return BangDiem
 	 */
 	public function getBangDiem() {
 		return $this->bangDiem;
 	}
 	
 	/**
-	 * @param ArrayCollection $bangDiem
+	 * @param BangDiem $bangDiem
 	 */
 	public function setBangDiem($bangDiem) {
 		$this->bangDiem = $bangDiem;
@@ -286,10 +297,4 @@ class PhanBo {
 		return $this->chiDoan;
 	}
 	
-	/**
-	 * @param ChiDoan $chiDoan
-	 */
-	public function setChiDoan($chiDoanObj) {
-		$this->chiDoan = $chiDoanObj;
-	}
 }

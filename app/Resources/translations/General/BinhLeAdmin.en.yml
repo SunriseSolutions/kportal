@@ -2,6 +2,7 @@ user:
     email_exists: This email has already been used by another user.
 
 dashboard:
+    thieunhi_chia_doi_chi_doan: Chia đội Thiếu Nhi
     binhle_thieunhi_namhoc: Năm học Giáo-lý
     binhle_thieunhi_thanhvien: Thành Viên
     binhle_thieunhi_phanbo: Phân Bổ
@@ -27,6 +28,7 @@ list:
     label_started: Khai giảng
     label_dang_sh: Đang SH
     label_enabled: Mở (yes)/Khóa (no)
+    label_khoa_so: Khóa sổ
     label_category: Xếp loại
     label_full_name: Họ tên đầy đủ
 

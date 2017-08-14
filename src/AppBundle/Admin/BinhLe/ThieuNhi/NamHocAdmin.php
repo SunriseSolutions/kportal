@@ -3,6 +3,7 @@
 namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BaseAdmin;
+use AppBundle\Entity\BinhLe\ThieuNhi\NamHoc;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
 use Bean\Bundle\CoreBundle\Service\StringService;
 
@@ -39,7 +40,8 @@ class NamHocAdmin extends BaseAdmin {
 	
 	
 	public function configureRoutes(RouteCollection $collection) {
-//		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
+		$collection->add('khaiGiang', $this->getRouterIdParameter() . '/khai-giang');
+		$collection->add('khoaSo', $this->getRouterIdParameter() . '/khoa-so');
 		parent::configureRoutes($collection);
 	}
 	
@@ -49,18 +51,54 @@ class NamHocAdmin extends BaseAdmin {
 			->add('id');
 	}
 	
-	
+	/**
+	 * @param string $name
+	 * @param NamHoc $object
+	 *
+	 * @return bool|mixed
+	 */
 	public function isGranted($name, $object = null) {
+		$container = $this->getConfigurationPool()->getContainer();
+
 		
-		if(empty($this->namHoc)) {
-		
+		if($name === 'DELETE') {
+			return false;
 		}
 		
-		if($name === 'IMPORT') {
-
-//			return true;
-		} elseif($name === 'CREATE') {
+		if(empty($this->namHoc)) {
+		}
 		
+		if($name === 'KHAI_GIANG') {
+			if(($object->isStarted())) {
+				return false;
+			}
+			/** @var QueryBuilder $qb */
+			$qb    = $container->get('doctrine')->getRepository(NamHoc::class)->createQueryBuilder('o');
+			$expr  = $qb->expr();
+			$query = $qb
+				->where($expr->eq('o.enabled', ':trueValue'))
+				->setParameter('trueValue', true)
+				->getQuery();
+			
+//			$x = $query->getSQL();
+			return empty($query->getOneOrNullResult());
+//			return true;
+		} elseif($name === 'KHOA_SO') {
+			if($object->isStarted() && $object->isEnabled()) {
+				return true;
+			}
+			
+			return false;
+		}
+		
+		if($this->isAdmin()) {
+			return true;
+		}
+		$user = $container->get('app.user')->getUser();
+		if(empty($thanhVien = $user->getThanhVien())) {
+			return false;
+		} elseif($thanhVien->isBQT()) {
+			return true;
 		}
 		
 		return parent::isGranted($name, $object);
@@ -72,19 +110,37 @@ class NamHocAdmin extends BaseAdmin {
 		
 		return $query;
 	}
+	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
 //			->addIdentifier('id')
-			->addIdentifier('id', 'text', array())
-			->add('started')
-			->add('enabled')
-			->add('diemTB',null, array(
+			->add('id', 'text', array())
+			->add('started', null, array(
+				'template' => '::admin/binhle/thieu-nhi/nam-hoc/list__field_started.html.twig'
+			))
+			->add('enabled', null, array(
+				'label'    => 'list.label_khoa_so',
+				'template' => '::admin/binhle/thieu-nhi/nam-hoc/list__field_enabled.html.twig'
+			))
+			->add('diemTB', null, array(
 				'label' => 'list.label_diem_tb'
 			))
 			->add('diemKha')
 			->add('diemGioi')
 			->add('phieuLenLop')
-			->add('phieuKhenThuong');
+			->add('phieuKhenThuong')
+			->add( '_action', 'actions', array(
+				'actions' => array(
+					'edit'          => array(),
+//					'send_evoucher' => array( 'template' => '::admin/employer/employee/list__action_send_evoucher.html.twig' )
+
+//                ,
+//                    'view_description' => array('template' => '::admin/product/description.html.twig')
+//                ,
+//                    'view_tos' => array('template' => '::admin/product/tos.html.twig')
+				)
+			) )
+		;
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
@@ -94,7 +150,22 @@ class NamHocAdmin extends BaseAdmin {
 		$formMapper
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
-		;
+			->add('id', null,array('label'=>'list.label_nam_hoc'))
+			->add('diemTB', null, array(
+				'label' => 'list.label_diem_tb'
+			))
+			->add('diemKha', null, array(
+				'label' => 'list.label_diem_kha'
+			))
+			->add('diemGioi', null, array(
+				'label' => 'list.label_diem_gioi'
+			))
+			->add('phieuLenLop', null, array(
+				'label' => 'list.label_phieu_len_lop'
+			))
+			->add('phieuKhenThuong', null, array(
+				'label' => 'list.label_phieu_khen_thuong'
+			));
 		
 		
 		$formMapper
@@ -104,9 +175,14 @@ class NamHocAdmin extends BaseAdmin {
 	}
 	
 	/**
-	 * @param ThanhVien $object
+	 * @param NamHoc $object
 	 */
 	public function preValidate($object) {
 	
+	}
+	
+	/** @param NamHoc $object */
+	public function prePersist($object) {
+		$object->setEnabled(false);
 	}
 }

@@ -69,7 +69,7 @@ class ThanhVien {
 		'ELIZABETH'           => 'Elizabeth',
 		'MONICA'              => 'Monica of Hippo',
 		'GIÊ-RA-ĐÔ'           => 'Gerard',
-		'BÊ-NA-ĐÔ'            => 'Bernard of Clairvaux',
+		'BÊ-NA-ĐÔ'            => 'Bernard',
 		'AGNES'               => 'Agnes of Rome',
 		'AN-PHÔNG-SÔ'         => 'Alphonsus Maria de\' Liguori',
 		'STEPHANO'            => 'Stephen',
@@ -120,6 +120,10 @@ class ThanhVien {
 		20 => self::HUYNH_TRUONG,
 	];
 	
+	public function isBQT() {
+		return $this->xuDoanPhoNgoai || $this->xuDoanPhoNoi || $this->xuDoanTruong;
+	}
+	
 	/**
 	 * ID_REF
 	 * @ORM\Id
@@ -134,6 +138,57 @@ class ThanhVien {
 	 */
 	public function getId() {
 		return $this->id;
+	}
+	
+	public function __construct() {
+		$this->phanBoHangNam = new ArrayCollection();
+	}
+	
+	/**
+	 * @param NamHoc $namHoc
+	 *
+	 * @return PhanBo|bool
+	 */
+	public function chuyenNhom(NamHoc $namHoc) {
+		if(empty($this->isThieuNhi())) {
+			return false;
+		}
+		$namCu    = $namHoc->getId() - 1;
+		$namHocCu = null;
+		$phanBoCu = null;
+		
+		$dsPhanBo = $this->phanBoHangNam;
+		/** @var PhanBo $phanBo */
+		foreach($dsPhanBo as $phanBo) {
+			$chiDoan = $phanBo->getChiDoan();
+			$_namHoc = $chiDoan->getNamHoc();
+			if($_namHoc->getId() === $namCu) {
+				$namHocCu = $_namHoc;
+				$phanBoCu = $phanBo;
+			} elseif($_namHoc->getId() === $namHoc) {
+				return false;
+			}
+		}
+		
+		$bangDiemCu  = $phanBoCu->getBangDiem();
+		$oldCDNumber = $phanBoCu->getChiDoan()->getNumber();
+		if($bangDiemCu->isGradeRetention()) {
+			$phanBoCu->setChiDoan($namHoc->getChiDoanWithNumber($oldCDNumber));
+			
+			return $phanBoCu;
+		}
+		
+		$newCDNumber = $oldCDNumber + 1;
+		$phanBoMoi   = new PhanBo();
+		$phanBoMoi->setThanhVien($this);
+		$phanBoMoi->setChiDoan($namHoc->getChiDoanWithNumber($newCDNumber));
+		$phanBoMoi->setThieuNhi(true);
+		
+		$this->setChiDoan($newCDNumber);
+		$this->setPhanDoan($phanBoMoi->getPhanDoan());
+		$this->setNamHoc($namHoc->getId());
+		
+		return $phanBoMoi;
 	}
 	
 	/**
