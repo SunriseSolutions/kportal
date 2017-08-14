@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Entity\BinhLe\ThieuNhi;
 
 use AppBundle\Entity\Content\Base\AppContentEntity;
@@ -182,6 +183,13 @@ class BangDiem {
 	 * @ORM\Column(type="boolean", nullable=true)
 	 */
 	protected $awarded;
+	
+	
+	/**
+	 * @var  boolean
+	 * @ORM\Column(type="boolean", nullable=false)
+	 */
+	protected $submitted = false;
 	
 	/**
 	 * @var  boolean
@@ -594,5 +602,18 @@ class BangDiem {
 		$this->tbYear = $tbYear;
 	}
 	
+	/**
+	 * @return bool
+	 */
+	public function isSubmitted() {
+		return $this->submitted;
+	}
+	
+	/**
+	 * @param bool $submitted
+	 */
+	public function setSubmitted($submitted) {
+		$this->submitted = $submitted;
+	}
 	
 }

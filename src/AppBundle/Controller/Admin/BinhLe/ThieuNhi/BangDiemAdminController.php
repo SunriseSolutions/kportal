@@ -145,8 +145,8 @@ class BangDiemAdminController extends BaseCRUDController {
 
 //					$email = $phpExcelObject->getActiveSheet()->getCell('H' . $row)->getValue();
 					
-					
 					$bangDiem = new BangDiem();
+					$bangDiem->setSubmitted(true);
 					$bangDiem->setSundayTickets(intval($_phieuLe));
 					$bangDiem->setAwarded(($_awarded === 'X'));
 					$bangDiem->setGradeRetention($_retention === 'Ở LẠI');
