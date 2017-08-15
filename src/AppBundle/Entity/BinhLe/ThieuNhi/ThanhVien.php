@@ -26,7 +26,7 @@ class ThanhVien {
 		'ANNA'              => 'Anne',
 		'MARIA MADALENA'    => 'Mary Magdalene',
 		'MARTINO DE PORRES' => 'Martin de Porres',
-		
+		'ROSA LIMA'         => 'ROSA LIMA',
 		
 		'DM VINCENTE'      => 'DM VINCENTE',
 		'MARTINO (MARTIN)' => 'MARTINO',
@@ -40,7 +40,7 @@ class ThanhVien {
 		'SILAO'            => 'SILAO',
 		
 		'MARIA-GIUSE'  => 'MARIA-GIUSE',
-		'MARIA-AGATA'  => ' MARIA-AGATA',
+		'MARIA-AGATA'  => 'MARIA-AGATA',
 		'MARIA-TERESA' => 'MARIA-TERESA',
 		
 		'MAGARITA'            => 'Margarita',
@@ -183,6 +183,8 @@ class ThanhVien {
 		$phanBoMoi->setThanhVien($this);
 		$phanBoMoi->setChiDoan($namHoc->getChiDoanWithNumber($newCDNumber));
 		$phanBoMoi->setThieuNhi(true);
+		$phanBoMoi->setPhanBoTruoc($phanBoCu);
+		$phanBoCu->setPhanBoSau($phanBoMoi);
 		
 		$this->setChiDoan($newCDNumber);
 		$this->setPhanDoan($phanBoMoi->getPhanDoan());

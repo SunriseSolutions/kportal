@@ -47,7 +47,7 @@ class NamHoc {
 				}
 			}
 			
-			$cd   = new ChiDoan();
+			$cd = new ChiDoan();
 			$cd->setNamHoc($this);
 			$cd->setName('' . $number);
 			$cd->setNumber($number);
@@ -66,6 +66,20 @@ class NamHoc {
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan", mappedBy="namHoc", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $chiDoan;
+	
+	
+	/**
+	 * @var NamHoc
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\NamHoc", mappedBy="namTruoc", cascade={"persist","merge"})
+	 */
+	protected $namSau;
+	
+	/**
+	 * @var NamHoc
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\NamHoc", inversedBy="namSau", cascade={"persist","merge"})
+	 * @ORM\JoinColumn(name="id_nam_truoc", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $namTruoc;
 	
 	/**
 	 * @var boolean
@@ -217,4 +231,31 @@ class NamHoc {
 		$this->started = $started;
 	}
 	
+	/**
+	 * @return NamHoc
+	 */
+	public function getNamSau() {
+		return $this->namSau;
+	}
+	
+	/**
+	 * @param NamHoc $namSau
+	 */
+	public function setNamSau($namSau) {
+		$this->namSau = $namSau;
+	}
+	
+	/**
+	 * @return NamHoc
+	 */
+	public function getNamTruoc() {
+		return $this->namTruoc;
+	}
+	
+	/**
+	 * @param NamHoc $namTruoc
+	 */
+	public function setNamTruoc($namTruoc) {
+		$this->namTruoc = $namTruoc;
+	}
 }

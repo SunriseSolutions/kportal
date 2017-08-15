@@ -14,7 +14,7 @@ services:
 
     app.admin.binhle_thieunhi_phanbo:
         class: AppBundle\Admin\BinhLe\ThieuNhi\PhanBoAdmin
-        arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\PhanBo, ~]
+        arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\PhanBo, AppBundle:Admin/BinhLe/ThieuNhi/PhanBoAdmin]
         calls:
 #            - [setRouteBuilder,['@sonata.admin.route.path_info_slashes']]
             - [setIvoryCkeditor,['default']]

@@ -3,6 +3,7 @@
 namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BaseAdmin;
+use AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
 use Bean\Bundle\CoreBundle\Service\StringService;
 
@@ -24,13 +25,39 @@ use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\DoctrineORMAdminBundle\Datagrid;
 use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
 class PhanBoAdmin extends BaseAdmin {
 	
+	protected $action = '';
+	protected $actionParams = [];
+	
+	/**
+	 * @return array
+	 */
+	public function getActionParams() {
+		return $this->actionParams;
+	}
+	
+	/**
+	 * @param array $actionParams
+	 */
+	public function setActionParams($actionParams) {
+		$this->actionParams = $actionParams;
+	}
+	
+	public function setAction($action) {
+		$this->action = $action;
+	}
+	
 	public function getTemplate($name) {
 		if($name === 'list') {
+			if($this->action === 'chia-doi-thieu-nhi') {
+			return '::admin/binhle/thieu-nhi/phan-bo/list-chia-doi-thieu-nhi.html.twig';
+			}
+			
 			return '::admin/binhle/thieu-nhi/phan-bo/list.html.twig';
 		}
 		
@@ -39,17 +66,103 @@ class PhanBoAdmin extends BaseAdmin {
 	
 	
 	public function configureRoutes(RouteCollection $collection) {
-//		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
+		$collection->add('thieuNhiChiDoanChiaDoi', 'thieu-nhi/chi-doan/{chiDoan}/chia-doi');
+		
 		parent::configureRoutes($collection);
 	}
 	
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+		$action       = $this->action;
+		$actionParams = $this->actionParams;
+		
 		// this text filter will be used to retrieve autocomplete fields
 		$datagridMapper
-			->add('id')
-			->add('chiDoan');
+			->add('id');
+		if($action !== 'chia-doi-thieu-nhi') {
+			$datagridMapper->add('chiDoan', 'doctrine_orm_callback', array(
+//                'callback'   => array($this, 'getWithOpenCommentFilter'),
+				'callback'   => function($queryBuilder, $alias, $field, $value) use ($action, $actionParams) {
+					if( ! $value['value']) {
+						return;
+					}
+					if($action === 'chia-doi-thieu-nhi') {
+						/** @var ChiDoan $chiDoan */
+						$chiDoan = $actionParams['chiDoan'];
+					}
+					$queryBuilder->leftJoin(sprintf('%s.comments', $alias), 'c');
+					$queryBuilder->andWhere('c.status = :status');
+					$queryBuilder->setParameter('status', Comment::STATUS_MODERATE);
+					
+					return true;
+				},
+				'field_type' => 'checkbox'
+			));
+		}
 	}
 	
+	/**
+	 * @param string    $name
+	 * @param ThanhVien $object
+	 *
+	 * @return bool|mixed
+	 */
+	public function isGranted($name, $object = null) {
+		$container = $this->getConfigurationPool()->getContainer();
+		if($this->isAdmin()) {
+			return true;
+		}
+		
+		if($name === 'DELETE') {
+			return false;
+		}
+		
+		$user = $container->get('app.user')->getUser();
+		if(empty($thanhVien = $user->getThanhVien())) {
+			return false;
+		} elseif($thanhVien->isBQT()) {
+			return true;
+		}
+		
+		
+		if($name === 'LIST') {
+			return true;
+		}
+		
+		return false;
+
+
+//		return parent::isGranted($name, $object);
+	}
+	
+	public function createQuery($context = 'list') {
+		/** @var ProxyQuery $query */
+		$query = parent::createQuery($context);
+		/** @var QueryBuilder $qb */
+		$qb        = $query->getQueryBuilder();
+		$expr      = $qb->expr();
+		$rootAlias = $qb->getRootAliases()[0];
+		if($this->action === 'list-thieu-nhi') {
+			$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
+		}
+		if($this->action === 'chia-doi-thieu-nhi') {
+			$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
+			$qb->join($rootAlias . '.chiDoan', 'chiDoan');
+			$qb->andWhere($expr->eq('chiDoan.id', $expr->literal($this->actionParams['chiDoan']->getId())));
+			
+		}
+		
+		return $query;
+	}
+	
+	public function generateUrl($name, array $parameters = array(), $absolute = UrlGeneratorInterface::ABSOLUTE_PATH) {
+		if($this->action === 'list-thieu-nhi') {
+			if($name === 'list') {
+				$name = 'thieuNhi';
+			}
+		}
+		
+		return parent::generateUrl($name, $parameters, $absolute);
+	}
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$danhSachChiDoan = [
@@ -74,13 +187,25 @@ class PhanBoAdmin extends BaseAdmin {
 		$listMapper
 //			->addIdentifier('id')
 			->addIdentifier('id', null, array())
-			->add('thanhVien', null, array( 'associated_property' => 'name' ))
-			->add('namHoc', null, array( 'associated_property' => 'id' ))
-			->add('chiDoan', 'choice', array(
-				'editable' => true,
-//				'class' => 'Vendor\ExampleBundle\Entity\ExampleStatus',
-				'choices'  => $danhSachChiDoan,
+//			->add('thanhVien', null, array( 'associated_property' => 'name' ))
+			->add('thanhVien.christianName', null, array(
+				'label' => 'list.label_christianname'
+			))
+			->add('thanhVien.lastName', null, array(
+				'label' => 'list.label_lastname'
+			))
+			->add('thanhVien.middleName', null, array(
+				'label' => 'list.label_middlename'
+			))
+			->add('thanhVien.firstName', null, array(
+				'label' => 'list.label_firstname'
 			));
+		if($this->action === 'chia-doi-thieu-nhi') {
+			$listMapper->add('phanBoTruoc.bangDiem', null, array( 'associated_property' => 'tbYear' ));
+		}
+		$listMapper->add('chiDoan', null, array(
+			'associated_property' => 'number'
+		));
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
@@ -118,13 +243,8 @@ class PhanBoAdmin extends BaseAdmin {
 				},
 			
 			))
-			->add('namHoc', ModelType::class, array(
+			->add('chiDoan', ModelAutocompleteType::class, array(
 				'property' => 'id'
-			))
-			->add('chiDoan', ChoiceType::class, array(
-				'placeholder'        => 'Chọn Chi Đoàn',
-				'choices'            => $danhSachChiDoan,
-				'translation_domain' => $this->translationDomain
 			));
 		
 		$formMapper

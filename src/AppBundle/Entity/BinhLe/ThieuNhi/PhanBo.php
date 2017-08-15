@@ -29,6 +29,11 @@ class PhanBo {
 		return $this->id;
 	}
 	
+	public function getBangDiemTruoc() {
+		$namTruoc = $this->chiDoan->getNamHoc()->getNamTruoc();
+		
+	}
+	
 	
 	/**
 	 * @param ChiDoan $chiDoanObj
@@ -61,6 +66,21 @@ class PhanBo {
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\BangDiem", mappedBy="phanBo", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $bangDiem;
+	
+	
+	/**
+	 * @var PhanBo
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\PhanBo", mappedBy="phanBoTruoc", cascade={"persist","merge"})
+	 */
+	protected $phanBoSau;
+	
+	/**
+	 * @var PhanBo
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\PhanBo", inversedBy="phanBoSau", cascade={"persist","merge"})
+	 * @ORM\JoinColumn(name="id_phan_bo_truoc", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $phanBoTruoc;
+	
 	
 	/**
 	 * @var boolean
@@ -297,4 +317,31 @@ class PhanBo {
 		return $this->chiDoan;
 	}
 	
+	/**
+	 * @return PhanBo
+	 */
+	public function getPhanBoSau() {
+		return $this->phanBoSau;
+	}
+	
+	/**
+	 * @param PhanBo $phanBoSau
+	 */
+	public function setPhanBoSau($phanBoSau) {
+		$this->phanBoSau = $phanBoSau;
+	}
+	
+	/**
+	 * @return PhanBo
+	 */
+	public function getPhanBoTruoc() {
+		return $this->phanBoTruoc;
+	}
+	
+	/**
+	 * @param PhanBo $phanBoTruoc
+	 */
+	public function setPhanBoTruoc($phanBoTruoc) {
+		$this->phanBoTruoc = $phanBoTruoc;
+	}
 }

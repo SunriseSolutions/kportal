@@ -47,7 +47,7 @@ class HuynhTruongRoleMBListener {
 		))->setLabel($translator->trans('dashboard.list_thieunhi_xudoan', [], 'BinhLeAdmin'));
 		
 		$menu->addChild('chia doi trong chi doan', array(
-			'route'           => 'admin_app_binhle_thieunhi_thanhvien_thieuNhiChiDoanChiaDoi',
+			'route'           => 'admin_app_binhle_thieunhi_phanbo_thieuNhiChiDoanChiaDoi',
 			'routeParameters' => [ 'chiDoan' => '7-2017' ],
 			'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 		))->setLabel($translator->trans('dashboard.thieunhi_chia_doi_chi_doan', [], 'BinhLeAdmin'));

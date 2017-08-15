@@ -59,7 +59,7 @@ class NamHocAdmin extends BaseAdmin {
 	 */
 	public function isGranted($name, $object = null) {
 		$container = $this->getConfigurationPool()->getContainer();
-
+		
 		
 		if($name === 'DELETE') {
 			return false;
@@ -79,7 +79,7 @@ class NamHocAdmin extends BaseAdmin {
 				->where($expr->eq('o.enabled', ':trueValue'))
 				->setParameter('trueValue', true)
 				->getQuery();
-			
+
 //			$x = $query->getSQL();
 			return empty($query->getOneOrNullResult());
 //			return true;
@@ -129,9 +129,9 @@ class NamHocAdmin extends BaseAdmin {
 			->add('diemGioi')
 			->add('phieuLenLop')
 			->add('phieuKhenThuong')
-			->add( '_action', 'actions', array(
+			->add('_action', 'actions', array(
 				'actions' => array(
-					'edit'          => array(),
+					'edit' => array(),
 //					'send_evoucher' => array( 'template' => '::admin/employer/employee/list__action_send_evoucher.html.twig' )
 
 //                ,
@@ -139,8 +139,7 @@ class NamHocAdmin extends BaseAdmin {
 //                ,
 //                    'view_tos' => array('template' => '::admin/product/tos.html.twig')
 				)
-			) )
-		;
+			));
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
@@ -150,7 +149,8 @@ class NamHocAdmin extends BaseAdmin {
 		$formMapper
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
-			->add('id', null,array('label'=>'list.label_nam_hoc'))
+			->add('id', null, array( 'label' => 'list.label_nam_hoc' ))
+			->add('namTruoc', ModelType::class, array( 'property' => 'id' ))
 			->add('diemTB', null, array(
 				'label' => 'list.label_diem_tb'
 			))

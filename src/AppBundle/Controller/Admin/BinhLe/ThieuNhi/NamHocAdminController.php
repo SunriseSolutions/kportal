@@ -47,6 +47,7 @@ class NamHocAdminController extends BaseCRUDController {
 			}
 		}
 		$object->setStarted(true);
+		$object->setEnabled(true);
 		$manager->flush();
 
 //		$admin->setAction('list-thieu-nhi');

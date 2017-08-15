@@ -11,7 +11,7 @@
           href="http://localhost/001/script/handsontable-master/dist/pikaday/pikaday.css">
 
     {#<link rel="stylesheet" media="screen"#}
-          {#href="http://localhost/001/script/handsontable-master/demo/css/samples.css?20140331">#}
+    {#href="http://localhost/001/script/handsontable-master/demo/css/samples.css?20140331">#}
 
     <style type="text/css">
         body {
@@ -144,8 +144,9 @@
                                 {% endif %}
 
                                 {% spaceless %}
-                                    <th class="sonata-ba-list-field-header-{{ field_description.type}} {% if sortable %} sonata-ba-list-field-header-order-{{ sort_by|lower }} {{ sort_active_class }}{% endif %}{% if field_description.options.header_class is defined %} {{ field_description.options.header_class }}{% endif %}"{% if field_description.options.header_style is defined %} style="{{ field_description.options.header_style }}"{% endif %}>
-                                        {% if sortable %}<a href="{{ admin.generateUrl('list', sort_parameters) }}">{% endif %}
+                                    <th class="sonata-ba-list-field-header-{{ field_description.type }} {% if sortable %} sonata-ba-list-field-header-order-{{ sort_by|lower }} {{ sort_active_class }}{% endif %}{% if field_description.options.header_class is defined %} {{ field_description.options.header_class }}{% endif %}"{% if field_description.options.header_style is defined %} style="{{ field_description.options.header_style }}"{% endif %}>
+                                        {% if sortable %}<a
+                                                href="{{ admin.generateUrl('list', sort_parameters) }}">{% endif %}
                                             {{ field_description.label|trans({}, field_description.translationDomain) }}
                                             {% if sortable %}</a>{% endif %}
                                     </th>
@@ -157,6 +158,20 @@
                         <tr>
                             {#{% include admin.getTemplate('inner_list_row') %}#}
                             {#{{ dump(object) }}#}
+
+                            {% for field_description in admin.list.elements %}
+                                {% if field_description.name == '_action' and app.request.isXmlHttpRequest %}
+                                    {# Action buttons disabled in ajax view! #}
+                                    <h1>_action</h1>
+                                {% elseif field_description.getOption('ajax_hidden') == true and app.request.isXmlHttpRequest %}
+                                    {# Disable fields with 'ajax_hidden' option set to true #}
+                                    <h1>ajax_hidden</h1>
+                                {% else %}
+                                    {#{{ object|render_list_element(field_description) }}#}
+                                    <td>{{ dump(field_description) }}</td>
+                                {% endif %}
+                            {% endfor %}
+
                         </tr>
                     {% endfor %}
                 </table>

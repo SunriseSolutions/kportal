@@ -97,6 +97,10 @@ class BangDiemAdminController extends BaseCRUDController {
 					$_cname = $phpExcelObject->getActiveSheet()->getCell('B' . $row)->getValue();
 					if( ! empty($_cname)) {
 						$_cname = trim($_cname);
+						if( ! empty($_cname)) {
+							$_cnameArray = array_flip(ThanhVien::$christianNames);
+							$_cname      = $_cnameArray[ $_cname ];
+						}
 					}
 					
 					$_mname = $phpExcelObject->getActiveSheet()->getCell('D' . $row)->getValue();

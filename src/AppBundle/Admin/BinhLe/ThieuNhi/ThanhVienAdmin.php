@@ -44,9 +44,6 @@ class ThanhVienAdmin extends BaseAdmin {
 			if($this->action === 'list-thieu-nhi') {
 				return '::admin/binhle/thieu-nhi/thanh-vien/list-thieu-nhi.html.twig';
 			}
-			if($this->action === 'chia-doi-thieu-nhi') {
-				return '::admin/binhle/thieu-nhi/thanh-vien/list-chia-doi-thieu-nhi.html.twig';
-			}
 		}
 		
 		return parent::getTemplate($name);
@@ -56,7 +53,6 @@ class ThanhVienAdmin extends BaseAdmin {
 	public function configureRoutes(RouteCollection $collection) {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
 		$collection->add('thieuNhi', 'thieu-nhi/list');
-		$collection->add('thieuNhiChiDoanChiaDoi', 'thieu-nhi/chi-doan/{chiDoan}/chia-doi');
 		
 		parent::configureRoutes($collection);
 	}
@@ -117,7 +113,7 @@ class ThanhVienAdmin extends BaseAdmin {
 			$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
 			$qb->join($rootAlias . '.phanBoHangNam', 'phanBo');
 			$qb->join('phanBo.chiDoan', 'chiDoan');
-			$qb->andWhere($expr->eq( 'chiDoan.id', $expr->literal($this->actionParams['chiDoan']->getId())));
+			$qb->andWhere($expr->eq('chiDoan.id', $expr->literal($this->actionParams['chiDoan']->getId())));
 			
 		}
 		
@@ -203,13 +199,20 @@ class ThanhVienAdmin extends BaseAdmin {
 		$formMapper
 			->add('user', ModelAutocompleteType::class, array( 'property' => 'username' ))
 			->add('christianname', ChoiceType::class, array(
+				'label'              => 'list.label_christianname',
 				'required'           => true,
 				'choices'            => ThanhVien::$christianNames,
 				'translation_domain' => $this->translationDomain
 			))
-			->add('firstname', null, array())
-			->add('middlename', null, array())
-			->add('lastname', null, array())
+			->add('lastname', null, array(
+				'label' => 'list.label_lastname',
+			))
+			->add('middlename', null, array(
+				'label' => 'list.label_middlename',
+			))
+			->add('firstname', null, array(
+				'label' => 'list.label_firstname',
+			))
 			->add('phanDoan', ChoiceType::class, array(
 				'placeholder'        => 'Chọn Phân Đoàn',
 				'choices'            => ThanhVien::$danhSachPhanDoan,
@@ -249,6 +252,7 @@ class ThanhVienAdmin extends BaseAdmin {
 			$cNames        = array_flip(ThanhVien::$christianNames);
 			$christianName = $cNames[ $christianName ];
 		}
+		$object->setChristianname($christianName);
 		$lastname   = $object->getLastname() ?: '';
 		$middlename = $object->getMiddlename() ?: '';
 		$firstname  = $object->getFirstname() ?: '';
