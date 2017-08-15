@@ -5,10 +5,10 @@
 
     {#<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>#}
 
-    <link rel="stylesheet" media="screen" href="http://localhost/001/script/handsontable-master/dist/handsontable.css">
+    <link rel="stylesheet" media="screen" href="{{ asset('assets/vendor/handsontable/handsontable.min.css') }}">
 
     <link rel="stylesheet" media="screen"
-          href="http://localhost/001/script/handsontable-master/dist/pikaday/pikaday.css">
+          href="{{ asset('assets/vendor/handsontable/pikaday/pikaday.css') }}">
 
     {#<link rel="stylesheet" media="screen"#}
     {#href="http://localhost/001/script/handsontable-master/demo/css/samples.css?20140331">#}
@@ -22,48 +22,81 @@
         h2 {
             /*margin: 20px 0;*/
         }
+
+        .handsontable .currentRow {
+            background-color: #E7E8EF;
+        }
+
+        .handsontable .currentCol {
+            background-color: #F9F9FB;
+        }
     </style>
 
 {% endblock %}
 
 {% block javascripts %}
+    {% set chiDoan = admin.actionParams['chiDoan'] %}
+    {% set phanBoHangNam = chiDoan.phanBoHangNam %}
+    {% set christianNames =  admin.actionParams['christianNames'] %}
+
     {{ parent() }}
-    <script src="http://localhost/001/script/handsontable-master/dist/pikaday/pikaday.js"></script>
-    <script src="http://localhost/001/script/handsontable-master/dist/moment/moment.js"></script>
-    <script src="http://localhost/001/script/handsontable-master/dist/numbro/numbro.js"></script>
-    <script src="http://localhost/001/script/handsontable-master/dist/numbro/languages.js"></script>
-    <script src="http://localhost/001/script/handsontable-master/dist/handsontable.js"></script>
+
+    <script src="{{ asset('assets/vendor/handsontable/pikaday/pikaday.js') }}"></script>
+    <script src="{{ asset('assets/vendor/handsontable/moment/moment.js') }}"></script>
+    <script src="{{ asset('assets/vendor/handsontable/numbro/numbro.js') }}"></script>
+    <script src="{{ asset('assets/vendor/handsontable/numbro/languages.js') }}"></script>
+    <script src="{{ asset('assets/vendor/handsontable/handsontable.min.js') }}"></script>
 
     <script>
         $(document).ready(function () {
 
             function getCarData() {
                 return [
-                    ["Nissan", 2009, "black", "black"],
-                    ["Nissan", 2006, "blue", "blue"],
-                    ["Chrysler", 2004, "yellow", "black"],
-                    ["Volvo", 2012, "white", "gray"]
+                    {% for phanBo in phanBoHangNam %}
+                    {% set thanhVien = phanBo.thanhVien %}
+                    ["{{ phanBo.id }}", '{{ thanhVien.christianName }}', '{{ thanhVien.lastName }}', '{{ thanhVien.middleName }}', '{{ thanhVien.firstName }}', , ''],
+                    {% endfor %}
                 ];
             }
 
-            var container = document.getElementById('example1'),
+            var container = document.getElementById('chiDoanSpreadSheet'),
                 hot;
 
-            hot = new Handsontable(container, {
+            window.hot = new Handsontable(container, {
                 data: getCarData(),
+                columnSorting: true,
+                currentRowClassName: 'currentRow',
+                currentColClassName: 'currentCol',
+                autoWrapRow: true,
                 startRows: 7,
                 startCols: 4,
-                colHeaders: ['Car', 'Year', 'Chassis color', 'Bumper color'],
+                colHeaders: ['ID', 'Tên Thánh', 'Họ', 'Tên Lót', 'Tên', 'Đội', 'Giới tính'],
                 columns: [
-                    {},
-                    {type: 'numeric'},
                     {
-                        type: 'dropdown',
-                        source: ['yellow', 'red', 'orange', 'green', 'blue', 'gray', 'black', 'white']
+                        readOnly: true
                     },
                     {
                         type: 'dropdown',
-                        source: ['yellow', 'red', 'orange', 'green', 'blue', 'gray', 'black', 'white']
+                        source: [
+                            {% spaceless %}
+                            {% for vn,en in christianNames %}
+                            {{ loop.index > 1?',':'' }}
+                            '{{ vn }}'
+                            {% endfor %}
+                            {% endspaceless %}
+                        ]
+                    },
+                    {},
+                    {},
+                    {},
+                    {
+                        type: 'dropdown',
+                        source: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                    },
+                    {
+                        editor: 'select',
+                        selectOptions: ['Nam', 'Nữ']
+
                     }
                 ]
             });
@@ -78,6 +111,8 @@
                         var name = element.getAttribute('data-dump');
                         var instance = element.getAttribute('data-instance');
                         var hot = window[instance];
+//                        console.log(name);
+//                        console.log(instance);
                         console.log('data of ' + name, hot.getData());
                     }
                 });
@@ -89,106 +124,33 @@
     </script>
 {% endblock %}
 
-{% block list_table %}
-    <div class="col-xs-12 col-md-12">
+    {% block list_table %}
+        <div class="col-xs-12 col-md-12">
 
-        {# Add a margin if no pager to prevent dropdown cropping on window #}
-        <div class="box box-primary" style="margin-bottom: 100px;">
-            <div class="box-body no-padding">
-                <h1>hello</h1>
-                <h2>Dropdown cell type</h2>
+            {# Add a margin if no pager to prevent dropdown cropping on window #}
+            <div class="box box-primary" style="margin-bottom: 100px;">
+                <div class="box-body no-padding">
+                    <p>
+                        <button name="dump" data-dump="#chiDoanSpreadSheet" data-instance="hot"
+                                title="Save" class="btn btn-primary" style="margin: 15px;">Lưu thông tin
+                        </button>
+                    </p>
 
-                <p>This example shows the usage of the Dropdown feature.</p>
-
-                <p>Dropdown is based on <a href="autocomplete.html">Autocomplete</a> cell type. All options used by
-                    <code>autocomplete</code>
-                    cell type apply to <code>dropdown</code> as well.</p>
-
-                <p>Internally, cell <code>{type: "dropdown"}</code> is equivalent to cell <code>{type: "autocomplete",
-                        strict:
-                        true, filter: false}</code>.</p>
-
-                <p>Therefore you can think of <code>dropdown</code> as a searchable <code>&lt;select&gt;</code>. </p>
-
-                <div id="example1" class="handsontable htColumnHeaders"></div>
-
-                <p>
-                    <button name="dump" data-dump="#example1" data-instance="hot"
-                            title="Prints current data source to Firebug/Chrome Dev Tools">Dump
-                        data to console
-                    </button>
-                </p>
-
-
-                <table>
-                    <tr>
-                        {% for field_description in admin.list.elements %}
-                            {% if admin.hasRoute('batch') and field_description.getOption('code') == '_batch' and batchactions|length > 0 %}
-                                <th class="sonata-ba-list-field-header sonata-ba-list-field-header-batch">
-                                    <input type="checkbox" id="list_batch_checkbox">
-                                </th>
-                            {% elseif field_description.getOption('code') == '_select' %}
-                                <th class="sonata-ba-list-field-header sonata-ba-list-field-header-select"></th>
-                            {% elseif field_description.name == '_action' and app.request.isXmlHttpRequest %}
-                                {# Action buttons disabled in ajax view! #}
-                            {% elseif field_description.getOption('ajax_hidden') == true and app.request.isXmlHttpRequest %}
-                                {# Disable fields with 'ajax_hidden' option set to true #}
-                            {% else %}
-                                {% set sortable = false %}
-                                {% if field_description.options.sortable is defined and field_description.options.sortable %}
-                                    {% set sortable             = true %}
-                                    {% set sort_parameters      = admin.modelmanager.sortparameters(field_description, admin.datagrid) %}
-                                    {% set current              = admin.datagrid.values._sort_by == field_description or admin.datagrid.values._sort_by.fieldName == sort_parameters.filter._sort_by %}
-                                    {% set sort_active_class    = current ? 'sonata-ba-list-field-order-active' : '' %}
-                                    {% set sort_by              = current ? admin.datagrid.values._sort_order : field_description.options._sort_order %}
-                                {% endif %}
-
-                                {% spaceless %}
-                                    <th class="sonata-ba-list-field-header-{{ field_description.type }} {% if sortable %} sonata-ba-list-field-header-order-{{ sort_by|lower }} {{ sort_active_class }}{% endif %}{% if field_description.options.header_class is defined %} {{ field_description.options.header_class }}{% endif %}"{% if field_description.options.header_style is defined %} style="{{ field_description.options.header_style }}"{% endif %}>
-                                        {% if sortable %}<a
-                                                href="{{ admin.generateUrl('list', sort_parameters) }}">{% endif %}
-                                            {{ field_description.label|trans({}, field_description.translationDomain) }}
-                                            {% if sortable %}</a>{% endif %}
-                                    </th>
-                                {% endspaceless %}
-                            {% endif %}
-                        {% endfor %}
-                    </tr>
-                    {% for object in admin.datagrid.results %}
-                        <tr>
-                            {#{% include admin.getTemplate('inner_list_row') %}#}
-                            {#{{ dump(object) }}#}
-
-                            {% for field_description in admin.list.elements %}
-                                {% if field_description.name == '_action' and app.request.isXmlHttpRequest %}
-                                    {# Action buttons disabled in ajax view! #}
-                                    <h1>_action</h1>
-                                {% elseif field_description.getOption('ajax_hidden') == true and app.request.isXmlHttpRequest %}
-                                    {# Disable fields with 'ajax_hidden' option set to true #}
-                                    <h1>ajax_hidden</h1>
-                                {% else %}
-                                    {#{{ object|render_list_element(field_description) }}#}
-                                    <td>{{ dump(field_description) }}</td>
-                                {% endif %}
-                            {% endfor %}
-
-                        </tr>
-                    {% endfor %}
-                </table>
-
+                    <div style="max-height: 1800px; margin-left: 20px;" id="chiDoanSpreadSheet"
+                         class="handsontable htColumnHeaders"></div>
+                </div>
             </div>
         </div>
-    </div>
 
 
-{% endblock %}
+    {% endblock %}
 
- {% block sonata_admin_content_actions_wrappers %}
-     <ul class="nav navbar-nav navbar-right">
-         <li class="">
-             {#<input type="button" class="btn btn-small btn-success" value="Import List" data-toggle="modal"#}
-             {#data-target="#clinicImportJoinerModal" style="margin-top:8px;"/>#}
-         </li>
-     </ul>
-     {{ parent() }}
- {% endblock sonata_admin_content_actions_wrappers %}
+    {% block sonata_admin_content_actions_wrappers %}
+        <ul class="nav navbar-nav navbar-right">
+            <li class="">
+                {#<input type="button" class="btn btn-small btn-success" value="Import List" data-toggle="modal"#}
+                {#data-target="#clinicImportJoinerModal" style="margin-top:8px;"/>#}
+            </li>
+        </ul>
+        {{ parent() }}
+    {% endblock sonata_admin_content_actions_wrappers %}
