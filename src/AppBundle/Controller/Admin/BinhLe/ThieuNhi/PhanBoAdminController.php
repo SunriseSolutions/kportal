@@ -13,15 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PhanBoAdminController extends BaseCRUDController {
-	public function thieuNhiChiDoanChiaDoiAction(ChiDoan $chiDoan, Request $request) {
-		
-		/** @var PhanBoAdmin $admin */
-		$admin = $this->admin;
-		$admin->setAction('chia-doi-thieu-nhi');
-		$admin->setActionParams([ 'chiDoan' => $chiDoan, 'christianNames' => ThanhVien::$christianNames ]);
-		
-		return parent::listAction();
-	}
+
 	
 	
 }

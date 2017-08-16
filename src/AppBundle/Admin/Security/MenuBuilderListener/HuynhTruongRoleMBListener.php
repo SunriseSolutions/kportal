@@ -54,8 +54,8 @@ class HuynhTruongRoleMBListener {
 		
 		if( ! empty($phanBo) && $phanBo->isChiDoanTruong()) {
 			$menu->addChild('chia doi trong chi doan', array(
-				'route'           => 'admin_app_binhle_thieunhi_phanbo_thieuNhiChiDoanChiaDoi',
-				'routeParameters' => [ 'chiDoan' => $phanBo->getChiDoan()->getId() ],
+				'route'           => 'admin_app_binhle_thieunhi_chidoan_thieuNhiChiDoanChiaDoi',
+				'routeParameters' => [ 'id' => $phanBo->getChiDoan()->getId() ],
 				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 			))->setLabel($translator->trans('dashboard.thieunhi_chia_doi_chi_doan', [], 'BinhLeAdmin'));
 		}

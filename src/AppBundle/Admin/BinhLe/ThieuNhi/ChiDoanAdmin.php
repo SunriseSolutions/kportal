@@ -3,22 +3,34 @@
 namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BaseAdmin;
+use AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
-use AppBundle\Entity\User\User;
+use Bean\Bundle\CoreBundle\Service\StringService;
+
+use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+
+use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\CoreBundle\Form\Type\DatePickerType;
-use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
+use Sonata\CoreBundle\Form\Type\BooleanType;
+use Sonata\CoreBundle\Form\Type\CollectionType;
+use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\DoctrineORMAdminBundle\Datagrid;
+use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\Valid;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
-class ThanhVienAdmin extends BaseAdmin {
+class ChiDoanAdmin extends BaseAdmin {
+	
 	protected $action = '';
 	protected $actionParams = [];
 	
@@ -42,9 +54,11 @@ class ThanhVienAdmin extends BaseAdmin {
 	
 	public function getTemplate($name) {
 		if($name === 'list') {
-			if($this->action === 'list-thieu-nhi') {
-				return '::admin/binhle/thieu-nhi/thanh-vien/list-thieu-nhi.html.twig';
+			if($this->action === 'chia-doi-thieu-nhi') {
+				return '::admin/binhle/thieu-nhi/chi-doan/list-chia-doi-thieu-nhi.html.twig';
 			}
+			
+			return '::admin/binhle/thieu-nhi/chi-doan/list.html.twig';
 		}
 		
 		return parent::getTemplate($name);
@@ -52,18 +66,18 @@ class ThanhVienAdmin extends BaseAdmin {
 	
 	
 	public function configureRoutes(RouteCollection $collection) {
-//		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
-		$collection->add('thieuNhi', 'thieu-nhi/list');
+		$collection->add('thieuNhiChiDoanChiaDoi', $this->getRouterIdParameter() . '/thieu-nhi/chia-doi');
 		
 		parent::configureRoutes($collection);
 	}
 	
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+		$action       = $this->action;
+		$actionParams = $this->actionParams;
+		
 		// this text filter will be used to retrieve autocomplete fields
 		$datagridMapper
-			->add('id')
-			->add('name')
-			->add('chiDoan');
+			->add('id');
 	}
 	
 	/**
@@ -74,6 +88,7 @@ class ThanhVienAdmin extends BaseAdmin {
 	 */
 	public function isGranted($name, $object = null) {
 		$container = $this->getConfigurationPool()->getContainer();
+		
 		if($this->isAdmin()) {
 			return true;
 		}
@@ -86,9 +101,28 @@ class ThanhVienAdmin extends BaseAdmin {
 		if(empty($thanhVien = $user->getThanhVien())) {
 			return false;
 		} elseif($thanhVien->isBQT()) {
+			if($name === 'chia-doi-thieu-nhi') {
+				return false;
+			}
+			
 			return true;
 		}
 		
+		if($name === 'chia-doi-thieu-nhi') {
+			if(empty($phanBoNamNay = $thanhVien->getPhanBoNamNay())) {
+				return false;
+			}
+			if(empty($phanBoNamNay->getNamHoc()->isEnabled())) {
+				return false;
+			}
+			if($phanBoNamNay->isChiDoanTruong()) {
+				if($phanBoNamNay->getChiDoan()->getId() === $object->getId()) {
+					return true;
+				}
+			}
+			
+			return false;
+		}
 		
 		if($name === 'LIST') {
 			return true;
@@ -108,14 +142,10 @@ class ThanhVienAdmin extends BaseAdmin {
 		$expr      = $qb->expr();
 		$rootAlias = $qb->getRootAliases()[0];
 		if($this->action === 'list-thieu-nhi') {
-			$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
+			$this->clearResults($query);
 		}
 		if($this->action === 'chia-doi-thieu-nhi') {
-			$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
-			$qb->join($rootAlias . '.phanBoHangNam', 'phanBo');
-			$qb->join('phanBo.chiDoan', 'chiDoan');
-			$qb->andWhere($expr->eq('chiDoan.id', $expr->literal($this->actionParams['chiDoan']->getId())));
-			
+			$this->clearResults($query);
 		}
 		
 		return $query;
@@ -153,23 +183,31 @@ class ThanhVienAdmin extends BaseAdmin {
 		
 		$listMapper
 //			->addIdentifier('id')
-//			->addIdentifier('christianname', null, array())
-			->addIdentifier('name', null, array())
-			->add('dob', null, array( 'editable' => true ))
-			->add('soDienThoai', null, array())
-			->add('diaChiThuongTru', null, array( 'editable' => true ))
-			->add('chiDoan', 'choice', array(
-				'editable' => true,
-//				'class' => 'Vendor\ExampleBundle\Entity\ExampleStatus',
-				'choices'  => $danhSachChiDoan,
+			->addIdentifier('id', null, array())
+//			->add('thanhVien', null, array( 'associated_property' => 'name' ))
+			->add('thanhVien.christianName', null, array(
+				'label' => 'list.label_christianname'
 			))
-			->add('namHoc', 'text', array( 'editable' => true ));
+			->add('thanhVien.lastName', null, array(
+				'label' => 'list.label_lastname'
+			))
+			->add('thanhVien.middleName', null, array(
+				'label' => 'list.label_middlename'
+			))
+			->add('thanhVien.firstName', null, array(
+				'label' => 'list.label_firstname'
+			));
+		if($this->action === 'chia-doi-thieu-nhi') {
+			$listMapper->add('phanBoTruoc.bangDiem', null, array( 'associated_property' => 'tbYear' ));
+		}
+		$listMapper->add('chiDoan', null, array(
+			'associated_property' => 'number'
+		));
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
 		$isAdmin   = $this->isAdmin();
 		$container = $this->getConfigurationPool()->getContainer();
-//		$position  = $container->get( 'app.user' )->getPosition();
 		
 		$danhSachChiDoan = [
 			'Chiên Con 4 tuổi'    => 4,
@@ -190,50 +228,21 @@ class ThanhVienAdmin extends BaseAdmin {
 			'Dự Trưởng (19 tuổi)' => 19,
 		];
 		
-		// define group zoning
-		
-		
 		$formMapper
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
 		;
 		$formMapper
-			->add('user', ModelAutocompleteType::class, array( 'property' => 'username' ))
-			->add('christianname', ChoiceType::class, array(
-				'label'              => 'list.label_christianname',
-				'required'           => true,
-				'choices'            => ThanhVien::$christianNames,
-				'translation_domain' => $this->translationDomain
+			->add('thanhVien', ModelAutocompleteType::class, array(
+				'property'           => 'name',
+				'to_string_callback' => function(ThanhVien $entity, $property) {
+					return $entity->getName();
+				},
+			
 			))
-			->add('lastname', null, array(
-				'label' => 'list.label_lastname',
-			))
-			->add('middlename', null, array(
-				'label' => 'list.label_middlename',
-			))
-			->add('firstname', null, array(
-				'label' => 'list.label_firstname',
-			))
-			->add('phanDoan', ChoiceType::class, array(
-				'placeholder'        => 'Chọn Phân Đoàn',
-				'choices'            => ThanhVien::$danhSachPhanDoan,
-				'translation_domain' => $this->translationDomain
-			))
-			->add('chiDoan', ChoiceType::class, array(
-				'placeholder'        => 'Chọn Chi Đoàn',
-				'choices'            => $danhSachChiDoan,
-				'translation_domain' => $this->translationDomain
-			))
-			->add('namHoc', null, array( 'required' => true ))
-			->add('huynhTruong', null, array())
-			->add('enabled', null, array())
-			->add('dob', DatePickerType::class, array(
-				'format' => 'dd/MM/yyyy',
-			))
-			->add('soDienThoai', null, array( 'required' => false ))
-			->add('soDienThoaiMe', null, array( 'required' => false ))
-			->add('soDienThoaiBo', null, array( 'required' => false ))
-			->add('diaChiThuongTru', null, array( 'required' => true ));
+			->add('chiDoan', ModelAutocompleteType::class, array(
+				'property' => 'id'
+			));
 		
 		$formMapper
 			->end()
@@ -248,24 +257,5 @@ class ThanhVienAdmin extends BaseAdmin {
 		if( ! empty($object->isHuynhTruong())) {
 			$object->setThieuNhi(false);
 		}
-		$christianName = $object->getChristianname();
-		if( ! empty($christianName)) {
-			$cNames        = array_flip(ThanhVien::$christianNames);
-			$christianName = $cNames[ $christianName ];
-			$object->setSex(ThanhVien::$christianNameSex[ $christianName ]);
-		}
-		$object->setChristianname($christianName);
-		$lastname   = $object->getLastname() ?: '';
-		$middlename = $object->getMiddlename() ?: '';
-		$firstname  = $object->getFirstname() ?: '';
-		$object->setName($christianName . ' ' . $lastname . ' ' . $middlename . ' ' . $firstname);
-	}
-	
-	/**
-	 * @param ThanhVien $object
-	 */
-	public function postPersist($object) {
-		$object->setCode(strtoupper(User::generate4DigitCode($object->getId())));
-		$this->getModelManager()->update($object);
 	}
 }

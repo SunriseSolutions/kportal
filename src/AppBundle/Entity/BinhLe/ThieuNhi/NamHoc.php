@@ -69,6 +69,13 @@ class NamHoc {
 	
 	
 	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\PhanBo", mappedBy="namHoc", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $phanBoHangNam;
+	
+	
+	/**
 	 * @var NamHoc
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\NamHoc", mappedBy="namTruoc", cascade={"persist","merge"})
 	 */
@@ -258,4 +265,20 @@ class NamHoc {
 	public function setNamTruoc($namTruoc) {
 		$this->namTruoc = $namTruoc;
 	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getPhanBoHangNam() {
+		return $this->phanBoHangNam;
+	}
+	
+	/**
+	 * @param ArrayCollection $phanBoHangNam
+	 */
+	public function setPhanBoHangNam($phanBoHangNam) {
+		$this->phanBoHangNam = $phanBoHangNam;
+	}
+	
+	
 }

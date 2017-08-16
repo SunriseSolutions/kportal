@@ -14,6 +14,76 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ThanhVien {
 	
+	public static $christianNameSex = [
+		'PHERO'  => 'NAM',
+		'PHAOLO' => 'NAM',
+		'GIUSE'  => 'NAM',
+		'LUCA'   => 'NAM',
+		'ANRE'   => 'NAM',
+		
+		'TERESA'            => 'NỮ',
+		'MARIA'             => 'NỮ',
+		'ANNA'              => 'NỮ',
+		'MARIA MADALENA'    => 'NỮ',
+		'MARTINO DE PORRES' => 'NAM',
+		'ROSA LIMA'         => 'NỮ',
+
+		'DM VINCENTE'      => 'NAM',
+		'MARTINO (MARTIN)' => 'NAM',
+		'MARIANNE'         => 'NỮ',
+		
+		'ANNA MARIA CLARA' => 'NỮ',
+		'MA.TERESA'        => 'NỮ',
+		'GIUSE-MARIA'      => 'NAM',
+
+		'M.MARIE'          => 'NỮ',
+		'SILAO'            => 'NAM',
+		
+		'MARIA-GIUSE'  => 'NỮ',
+		'MARIA-AGATA'  => 'NỮ',
+		'MARIA-TERESA' => 'NỮ',
+		
+		'MAGARITA'                     => 'NỮ',
+		'MARIA-GORETTI'                => 'NỮ',
+		'VINH-SƠN (VINCENTE)'          => 'NAM',
+		'CATARINA'                     => 'NỮ',
+		'TOMA'                         => 'NAM',
+		'MICAE'                        => 'NAM',
+		'ANTON'                        => 'NAM',
+		'ĐA-MINH (Daminh)'             => 'NAM',
+		'GIOAN-BAOTIXITA'              => 'NAM',
+		'GIOAN-KIM'                    => 'NAM',
+		'FAUSTINA'                     => 'NỮ',
+		'AUGUSTINO'                    => 'NAM',
+		'MÁC-TA (MACTA)'               => 'NỮ',
+		'PHERO ĐA'                     => 'NAM',
+		'LUCIA'                        => 'NỮ',
+		'CECILIA'                      => 'NỮ',
+		'GIOAN'                        => 'NAM',
+		'AGATA'                        => 'NỮ',
+		'PHANXICO'                     => 'NAM',
+		'PHANXICO-XAVIE'               => 'NAM',
+		'PHANXICO-ASSISI'              => 'NAM',
+		'GIOAN-KIM-KHẨU'               => 'NAM',
+		'PHILIPPHE'                    => 'NAM',
+		'ELIZABETH'                    => 'NỮ',
+		'MONICA'                       => 'NỮ',
+		'GIERADO (GIÊ-RA-ĐÔ)'          => 'NAM',
+		'BENADO (BÊ-NA-ĐÔ)'            => 'NAM',
+		'AGNES'                        => 'NỮ',
+		'ANPHONGSO (AN-PHÔNG-SÔ)'      => 'NAM',
+		'STEPHANO'                     => 'NAM',
+		'ISAVE'                        => 'NỮ',
+
+		'ALBERTO'                      => 'NAM',
+		'GIOAN-PHAOLO'                 => 'NAM',
+		'GIOAN-BOSCO'                  => 'NAM',
+		'DAMINH SAVIO (ĐA-MINH-SAVIO)' => 'NAM',
+		'PIO (PI-Ô)'                   => 'NAM',
+	
+	
+	];
+	
 	public static $christianNames = [
 		'PHERO'  => 'Peter',
 		'PHAOLO' => 'Paul',
@@ -93,11 +163,11 @@ class ThanhVien {
 	const HUYNH_TRUONG = 'HUYNH_TRUONG';
 	
 	public static $danhSachPhanDoan = [
-		self::PHAN_DOAN_CHIEN   => self::PHAN_DOAN_CHIEN,
-		self::PHAN_DOAN_AU      => self::PHAN_DOAN_AU,
-		self::PHAN_DOAN_THIEU   => self::PHAN_DOAN_THIEU,
-		self::PHAN_DOAN_NGHIA   => self::PHAN_DOAN_NGHIA,
-		self::PHAN_DOAN_TONG_DO => self::PHAN_DOAN_TONG_DO,
+		'CHIÊN CON'   => self::PHAN_DOAN_CHIEN,
+		'ĐOÀN ẤU'      => self::PHAN_DOAN_AU,
+		'ĐOÀN THIẾU'   => self::PHAN_DOAN_THIEU,
+		'NGHĨA SĨ'   => self::PHAN_DOAN_NGHIA,
+		'TÔNG ĐỒ' => self::PHAN_DOAN_TONG_DO,
 	];
 	
 	public static $danhSachChiDoan = [
@@ -133,9 +203,16 @@ class ThanhVien {
 	protected $id;
 	
 	/**
+	 * @var string
 	 * @ORM\Column(type="string", length=4, nullable=true)
 	 */
 	protected $code;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=6, nullable=true)
+	 */
+	protected $sex;
 	
 	/**
 	 * @return mixed
@@ -192,13 +269,13 @@ class ThanhVien {
 		$bangDiemCu  = $phanBoCu->getBangDiem();
 		$oldCDNumber = $phanBoCu->getChiDoan()->getNumber();
 		if($bangDiemCu->isGradeRetention()) {
-			$phanBoCu->setChiDoan($namHoc->getChiDoanWithNumber($oldCDNumber));
-			
-			return $phanBoCu;
+//			$phanBoCu->setChiDoan($namHoc->getChiDoanWithNumber($oldCDNumber));
+			$newCDNumber = $oldCDNumber;
+		} else {
+			$newCDNumber = $oldCDNumber + 1;
 		}
 		
-		$newCDNumber = $oldCDNumber + 1;
-		$phanBoMoi   = new PhanBo();
+		$phanBoMoi = new PhanBo();
 		$phanBoMoi->setThanhVien($this);
 		$this->phanBoHangNam->add($phanBoMoi);
 		
@@ -206,6 +283,8 @@ class ThanhVien {
 		$phanBoMoi->setChiDoan($chiDoanMoi);
 		$chiDoanMoi->getPhanBoHangNam()->add($phanBoMoi);
 		
+		$phanBoMoi->setNamHoc($namHoc);
+		$namHoc->getPhanBoHangNam()->add($phanBoMoi);
 		$phanBoMoi->setThieuNhi(true);
 		$phanBoMoi->setPhanBoTruoc($phanBoCu);
 		$phanBoCu->setPhanBoSau($phanBoMoi);
@@ -854,4 +933,17 @@ class ThanhVien {
 		$this->code = $code;
 	}
 	
+	/**
+	 * @return string
+	 */
+	public function getSex() {
+		return $this->sex;
+	}
+	
+	/**
+	 * @param string $sex
+	 */
+	public function setSex($sex) {
+		$this->sex = $sex;
+	}
 }

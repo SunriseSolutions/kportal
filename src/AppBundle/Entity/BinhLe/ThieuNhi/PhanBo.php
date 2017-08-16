@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 class PhanBo {
 	/**
 	 * ID_REF
+	 * @var string
 	 * @ORM\Id
 	 * @ORM\Column(type="string", length=24)
 	 * @ORM\GeneratedValue(strategy="CUSTOM")
@@ -22,8 +23,12 @@ class PhanBo {
 	 */
 	protected $id;
 	
+	function __construct() {
+		$this->cacTruongPhuTrachDoi = new ArrayCollection();
+	}
+	
 	/**
-	 * @return mixed
+	 * @return string
 	 */
 	public function getId() {
 		return $this->id;
@@ -45,6 +50,14 @@ class PhanBo {
 		}
 	}
 	
+	
+	/**
+	 * @var DoiNhomGiaoLy
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\DoiNhomGiaoLy", inversedBy="phanBoHangNam", cascade={"persist","merge"})
+	 * @ORM\JoinColumn(name="id_doi_nhom_giao_ly", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $doiNhomGiaoLy;
+	
 	/**
 	 * @var ChiDoan
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan",inversedBy="phanBoHangNam", cascade={"persist","merge"})
@@ -52,6 +65,14 @@ class PhanBo {
 	 */
 	protected
 		$chiDoan;
+	
+	/**
+	 * @var NamHoc
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\NamHoc",inversedBy="phanBoHangNam", cascade={"persist","merge"})
+	 * @ORM\JoinColumn(name="id_nam_hoc", referencedColumnName="id", onDelete="CASCADE")
+	 */
+	protected
+		$namHoc;
 	
 	/**
 	 * @var ThanhVien
@@ -81,6 +102,11 @@ class PhanBo {
 	 */
 	protected $phanBoTruoc;
 	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\TruongPhuTrachDoi", mappedBy="doiNhomGiaoLy", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $cacTruongPhuTrachDoi;
 	
 	/**
 	 * @var boolean
@@ -343,5 +369,47 @@ class PhanBo {
 	 */
 	public function setPhanBoTruoc($phanBoTruoc) {
 		$this->phanBoTruoc = $phanBoTruoc;
+	}
+	
+	/**
+	 * @return NamHoc
+	 */
+	public function getNamHoc() {
+		return $this->namHoc;
+	}
+	
+	/**
+	 * @param NamHoc $namHoc
+	 */
+	public function setNamHoc($namHoc) {
+		$this->namHoc = $namHoc;
+	}
+	
+	/**
+	 * @return DoiNhomGiaoLy
+	 */
+	public function getDoiNhomGiaoLy() {
+		return $this->doiNhomGiaoLy;
+	}
+	
+	/**
+	 * @param DoiNhomGiaoLy $doiNhomGiaoLy
+	 */
+	public function setDoiNhomGiaoLy($doiNhomGiaoLy) {
+		$this->doiNhomGiaoLy = $doiNhomGiaoLy;
+	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getCacTruongPhuTrachDoi() {
+		return $this->cacTruongPhuTrachDoi;
+	}
+	
+	/**
+	 * @param ArrayCollection $cacTruongPhuTrachDoi
+	 */
+	public function setCacTruongPhuTrachDoi($cacTruongPhuTrachDoi) {
+		$this->cacTruongPhuTrachDoi = $cacTruongPhuTrachDoi;
 	}
 }

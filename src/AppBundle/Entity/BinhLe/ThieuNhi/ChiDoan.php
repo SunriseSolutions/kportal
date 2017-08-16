@@ -20,11 +20,12 @@ class ChiDoan {
 	protected $id;
 	
 	function __construct() {
-		$this->phanBoHangNam = new ArrayCollection();
+		$this->phanBoHangNam    = new ArrayCollection();
+		$this->cacDoiNhomGiaoLy = new ArrayCollection();
 	}
 	
 	public function generateId() {
-		$this->id = $this->name . '-' . $this->namHoc->getId();
+		$this->id = $this->number . '-' . $this->namHoc->getId();
 	}
 	
 	/**
@@ -46,6 +47,12 @@ class ChiDoan {
 	 */
 	protected
 		$namHoc;
+	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\DoiNhomGiaoLy", mappedBy="chiDoan", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $cacDoiNhomGiaoLy;
 	
 	/**
 	 * @var ArrayCollection

@@ -221,6 +221,9 @@ class BangDiemAdminController extends BaseCRUDController {
 					
 					$thanhVien->setQuickName($_qname);
 					$thanhVien->setChristianname($_cname);
+					if(array_key_exists($_cname, ThanhVien::$christianNameSex)) {
+						$thanhVien->setSex(ThanhVien::$christianNameSex[ $_cname ]);
+					}
 					$thanhVien->setName($_cname . ' ' . $_lname . ' ' . $_mname . ' ' . $_fname);
 					$thanhVien->setThieuNhi(true);
 					$thanhVien->setHuynhTruong(false);

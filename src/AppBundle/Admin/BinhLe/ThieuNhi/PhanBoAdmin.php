@@ -54,10 +54,6 @@ class PhanBoAdmin extends BaseAdmin {
 	
 	public function getTemplate($name) {
 		if($name === 'list') {
-			if($this->action === 'chia-doi-thieu-nhi') {
-			return '::admin/binhle/thieu-nhi/phan-bo/list-chia-doi-thieu-nhi.html.twig';
-			}
-			
 			return '::admin/binhle/thieu-nhi/phan-bo/list.html.twig';
 		}
 		
@@ -66,7 +62,6 @@ class PhanBoAdmin extends BaseAdmin {
 	
 	
 	public function configureRoutes(RouteCollection $collection) {
-		$collection->add('thieuNhiChiDoanChiaDoi', 'thieu-nhi/chi-doan/{chiDoan}/chia-doi');
 		
 		parent::configureRoutes($collection);
 	}
@@ -77,27 +72,26 @@ class PhanBoAdmin extends BaseAdmin {
 		
 		// this text filter will be used to retrieve autocomplete fields
 		$datagridMapper
-			->add('id');
-		if($action !== 'chia-doi-thieu-nhi') {
-			$datagridMapper->add('chiDoan', 'doctrine_orm_callback', array(
-//                'callback'   => array($this, 'getWithOpenCommentFilter'),
-				'callback'   => function($queryBuilder, $alias, $field, $value) use ($action, $actionParams) {
-					if( ! $value['value']) {
-						return;
-					}
-					if($action === 'chia-doi-thieu-nhi') {
-						/** @var ChiDoan $chiDoan */
-						$chiDoan = $actionParams['chiDoan'];
-					}
-					$queryBuilder->leftJoin(sprintf('%s.comments', $alias), 'c');
-					$queryBuilder->andWhere('c.status = :status');
-					$queryBuilder->setParameter('status', Comment::STATUS_MODERATE);
-					
-					return true;
+			->add('id')
+			->add('chiDoan', 'doctrine_orm_model_autocomplete', array(
+				'label' => 'list.label_chi_doan',
+			), null, array(
+				// in related CategoryAdmin there must be datagrid filter on `title` field to make the autocompletion work
+				'property'           => 'id',
+				'to_string_callback' => function(ChiDoan $entity, $property) {
+					return $entity->getId();
 				},
-				'field_type' => 'checkbox'
-			));
-		}
+			))
+			->add('thanhVien', 'doctrine_orm_model_autocomplete', array(
+				'label' => 'list.label_thanh_vien',
+			), null, array(
+				// in related CategoryAdmin there must be datagrid filter on `title` field to make the autocompletion work
+				'property'           => 'name',
+				'to_string_callback' => function(ThanhVien $entity, $property) {
+					return $entity->getName();
+				},
+			))
+		;
 	}
 	
 	/**
@@ -145,9 +139,7 @@ class PhanBoAdmin extends BaseAdmin {
 			$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
 		}
 		if($this->action === 'chia-doi-thieu-nhi') {
-			$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
-			$qb->join($rootAlias . '.chiDoan', 'chiDoan');
-			$qb->andWhere($expr->eq('chiDoan.id', $expr->literal($this->actionParams['chiDoan']->getId())));
+			$this->clearResults($query);
 			
 		}
 		
@@ -237,6 +229,7 @@ class PhanBoAdmin extends BaseAdmin {
 		;
 		$formMapper
 			->add('thanhVien', ModelAutocompleteType::class, array(
+				'label' => 'list.label_thanh_vien',
 				'property'           => 'name',
 				'to_string_callback' => function(ThanhVien $entity, $property) {
 					return $entity->getName();
@@ -244,7 +237,27 @@ class PhanBoAdmin extends BaseAdmin {
 			
 			))
 			->add('chiDoan', ModelAutocompleteType::class, array(
+				'label' => 'list.label_chi_doan',
+				'property'           => 'id',
+				'to_string_callback' => function(ChiDoan $entity, $property) {
+					return $entity->getId();
+				},
+			))
+			->add('namHoc', ModelType::class, array(
+				'label' => 'list.label_nam_hoc',
 				'property' => 'id'
+			))
+			->add('phanDoan', ChoiceType::class, array(
+				'label' => 'list.label_phan_doan',
+				'placeholder'        => 'Chọn Phân Đoàn',
+				'choices'            => ThanhVien::$danhSachPhanDoan,
+				'translation_domain' => $this->translationDomain
+			))
+			->add('phanDoanTruong',null,array(
+				'label' => 'list.label_phan_doan_truong',
+			))
+			->add('chiDoanTruong',null,array(
+				'label' => 'list.label_chi_doan_truong',
 			));
 		
 		$formMapper
