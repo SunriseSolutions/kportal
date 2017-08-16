@@ -10,6 +10,7 @@ use AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan;
 use AppBundle\Entity\BinhLe\ThieuNhi\NamHoc;
 use AppBundle\Entity\BinhLe\ThieuNhi\PhanBo;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
+use AppBundle\Entity\User\User;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,7 +85,7 @@ class BangDiemAdminController extends BaseCRUDController {
 //				$conn        = $this->get('database_connection');
 //				$updateQuery = 'UPDATE `mhs__employer__employee` SET `state` = \'' . BusinessEmployee::STATE_DRAFT . '\' WHERE `mhs__employer__employee`.`id` = ' . $id;
 //                $conn->update('mhs__employer__employee', array('state' => BusinessEmployee::STATE_DRAFT), array('id_employer' => $id, 'enabled' => true));
-				
+				$thanhVienRepo  = $this->getDoctrine()->getRepository(ThanhVien::class);
 				$phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($filePath);
 				$row            = 5;
 				$successfulRow  = 0;
@@ -267,6 +268,15 @@ class BangDiemAdminController extends BaseCRUDController {
 					$row ++;
 				}
 				try {
+					$manager->flush();
+					
+					$allThanhVien = $thanhVienRepo->findAll();
+					/** @var ThanhVien $thanhVien */
+					foreach($allThanhVien as $thanhVien) {
+						$thanhVien->setCode(strtoupper(User::generate4DigitCode($thanhVien->getId())));
+						$manager->persist($thanhVien);
+					}
+					
 					$manager->flush();
 
 //                    $employeeArray = $conn->fetchAll('SELECT * FROM mhs__employer__employee WHERE state LIKE \'' . BusinessEmployee::STATE_DRAFT . '\' AND id_employer = ' . $id);

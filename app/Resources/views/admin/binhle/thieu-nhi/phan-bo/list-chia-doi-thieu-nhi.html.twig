@@ -36,6 +36,7 @@
 
 {% block javascripts %}
     {% set chiDoan = admin.actionParams['chiDoan'] %}
+
     {% set phanBoHangNam = chiDoan.phanBoHangNam %}
     {% set christianNames =  admin.actionParams['christianNames'] %}
 
@@ -54,13 +55,18 @@
                 return [
                     {% for phanBo in phanBoHangNam %}
                     {% set thanhVien = phanBo.thanhVien %}
-                    ["{{ phanBo.id }}", '{{ thanhVien.christianName }}', '{{ thanhVien.lastName }}', '{{ thanhVien.middleName }}', '{{ thanhVien.firstName }}', , ''],
+                    {% if thanhVien.thieuNhi is not empty %}
+                    {#"{{ phanBo.id }}",#}
+                    ["{{ thanhVien.code }}", '{{ thanhVien.christianName }}', '{{ thanhVien.lastName }}', '{{ thanhVien.middleName }}', '{{ thanhVien.firstName }}', '', ''],
+                    {% endif %}
                     {% endfor %}
                 ];
             }
 
             var container = document.getElementById('chiDoanSpreadSheet'),
                 hot;
+            var container1 = document.getElementById('example1'),
+                hot1;
 
             window.hot = new Handsontable(container, {
                 data: getCarData(),
@@ -70,7 +76,8 @@
                 autoWrapRow: true,
                 startRows: 7,
                 startCols: 4,
-                colHeaders: ['ID', 'Tên Thánh', 'Họ', 'Tên Lót', 'Tên', 'Đội', 'Giới tính'],
+                rowHeaders: true,
+                colHeaders: ['#', 'Tên Thánh', 'Họ', 'Tên Lót', 'Tên', 'Đội', 'Giới tính'],
                 columns: [
                     {
                         readOnly: true
@@ -136,7 +143,7 @@
                         </button>
                     </p>
 
-                    <div style="max-height: 1800px; margin-left: 20px;" id="chiDoanSpreadSheet"
+                    <div style="margin-left: 20px;" id="chiDoanSpreadSheet"
                          class="handsontable htColumnHeaders"></div>
                 </div>
             </div>

@@ -15,13 +15,13 @@ use Doctrine\ORM\Mapping as ORM;
 class ThanhVien {
 	
 	public static $christianNames = [
-		'PHÊ-RÔ'  => 'Peter',
-		'PHAO-LÔ' => 'Paul',
-		'GIUSE'   => 'Joseph',
-		'LUCA'    => 'Luke',
-		'AN-RÊ'   => 'Andrew',
+		'PHERO'  => 'Peter',
+		'PHAOLO' => 'Paul',
+		'GIUSE'  => 'Joseph',
+		'LUCA'   => 'Luke',
+		'ANRE'   => 'Andrew',
 		
-		'TÊ-RÊ-SA'          => 'Therese',
+		'TERESA'            => 'Therese',
 		'MARIA'             => 'Mary',
 		'ANNA'              => 'Anne',
 		'MARIA MADALENA'    => 'Mary Magdalene',
@@ -43,43 +43,43 @@ class ThanhVien {
 		'MARIA-AGATA'  => 'MARIA-AGATA',
 		'MARIA-TERESA' => 'MARIA-TERESA',
 		
-		'MAGARITA'            => 'Margarita',
-		'MARIA-GORETTI'       => 'Maria Goretti',
-		'VINH-SƠN (VINCENTE)' => 'Vincent',
-		'CATARINA'            => 'Catherine',
-		'TÔ-MA'               => 'Thomas',
-		'MICAE'               => 'Michel',
-		'AN-TÔN'              => 'Anthony',
-		'ĐA-MINH'             => 'Dominic',
-		'GIOAN-BAOTIXITA'     => 'John the Baptist',
-		'GIOAN-KIM'           => 'Joachim',
-		'FAUSTINA'            => 'Faustina',
-		'AUGUSTINO'           => 'Augustine of Hippo',
-		'MÁC-TA'              => 'Martha of Bethany',
-		'PHÊ-RÔ ĐA'           => 'Peter Đa',
-		'LUCIA'               => 'Lucy',
-		'CECILIA'             => 'Cecilia',
-		'GIOAN'               => 'John',
-		'AGATA'               => 'Agatha',
-		'PHANXICO'            => 'Francis',
-		'PHANXICO-XAVIE'      => 'Francis Xavier',
-		'PHANXICO-ASSISI'     => 'Francis of Assisi',
-		'GIOAN-KIM-KHẨU'      => 'John Chrysostom',
-		'PHILIPPHE'           => 'Philip',
-		'ELIZABETH'           => 'Elizabeth',
-		'MONICA'              => 'Monica of Hippo',
-		'GIÊ-RA-ĐÔ'           => 'Gerard',
-		'BÊ-NA-ĐÔ'            => 'Bernard',
-		'AGNES'               => 'Agnes of Rome',
-		'AN-PHÔNG-SÔ'         => 'Alphonsus Maria de\' Liguori',
-		'STEPHANO'            => 'Stephen',
-		'ISAVE'               => 'Elizabeth (Isave)',
-		'EMMANUEL'            => 'Emmanuel',
-		'ALBERTO'             => 'Albertus',
-		'GIOAN-PHAOLO'        => 'John-Paul',
-		'GIOAN-BOSCO'         => 'John Bosco',
-		'ĐA-MINH-SAVIO'       => 'Dominic Savio',
-		'PI-Ô'                => 'Pius',
+		'MAGARITA'                     => 'Margarita',
+		'MARIA-GORETTI'                => 'Maria Goretti',
+		'VINH-SƠN (VINCENTE)'          => 'Vincent',
+		'CATARINA'                     => 'Catherine',
+		'TOMA'                         => 'Thomas',
+		'MICAE'                        => 'Michel',
+		'ANTON'                        => 'Anthony',
+		'ĐA-MINH (Daminh)'             => 'Dominic',
+		'GIOAN-BAOTIXITA'              => 'John the Baptist',
+		'GIOAN-KIM'                    => 'Joachim',
+		'FAUSTINA'                     => 'Faustina',
+		'AUGUSTINO'                    => 'Augustine of Hippo',
+		'MÁC-TA (MACTA)'               => 'Martha of Bethany',
+		'PHERO ĐA'                     => 'Peter Đa',
+		'LUCIA'                        => 'Lucy',
+		'CECILIA'                      => 'Cecilia',
+		'GIOAN'                        => 'John',
+		'AGATA'                        => 'Agatha',
+		'PHANXICO'                     => 'Francis',
+		'PHANXICO-XAVIE'               => 'Francis Xavier',
+		'PHANXICO-ASSISI'              => 'Francis of Assisi',
+		'GIOAN-KIM-KHẨU'               => 'John Chrysostom',
+		'PHILIPPHE'                    => 'Philip',
+		'ELIZABETH'                    => 'Elizabeth',
+		'MONICA'                       => 'Monica of Hippo',
+		'GIERADO (GIÊ-RA-ĐÔ)'          => 'Gerard',
+		'BENADO (BÊ-NA-ĐÔ)'            => 'Bernard',
+		'AGNES'                        => 'Agnes of Rome',
+		'ANPHONGSO (AN-PHÔNG-SÔ)'      => 'Alphonsus Maria de\' Liguori',
+		'STEPHANO'                     => 'Stephen',
+		'ISAVE'                        => 'Elizabeth (Isave)',
+		'EMMANUEL'                     => 'Emmanuel',
+		'ALBERTO'                      => 'Albertus',
+		'GIOAN-PHAOLO'                 => 'John-Paul',
+		'GIOAN-BOSCO'                  => 'John Bosco',
+		'DAMINH SAVIO (ĐA-MINH-SAVIO)' => 'Dominic Savio',
+		'PIO (PI-Ô)'                   => 'Pius',
 	
 	
 	];
@@ -125,13 +125,17 @@ class ThanhVien {
 	}
 	
 	/**
-	 * ID_REF
+	 * @var int
 	 * @ORM\Id
-	 * @ORM\Column(type="string", length=24)
-	 * @ORM\GeneratedValue(strategy="CUSTOM")
-	 * @ORM\CustomIdGenerator(class="AppBundle\Doctrine\ORM\RandomIdGenerator")
+	 * @ORM\Column(type="integer",options={"unsigned":true})
+	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	protected $id;
+	
+	/**
+	 * @ORM\Column(type="string", length=4, nullable=true)
+	 */
+	protected $code;
 	
 	/**
 	 * @return mixed
@@ -142,6 +146,21 @@ class ThanhVien {
 	
 	public function __construct() {
 		$this->phanBoHangNam = new ArrayCollection();
+	}
+	
+	/**
+	 * @return PhanBo|null
+	 */
+	public function getPhanBoNamNay() {
+		/** @var PhanBo $phanBo */
+		foreach($this->phanBoHangNam as $phanBo) {
+			$chiDoan = $phanBo->getChiDoan();
+			if($chiDoan->getNamHoc()->isEnabled()) {
+				return $phanBo;
+			}
+		}
+		
+		return null;
 	}
 	
 	/**
@@ -181,7 +200,12 @@ class ThanhVien {
 		$newCDNumber = $oldCDNumber + 1;
 		$phanBoMoi   = new PhanBo();
 		$phanBoMoi->setThanhVien($this);
-		$phanBoMoi->setChiDoan($namHoc->getChiDoanWithNumber($newCDNumber));
+		$this->phanBoHangNam->add($phanBoMoi);
+		
+		$chiDoanMoi = $namHoc->getChiDoanWithNumber($newCDNumber);
+		$phanBoMoi->setChiDoan($chiDoanMoi);
+		$chiDoanMoi->getPhanBoHangNam()->add($phanBoMoi);
+		
 		$phanBoMoi->setThieuNhi(true);
 		$phanBoMoi->setPhanBoTruoc($phanBoCu);
 		$phanBoCu->setPhanBoSau($phanBoMoi);
@@ -815,4 +839,19 @@ class ThanhVien {
 	public function setApproved($approved) {
 		$this->approved = $approved;
 	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getCode() {
+		return $this->code;
+	}
+	
+	/**
+	 * @param mixed $code
+	 */
+	public function setCode($code) {
+		$this->code = $code;
+	}
+	
 }

@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity\BinhLe\ThieuNhi;
 
-use AppBundle\Entity\Content\Base\AppContentEntity;
 use AppBundle\Entity\NLP\Sense;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,8 +19,12 @@ class ChiDoan {
 	 */
 	protected $id;
 	
-	public function generateId(){
-		$this->id = $this->name.'-'.$this->namHoc->getId();
+	function __construct() {
+		$this->phanBoHangNam = new ArrayCollection();
+	}
+	
+	public function generateId() {
+		$this->id = $this->name . '-' . $this->namHoc->getId();
 	}
 	
 	/**

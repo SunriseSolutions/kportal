@@ -36,4 +36,17 @@ class User extends AppUser {
 	public function isAdmin() {
 		return $this->hasRole(self::ROLE_ADMIN) || $this->hasRole(self::ROLE_SUPER_ADMIN);
 	}
+	
+	public static function generate4DigitCode($code = null) {
+		if($code === null) {
+			$code = rand(0, 1679615);
+		}
+		
+		$code = base_convert($code, 10, 36);
+		for($i = 0; $i < 4 - strlen($code);) {
+			$code = '0' . $code;
+		}
+		
+		return $code;
+	}
 }

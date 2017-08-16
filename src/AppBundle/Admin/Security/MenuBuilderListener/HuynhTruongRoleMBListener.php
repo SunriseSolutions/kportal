@@ -2,6 +2,7 @@
 
 namespace AppBundle\Admin\Security\MenuBuilderListener;
 
+use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
 use AppBundle\Entity\ChannelPartner\BusinessChannelPartner;
 use AppBundle\Entity\ChannelPartner\ChannelPartner;
 use AppBundle\Entity\ChannelPartner\ChannelPartnerEmployer;
@@ -33,25 +34,31 @@ class HuynhTruongRoleMBListener {
 		$translator = $this->container->get('translator');
 		$request    = $this->container->get('request_stack')->getCurrentRequest();
 //        $pos = $user->getPosition(['roles' => [Position::ROLE_ADMIN]]);
-		if($user->hasRole(User::ROLE_HUYNH_TRUONG)) {
-			$menu->setChildren([]);
-			$this->addThanhVienMenuItems($menu, $translator);
+		$thanhVien = $user->getThanhVien();
+		if( ! empty($thanhVien = $user->getThanhVien())) {
+			if($user->hasRole(User::ROLE_HUYNH_TRUONG)) {
+				$menu->setChildren([]);
+				$this->addThanhVienMenuItems($menu, $translator, $thanhVien);
+			}
 		}
 	}
 	
-	private function addThanhVienMenuItems(ItemInterface $menu, $translator, $params = array()) {
+	private function addThanhVienMenuItems(ItemInterface $menu, $translator, ThanhVien $thanhVien, $params = array()) {
+		$phanBo = $thanhVien->getPhanBoNamNay();
+		
 		$menu->addChild('list thieu nhi toan xu doan', array(
 			'route'           => 'admin_app_binhle_thieunhi_thanhvien_thieuNhi',
 //			'routeParameters' => [ 'id' => $salesPartnerId ],
 			'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 		))->setLabel($translator->trans('dashboard.list_thieunhi_xudoan', [], 'BinhLeAdmin'));
 		
-		$menu->addChild('chia doi trong chi doan', array(
-			'route'           => 'admin_app_binhle_thieunhi_phanbo_thieuNhiChiDoanChiaDoi',
-			'routeParameters' => [ 'chiDoan' => '7-2017' ],
-			'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
-		))->setLabel($translator->trans('dashboard.thieunhi_chia_doi_chi_doan', [], 'BinhLeAdmin'));
-		
+		if( ! empty($phanBo) && $phanBo->isChiDoanTruong()) {
+			$menu->addChild('chia doi trong chi doan', array(
+				'route'           => 'admin_app_binhle_thieunhi_phanbo_thieuNhiChiDoanChiaDoi',
+				'routeParameters' => [ 'chiDoan' => $phanBo->getChiDoan()->getId() ],
+				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+			))->setLabel($translator->trans('dashboard.thieunhi_chia_doi_chi_doan', [], 'BinhLeAdmin'));
+		}
 		
 	}
 	
