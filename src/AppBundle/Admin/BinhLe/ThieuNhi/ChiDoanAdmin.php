@@ -56,6 +56,9 @@ class ChiDoanAdmin extends BaseAdmin {
 		if($name === 'list') {
 			if($this->action === 'chia-doi-thieu-nhi') {
 				return '::admin/binhle/thieu-nhi/chi-doan/list-chia-doi-thieu-nhi.html.twig';
+			} elseif($this->action === 'chia-truong-phu-trach') {
+				return '::admin/binhle/thieu-nhi/chi-doan/list-chia-truong-phu-trach.html.twig';
+				
 			}
 			
 			return '::admin/binhle/thieu-nhi/chi-doan/list.html.twig';
@@ -67,6 +70,7 @@ class ChiDoanAdmin extends BaseAdmin {
 	
 	public function configureRoutes(RouteCollection $collection) {
 		$collection->add('thieuNhiChiDoanChiaDoi', $this->getRouterIdParameter() . '/thieu-nhi/chia-doi');
+		$collection->add('thieuNhiChiDoanChiaTruongPhuTrach', $this->getRouterIdParameter() . '/thieu-nhi/chia-truong-phu-trach');
 		
 		parent::configureRoutes($collection);
 	}
@@ -108,7 +112,7 @@ class ChiDoanAdmin extends BaseAdmin {
 			return true;
 		}
 		
-		if($name === 'chia-doi-thieu-nhi') {
+		if($name === 'chia-doi-thieu-nhi' || $name === 'chia-truong-phu-trach') {
 			if(empty($phanBoNamNay = $thanhVien->getPhanBoNamNay())) {
 				return false;
 			}

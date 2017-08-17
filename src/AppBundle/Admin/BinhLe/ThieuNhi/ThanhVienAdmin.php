@@ -54,6 +54,7 @@ class ThanhVienAdmin extends BaseAdmin {
 	public function configureRoutes(RouteCollection $collection) {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
 		$collection->add('thieuNhi', 'thieu-nhi/list');
+		$collection->add('truongChiDoan', 'truong/chi-doan-{chiDoan}/list');
 		
 		parent::configureRoutes($collection);
 	}
@@ -89,9 +90,20 @@ class ThanhVienAdmin extends BaseAdmin {
 			return true;
 		}
 		
-		
 		if($name === 'LIST') {
 			return true;
+		}
+		
+		if($name === 'CREATE') {
+			return false;
+		}
+		
+		if($this->action === 'truong-chi-doan' || $name === 'EDIT') {
+			if( ! empty($thanhVien->getPhanBoNamNay()->isChiDoanTruong())) {
+				return true;
+			}
+			
+			return false;
 		}
 		
 		return false;
@@ -107,11 +119,13 @@ class ThanhVienAdmin extends BaseAdmin {
 		$qb        = $query->getQueryBuilder();
 		$expr      = $qb->expr();
 		$rootAlias = $qb->getRootAliases()[0];
+		
 		if($this->action === 'list-thieu-nhi') {
 			$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
 		}
-		if($this->action === 'chia-doi-thieu-nhi') {
-			$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
+		
+		if($this->action === 'truong-chi-doan') {
+			$query->andWhere($expr->eq($rootAlias . '.huynhTruong', $expr->literal(true)));
 			$qb->join($rootAlias . '.phanBoHangNam', 'phanBo');
 			$qb->join('phanBo.chiDoan', 'chiDoan');
 			$qb->andWhere($expr->eq('chiDoan.id', $expr->literal($this->actionParams['chiDoan']->getId())));
@@ -156,89 +170,48 @@ class ThanhVienAdmin extends BaseAdmin {
 //			->addIdentifier('christianname', null, array())
 			->addIdentifier('name', null, array())
 			->add('dob', null, array( 'editable' => true ))
-			->add('soDienThoai', null, array())
-			->add('diaChiThuongTru', null, array( 'editable' => true ))
+			->add('soDienThoai', null, array(
+				'label' => 'list.label_so_dien_thoai',
+				'editable' => true ))
+			->add('soDienThoaiSecours', null, array(
+				'label' => 'list.label_so_dien_thoai_secours',
+				'editable' => true ))
+			->add('diaChiThuongTru', null, array(
+				'label' => 'list.label_dia_chi_thuong_tru',
+				'editable' => true ))
 			->add('chiDoan', 'choice', array(
-				'editable' => true,
+				'editable' => false,
 //				'class' => 'Vendor\ExampleBundle\Entity\ExampleStatus',
 				'choices'  => $danhSachChiDoan,
 			))
-			->add('namHoc', 'text', array( 'editable' => true ));
+			->add('namHoc', 'text', array( 'editable' => false ))
+			->add('_action', 'actions', array(
+				'actions' => array(
+					'edit' => array(),
+//					'delete' => array(),
+//					'send_evoucher' => array( 'template' => '::admin/employer/employee/list__action_send_evoucher.html.twig' )
+
+//                ,
+//                    'view_description' => array('template' => '::admin/product/description.html.twig')
+//                ,
+//                    'view_tos' => array('template' => '::admin/product/tos.html.twig')
+				)
+			));
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
 		$isAdmin   = $this->isAdmin();
 		$container = $this->getConfigurationPool()->getContainer();
-//		$position  = $container->get( 'app.user' )->getPosition();
 		
-		$danhSachChiDoan = [
-			'Chiên Con 4 tuổi'    => 4,
-			'Chiên Con 5 tuổi'    => 5,
-			'Chiên Con 6 tuổi'    => 6,
-			'Ấu Nhi 7 tuổi'       => 7,
-			'Ấu Nhi 8 tuổi'       => 8,
-			'Ấu Nhi 9 tuổi'       => 9,
-			'Thiếu Nhi 10 tuổi'   => 10,
-			'Thiếu Nhi 11 tuổi'   => 11,
-			'Thiếu Nhi 12 tuổi'   => 12,
-			'Nghĩa Sĩ 13 tuổi'    => 13,
-			'Nghĩa Sĩ 14 tuổi'    => 14,
-			'Nghĩa Sĩ 15 tuổi'    => 15,
-			'Tông Đồ 16 tuổi'     => 16,
-			'Tông Đồ 17 tuổi'     => 17,
-			'Tông Đồ 18 tuổi'     => 18,
-			'Dự Trưởng (19 tuổi)' => 19,
-		];
-		
-		// define group zoning
-		
-		
-		$formMapper
-			->tab('form.tab_info')
-			->with('form.group_general')//            ->add('children')
-		;
-		$formMapper
-			->add('user', ModelAutocompleteType::class, array( 'property' => 'username' ))
-			->add('christianname', ChoiceType::class, array(
-				'label'              => 'list.label_christianname',
-				'required'           => true,
-				'choices'            => ThanhVien::$christianNames,
-				'translation_domain' => $this->translationDomain
-			))
-			->add('lastname', null, array(
-				'label' => 'list.label_lastname',
-			))
-			->add('middlename', null, array(
-				'label' => 'list.label_middlename',
-			))
-			->add('firstname', null, array(
-				'label' => 'list.label_firstname',
-			))
-			->add('phanDoan', ChoiceType::class, array(
-				'placeholder'        => 'Chọn Phân Đoàn',
-				'choices'            => ThanhVien::$danhSachPhanDoan,
-				'translation_domain' => $this->translationDomain
-			))
-			->add('chiDoan', ChoiceType::class, array(
-				'placeholder'        => 'Chọn Chi Đoàn',
-				'choices'            => $danhSachChiDoan,
-				'translation_domain' => $this->translationDomain
-			))
-			->add('namHoc', null, array( 'required' => true ))
-			->add('huynhTruong', null, array())
-			->add('enabled', null, array())
-			->add('dob', DatePickerType::class, array(
-				'format' => 'dd/MM/yyyy',
-			))
-			->add('soDienThoai', null, array( 'required' => false ))
-			->add('soDienThoaiMe', null, array( 'required' => false ))
-			->add('soDienThoaiBo', null, array( 'required' => false ))
-			->add('diaChiThuongTru', null, array( 'required' => true ));
-		
-		$formMapper
-			->end()
-			->end();
-		
+		$user                   = $container->get('app.user')->getUser();
+		$thanhVien              = $user->getThanhVien();
+		$phanBoNamNay           = $thanhVien->getPhanBoNamNay();
+		ThanhVienAdminHelper::$translationDomain = $this->translationDomain;
+		if($isAdmin) {
+			ThanhVienAdminHelper::configureAdminForm($formMapper);
+		} elseif( ! empty($phanBoNamNay) && $phanBoNamNay->isChiDoanTruong()) {
+			ThanhVienAdminHelper::configureChiDoanTruongForm($formMapper);
+		}
 	}
 	
 	/**

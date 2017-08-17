@@ -58,6 +58,20 @@ class HuynhTruongRoleMBListener {
 				'routeParameters' => [ 'id' => $phanBo->getChiDoan()->getId() ],
 				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 			))->setLabel($translator->trans('dashboard.thieunhi_chia_doi_chi_doan', [], 'BinhLeAdmin'));
+			
+			
+			$menu->addChild('chia doi truong chi doan', array(
+				'route'           => 'admin_app_binhle_thieunhi_chidoan_thieuNhiChiDoanChiaTruongPhuTrach',
+				'routeParameters' => [ 'id' => $phanBo->getChiDoan()->getId() ],
+				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+			))->setLabel($translator->trans('dashboard.thieunhi_chia_truong_chi_doan', [], 'BinhLeAdmin'));
+			
+			
+			$menu->addChild('truong chi doan', array(
+				'route'           => 'admin_app_binhle_thieunhi_thanhvien_truongChiDoan',
+				'routeParameters' => [ 'chiDoan' => $phanBo->getChiDoan()->getId() ],
+				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+			))->setLabel($translator->trans('dashboard.thieunhi_truong_chi_doan', [], 'BinhLeAdmin'));
 		}
 		
 	}

@@ -39,7 +39,6 @@ class PhanBo {
 		
 	}
 	
-	
 	/**
 	 * @param ChiDoan $chiDoanObj
 	 */
@@ -48,6 +47,14 @@ class PhanBo {
 		if( ! empty($chiDoanObj)) {
 			$this->phanDoan = ThanhVien::$danhSachChiDoan[ $chiDoanObj->getNumber() ];
 		}
+	}
+	
+	public function clearCacTruongPhuTrachDoi() {
+		/** @var TruongPhuTrachDoi $truongDoi */
+		foreach($this->cacTruongPhuTrachDoi as $truongDoi) {
+			$truongDoi->setPhanBoHangNam(null);
+		}
+		$this->cacTruongPhuTrachDoi->clear();
 	}
 	
 	
@@ -104,7 +111,7 @@ class PhanBo {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\TruongPhuTrachDoi", mappedBy="doiNhomGiaoLy", cascade={"persist","merge"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\TruongPhuTrachDoi", mappedBy="phanBoHangNam", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $cacTruongPhuTrachDoi;
 	

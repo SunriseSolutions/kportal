@@ -403,6 +403,12 @@ class ThanhVien {
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
+	protected $soDienThoaiSecours;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
 	protected $soDienThoaiMe;
 	
 	/**
@@ -945,5 +951,19 @@ class ThanhVien {
 	 */
 	public function setSex($sex) {
 		$this->sex = $sex;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getSoDienThoaiSecours() {
+		return $this->soDienThoaiSecours;
+	}
+	
+	/**
+	 * @param string $soDienThoaiSecours
+	 */
+	public function setSoDienThoaiSecours($soDienThoaiSecours) {
+		$this->soDienThoaiSecours = $soDienThoaiSecours;
 	}
 }

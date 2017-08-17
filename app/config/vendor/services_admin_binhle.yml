@@ -51,6 +51,31 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.binhle_thieunhi_chidoan, group: binhle, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
+    app.admin.binhle_thieunhi_doinhomgiaoly:
+        class: AppBundle\Admin\BinhLe\ThieuNhi\DoiNhomGiaoLyAdmin
+        arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\DoiNhomGiaoLy, ~]
+        calls:
+#            - [setRouteBuilder,['@sonata.admin.route.path_info_slashes']]
+            - [setIvoryCkeditor,['default']]
+#            - [setStringService, ['@bean_core.string']]
+#            - [setPHPCRService, ['@app.phpcr']]
+#            - [addChild, ['@app.admin.product_clinics']]
+            - [setTranslationDomain, ['BinhLeAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.binhle_thieunhi_doinhomgiaoly, group: binhle, label_translator_strategy: sonata.admin.label.strategy.underscore }
+
+    app.admin.binhle_thieunhi_truongphutrachdoi:
+        class: AppBundle\Admin\BinhLe\ThieuNhi\TruongPhuTrachDoiAdmin
+        arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\TruongPhuTrachDoi, ~]
+        calls:
+#            - [setRouteBuilder,['@sonata.admin.route.path_info_slashes']]
+            - [setIvoryCkeditor,['default']]
+#            - [setStringService, ['@bean_core.string']]
+#            - [setPHPCRService, ['@app.phpcr']]
+#            - [addChild, ['@app.admin.product_clinics']]
+            - [setTranslationDomain, ['BinhLeAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.binhle_thieunhi_truongphutrachdoi, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
     app.admin.binhle_thieunhi_namhoc:
         class: AppBundle\Admin\BinhLe\ThieuNhi\NamHocAdmin

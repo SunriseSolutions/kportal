@@ -30,11 +30,11 @@ class TruongPhuTrachDoi {
 	}
 	
 	function __construct() {
-
+	
 	}
 	
 	public function generateId() {
-		$this->id = $this->phanBoHangNam->getThanhVien()->getCode() . '-' . $this->doiNhomGiaoLy->getId();
+		$this->id = User::generate4DigitCode() . '-' . $this->phanBoHangNam->getThanhVien()->getCode() . '-' . $this->doiNhomGiaoLy->getId();
 	}
 	
 	/**
@@ -78,7 +78,6 @@ class TruongPhuTrachDoi {
 	public function setPhanBoHangNam($phanBoHangNam) {
 		$this->phanBoHangNam = $phanBoHangNam;
 	}
-	
 	
 	
 }

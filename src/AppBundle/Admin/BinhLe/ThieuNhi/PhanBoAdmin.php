@@ -90,8 +90,7 @@ class PhanBoAdmin extends BaseAdmin {
 				'to_string_callback' => function(ThanhVien $entity, $property) {
 					return $entity->getName();
 				},
-			))
-		;
+			));
 	}
 	
 	/**
@@ -204,65 +203,15 @@ class PhanBoAdmin extends BaseAdmin {
 		$isAdmin   = $this->isAdmin();
 		$container = $this->getConfigurationPool()->getContainer();
 		
-		$danhSachChiDoan = [
-			'Chiên Con 4 tuổi'    => 4,
-			'Chiên Con 5 tuổi'    => 5,
-			'Chiên Con 6 tuổi'    => 6,
-			'Ấu Nhi 7 tuổi'       => 7,
-			'Ấu Nhi 8 tuổi'       => 8,
-			'Ấu Nhi 9 tuổi'       => 9,
-			'Thiếu Nhi 10 tuổi'   => 10,
-			'Thiếu Nhi 11 tuổi'   => 11,
-			'Thiếu Nhi 12 tuổi'   => 12,
-			'Nghĩa Sĩ 13 tuổi'    => 13,
-			'Nghĩa Sĩ 14 tuổi'    => 14,
-			'Nghĩa Sĩ 15 tuổi'    => 15,
-			'Tông Đồ 16 tuổi'     => 16,
-			'Tông Đồ 17 tuổi'     => 17,
-			'Tông Đồ 18 tuổi'     => 18,
-			'Dự Trưởng (19 tuổi)' => 19,
-		];
+		$user                                 = $container->get('app.user')->getUser();
+		$thanhVien                            = $user->getThanhVien();
+		PhanBoAdminHelper::$translationDomain = $this->translationDomain;
+		if($isAdmin) {
+			PhanBoAdminHelper::configureAdminForm($formMapper);
+		} elseif( ! empty($phanBoNamNay = $thanhVien->getPhanBoNamNay()) && $phanBoNamNay->isChiDoanTruong()) {
+			PhanBoAdminHelper::configureChiDoanTruongForm($formMapper);
+		}
 		
-		$formMapper
-			->tab('form.tab_info')
-			->with('form.group_general')//            ->add('children')
-		;
-		$formMapper
-			->add('thanhVien', ModelAutocompleteType::class, array(
-				'label' => 'list.label_thanh_vien',
-				'property'           => 'name',
-				'to_string_callback' => function(ThanhVien $entity, $property) {
-					return $entity->getName();
-				},
-			
-			))
-			->add('chiDoan', ModelAutocompleteType::class, array(
-				'label' => 'list.label_chi_doan',
-				'property'           => 'id',
-				'to_string_callback' => function(ChiDoan $entity, $property) {
-					return $entity->getId();
-				},
-			))
-			->add('namHoc', ModelType::class, array(
-				'label' => 'list.label_nam_hoc',
-				'property' => 'id'
-			))
-			->add('phanDoan', ChoiceType::class, array(
-				'label' => 'list.label_phan_doan',
-				'placeholder'        => 'Chọn Phân Đoàn',
-				'choices'            => ThanhVien::$danhSachPhanDoan,
-				'translation_domain' => $this->translationDomain
-			))
-			->add('phanDoanTruong',null,array(
-				'label' => 'list.label_phan_doan_truong',
-			))
-			->add('chiDoanTruong',null,array(
-				'label' => 'list.label_chi_doan_truong',
-			));
-		
-		$formMapper
-			->end()
-			->end();
 		
 	}
 	

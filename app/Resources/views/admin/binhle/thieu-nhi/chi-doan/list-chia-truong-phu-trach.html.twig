@@ -69,7 +69,7 @@
 
 {% block javascripts %}
     {% set chiDoan = admin.actionParams['chiDoan'] %}
-
+    {% set cacDoiNhomGiaoLy = chiDoan.cacDoiNhomGiaoLy %}
     {% set phanBoHangNam = chiDoan.phanBoHangNam %}
     {% set christianNames =  admin.actionParams['christianNames'] %}
 
@@ -87,11 +87,10 @@
     <script>
         $(document).ready(function () {
             window.phanBo = {
-                    {%  set _counter = 0 %}
+                    {% set _counter = 0 %}
                     {% for phanBo in phanBoHangNam %}
-                    {% if phanBo.thieuNhi is not empty %}
-                    {%  set _counter = _counter + 1 %}
-
+                    {% if phanBo.huynhTruong is not empty or phanBo.duTruong is not empty %}
+                    {% set _counter = _counter + 1 %}
                     {% set thanhVien = phanBo.thanhVien %}
                     {% spaceless %}
                     {% if _counter > 1 %}, {% endif %}
@@ -102,31 +101,32 @@
             {% endif %}
             {% endfor %}
         }
+            
             window.data =
                 [
                     {% for phanBo in phanBoHangNam %}
                     {% set thanhVien = phanBo.thanhVien %}
-                    {% set doiNhomGiaoLy = phanBo.doiNhomGiaoLy %}
-                    {% set doi = doiNhomGiaoLy is empty?'':doiNhomGiaoLy.number %}
-                    {% if thanhVien.thieuNhi is not empty %}
-                    {% set phanBoTruoc = phanBo.phanBoTruoc %}
-                    {% if phanBoTruoc is not empty %}
-                    {% set bangDiemTruoc = phanBo.phanBoTruoc.bangDiem %}
-                    {% if bangDiemTruoc is not empty %}
-                    {% set diemNamTruoc = bangDiemTruoc.tbYear %}
-                    {% set oLai = bangDiemTruoc.gradeRetention is empty?'':'Ở LẠI' %}
-                    {% else %}
-                    {% set diemNamTruoc = '---' %}
-                    {% set oLai = '---' %}
+                    {% if phanBo.huynhTruong is not empty or phanBo.duTruong is not empty %}
+                    {% set doi1 = '' %}
+                    {% set doi2 = '' %}
+                    {% set doi3 = '' %}
+                    {% for truongPhuTrach in phanBo.cacTruongPhuTrachDoi %}
+
+                    {% if loop.index == 1 %}
+                    {% set doi1 = truongPhuTrach.doiNhomGiaoLy.number %}
                     {% endif %}
 
-                    {% else %}
-                    {% set diemNamTruoc =  'Mới tham gia' %}
-                    {% set oLai = '' %}
+                    {% if loop.index == 2 %}
+                    {% set doi2 = truongPhuTrach.doiNhomGiaoLy.number %}
                     {% endif %}
-                    {#"{{ phanBo.id }}",#}
+
+                    {% if loop.index == 3 %}
+                    {% set doi3 = truongPhuTrach.doiNhomGiaoLy.number %}
+                    {% endif %}
+
+                    {% endfor %}
                     {% spaceless %}
-                    ["{{ thanhVien.code }}", '{{ thanhVien.christianName }}', '{{ thanhVien.lastName }}', '{{ thanhVien.middleName }}', '{{ thanhVien.firstName }}', {{ diemNamTruoc }}, '{{ doi }}', '{{ thanhVien.sex }}', '{{ oLai }}'],
+                    ["{{ thanhVien.code }}", '{{ thanhVien.christianName }}', '{{ thanhVien.lastName }}', '{{ thanhVien.middleName }}', '{{ thanhVien.firstName }}', '{{ doi1 }}', '{{ doi2 }}', '{{ doi3 }}'],
                     {% endspaceless %}
                     {% endif %}
                     {% endfor %}
@@ -138,16 +138,25 @@
             var container1 = document.getElementById('example1'),
                 hot1;
 
-            window.postDoi = function (doi, phanBoId, thanhVienCode, thanhVienFirstName) {
+            window.cacDoiNhomGiaoLy = [{% for dngl in cacDoiNhomGiaoLy %} {% if loop.index > 1 %},{% endif %} {{ dngl.number }}{% endfor %}]
+            window.validateDoi = function (doi1) {
+                return doi1 === '' || doi1 === 'undefined' || ( $.isNumeric(doi1) && window.cacDoiNhomGiaoLy.indexOf(parseInt(doi1)) > -1 );
+            }
+            window.postDoi = function (doi1, doi2, doi3, phanBoId, thanhVienCode, thanhVienFirstName) {
                 // Assign handlers immediately after making the request,
 // and remember the jqxhr object for this request
-                var chiaDoiPostURL = "{{ path('admin_app_binhle_thieunhi_chidoan_thieuNhiChiDoanChiaDoi',{'id':chiDoan.id}) }}";
-                if ($.isNumeric(doi) && phanBoId != 'undefined' && phanBoId != null) {
-                    var jqxhr = $.post(chiaDoiPostURL, {doi: doi, phanBoId: phanBoId})
+                var chiaDoiPostURL = "{{ path('admin_app_binhle_thieunhi_chidoan_thieuNhiChiDoanChiaTruongPhuTrach',{'id':chiDoan.id}) }}";
+                if (window.validateDoi(doi1) && window.validateDoi(doi2) && window.validateDoi(doi3) && phanBoId != 'undefined' && phanBoId != null
+                ) {
+                    var jqxhr = $.post(chiaDoiPostURL, {doi1: doi1, doi2: doi2, doi3: doi3, phanBoId: phanBoId})
                         .done(function () {
+                            var doi = doi1 === '' || doi1 === 'undefined' ? '' : doi1;
+                            doi += doi2 === '' || doi2 === 'undefined' ? '' : ', ' + doi2;
+                            doi += doi3 === '' || doi3 === 'undefined' ? '' : ', ' + doi3;
+
                             $.notify({
                                 // options
-                                message: ' Bé ' + data[changedRow][4] + ' (' + thanhVienCode + ') đã được xếp vào đội ' + doi
+                                message: ' Trưởng ' + data[changedRow][4] + ' (' + thanhVienCode + ') đã được xếp vào đội ' + doi
                             }, {
                                 // settings
                                 type: 'success',
@@ -198,10 +207,11 @@
                     jqxhr.always(function () {
 
                     });
-                } else {
+                }
+                else {
                     $.notify({
                         // options
-                        message: 'Mã số đội phải nhập số (1 -> 12) chứ đừng nhập chữ nha bồ tèo ...'
+                        message: 'Mã số đội phải nhập cho đúng nha chế ...'
                     }, {
                         // settings
                         type: 'error',
@@ -228,7 +238,7 @@
                 startCols: 4,
                 rowHeaders: true,
                 afterChange: function (change, source) {
-                    if (source === 'loadData') {
+                    if (source !== 'edit') {
                         return; //don't save this change
                     }
 //                    if (!autosave.checked) {
@@ -240,12 +250,14 @@
                     var thanhVienCode = data[changedRow][0];
                     var thanhVienFirstName = data[changedRow][4];
                     var phanBoId = window.phanBo[thanhVienCode];
-                    var doi = data[changedRow][6];
-                    window.postDoi(doi, phanBoId, thanhVienCode, thanhVienFirstName);
+                    var doi1 = data[changedRow][5];
+                    var doi2 = data[changedRow][6];
+                    var doi3 = data[changedRow][7];
+                    window.postDoi(doi1, doi2, doi3, phanBoId, thanhVienCode, thanhVienFirstName);
 
                 }
                 ,
-                colHeaders: ['#', 'Tên Thánh', 'Họ', 'Tên Lót', 'Tên', 'Điểm ' + '{{ chiDoan.namHoc.id - 1 }}', 'Đội', 'Giới tính', 'Ở lại'],
+                colHeaders: ['#', 'Tên Thánh', 'Họ', 'Tên Lót', 'Tên', 'Đội thứ nhất', 'Đội thứ 2', 'Đội thứ 3'],
                 columns: [
                     {
                         readOnly: true
@@ -266,20 +278,16 @@
                     {readOnly: true},
                     {readOnly: true},
                     {
-                        readOnly: true,
-                        type: 'numeric'
+                        type: 'dropdown',
+                        source: window.cacDoiNhomGiaoLy
                     },
                     {
                         type: 'dropdown',
-                        source: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                        source: window.cacDoiNhomGiaoLy
                     },
                     {
-                        readOnly: true,
-                        editor: 'select',
-                        selectOptions: ['NAM', 'NỮ']
-                    },
-                    {
-                        readOnly: true
+                        type: 'dropdown',
+                        source: window.cacDoiNhomGiaoLy
                     }
                 ]
             });
