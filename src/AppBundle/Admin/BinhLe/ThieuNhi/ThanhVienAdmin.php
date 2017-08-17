@@ -90,7 +90,7 @@ class ThanhVienAdmin extends BaseAdmin {
 			return true;
 		}
 		
-		if($name === 'LIST') {
+		if($name === 'LIST' || $name === 'VIEW') {
 			return true;
 		}
 		
@@ -100,6 +100,14 @@ class ThanhVienAdmin extends BaseAdmin {
 		
 		if($this->action === 'truong-chi-doan' || $name === 'EDIT') {
 			if( ! empty($thanhVien->getPhanBoNamNay()->isChiDoanTruong())) {
+				if($name === 'EDIT') {
+					if(empty($object)) {
+						return false;
+					}
+					
+					return ($object->getPhanBoNamNay()->getChiDoan() === $thanhVien->getPhanBoNamNay()->getChiDoan());
+				}
+				
 				return true;
 			}
 			
@@ -171,14 +179,17 @@ class ThanhVienAdmin extends BaseAdmin {
 			->addIdentifier('name', null, array())
 			->add('dob', null, array( 'editable' => true ))
 			->add('soDienThoai', null, array(
-				'label' => 'list.label_so_dien_thoai',
-				'editable' => true ))
+				'label'    => 'list.label_so_dien_thoai',
+				'editable' => true
+			))
 			->add('soDienThoaiSecours', null, array(
-				'label' => 'list.label_so_dien_thoai_secours',
-				'editable' => true ))
+				'label'    => 'list.label_so_dien_thoai_secours',
+				'editable' => true
+			))
 			->add('diaChiThuongTru', null, array(
-				'label' => 'list.label_dia_chi_thuong_tru',
-				'editable' => true ))
+				'label'    => 'list.label_dia_chi_thuong_tru',
+				'editable' => true
+			))
 			->add('chiDoan', 'choice', array(
 				'editable' => false,
 //				'class' => 'Vendor\ExampleBundle\Entity\ExampleStatus',
@@ -203,13 +214,13 @@ class ThanhVienAdmin extends BaseAdmin {
 		$isAdmin   = $this->isAdmin();
 		$container = $this->getConfigurationPool()->getContainer();
 		
-		$user                   = $container->get('app.user')->getUser();
-		$thanhVien              = $user->getThanhVien();
+		$user                                    = $container->get('app.user')->getUser();
+		$thanhVien                               = $user->getThanhVien();
 		ThanhVienAdminHelper::$translationDomain = $this->translationDomain;
 		if($isAdmin) {
-			ThanhVienAdminHelper::configureAdminForm($formMapper,$this);
+			ThanhVienAdminHelper::configureAdminForm($formMapper, $this);
 		} elseif( ! empty($phanBoNamNay = $thanhVien->getPhanBoNamNay()) && $phanBoNamNay->isChiDoanTruong()) {
-			ThanhVienAdminHelper::configureChiDoanTruongForm($formMapper,$this);
+			ThanhVienAdminHelper::configureChiDoanTruongForm($formMapper, $this);
 		}
 	}
 	
