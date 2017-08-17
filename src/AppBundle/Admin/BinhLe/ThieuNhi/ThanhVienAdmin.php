@@ -207,9 +207,9 @@ class ThanhVienAdmin extends BaseAdmin {
 		$thanhVien              = $user->getThanhVien();
 		ThanhVienAdminHelper::$translationDomain = $this->translationDomain;
 		if($isAdmin) {
-			ThanhVienAdminHelper::configureAdminForm($formMapper);
+			ThanhVienAdminHelper::configureAdminForm($formMapper,$this);
 		} elseif( ! empty($phanBoNamNay = $thanhVien->getPhanBoNamNay()) && $phanBoNamNay->isChiDoanTruong()) {
-			ThanhVienAdminHelper::configureChiDoanTruongForm($formMapper);
+			ThanhVienAdminHelper::configureChiDoanTruongForm($formMapper,$this);
 		}
 	}
 	

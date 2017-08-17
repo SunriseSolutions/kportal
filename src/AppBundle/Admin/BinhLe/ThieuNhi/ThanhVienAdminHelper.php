@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints\Valid;
 class ThanhVienAdminHelper {
 	public static $translationDomain;
 	
-	public static function configureChiDoanTruongForm(FormMapper $formMapper) {
+	public static function configureChiDoanTruongForm(FormMapper $formMapper, ThanhVienAdmin $admin) {
 		$formMapper->tab('form.tab_info')
 		           ->with('form.group_general', [ 'class' => 'col-md-6' ])->end()
 		           ->with('form.group_extra', [ 'class' => 'col-md-6' ])->end()
@@ -56,7 +56,7 @@ class ThanhVienAdminHelper {
 		$formMapper->end()->end();
 	}
 	
-	public static function configureAdminForm(FormMapper $formMapper) {
+	public static function configureAdminForm(FormMapper $formMapper, ThanhVienAdmin $admin) {
 		
 		$danhSachChiDoan = [
 			'Chiên Con 4 tuổi'    => 4,
@@ -79,6 +79,14 @@ class ThanhVienAdminHelper {
 		
 		// define group zoning
 		
+		if( ! empty($subject = $admin->getSubject())) {
+			$christianName = $subject->getChristianName();
+			if(array_key_exists($christianName, ThanhVien::$christianNames)) {
+				$christianName = ThanhVien::$christianNames[ $christianName ];
+			}
+		} else {
+			$christianName = '';
+		}
 		
 		$formMapper
 			->tab('form.tab_info')
@@ -90,6 +98,7 @@ class ThanhVienAdminHelper {
 				'label'              => 'list.label_christianname',
 				'required'           => true,
 				'choices'            => ThanhVien::$christianNames,
+				'data'               => $christianName,
 				'translation_domain' => self::$translationDomain
 			))
 			->add('lastname', null, array(
@@ -123,11 +132,12 @@ class ThanhVienAdminHelper {
 			->add('enabled', null, array())
 			->add('dob', DatePickerType::class, array(
 				'format' => 'dd/MM/yyyy',
+				'required' => false,
 			))
 			->add('soDienThoai', null, array( 'required' => false ))
 			->add('soDienThoaiMe', null, array( 'required' => false ))
 			->add('soDienThoaiBo', null, array( 'required' => false ))
-			->add('diaChiThuongTru', null, array( 'required' => true ));
+			->add('diaChiThuongTru', null, array( 'required' => false ));
 		
 		$formMapper
 			->end()
