@@ -30,7 +30,7 @@ class DoiNhomGiaoLy {
 	}
 	
 	function __construct() {
-		$this->phanBoHangNam = new ArrayCollection();
+		$this->phanBoHangNam        = new ArrayCollection();
 		$this->cacTruongPhuTrachDoi = new ArrayCollection();
 	}
 	
@@ -56,6 +56,18 @@ class DoiNhomGiaoLy {
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\TruongPhuTrachDoi", mappedBy="doiNhomGiaoLy", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $cacTruongPhuTrachDoi;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $hoanTatBangDiemHK1;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $hoanTatBangDiemHK2;
 	
 	/**
 	 * @var integer
@@ -119,4 +131,31 @@ class DoiNhomGiaoLy {
 		$this->cacTruongPhuTrachDoi = $cacTruongPhuTrachDoi;
 	}
 	
+	/**
+	 * @return bool
+	 */
+	public function isHoanTatBangDiemHK1() {
+		return $this->hoanTatBangDiemHK1;
+	}
+	
+	/**
+	 * @param bool $hoanTatBangDiemHK1
+	 */
+	public function setHoanTatBangDiemHK1($hoanTatBangDiemHK1) {
+		$this->hoanTatBangDiemHK1 = $hoanTatBangDiemHK1;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isHoanTatBangDiemHK2() {
+		return $this->hoanTatBangDiemHK2;
+	}
+	
+	/**
+	 * @param bool $hoanTatBangDiemHK2
+	 */
+	public function setHoanTatBangDiemHK2($hoanTatBangDiemHK2) {
+		$this->hoanTatBangDiemHK2 = $hoanTatBangDiemHK2;
+	}
 }

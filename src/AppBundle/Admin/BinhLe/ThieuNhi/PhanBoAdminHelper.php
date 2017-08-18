@@ -131,7 +131,11 @@ class PhanBoAdminHelper {
 			))
 			->add('chiDoanTruong',null,array(
 				'label' => 'list.label_chi_doan_truong',
-			));
+			))
+			->add('huynhTruong',null,array(
+				'label' => 'list.label_huynh_truong',
+			))
+		;
 		
 		$formMapper
 			->end()

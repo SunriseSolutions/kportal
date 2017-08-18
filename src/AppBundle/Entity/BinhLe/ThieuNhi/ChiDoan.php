@@ -28,6 +28,37 @@ class ChiDoan {
 		$this->id = $this->number . '-' . $this->namHoc->getId();
 	}
 	
+	private $phanBoHangNamSorted = false;
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public
+	function getPhanBoHangNam() {
+		if( ! $this->phanBoHangNamSorted) {
+			$array       = $this->phanBoHangNam->toArray();
+			$phanBoArray = [];
+			$sortedArray = [];
+			$returnArray = [];
+			/** @var PhanBo $phanBo */
+			foreach($array as $phanBo) {
+				$firstName                       = $phanBo->getThanhVien()->getFirstname();
+				$sortedArray[ $phanBo->getId() ] = $firstName;
+				$phanBoArray[ $phanBo->getId() ] = $phanBo;
+			}
+			$this->phanBoHangNamSorted = true;
+			$collator                  = new \Collator('vi_VN');
+//			natcasesort()
+			$collator->asort($sortedArray);
+			foreach($sortedArray as $id => $name) {
+				$returnArray[] = $phanBoArray[ $id ];
+			}
+			$this->phanBoHangNam = new ArrayCollection(($returnArray));
+		}
+		
+		return $this->phanBoHangNam;
+	}
+	
 	public function chiaTruongPhuTrachVaoCacDoi($doi1, $doi2, $doi3, PhanBo $phanBo) {
 		if($phanBo->getChiDoan()->getId() !== $this->id) {
 			return false;
@@ -165,15 +196,6 @@ class ChiDoan {
 		$phanDoan
 	) {
 		$this->phanDoan = $phanDoan;
-	}
-	
-	
-	/**
-	 * @return ArrayCollection
-	 */
-	public
-	function getPhanBoHangNam() {
-		return $this->phanBoHangNam;
 	}
 	
 	/**

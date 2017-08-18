@@ -3,7 +3,9 @@
 namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BaseAdmin;
+use AppBundle\Entity\BinhLe\ThieuNhi\DoiNhomGiaoLy;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
+use AppBundle\Entity\BinhLe\ThieuNhi\TruongPhuTrachDoi;
 use AppBundle\Entity\User\User;
 use Doctrine\ORM\QueryBuilder;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
@@ -54,6 +56,7 @@ class ThanhVienAdmin extends BaseAdmin {
 	public function configureRoutes(RouteCollection $collection) {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
 		$collection->add('thieuNhi', 'thieu-nhi/list');
+		$collection->add('thieuNhiNhom', 'thieu-nhi/nhom-giao-ly/{phanBo}/list');
 		$collection->add('truongChiDoan', 'truong/chi-doan-{chiDoan}/list');
 		
 		parent::configureRoutes($collection);
@@ -98,20 +101,45 @@ class ThanhVienAdmin extends BaseAdmin {
 			return false;
 		}
 		
-		if($this->action === 'truong-chi-doan' || $name === 'EDIT') {
-			if( ! empty($thanhVien->getPhanBoNamNay()->isChiDoanTruong())) {
+		if(in_array($this->action, [ 'truong-chi-doan', 'list-thieu-nhi-nhom' ]) || $name === 'EDIT') {
+			if($this->action === 'truong-chi-doan') {
+				if( ! empty($thanhVien->getPhanBoNamNay()->isChiDoanTruong())) {
+					if($name === 'EDIT') {
+						if(empty($object)) {
+							return false;
+						}
+						
+						return ($object->getPhanBoNamNay()->getChiDoan() === $thanhVien->getPhanBoNamNay()->getChiDoan());
+					}
+					
+					return true;
+				}
+				
+				return false;
+			} elseif($this->action === 'list-thieu-nhi-nhom') {
 				if($name === 'EDIT') {
 					if(empty($object)) {
 						return false;
 					}
 					
-					return ($object->getPhanBoNamNay()->getChiDoan() === $thanhVien->getPhanBoNamNay()->getChiDoan());
+					$doiNhomGiaoLy = $object->getPhanBoNamNay()->getDoiNhomGiaoLy();
+					
+					if(empty($doiNhomGiaoLy)) {
+						return false;
+					}
+					
+					$cacTruongPT = $doiNhomGiaoLy->getCacTruongPhuTrachDoi();
+					/** @var TruongPhuTrachDoi $item */
+					foreach($cacTruongPT as $item) {
+						if($item->getPhanBoHangNam()->getThanhVien()->getId() === $thanhVien->getId()) {
+							return true;
+						}
+					}
+					
+					return false;
 				}
 				
-				return true;
 			}
-			
-			return false;
 		}
 		
 		return false;
@@ -128,8 +156,27 @@ class ThanhVienAdmin extends BaseAdmin {
 		$expr      = $qb->expr();
 		$rootAlias = $qb->getRootAliases()[0];
 		
-		if($this->action === 'list-thieu-nhi') {
+		if(in_array($this->action, [ 'list-thieu-nhi', 'list-thieu-nhi-nhom' ])) {
 			$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
+		}
+		
+		if($this->action === 'list-thieu-nhi-nhom') {
+			/** @var array $dngl */
+			$cacDoiNhomGiaoLy = $this->actionParams['cacDoiNhomGiaoLy'];
+			if(count($cacDoiNhomGiaoLy) > 0) {
+				$dnglIds = [];
+				/** @var DoiNhomGiaoLy $dngl */
+				foreach($cacDoiNhomGiaoLy as $dngl) {
+					$dnglIds[] = $dngl->getId();
+				}
+				
+				$qb->join($rootAlias . '.phanBoHangNam', 'phanBo');
+				$qb->join('phanBo.doiNhomGiaoLy', 'doiNhomGiaoLy');
+				
+				$query->andWhere($expr->in('doiNhomGiaoLy.id', $dnglIds));
+			} else {
+				$this->clearResults($query);
+			}
 		}
 		
 		if($this->action === 'truong-chi-doan') {
@@ -144,9 +191,12 @@ class ThanhVienAdmin extends BaseAdmin {
 	}
 	
 	public function generateUrl($name, array $parameters = array(), $absolute = UrlGeneratorInterface::ABSOLUTE_PATH) {
-		if($this->action === 'list-thieu-nhi') {
-			if($name === 'list') {
+		if($name === 'list') {
+			if($this->action === 'list-thieu-nhi') {
 				$name = 'thieuNhi';
+			} elseif($this->action === 'list-thieu-nhi-nhom') {
+				$name                 = 'thieuNhiNhom';
+				$parameters['phanBo'] = $this->actionParams['phanBo']->getId();
 			}
 		}
 		
@@ -174,7 +224,7 @@ class ThanhVienAdmin extends BaseAdmin {
 		];
 		
 		$listMapper
-//			->addIdentifier('id')
+			->addIdentifier('code')
 //			->addIdentifier('christianname', null, array())
 			->addIdentifier('name', null, array())
 			->add('dob', null, array( 'editable' => true ))

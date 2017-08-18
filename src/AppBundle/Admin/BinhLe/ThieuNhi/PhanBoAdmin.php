@@ -219,6 +219,11 @@ class PhanBoAdmin extends BaseAdmin {
 	 * @param ThanhVien $object
 	 */
 	public function preValidate($object) {
+		
+		if( ! empty($object->isChiDoanTruong() || $object->isPhanDoanTruong())) {
+			$object->setHuynhTruong(true);
+		}
+		
 		if( ! empty($object->isHuynhTruong())) {
 			$object->setThieuNhi(false);
 		}

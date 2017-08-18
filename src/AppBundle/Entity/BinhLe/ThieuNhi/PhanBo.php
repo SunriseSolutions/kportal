@@ -116,6 +116,18 @@ class PhanBo {
 	protected $cacTruongPhuTrachDoi;
 	
 	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\HienDien", mappedBy="thieuNhi", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $diemDanh;
+	
+	/**
+	 * @var ArrayCollection
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\HienDien", mappedBy="huynhTruong", cascade={"persist","merge"}, orphanRemoval=true)
+	 */
+	protected $diemDanhThieuNhi;
+	
+	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
