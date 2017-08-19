@@ -47,6 +47,9 @@ class ThanhVienAdmin extends BaseAdmin {
 			if($this->action === 'list-thieu-nhi') {
 				return '::admin/binhle/thieu-nhi/thanh-vien/list-thieu-nhi.html.twig';
 			}
+			if($this->action === 'list-thieu-nhi-nhom') {
+				return '::admin/binhle/thieu-nhi/thanh-vien/list-thieu-nhi-nhom.html.twig';
+			}
 		}
 		
 		return parent::getTemplate($name);
@@ -57,6 +60,8 @@ class ThanhVienAdmin extends BaseAdmin {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
 		$collection->add('thieuNhi', 'thieu-nhi/list');
 		$collection->add('thieuNhiNhom', 'thieu-nhi/nhom-giao-ly/{phanBo}/list');
+		$collection->add('thieuNhiNhomDownloadBangDiem', 'thieu-nhi/nhom-giao-ly/{phanBo}/bang-diem/{hocKy}/download');
+		
 		$collection->add('truongChiDoan', 'truong/chi-doan-{chiDoan}/list');
 		
 		parent::configureRoutes($collection);
@@ -65,9 +70,9 @@ class ThanhVienAdmin extends BaseAdmin {
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
 		// this text filter will be used to retrieve autocomplete fields
 		$datagridMapper
-			->add('id')
-			->add('name')
-			->add('chiDoan');
+			->add('id', null, array( 'label' => 'list.label_id' ))
+			->add('name', null, array( 'label' => 'list.label_name' ))
+			->add('chiDoan', null, array( 'label' => 'list.label_chi_doan' ));
 	}
 	
 	/**
@@ -117,6 +122,10 @@ class ThanhVienAdmin extends BaseAdmin {
 				
 				return false;
 			} elseif($this->action === 'list-thieu-nhi-nhom') {
+				if($name === 'EXPORT') {
+					return true;
+				}
+				
 				if($name === 'EDIT') {
 					if(empty($object)) {
 						return false;

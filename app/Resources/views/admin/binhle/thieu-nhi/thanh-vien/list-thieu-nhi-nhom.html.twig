@@ -17,13 +17,13 @@
         {#{{ dump(form.children) }}#}
         {#{{ dump(form.children.employer.vars.value.value) }}#}
         {#<select name="action_assign_to_benefit" style="width: auto; height: auto" class="form-control">) }}#}
-            {#{% set employer = form.children.employer.vars.value.value %}#}
-            {#{% set products = employer.nonVoucherProducts %}#}
-            {#{% for product in products %}#}
+        {#{% set employer = form.children.employer.vars.value.value %}#}
+        {#{% set products = employer.nonVoucherProducts %}#}
+        {#{% for product in products %}#}
 
-                    {#<option value="{{ product.id }}">{{ product.nonVoucherProduct.product.name }}</option>#}
+        {#<option value="{{ product.id }}">{{ product.nonVoucherProduct.product.name }}</option>#}
 
-            {#{% endfor %}#}
+        {#{% endfor %}#}
         {#</select>#}
         {#<input name="action_assign_entitlement_to_benefit" style="width: auto; height: auto" class="form-control" placeholder="Custom Entitlement"/>#}
     {% endblock %}
@@ -40,7 +40,8 @@
                     <h4 class="modal-title" id="myModalLabel">Import Joiner List</h4>
                 </div>
                 <div class="modal-body">
-                    <p><a class="btn btn-default" href="{{ asset('import/sample/employee-list.xls') }}">Download sample excel</a>
+                    <p><a class="btn btn-default" href="{{ asset('import/sample/employee-list.xls') }}">Download sample
+                            excel</a>
                     </p>
                     <form action=" path('admin_app_employer_businessemployer_employeesImport',{'id':admin.parent.subject.id,'type':'joiner'}) "
                           method="post" enctype="multipart/form-data">
@@ -65,7 +66,8 @@
                     <h4 class="modal-title" id="myModalLabel">Import Leaver List</h4>
                 </div>
                 <div class="modal-body">
-                    <p><a class="btn btn-default" href="{{ asset('import/sample/employee-resignee-list.xls') }}">Download sample excel</a>
+                    <p><a class="btn btn-default" href="{{ asset('import/sample/employee-resignee-list.xls') }}">Download
+                            sample excel</a>
                     </p>
                     <form action=" path('admin_app_employer_businessemployer_employeesImport',{'id':admin.parent.subject.id,'type':'leaver'}) "
                           method="post" enctype="multipart/form-data">
@@ -82,11 +84,19 @@
 {% endblock list_table %}
 
  {% block sonata_admin_content_actions_wrappers %}
+     {{ parent() }}
      <ul class="nav navbar-nav navbar-right">
-         <li class="">
-             {#<input type="button" class="btn btn-small btn-success" value="Import List" data-toggle="modal"#}
-                    {#data-target="#clinicImportJoinerModal" style="margin-top:8px;"/>#}
+         <li class="dropdown sonata-actions">
+             <a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                 Download <b class="caret"></b>
+             </a>
+             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                 <li><a class="dropdown-item"
+                        href="{{ path('admin_app_binhle_thieunhi_thanhvien_thieuNhiNhomDownloadBangDiem',{'phanBo':admin.actionParams['phanBo'].getId(), 'hocKy':1}) }}">Bang diem Hoc ky I</a>
+                 </li>
+             </ul>
          </li>
      </ul>
-     {{ parent() }}
  {% endblock sonata_admin_content_actions_wrappers %}

@@ -1,0 +1,5 @@
+services:
+    app.binhle_thieunhi_thanhvien:
+        class: AppBundle\Service\BinhLe\ThieuNhi\ThanhVienService
+        arguments:
+            - "@service_container"
