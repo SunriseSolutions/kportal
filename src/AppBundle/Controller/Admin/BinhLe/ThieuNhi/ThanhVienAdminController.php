@@ -64,20 +64,29 @@ class ThanhVienAdminController extends BaseCRUDController {
 		$phpExcelObject->setActiveSheetIndex(0);
 		$activeSheet = $phpExcelObject->getActiveSheet();
 		
-		$activeSheet->setCellValue('A1', "BẢNG ĐIỂM HỌC KỲ 1")
-		            ->setCellValue('B1', "Last Name")
-		            ->setCellValue('C1', "DOB")
-		            ->setCellValue('D1', "Gender")
-		            ->setCellValue('E1', "NRIC/FIN")
-		            ->setCellValue('F1', "SchemeID")
-		            ->setCellValue('G1', "Employer")
-		            ->setCellValue('H1', "Biz Registration No");
+		$activeSheet->setCellValue('A1', "BẢNG ĐIỂM HỌC KỲ 1");
+		
 		
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$phpExcelObject->setActiveSheetIndex(0);
 		$activeSheet = $phpExcelObject->getActiveSheet();
 		$sWriter     = new SpreadsheetWriter($activeSheet);
+		$sWriter->mergeCellsRight(13);
+		$sWriter->getCurrentCellStyle()->applyFromArray(array(
+			'font'      => array(
+				'bold' => true,
+//				'color' => array( 'rgb' => 'FF0000' ),
+				'size' => 18,
+				'name' => 'Times New Roman'
+			)
+		,
+			'alignment' => array(
+				'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+				'vertical'   => \PHPExcel_Style_Alignment::VERTICAL_CENTER,
+			)
+		));
 		
+		$sWriter->getCurrentRowDimension()->setRowHeight(30);
 		
 		// create the writer
 		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
