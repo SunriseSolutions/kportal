@@ -30,6 +30,23 @@ class SpreadsheetWriter {
 		return $this->workSheet->getColumnDimension($this->cursorColumn);
 	}
 	
+	public function mergeCellsRightDown($numberRight, $numberDown) {
+		$startCell = $this->cursorColumn . $this->cursorRow;
+		
+		$targetColumn = $this->cursorColumn;
+		for($i = 0; $i < $numberRight; $i ++) {
+			$targetColumn ++;
+		}
+		
+		$targetRow = $this->cursorRow;
+		for($i = 0; $i < $numberDown; $i ++) {
+			$targetRow ++;
+		}
+		
+		$endCell = $targetColumn . $targetRow;
+		$this->workSheet->mergeCells($startCell . ':' . $endCell);
+	}
+	
 	public function mergeCellsRight($number) {
 		$startCell    = $this->cursorColumn . $this->cursorRow;
 		$targetColumn = $this->cursorColumn;
@@ -40,8 +57,36 @@ class SpreadsheetWriter {
 		$this->workSheet->mergeCells($startCell . ':' . $endCell);
 	}
 	
+	public function mergeCellsDown($number) {
+		$startCell = $this->cursorColumn . $this->cursorRow;
+		$targetRow = $this->cursorRow;
+		for($i = 0; $i < $number; $i ++) {
+			$targetRow ++;
+		}
+		$endCell = $this->cursorColumn . $targetRow;
+		$this->workSheet->mergeCells($startCell . ':' . $endCell);
+	}
+	
+	public function setCurrentCellColor($color) {
+		$this->getCurrentCellStyle()->getFill()->applyFromArray(array(
+			'type'       => \PHPExcel_Style_Fill::FILL_SOLID,
+			'startcolor' => array(
+				'rgb' => $color
+			)
+		));
+	}
+	
+	public function getCellsStyle($startCell, $endCell) {
+		return $this->workSheet->getStyle($startCell . ':' . $endCell);
+	}
+	
 	public function getCurrentCellStyle() {
 		return $this->workSheet->getStyle($this->cursorColumn . $this->cursorRow);
+	}
+	
+	public function alignCurrentCellCenter() {
+		$this->getCurrentCellStyle()->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+		$this->getCurrentCellStyle()->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 	}
 	
 	public function writeCellAndGoRight($value = '') {
@@ -66,15 +111,19 @@ class SpreadsheetWriter {
 		$this->cursorColumn --;
 	}
 	
-	public function goDown() {
-		$this->cursorRow ++;
-		if($this->cursorRow > $this->lastRow) {
-			$this->lastRow ++;
+	public function goDown($number = 1) {
+		for($i = 0; $i < $number; $i ++) {
+			$this->cursorRow ++;
+			if($this->cursorRow > $this->lastRow) {
+				$this->lastRow ++;
+			}
 		}
 	}
 	
-	public function goUp() {
-		$this->cursorRow --;
+	public function goUp($number = 1) {
+		for($i = 0; $i < $number; $i ++) {
+			$this->cursorRow --;
+		}
 	}
 	
 	public function getCursor() {

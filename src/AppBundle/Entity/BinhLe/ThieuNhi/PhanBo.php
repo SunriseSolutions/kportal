@@ -28,6 +28,15 @@ class PhanBo {
 	}
 	
 	/**
+	 * @param BangDiem $bangDiem
+	 */
+	public function setBangDiem($bangDiem) {
+		$this->bangDiem = $bangDiem;
+		$bangDiem->setPhanBo($this);
+	}
+	
+	
+	/**
 	 * @return string
 	 */
 	public function getId() {
@@ -206,13 +215,6 @@ class PhanBo {
 	 */
 	public function getBangDiem() {
 		return $this->bangDiem;
-	}
-	
-	/**
-	 * @param BangDiem $bangDiem
-	 */
-	public function setBangDiem($bangDiem) {
-		$this->bangDiem = $bangDiem;
 	}
 	
 	/**

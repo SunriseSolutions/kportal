@@ -48,7 +48,10 @@ class ThanhVienAdminController extends BaseCRUDController {
 	}
 	
 	public function thieuNhiNhomDownloadBangDiemAction(PhanBo $phanBo, $hocKy, Request $request) {
-		$filename = 'bang-diem-hk1.xlsx';
+//		\PHPExcel_Shared_Font::setAutoSizeMethod(\PHPExcel_Shared_Font::AUTOSIZE_METHOD_EXACT);
+		
+		$thanhVienService = $this->get('app.binhle_thieunhi_thanhvien');
+		$filename         = 'bang-diem-hk1.xlsx';
 //		$response = new BinaryFileResponse($zipFile);
 //		$response->headers->set('Content-Disposition', 'attachment;filename=' . str_replace(' ', '-', 'ihp_export_' . $dateAlnum . '.zip'));
 		$phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
@@ -87,7 +90,56 @@ class ThanhVienAdminController extends BaseCRUDController {
 		));
 		
 		$sWriter->getCurrentRowDimension()->setRowHeight(30);
+		$sWriter->goDown();
+		$sWriter->writeCell(sprintf('NĂM HỌC %d - %d', $phanBo->getNamHoc()->getId(), $phanBo->getNamHoc()->getId() + 1));
+		$sWriter->mergeCellsRight(13);
+		$sWriter->getCurrentCellStyle()->applyFromArray(array(
+			'font'      => array(
+				'bold' => true,
+//				'color' => array( 'rgb' => 'FF0000' ),
+				'size' => 15,
+				'name' => 'Times New Roman'
+			)
+		,
+			'alignment' => array(
+				'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+				'vertical'   => \PHPExcel_Style_Alignment::VERTICAL_CENTER,
+			)
+		));
+		$sWriter->getCurrentRowDimension()->setRowHeight(25);
+		$sWriter->goDown();
+		$sWriter->writeCell(sprintf('CHI ĐOÀN: %d', $phanBo->getChiDoan()->getNumber()));
+		$sWriter->mergeCellsRight(13);
+		$sWriter->getCurrentCellStyle()->applyFromArray(array(
+			'font'      => array(
+				'bold' => true,
+//				'color' => array( 'rgb' => 'FF0000' ),
+				'size' => 15,
+				'name' => 'Times New Roman'
+			)
+		,
+			'alignment' => array(
+				'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+				'vertical'   => \PHPExcel_Style_Alignment::VERTICAL_CENTER,
+			)
+		));
+		$sWriter->getCurrentRowDimension()->setRowHeight(25);
+		$sWriter->goDown();
+		$sWriter->goDown();
 		
+		foreach(range('A', 'N') as $columnID) {
+			$activeSheet->getColumnDimension($columnID)
+			            ->setAutoSize(true);
+		}
+		
+		$thanhVienService->writeBangDiemDoiNhomGiaoLyHK1Data($sWriter, $phanBo);
+
+//		$colDimensions = $activeSheet->getColumnDimensions();
+//		foreach($colDimensions as $dimension) {
+//			$dimension->setAutoSize(true);
+//		}
+		
+		$activeSheet->calculateColumnWidths();
 		// create the writer
 		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
 		// create the response
