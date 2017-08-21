@@ -345,13 +345,6 @@
 
                         initAudio($(this).data("audioalias"));
                     });
-                    // alert(playAudio_list.length);
-                    $('.playAudioOnClick').click(function () {
-                        var audioalias = $(this).data('audioalias');
-                        stopAudio();
-                        initAudio(audioalias);
-                        playAudio();
-                    });
 
                     $('.playlist [data-audioalias]')
                         .click(

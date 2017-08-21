@@ -27,6 +27,7 @@ abstract class AppContentPiece {
 	
 	function __construct() {
 		$this->h5pContentItems = new ArrayCollection();
+		$this->vocabEntries    = new ArrayCollection();
 	}
 	
 	/**

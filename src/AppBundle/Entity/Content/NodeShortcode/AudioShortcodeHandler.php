@@ -14,7 +14,8 @@ class AudioShortcodeHandler extends AbstractShortcodeHandler {
 		$h5pContentRepo = $container->get('doctrine')->getRepository(Content::class);
 		$shortcodeCount = 0;
 		
-		$h5pIds = [];
+		$h5pIds  = [];
+		$content = $this->preProcess($content, $escaped);
 		while( ! empty($shortcodeData = $this->parseShortCode($content, 'audio', $escaped))) {
 			$shortcodeCount ++;
 			
@@ -25,6 +26,8 @@ class AudioShortcodeHandler extends AbstractShortcodeHandler {
 			}
 			
 		}
+		
+		$content = $this->postProcess($content, $escaped);
 		
 		return [ 'content' => $content ];
 	}

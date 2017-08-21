@@ -17,6 +17,10 @@ var song_list = [];
 var song_index;
 var song = null;
 var auto_next = false;
+var beanAudio = {};
+beanAudio.currentAudio = {};
+beanAudio.currentAudio.alias = '';
+beanAudio.currentAudio.playing = false;
 
 function playOnEnded(_auto_next) {
     auto_next = _auto_next;
@@ -40,6 +44,8 @@ function initAudio(alias) {
         } else {
         }
         song = SAudio.song_cache[alias];
+
+        beanAudio.currentAudio.alias = alias;
     }
     // song = new Audio(audio_server_url + '/file.php?ext=mp3&alias=' + alias);//
     // song_cache[alias];
@@ -65,12 +71,14 @@ function seekAudio(pos) {
 function playAudio() {
     if (song != undefined && song != null) {
         song.play();
+        beanAudio.currentAudio.playing = true;
     }
 }
 
 function stopAudio() {
     if (song != undefined && song != null) {
         song.pause();
+        beanAudio.currentAudio.playing = false;
     }
 }
 
@@ -184,3 +192,19 @@ function playNextAudio() {
     initAudio(next);
     playAudio();
 }
+
+// alert(playAudio_list.length);
+jQuery('.playAudioOnClick').click(function () {
+    var audioalias = jQuery(this).data('audioalias');
+    if (beanAudio.currentAudio.alias !== audioalias) {
+        stopAudio();
+        initAudio(audioalias);
+        playAudio();
+    } else {
+        if (beanAudio.currentAudio.playing === true) {
+            stopAudio();
+        } else {
+            playAudio();
+        }
+    }
+});

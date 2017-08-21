@@ -260,6 +260,8 @@ app.request.attributes.get('_route_params')) %}
     'themes/standard/js/inspinia.js'
     'themes/standard/js/plugins/pace/pace.min.js'
 
+    'assets/bean/js/audio.js'
+
     output='js/compiled/app.js' %}
     <script src=" {{ asset_url }}"></script>
     {#app.request.basePath ~ '/js/compiled/app.js'#}
@@ -290,13 +292,7 @@ app.request.attributes.get('_route_params')) %}
 
                         initAudio($(this).data("audioalias"));
                     });
-                    // alert(playAudio_list.length);
-                    $('.playAudioOnClick').click(function () {
-                        var audioalias = $(this).data('audioalias');
-                        stopAudio();
-                        initAudio(audioalias);
-                        playAudio();
-                    });
+
 
                     $('.playlist [data-audioalias]')
                         .click(

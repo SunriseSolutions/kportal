@@ -12,6 +12,20 @@ abstract class AbstractShortcodeHandler {
 	 */
 	protected $container;
 	
+	protected function preProcess($content, $escaped = false) {
+		if($escaped === false) {
+			$content = str_replace('\[', '&#91;', $content);
+			$content = str_replace('\]', '&#93;', $content);
+		}
+		
+		return $content;
+	}
+	
+	protected function postProcess($content, $escaped = false) {
+		
+		return $content;
+	}
+	
 	public function parseShortCode($content, $shortcode, $escaped = false) {
 		$innerCode   = $this->container->get('app.string')->getBetween($content, '[' . $shortcode, ']');
 		$openTagPos  = strpos($content, '[' . $shortcode);

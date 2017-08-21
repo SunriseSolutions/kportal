@@ -38,18 +38,30 @@ class ColumnLayoutAdmin extends GenericLayoutAdmin {
 		$container = $this->getConfigurationPool()->getContainer();
 //		$position  = $container->get( 'app.user' )->getPosition();
 		$spanChoices = [
-			'1' => 1,
-			'2' => 2,
-			'3' => 3,
-			'4' => 4,
-			'5' => 5,
-			'6' => 6,
+			'1'  => 1,
+			'2'  => 2,
+			'3'  => 3,
+			'4'  => 4,
+			'5'  => 5,
+			'6'  => 6,
+			'7'  => 7,
+			'8'  => 8,
+			'9'  => 9,
+			'10' => 10,
+			'11' => 11,
+			'12' => 12,
 		];
 		$screenSizes = [
 			ColumnLayout::SCREEN_PHONE          => 1,
 			ColumnLayout::SCREEN_TABLET         => 2,
 			ColumnLayout::SCREEN_DESKTOP        => 3,
 			ColumnLayout::SCREEN_LARGER_DESKTOP => 4,
+		];
+		
+		$alignments = [
+			ColumnLayout::ALIGN_LEFT   => ColumnLayout::ALIGN_LEFT,
+			ColumnLayout::ALIGN_CENTER => ColumnLayout::ALIGN_CENTER,
+			ColumnLayout::ALIGN_RIGHT  => ColumnLayout::ALIGN_RIGHT,
 		];
 		
 		$formMapper
@@ -66,16 +78,25 @@ class ColumnLayoutAdmin extends GenericLayoutAdmin {
 			           'required'           => true,
 			           'choices'            => $screenSizes,
 			           'translation_domain' => $this->translationDomain
+		           ))
+		           ->add('textAlign', ChoiceType::class, array(
+			           'placeholder'        => '---',
+			           'required'           => true,
+			           'choices'            => $alignments,
+			           'translation_domain' => $this->translationDomain
+		           ))
+		           ->add('position', null, array(
+			           'translation_domain' => $this->translationDomain
 		           ));
 		$formMapper->add('parent', ModelType::class, array(
 //					'label' => 'form.label_work_location',
-				'property' => 'name',
-				
-				'btn_add'     => false,
-				'required'    => false,
-				'constraints' => new Valid(),
-				'multiple'    => false,
-				'query'       => $this->getParentQuery()
+				'property'           => 'name',
+				'translation_domain' => $this->translationDomain,
+				'btn_add'            => false,
+				'required'           => false,
+				'constraints'        => new Valid(),
+				'multiple'           => false,
+				'query'              => $this->getParentQuery()
 			)
 		);
 		

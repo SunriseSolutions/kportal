@@ -25,7 +25,10 @@ list:
 
 form:
     label_screen_size: Screen
+    label_text_align: Alignment
+    label_parent: Parent
     label_span: Span
+    label_position: Order
 
     label_html_body: HTML Body
     label_body: Body
@@ -39,6 +42,8 @@ form:
     label_bottom_left: Bottom Left
     label_bottom_right: Bottom Right
 
+    tab_layout_grid: Grid Layouts
+    tab_layout_inline: Inline Layouts
     tab_info: Info
     tab_main_body_info: Main Body
     group_general: General

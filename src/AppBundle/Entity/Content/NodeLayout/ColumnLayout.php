@@ -40,11 +40,20 @@ class ColumnLayout extends AppColumnLayout {
 				$size = 'xs';
 				break;
 		}
-		$colClass = 'col-' . $size . '-' . $this->span;
-		$html     = '<div class = "' . $colClass . '" >' . $childHtml . '</div>';
+		$colClass  = 'col-' . $size . '-' . $this->span;
+		$textAlign = empty($this->textAlign) ? '' : 'text-align: ' . $this->textAlign . ';';
+		
+		$colStyle = 'style="' . $textAlign . '"';
+		$html     = '<div ' . $colStyle . ' class = "' . $colClass . '" >' . $childHtml . '</div>';
 		
 		return $html;
 	}
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true, length=6)
+	 */
+	protected $textAlign;
 	
 	/**
 	 * @var RootLayout
