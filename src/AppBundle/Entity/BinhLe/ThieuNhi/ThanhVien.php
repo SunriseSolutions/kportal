@@ -27,7 +27,7 @@ class ThanhVien {
 		'MARIA MADALENA'    => 'NỮ',
 		'MARTINO DE PORRES' => 'NAM',
 		'ROSA LIMA'         => 'NỮ',
-
+		
 		'DM VINCENTE'      => 'NAM',
 		'MARTINO (MARTIN)' => 'NAM',
 		'MARIANNE'         => 'NỮ',
@@ -35,46 +35,46 @@ class ThanhVien {
 		'ANNA MARIA CLARA' => 'NỮ',
 		'MA.TERESA'        => 'NỮ',
 		'GIUSE-MARIA'      => 'NAM',
-
-		'M.MARIE'          => 'NỮ',
-		'SILAO'            => 'NAM',
+		
+		'M.MARIE' => 'NỮ',
+		'SILAO'   => 'NAM',
 		
 		'MARIA-GIUSE'  => 'NỮ',
 		'MARIA-AGATA'  => 'NỮ',
 		'MARIA-TERESA' => 'NỮ',
 		
-		'MAGARITA'                     => 'NỮ',
-		'MARIA-GORETTI'                => 'NỮ',
-		'VINH-SƠN (VINCENTE)'          => 'NAM',
-		'CATARINA'                     => 'NỮ',
-		'TOMA'                         => 'NAM',
-		'MICAE'                        => 'NAM',
-		'ANTON'                        => 'NAM',
-		'ĐA-MINH (Daminh)'             => 'NAM',
-		'GIOAN-BAOTIXITA'              => 'NAM',
-		'GIOAN-KIM'                    => 'NAM',
-		'FAUSTINA'                     => 'NỮ',
-		'AUGUSTINO'                    => 'NAM',
-		'MÁC-TA (MACTA)'               => 'NỮ',
-		'PHERO ĐA'                     => 'NAM',
-		'LUCIA'                        => 'NỮ',
-		'CECILIA'                      => 'NỮ',
-		'GIOAN'                        => 'NAM',
-		'AGATA'                        => 'NỮ',
-		'PHANXICO'                     => 'NAM',
-		'PHANXICO-XAVIE'               => 'NAM',
-		'PHANXICO-ASSISI'              => 'NAM',
-		'GIOAN-KIM-KHẨU'               => 'NAM',
-		'PHILIPPHE'                    => 'NAM',
-		'ELIZABETH'                    => 'NỮ',
-		'MONICA'                       => 'NỮ',
-		'GIERADO (GIÊ-RA-ĐÔ)'          => 'NAM',
-		'BENADO (BÊ-NA-ĐÔ)'            => 'NAM',
-		'AGNES'                        => 'NỮ',
-		'ANPHONGSO (AN-PHÔNG-SÔ)'      => 'NAM',
-		'STEPHANO'                     => 'NAM',
-		'ISAVE'                        => 'NỮ',
-
+		'MAGARITA'                => 'NỮ',
+		'MARIA-GORETTI'           => 'NỮ',
+		'VINH-SƠN (VINCENTE)'     => 'NAM',
+		'CATARINA'                => 'NỮ',
+		'TOMA'                    => 'NAM',
+		'MICAE'                   => 'NAM',
+		'ANTON'                   => 'NAM',
+		'ĐA-MINH (Daminh)'        => 'NAM',
+		'GIOAN-BAOTIXITA'         => 'NAM',
+		'GIOAN-KIM'               => 'NAM',
+		'FAUSTINA'                => 'NỮ',
+		'AUGUSTINO'               => 'NAM',
+		'MÁC-TA (MACTA)'          => 'NỮ',
+		'PHERO ĐA'                => 'NAM',
+		'LUCIA'                   => 'NỮ',
+		'CECILIA'                 => 'NỮ',
+		'GIOAN'                   => 'NAM',
+		'AGATA'                   => 'NỮ',
+		'PHANXICO'                => 'NAM',
+		'PHANXICO-XAVIE'          => 'NAM',
+		'PHANXICO-ASSISI'         => 'NAM',
+		'GIOAN-KIM-KHẨU'          => 'NAM',
+		'PHILIPPHE'               => 'NAM',
+		'ELIZABETH'               => 'NỮ',
+		'MONICA'                  => 'NỮ',
+		'GIERADO (GIÊ-RA-ĐÔ)'     => 'NAM',
+		'BENADO (BÊ-NA-ĐÔ)'       => 'NAM',
+		'AGNES'                   => 'NỮ',
+		'ANPHONGSO (AN-PHÔNG-SÔ)' => 'NAM',
+		'STEPHANO'                => 'NAM',
+		'ISAVE'                   => 'NỮ',
+		
 		'ALBERTO'                      => 'NAM',
 		'GIOAN-PHAOLO'                 => 'NAM',
 		'GIOAN-BOSCO'                  => 'NAM',
@@ -163,11 +163,11 @@ class ThanhVien {
 	const HUYNH_TRUONG = 'HUYNH_TRUONG';
 	
 	public static $danhSachPhanDoan = [
-		'CHIÊN CON'   => self::PHAN_DOAN_CHIEN,
-		'ĐOÀN ẤU'      => self::PHAN_DOAN_AU,
-		'ĐOÀN THIẾU'   => self::PHAN_DOAN_THIEU,
+		'CHIÊN CON'  => self::PHAN_DOAN_CHIEN,
+		'ĐOÀN ẤU'    => self::PHAN_DOAN_AU,
+		'ĐOÀN THIẾU' => self::PHAN_DOAN_THIEU,
 		'NGHĨA SĨ'   => self::PHAN_DOAN_NGHIA,
-		'TÔNG ĐỒ' => self::PHAN_DOAN_TONG_DO,
+		'TÔNG ĐỒ'    => self::PHAN_DOAN_TONG_DO,
 	];
 	
 	public static $danhSachChiDoan = [
@@ -294,6 +294,14 @@ class ThanhVien {
 		$this->setNamHoc($namHoc->getId());
 		
 		return $phanBoMoi;
+	}
+	
+	public function getTitle() {
+		if($this->sex === 'NAM') {
+			return 'anh';
+		}elseif($this->sex === 'NỮ'){
+			return 'chị';
+		}
 	}
 	
 	/**

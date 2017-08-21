@@ -60,7 +60,7 @@ class ThanhVienAdmin extends BaseAdmin {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
 		$collection->add('thieuNhi', 'thieu-nhi/list');
 		$collection->add('thieuNhiNhom', 'thieu-nhi/nhom-giao-ly/{phanBo}/list');
-		$collection->add('thieuNhiNhomDownloadBangDiem', 'thieu-nhi/nhom-giao-ly/{phanBo}/bang-diem/{hocKy}/download');
+		$collection->add('thieuNhiNhomDownloadBangDiem', 'thieu-nhi/nhom-giao-ly/{phanBo}/bang-diem/hoc-ky-{hocKy}/download');
 		
 		$collection->add('truongChiDoan', 'truong/chi-doan-{chiDoan}/list');
 		

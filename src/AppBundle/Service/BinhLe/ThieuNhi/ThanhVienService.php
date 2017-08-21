@@ -81,7 +81,43 @@ class ThanhVienService extends BaseService {
 		$sWriter->mergeCellsDown(2);
 		$sWriter->getCurrentColumnDimension()->setAutoSize(false);
 		$sWriter->getCurrentColumnDimension()->setWidth(20);
-		$sWriter->writeCellAndGoRight('TB.CHUYÊN CẦN');
+		$sWriter->writeCellAndGoRight(' TB.CHUYÊN CẦN ');
+		
+		$sWriter->setCurrentCellColor('0000FF');
+		$sWriter->getCurrentCellStyle()->applyFromArray($style1);
+		$sWriter->mergeCellsDown(2);
+		$sWriter->getCurrentColumnDimension()->setAutoSize(false);
+		$sWriter->getCurrentColumnDimension()->setWidth(20);
+		$sWriter->writeCellAndGoRight(' TB.MIỆNG ');
+		
+		$sWriter->setCurrentCellColor('0000FF');
+		$sWriter->getCurrentCellStyle()->applyFromArray($style1);
+		$sWriter->mergeCellsDown(2);
+		$sWriter->getCurrentColumnDimension()->setAutoSize(false);
+		$sWriter->getCurrentColumnDimension()->setWidth(20);
+		$sWriter->writeCellAndGoRight(' ĐIỂM 1 TIẾT ');
+		
+		$sWriter->setCurrentCellColor('0000FF');
+		$sWriter->getCurrentCellStyle()->applyFromArray($style1);
+		$sWriter->mergeCellsDown(2);
+		$sWriter->getCurrentColumnDimension()->setAutoSize(false);
+		$sWriter->getCurrentColumnDimension()->setWidth(20);
+		$sWriter->writeCellAndGoRight(' ĐIỂM THI HKI ');
+		
+		$sWriter->setCurrentCellColor('FF0000');
+		$sWriter->getCurrentCellStyle()->applyFromArray($style1);
+		$sWriter->mergeCellsDown(2);
+		$sWriter->getCurrentColumnDimension()->setAutoSize(false);
+		$sWriter->getCurrentColumnDimension()->setWidth(20);
+		$sWriter->writeCellAndGoRight(' TB HKI ');
+		
+		$sWriter->setCurrentCellColor('FF9900');
+		$sWriter->getCurrentCellStyle()->applyFromArray($style1);
+		$sWriter->mergeCellsDown(2);
+		$sWriter->getCurrentColumnDimension()->setAutoSize(false);
+		$sWriter->getCurrentColumnDimension()->setWidth(20);
+		$sWriter->writeCellAndGoRight(' PHIẾU LỄ CN ');
+		
 		
 		$sWriter->goDown(2);
 		//////////////// Write Names and Code

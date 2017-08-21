@@ -49,9 +49,21 @@ class ThanhVienAdminController extends BaseCRUDController {
 	
 	public function thieuNhiNhomDownloadBangDiemAction(PhanBo $phanBo, $hocKy, Request $request) {
 //		\PHPExcel_Shared_Font::setAutoSizeMethod(\PHPExcel_Shared_Font::AUTOSIZE_METHOD_EXACT);
+		$hocKy               = intval($hocKy);
 		
-		$thanhVienService = $this->get('app.binhle_thieunhi_thanhvien');
-		$filename         = 'bang-diem-hk1.xlsx';
+		$thanhVienService    = $this->get('app.binhle_thieunhi_thanhvien');
+		$cacTruongPT         = $phanBo->getCacTruongPhuTrachDoi();
+		$cacDoiNhomGiaoLyStr = '';
+		$thanhVien           = $phanBo->getThanhVien();
+		
+		/** @var TruongPhuTrachDoi $truongPT */
+		foreach($cacTruongPT as $truongPT) {
+			$cacDoiNhomGiaoLyStr .= $truongPT->getDoiNhomGiaoLy()->getNumber() . ', ';
+		}
+		$cacDoiNhomGiaoLyStr = substr($cacDoiNhomGiaoLyStr, 0, - 2);
+		$cacDoiNhomGiaoLyStr .= sprintf(' (%s)', $thanhVien->getTitle() . ' ' . $thanhVien->getFirstname());
+		
+		$filename = 'bang-diem-hk1.xlsx';
 //		$response = new BinaryFileResponse($zipFile);
 //		$response->headers->set('Content-Disposition', 'attachment;filename=' . str_replace(' ', '-', 'ihp_export_' . $dateAlnum . '.zip'));
 		$phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
@@ -67,7 +79,7 @@ class ThanhVienAdminController extends BaseCRUDController {
 		$phpExcelObject->setActiveSheetIndex(0);
 		$activeSheet = $phpExcelObject->getActiveSheet();
 		
-		$activeSheet->setCellValue('A1', "BẢNG ĐIỂM HỌC KỲ 1");
+		$activeSheet->setCellValue('A1', "BẢNG ĐIỂM HỌC KỲ " . $hocKy);
 		
 		
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
@@ -108,7 +120,8 @@ class ThanhVienAdminController extends BaseCRUDController {
 		));
 		$sWriter->getCurrentRowDimension()->setRowHeight(25);
 		$sWriter->goDown();
-		$sWriter->writeCell(sprintf('CHI ĐOÀN: %d', $phanBo->getChiDoan()->getNumber()));
+		
+		$sWriter->writeCell(sprintf('CHI ĐOÀN: %d %s', $phanBo->getChiDoan()->getNumber(), 'Đội: ' . $cacDoiNhomGiaoLyStr));
 		$sWriter->mergeCellsRight(13);
 		$sWriter->getCurrentCellStyle()->applyFromArray(array(
 			'font'      => array(
@@ -132,7 +145,9 @@ class ThanhVienAdminController extends BaseCRUDController {
 			            ->setAutoSize(true);
 		}
 		
-		$thanhVienService->writeBangDiemDoiNhomGiaoLyHK1Data($sWriter, $phanBo);
+		if($hocKy === 1) {
+			$thanhVienService->writeBangDiemDoiNhomGiaoLyHK1Data($sWriter, $phanBo);
+		}
 
 //		$colDimensions = $activeSheet->getColumnDimensions();
 //		foreach($colDimensions as $dimension) {
