@@ -237,15 +237,17 @@ class ChiDoanAdmin extends BaseAdmin {
 			->with('form.group_general')//            ->add('children')
 		;
 		$formMapper
-			->add('thanhVien', ModelAutocompleteType::class, array(
-				'property'           => 'name',
-				'to_string_callback' => function(ThanhVien $entity, $property) {
-					return $entity->getName();
-				},
-			
-			))
-			->add('chiDoan', ModelAutocompleteType::class, array(
-				'property' => 'id'
+			->add('cotDiemBiLoaiBo', ChoiceType::class, array(
+				'label'              => 'list.label_cot_diem_bi_loai_bo',
+				'multiple'           => true,
+				'placeholder'        => 'Chọn Cot Diem',
+				'choices'            => [
+					'Chuyên cần T4' => 'cc4',
+					'Chuyên cần T5' => 'cc5',
+					'TB Miệng HK-1' => 'quizTerm1',
+					'TB Miệng HK-2' => 'quizTerm2'
+				],
+				'translation_domain' => $this->translationDomain
 			));
 		
 		$formMapper
@@ -255,11 +257,9 @@ class ChiDoanAdmin extends BaseAdmin {
 	}
 	
 	/**
-	 * @param ThanhVien $object
+	 * @param ChiDoan $object
 	 */
 	public function preValidate($object) {
-		if( ! empty($object->isHuynhTruong())) {
-			$object->setThieuNhi(false);
-		}
+
 	}
 }

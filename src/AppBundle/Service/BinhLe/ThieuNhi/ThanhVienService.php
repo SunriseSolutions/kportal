@@ -9,6 +9,75 @@ use AppBundle\Service\BaseService;
 use AppBundle\Service\SpreadsheetWriter;
 
 class ThanhVienService extends BaseService {
+	public function writeBangDiemDoiNhomGiaoLyHeading(SpreadsheetWriter $sWriter, $hocKy, PhanBo $phanBo) {
+		$cacTruongPT = $phanBo->getCacTruongPhuTrachDoi();
+		
+		$cacDoiNhomGiaoLyStr = '';
+		$thanhVien           = $phanBo->getThanhVien();
+		
+		/** @var TruongPhuTrachDoi $truongPT */
+		foreach($cacTruongPT as $truongPT) {
+			$cacDoiNhomGiaoLyStr .= $truongPT->getDoiNhomGiaoLy()->getNumber() . ', ';
+		}
+		$cacDoiNhomGiaoLyStr = substr($cacDoiNhomGiaoLyStr, 0, - 2);
+		$cacDoiNhomGiaoLyStr .= sprintf(' (%s)', $thanhVien->getTitle() . ' ' . $thanhVien->getFirstname());
+		
+		$sWriter->writeCell("BẢNG ĐIỂM HỌC KỲ " . $hocKy);
+		$sWriter->mergeCellsRight(13);
+		$sWriter->getCurrentCellStyle()->applyFromArray(array(
+			'font'      => array(
+				'bold' => true,
+//				'color' => array( 'rgb' => 'FF0000' ),
+				'size' => 18,
+				'name' => 'Times New Roman'
+			)
+		,
+			'alignment' => array(
+				'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+				'vertical'   => \PHPExcel_Style_Alignment::VERTICAL_CENTER,
+			)
+		));
+		
+		$sWriter->getCurrentRowDimension()->setRowHeight(30);
+		$sWriter->goDown();
+		$sWriter->writeCell(sprintf('NĂM HỌC %d - %d', $phanBo->getNamHoc()->getId(), $phanBo->getNamHoc()->getId() + 1));
+		$sWriter->mergeCellsRight(13);
+		$sWriter->getCurrentCellStyle()->applyFromArray(array(
+			'font'      => array(
+				'bold' => true,
+//				'color' => array( 'rgb' => 'FF0000' ),
+				'size' => 15,
+				'name' => 'Times New Roman'
+			)
+		,
+			'alignment' => array(
+				'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+				'vertical'   => \PHPExcel_Style_Alignment::VERTICAL_CENTER,
+			)
+		));
+		$sWriter->getCurrentRowDimension()->setRowHeight(25);
+		$sWriter->goDown();
+		
+		$sWriter->writeCell(sprintf('CHI ĐOÀN: %d %s', $phanBo->getChiDoan()->getNumber(), 'Đội: ' . $cacDoiNhomGiaoLyStr));
+		$sWriter->mergeCellsRight(13);
+		$sWriter->getCurrentCellStyle()->applyFromArray(array(
+			'font'      => array(
+				'bold' => true,
+//				'color' => array( 'rgb' => 'FF0000' ),
+				'size' => 15,
+				'name' => 'Times New Roman'
+			)
+		,
+			'alignment' => array(
+				'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+				'vertical'   => \PHPExcel_Style_Alignment::VERTICAL_CENTER,
+			)
+		));
+		$sWriter->getCurrentRowDimension()->setRowHeight(25);
+		$sWriter->goDown();
+		$sWriter->goDown();
+		
+	}
 	
 	public function writeBangDiemDoiNhomGiaoLyHK1Data(SpreadsheetWriter $sWriter, PhanBo $phanBo) {
 		$style1 = array(
@@ -144,6 +213,16 @@ class ThanhVienService extends BaseService {
 				$sWriter->alignCurrentCellCenter();
 				$sWriter->writeCellAndGoRight(sprintf('=ROUND(SUM(E%1$d:H%1$d)/4,2)', $sWriter->getCursorRow()));
 				
+				$sWriter->alignCurrentCellCenter();
+				$sWriter->writeCellAndGoRight($bangDiem->getQuizTerm1());
+				$sWriter->alignCurrentCellCenter();
+				$sWriter->writeCellAndGoRight($bangDiem->getMidTerm1());
+				$sWriter->alignCurrentCellCenter();
+				$sWriter->writeCellAndGoRight($bangDiem->getFinalTerm1());
+				$sWriter->alignCurrentCellCenter();
+				$sWriter->writeCellAndGoRight(sprintf('=ROUND(((I%1$d+J%1$d+K%1$d+(L%1$d*2))/5),2)', $sWriter->getCursorRow()));
+				$sWriter->alignCurrentCellCenter();
+				$sWriter->writeCellAndGoRight($bangDiem->getSundayTickets());
 			}
 		}
 		
@@ -159,4 +238,5 @@ class ThanhVienService extends BaseService {
 		
 		
 	}
+	
 }

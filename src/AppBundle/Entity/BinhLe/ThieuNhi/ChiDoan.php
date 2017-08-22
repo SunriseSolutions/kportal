@@ -132,7 +132,7 @@ class ChiDoan {
 	}
 	
 	/** @var array
-	 * @ORM\Column(type="attribute_array")
+	 * @ORM\Column(type="json_array")
 	 */
 	protected
 		$cotDiemBiLoaiBo = array();

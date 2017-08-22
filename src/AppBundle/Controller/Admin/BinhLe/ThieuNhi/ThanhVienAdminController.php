@@ -49,21 +49,11 @@ class ThanhVienAdminController extends BaseCRUDController {
 	
 	public function thieuNhiNhomDownloadBangDiemAction(PhanBo $phanBo, $hocKy, Request $request) {
 //		\PHPExcel_Shared_Font::setAutoSizeMethod(\PHPExcel_Shared_Font::AUTOSIZE_METHOD_EXACT);
-		$hocKy               = intval($hocKy);
+		$hocKy = intval($hocKy);
 		
-		$thanhVienService    = $this->get('app.binhle_thieunhi_thanhvien');
-		$cacTruongPT         = $phanBo->getCacTruongPhuTrachDoi();
-		$cacDoiNhomGiaoLyStr = '';
-		$thanhVien           = $phanBo->getThanhVien();
+		$thanhVienService = $this->get('app.binhle_thieunhi_thanhvien');
 		
-		/** @var TruongPhuTrachDoi $truongPT */
-		foreach($cacTruongPT as $truongPT) {
-			$cacDoiNhomGiaoLyStr .= $truongPT->getDoiNhomGiaoLy()->getNumber() . ', ';
-		}
-		$cacDoiNhomGiaoLyStr = substr($cacDoiNhomGiaoLyStr, 0, - 2);
-		$cacDoiNhomGiaoLyStr .= sprintf(' (%s)', $thanhVien->getTitle() . ' ' . $thanhVien->getFirstname());
-		
-		$filename = 'bang-diem-hk1.xlsx';
+		$filename = sprintf('bang-diem-hoc-ky-%d.xlsx', $hocKy);
 //		$response = new BinaryFileResponse($zipFile);
 //		$response->headers->set('Content-Disposition', 'attachment;filename=' . str_replace(' ', '-', 'ihp_export_' . $dateAlnum . '.zip'));
 		$phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
@@ -78,71 +68,17 @@ class ThanhVienAdminController extends BaseCRUDController {
 		
 		$phpExcelObject->setActiveSheetIndex(0);
 		$activeSheet = $phpExcelObject->getActiveSheet();
-		
-		$activeSheet->setCellValue('A1', "BẢNG ĐIỂM HỌC KỲ " . $hocKy);
-		
-		
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$phpExcelObject->setActiveSheetIndex(0);
-		$activeSheet = $phpExcelObject->getActiveSheet();
-		$sWriter     = new SpreadsheetWriter($activeSheet);
-		$sWriter->mergeCellsRight(13);
-		$sWriter->getCurrentCellStyle()->applyFromArray(array(
-			'font'      => array(
-				'bold' => true,
-//				'color' => array( 'rgb' => 'FF0000' ),
-				'size' => 18,
-				'name' => 'Times New Roman'
-			)
-		,
-			'alignment' => array(
-				'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-				'vertical'   => \PHPExcel_Style_Alignment::VERTICAL_CENTER,
-			)
-		));
 		
-		$sWriter->getCurrentRowDimension()->setRowHeight(30);
-		$sWriter->goDown();
-		$sWriter->writeCell(sprintf('NĂM HỌC %d - %d', $phanBo->getNamHoc()->getId(), $phanBo->getNamHoc()->getId() + 1));
-		$sWriter->mergeCellsRight(13);
-		$sWriter->getCurrentCellStyle()->applyFromArray(array(
-			'font'      => array(
-				'bold' => true,
-//				'color' => array( 'rgb' => 'FF0000' ),
-				'size' => 15,
-				'name' => 'Times New Roman'
-			)
-		,
-			'alignment' => array(
-				'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-				'vertical'   => \PHPExcel_Style_Alignment::VERTICAL_CENTER,
-			)
-		));
-		$sWriter->getCurrentRowDimension()->setRowHeight(25);
-		$sWriter->goDown();
+		$sWriter = new SpreadsheetWriter($activeSheet);
+		$thanhVienService->writeBangDiemDoiNhomGiaoLyHeading($sWriter, $hocKy, $phanBo);
 		
-		$sWriter->writeCell(sprintf('CHI ĐOÀN: %d %s', $phanBo->getChiDoan()->getNumber(), 'Đội: ' . $cacDoiNhomGiaoLyStr));
-		$sWriter->mergeCellsRight(13);
-		$sWriter->getCurrentCellStyle()->applyFromArray(array(
-			'font'      => array(
-				'bold' => true,
-//				'color' => array( 'rgb' => 'FF0000' ),
-				'size' => 15,
-				'name' => 'Times New Roman'
-			)
-		,
-			'alignment' => array(
-				'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-				'vertical'   => \PHPExcel_Style_Alignment::VERTICAL_CENTER,
-			)
-		));
-		$sWriter->getCurrentRowDimension()->setRowHeight(25);
-		$sWriter->goDown();
-		$sWriter->goDown();
-		
-		foreach(range('A', 'N') as $columnID) {
-			$activeSheet->getColumnDimension($columnID)
-			            ->setAutoSize(true);
+		if($hocKy === 1) {
+			foreach(range('A', 'N') as $columnID) {
+				$activeSheet->getColumnDimension($columnID)
+				            ->setAutoSize(true);
+			}
 		}
 		
 		if($hocKy === 1) {

@@ -40,6 +40,7 @@ list:
     label_full_name: Họ tên đầy đủ
     label_name: Tên
     label_phan_bo_truoc_bang_diem: TB Năm Trước
+    label_cot_diem_bi_loai_bo: Cột điểm bị loại bỏ
 
     label_christianname: Tên Thánh
     label_firstname: Tên gọi
