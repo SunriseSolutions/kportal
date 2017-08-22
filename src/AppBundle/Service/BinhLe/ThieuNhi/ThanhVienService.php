@@ -195,6 +195,8 @@ class ThanhVienService extends BaseService {
 			$phanBoHangNam = $truongPT->getDoiNhomGiaoLy()->getPhanBoHangNam();
 			/** @var PhanBo $phanBo */
 			foreach($phanBoHangNam as $phanBo) {
+				$chiDoan = $phanBo->getChiDoan();
+				
 				$sWriter->goDown();
 				$sWriter->goFirstColumn();
 				$thanhVien = $phanBo->getThanhVien();
@@ -211,7 +213,33 @@ class ThanhVienService extends BaseService {
 				$sWriter->writeCellAndGoRight($bangDiem->getCc11());
 				$sWriter->writeCellAndGoRight($bangDiem->getCc12());
 				$sWriter->alignCurrentCellCenter();
-				$sWriter->writeCellAndGoRight(sprintf('=ROUND(SUM(E%1$d:H%1$d)/4,2)', $sWriter->getCursorRow()));
+				
+				$cusorRow           = $sWriter->getCursorRow();
+				$cacCotDiemBiLoaiBo = $chiDoan->getCotDiemBiLoaiBo();
+				
+				$cotDiem    = [
+					'E' => 'cc9',
+					'F' => 'cc10',
+					'G' => 'cc11',
+					'H' => 'cc12',
+				];
+				$sumCCStr   = 'SUM(';
+				$sumCCCount = 0;
+				foreach($cotDiem as $key => $value) {
+					if(in_array($value, $cacCotDiemBiLoaiBo)) {
+						continue;
+					}
+					$sumCCStr .= $key . $cusorRow . ',';
+					$sumCCCount ++;
+				}
+				$sumCCStr = substr($sumCCStr, 0, - 1);
+				$sumCCStr .= ')';
+				
+				if($sumCCCount === 0) {
+					$sWriter->writeCellAndGoRight(0);
+				} else {
+					$sWriter->writeCellAndGoRight(sprintf('=ROUND(%s/%d,2)', $sumCCStr, $sumCCCount));
+				}
 				
 				$sWriter->alignCurrentCellCenter();
 				$sWriter->writeCellAndGoRight($bangDiem->getQuizTerm1());
@@ -220,7 +248,37 @@ class ThanhVienService extends BaseService {
 				$sWriter->alignCurrentCellCenter();
 				$sWriter->writeCellAndGoRight($bangDiem->getFinalTerm1());
 				$sWriter->alignCurrentCellCenter();
-				$sWriter->writeCellAndGoRight(sprintf('=ROUND(((I%1$d+J%1$d+K%1$d+(L%1$d*2))/5),2)', $sWriter->getCursorRow()));
+				
+				
+				$cotDiem       = [
+					'I' => 'tbCCTerm1',
+					'J' => 'quizTerm1',
+					'K' => 'midTerm1',
+					'L' => 'finalTerm1',
+				];
+				$sumTerm1Str    = 'SUM(';
+				$sumTerm1Count = 0;
+				foreach($cotDiem as $key => $value) {
+					if(in_array($value, $cacCotDiemBiLoaiBo)) {
+						continue;
+					}
+					$sumTerm1Str .= $key . $cusorRow . ',';
+					if($key === 'L') {
+						$sumTerm1Str .= $key . $cusorRow . ',';
+						$sumTerm1Count ++;
+					}
+					$sumTerm1Count ++;
+				}
+				$sumTerm1Str = substr($sumTerm1Str, 0, - 1);
+				$sumTerm1Str .= ')';
+				
+				if($sumCCCount === 0) {
+					$sWriter->writeCellAndGoRight(0);
+				} else {
+					$sWriter->writeCellAndGoRight(sprintf('=ROUND(%s/%d,2)', $sumTerm1Str, $sumTerm1Count));
+				}
+				
+				
 				$sWriter->alignCurrentCellCenter();
 				$sWriter->writeCellAndGoRight($bangDiem->getSundayTickets());
 			}

@@ -242,6 +242,13 @@ class ChiDoanAdmin extends BaseAdmin {
 				'multiple'           => true,
 				'placeholder'        => 'Chọn Cot Diem',
 				'choices'            => [
+					'Chuyên cần T9' => 'cc9',
+					'Chuyên cần T10' => 'cc10',
+					'Chuyên cần T11' => 'cc11',
+					'Chuyên cần T12' => 'cc12',
+					'Chuyên cần T1' => 'cc1',
+					'Chuyên cần T2' => 'cc2',
+					'Chuyên cần T3' => 'cc3',
 					'Chuyên cần T4' => 'cc4',
 					'Chuyên cần T5' => 'cc5',
 					'TB Miệng HK-1' => 'quizTerm1',
