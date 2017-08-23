@@ -34,8 +34,15 @@ class BangDiemAdmin extends BaseAdmin {
 	 */
 	protected $namHoc;
 	
+	protected $action = '';
+	protected $actionParams = [];
+	
 	public function getTemplate($name) {
 		if($name === 'list') {
+			if($this->action = 'nhap-diem-thieu-nhi') {
+				return '::admin/binhle/thieu-nhi/bang-diem/list-nhap-diem-thieu-nhi.html.twig';
+			}
+			
 			return '::admin/binhle/thieu-nhi/bang-diem/list.html.twig';
 		}
 		
@@ -43,28 +50,30 @@ class BangDiemAdmin extends BaseAdmin {
 	}
 	
 	public function configureRoutes(RouteCollection $collection) {
-		$collection->add('bangDiemImport', 'import/{namHoc}');
+		$collection->add('bangDiemImport', 'import /{
+					namHoc}');
+		$collection->add('nhapDiemThieuNhi', '{phanBo}/nhap-diem-thieu-nhi');
 		parent::configureRoutes($collection);
 	}
 	
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
 		$danhSachChiDoan = [
-			'Chiên Con 4 tuổi'    => 4,
-			'Chiên Con 5 tuổi'    => 5,
-			'Chiên Con 6 tuổi'    => 6,
-			'Ấu Nhi 7 tuổi'       => 7,
-			'Ấu Nhi 8 tuổi'       => 8,
-			'Ấu Nhi 9 tuổi'       => 9,
-			'Thiếu Nhi 10 tuổi'   => 10,
-			'Thiếu Nhi 11 tuổi'   => 11,
-			'Thiếu Nhi 12 tuổi'   => 12,
-			'Nghĩa Sĩ 13 tuổi'    => 13,
-			'Nghĩa Sĩ 14 tuổi'    => 14,
-			'Nghĩa Sĩ 15 tuổi'    => 15,
-			'Tông Đồ 16 tuổi'     => 16,
-			'Tông Đồ 17 tuổi'     => 17,
-			'Tông Đồ 18 tuổi'     => 18,
-			'Dự Trưởng (19 tuổi)' => 19,
+			'Chiên Con 4 tuổi'   => 4,
+			'Chiên Con 5 tuổi'   => 5,
+			'Chiên Con 6 tuổi'   => 6,
+			'Ấu Nhi 7 tuổi'      => 7,
+			'Ấu Nhi 8 tuổi'      => 8,
+			'Ấu Nhi 9 tuổi'      => 9,
+			'Thiếu Nhi 10 tuổi'  => 10,
+			'Thiếu Nhi 11 tuổi'  => 11,
+			'Thiếu Nhi 12 tuổi'  => 12,
+			'Nghĩa Sĩ 13 tuổi'   => 13,
+			'Nghĩa Sĩ 14 tuổi'   => 14,
+			'Nghĩa Sĩ 15 tuổi'   => 15,
+			'Tông Đồ 16 tuổi'    => 16,
+			'Tông Đồ 17 tuổi'    => 17,
+			'Tông Đồ 18 tuổi'    => 18,
+			'Dự Trưởng(19 tuổi)' => 19,
 		];
 		
 		// this text filter will be used to retrieve autocomplete fields
@@ -135,22 +144,22 @@ class BangDiemAdmin extends BaseAdmin {
 		$container = $this->getConfigurationPool()->getContainer();
 		
 		$danhSachChiDoan = [
-			'Chiên Con 4 tuổi'    => 4,
-			'Chiên Con 5 tuổi'    => 5,
-			'Chiên Con 6 tuổi'    => 6,
-			'Ấu Nhi 7 tuổi'       => 7,
-			'Ấu Nhi 8 tuổi'       => 8,
-			'Ấu Nhi 9 tuổi'       => 9,
-			'Thiếu Nhi 10 tuổi'   => 10,
-			'Thiếu Nhi 11 tuổi'   => 11,
-			'Thiếu Nhi 12 tuổi'   => 12,
-			'Nghĩa Sĩ 13 tuổi'    => 13,
-			'Nghĩa Sĩ 14 tuổi'    => 14,
-			'Nghĩa Sĩ 15 tuổi'    => 15,
-			'Tông Đồ 16 tuổi'     => 16,
-			'Tông Đồ 17 tuổi'     => 17,
-			'Tông Đồ 18 tuổi'     => 18,
-			'Dự Trưởng (19 tuổi)' => 19,
+			'Chiên Con 4 tuổi'   => 4,
+			'Chiên Con 5 tuổi'   => 5,
+			'Chiên Con 6 tuổi'   => 6,
+			'Ấu Nhi 7 tuổi'      => 7,
+			'Ấu Nhi 8 tuổi'      => 8,
+			'Ấu Nhi 9 tuổi'      => 9,
+			'Thiếu Nhi 10 tuổi'  => 10,
+			'Thiếu Nhi 11 tuổi'  => 11,
+			'Thiếu Nhi 12 tuổi'  => 12,
+			'Nghĩa Sĩ 13 tuổi'   => 13,
+			'Nghĩa Sĩ 14 tuổi'   => 14,
+			'Nghĩa Sĩ 15 tuổi'   => 15,
+			'Tông Đồ 16 tuổi'    => 16,
+			'Tông Đồ 17 tuổi'    => 17,
+			'Tông Đồ 18 tuổi'    => 18,
+			'Dự Trưởng(19 tuổi)' => 19,
 		];
 		
 		$formMapper
@@ -189,6 +198,34 @@ class BangDiemAdmin extends BaseAdmin {
 	 */
 	public function setNamHoc($namHoc) {
 		$this->namHoc = $namHoc;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getAction() {
+		return $this->action;
+	}
+	
+	/**
+	 * @param string $action
+	 */
+	public function setAction($action) {
+		$this->action = $action;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getActionParams() {
+		return $this->actionParams;
+	}
+	
+	/**
+	 * @param array $actionParams
+	 */
+	public function setActionParams($actionParams) {
+		$this->actionParams = $actionParams;
 	}
 	
 }

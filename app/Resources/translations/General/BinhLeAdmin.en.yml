@@ -2,6 +2,7 @@ user:
     email_exists: This email has already been used by another user.
 
 dashboard:
+    thieunhi_nhapdiem_nhomphutrach: Nhập điểm
     thieunhi_nhomphutrach: Danh sách nhóm
     thieunhi_chia_truong_chi_doan: Chia Trưởng phụ-trách
     thieunhi_truong_chi_doan: Trưởng Chi-đoàn

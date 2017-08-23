@@ -59,16 +59,28 @@ class DoiNhomGiaoLy {
 	
 	/**
 	 * @var boolean
-	 * @ORM\Column(type="boolean", nullable=true)
+	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
-	protected $hoanTatBangDiemHK1;
+	protected $hoanTatBangDiemHK1 = false;
 	
 	/**
 	 * @var boolean
-	 * @ORM\Column(type="boolean", nullable=true)
+	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
-	protected $hoanTatBangDiemHK2;
+	protected $duocDuyetBangDiemHK1 = false;
 	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $hoanTatBangDiemHK2 = false;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $duocDuyetBangDiemHK2 = false;
+
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
@@ -157,5 +169,33 @@ class DoiNhomGiaoLy {
 	 */
 	public function setHoanTatBangDiemHK2($hoanTatBangDiemHK2) {
 		$this->hoanTatBangDiemHK2 = $hoanTatBangDiemHK2;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isDuocDuyetBangDiemHK1() {
+		return $this->duocDuyetBangDiemHK1;
+	}
+	
+	/**
+	 * @param bool $duocDuyetBangDiemHK1
+	 */
+	public function setDuocDuyetBangDiemHK1($duocDuyetBangDiemHK1) {
+		$this->duocDuyetBangDiemHK1 = $duocDuyetBangDiemHK1;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isDuocDuyetBangDiemHK2() {
+		return $this->duocDuyetBangDiemHK2;
+	}
+	
+	/**
+	 * @param bool $duocDuyetBangDiemHK2
+	 */
+	public function setDuocDuyetBangDiemHK2($duocDuyetBangDiemHK2) {
+		$this->duocDuyetBangDiemHK2 = $duocDuyetBangDiemHK2;
 	}
 }

@@ -27,6 +27,28 @@ class PhanBo {
 		$this->cacTruongPhuTrachDoi = new ArrayCollection();
 	}
 	
+	public function isHoanTatBangDiemHK1() {
+		/** @var TruongPhuTrachDoi $truongPT */
+		foreach($this->cacTruongPhuTrachDoi as $truongPT) {
+			if(empty($truongPT->getDoiNhomGiaoLy()->isHoanTatBangDiemHK1())) {
+				return false;
+			};
+		}
+		
+		return true;
+	}
+	
+	public function isHoanTatBangDiemHK2() {
+		/** @var TruongPhuTrachDoi $truongPT */
+		foreach($this->cacTruongPhuTrachDoi as $truongPT) {
+			if(empty($truongPT->getDoiNhomGiaoLy()->isHoanTatBangDiemHK2())) {
+				return false;
+			};
+		}
+		
+		return true;
+	}
+	
 	/**
 	 * @param BangDiem $bangDiem
 	 */

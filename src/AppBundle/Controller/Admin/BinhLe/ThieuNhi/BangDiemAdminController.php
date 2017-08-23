@@ -12,9 +12,12 @@ use AppBundle\Entity\BinhLe\ThieuNhi\PhanBo;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
 use AppBundle\Entity\User\User;
 use Sonata\AdminBundle\Controller\CRUDController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class BangDiemAdminController extends BaseCRUDController {
 	
@@ -32,6 +35,50 @@ class BangDiemAdminController extends BaseCRUDController {
 		if(count($namHocArray) > 0) {
 			$namHoc = $namHocArray[0];
 			$admin->setNamHoc($namHoc->getId());
+		}
+		
+		return parent::listAction();
+	}
+	
+	public function nhapDiemThieuNhiAction(PhanBo $phanBo, Request $request) {
+		/** @var BangDiemAdmin $admin */
+		$admin = $this->admin;
+		
+		/** @var User $user */
+		$user      = $this->getUser();
+		$thanhVien = $user->getThanhVien();;
+		if(empty($_phanBo = $thanhVien->getPhanBoNamNay())) {
+			throw new NotFoundHttpException('No Group Assignment found');
+		}
+		
+		if($_phanBo->getId() !== $phanBo->getId()) {
+			throw new UnauthorizedHttpException('not authorised');
+		}
+		
+		$admin->setAction('nhap-diem-thieu-nhi');
+		$admin->setActionParams([ 'chiDoan'        => $phanBo->getChiDoan(),
+		                          'phanBo'         => $phanBo,
+		                          'christianNames' => ThanhVien::$christianNames
+		]);
+		if($request->isMethod('post')) {
+//			$doi      = $request->request->getInt('doi', 0);
+//			$phanBoId = $request->request->get('phanBoId');
+//			if( ! (empty($doi) || empty($phanBo = $this->getDoctrine()->getRepository(PhanBo::class)->find($phanBoId)))) {
+//				$dngl = $chiDoan->getDoiNhomGiaoLy($doi);
+//				$dngl->getPhanBoHangNam()->add($phanBo);
+//				$phanBo->setDoiNhomGiaoLy($dngl);
+//				$manager = $this->get('doctrine.orm.default_entity_manager');
+//				$manager->persist($dngl);
+//				$manager->persist($phanBo);
+//				$manager->persist($chiDoan);
+//				$manager->flush();
+//
+//				return new JsonResponse('OK', 200);
+//			} else {
+//				return new JsonResponse([ 415, 'Unsupported Data Type' ], 415);
+//			}
+			return new JsonResponse('OK', 200);
+			
 		}
 		
 		return parent::listAction();
