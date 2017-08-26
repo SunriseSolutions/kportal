@@ -154,9 +154,6 @@ class BangDiemAdminController extends BaseCRUDController {
 			} else {
 				return new JsonResponse([ 404, 'Không thể tìm thấy Thiếu-nhi này' ], 404);
 			}
-			
-			return new JsonResponse('OK', 200);
-			
 		}
 		
 		$cacTruongPT   = $phanBo->getCacTruongPhuTrachDoi();
@@ -171,12 +168,12 @@ class BangDiemAdminController extends BaseCRUDController {
 			$phanBoArray = [];
 			$sortedArray = [];
 			$returnArray = [];
-			/** @var PhanBo $phanBo */
-			foreach($array as $phanBo) {
-				$firstName                       = $phanBo->getThanhVien()->getFirstname();
-				$sortedArray[ $phanBo->getId() ] = $firstName;
-				$phanBoArray[ $phanBo->getId() ] = $phanBo;
-				$manager->persist($phanBo->createBangDiem());
+			/** @var PhanBo $phanBoItem */
+			foreach($array as $phanBoItem) {
+				$firstName                       = $phanBoItem->getThanhVien()->getFirstname();
+				$sortedArray[ $phanBoItem->getId() ] = $firstName;
+				$phanBoArray[ $phanBoItem->getId() ] = $phanBoItem;
+				$manager->persist($phanBoItem->createBangDiem());
 			}
 			$manager->flush();
 			$phanBoHangNamSorted = true;
