@@ -34,6 +34,41 @@ class BangDiem {
 		return $this->id;
 	}
 	
+	public function tinhDiemChuyenCan($hocKy = 1) {
+		$cacCotDiemBiLoaiBo = $this->phanBo->getChiDoan()->getCotDiemBiLoaiBo();
+		$cols               = null;
+		$tbCC               = 0;
+		if($hocKy === 1) {
+			$cols = [ 'cc9' => 'cc9', 'cc10' => 'cc10', 'cc11' => 'cc11', 'cc12' => 'cc12' ];
+		} elseif($hocKy === 2) {
+			$cols = [ 'cc1' => 'cc1', 'cc2' => 'cc2', 'cc3' => 'cc3', 'cc4' => 'cc4', 'cc5' => 'cc5' ];
+		} else {
+			return null;
+		}
+		
+		foreach($cacCotDiemBiLoaiBo as $cotDiemBiLoaiBo) {
+			unset($cols[ $cotDiemBiLoaiBo ]);
+		}
+		
+		$colCount = count($cols);
+		$sumCC    = 0;
+		foreach($cols as $col) {
+			if(empty($_cc = $this->$col)) {
+				continue;
+			}
+			$sumCC += $_cc;
+		}
+		
+		if($hocKy === 1) {
+			$tbCC = $this->tbCCTerm1 = $sumCC / $colCount;
+		} elseif($hocKy === 2) {
+			$tbCC = $this->tbCCTerm2 = $sumCC / $colCount;
+		}
+		
+		
+		return $tbCC;
+	}
+	
 	/**
 	 * @var PhanBo
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\PhanBo",inversedBy="bangDiem")

@@ -27,6 +27,33 @@ class PhanBo {
 		$this->cacTruongPhuTrachDoi = new ArrayCollection();
 	}
 	
+	public function quanLy(PhanBo $phanBo) {
+		/** @var TruongPhuTrachDoi $truongPT */
+		foreach($this->cacTruongPhuTrachDoi as $truongPT) {
+			$phanBoHangNam = $truongPT->getDoiNhomGiaoLy()->getPhanBoHangNam();
+			/** @var PhanBo $phanBoThieuNhi */
+			foreach($phanBoHangNam as $phanBoThieuNhi) {
+				if($phanBoThieuNhi === $phanBo) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * @return BangDiem
+	 */
+	public function createBangDiem() {
+		if(empty($this->bangDiem)) {
+			$this->bangDiem = new BangDiem();
+			$this->bangDiem->setPhanBo($this);
+		}
+		
+		return $this->bangDiem;
+	}
+	
 	public function isHoanTatBangDiemHK1() {
 		/** @var TruongPhuTrachDoi $truongPT */
 		foreach($this->cacTruongPhuTrachDoi as $truongPT) {

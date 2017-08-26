@@ -10,7 +10,9 @@ use AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan;
 use AppBundle\Entity\BinhLe\ThieuNhi\NamHoc;
 use AppBundle\Entity\BinhLe\ThieuNhi\PhanBo;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
+use AppBundle\Entity\BinhLe\ThieuNhi\TruongPhuTrachDoi;
 use AppBundle\Entity\User\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -42,8 +44,8 @@ class BangDiemAdminController extends BaseCRUDController {
 	
 	public function nhapDiemThieuNhiAction(PhanBo $phanBo, Request $request) {
 		/** @var BangDiemAdmin $admin */
-		$admin = $this->admin;
-		
+		$admin   = $this->admin;
+		$manager = $this->get('doctrine.orm.default_entity_manager');
 		/** @var User $user */
 		$user      = $this->getUser();
 		$thanhVien = $user->getThanhVien();;
@@ -52,34 +54,153 @@ class BangDiemAdminController extends BaseCRUDController {
 		}
 		
 		if($_phanBo->getId() !== $phanBo->getId()) {
-			throw new UnauthorizedHttpException('not authorised');
+			if( ! $_phanBo->quanLy($phanBo)) {
+				throw new UnauthorizedHttpException('not authorised');
+			}
 		}
 		
-		$admin->setAction('nhap-diem-thieu-nhi');
-		$admin->setActionParams([ 'chiDoan'        => $phanBo->getChiDoan(),
-		                          'phanBo'         => $phanBo,
-		                          'christianNames' => ThanhVien::$christianNames
-		]);
+		$chiDoan = $phanBo->getChiDoan();
+		$hocKy   = 1;
+		if($chiDoan->isDuocDuyetBangDiemHK1()) {
+			$hocKy = 2;
+		}
+		
+		$cotDiemHeaders     = [];
+		$cotDiemAttrs       = [];
+		$cotDiemLabels      = [];
+		$cotDiemCellFormats = [];
+		if($hocKy === 1) {
+			$cotDiemHeaders['cc9']               = 'CC-9';
+			$cotDiemHeaders['cc10']              = 'CC-10';
+			$cotDiemHeaders['cc11']              = 'CC-11';
+			$cotDiemHeaders['cc12']              = 'CC-12';
+			$cotDiemHeaders['tbCCTerm1']         = 'TB. CC';
+			$cotDiemHeaders['quizTerm1']         = 'TB. Miệng';
+			$cotDiemHeaders['midTerm1']          = 'Điểm 1 Tiết';
+			$cotDiemHeaders['finalTerm1']        = 'Thi HK1';
+			$cotDiemHeaders['tbTerm1']           = 'TB. HK1';
+			$cotDiemHeaders['sundayTicketTerm1'] = 'Phiếu lễ CN';
+			
+			$cotDiemAttrs['cc9']               = 'cc9';
+			$cotDiemAttrs['cc10']              = 'cc10';
+			$cotDiemAttrs['cc11']              = 'cc11';
+			$cotDiemAttrs['cc12']              = 'cc12';
+			$cotDiemAttrs['tbCCTerm1']         = 'tbCCTerm1';
+			$cotDiemAttrs['quizTerm1']         = 'quizTerm1';
+			$cotDiemAttrs['midTerm1']          = 'midTerm1';
+			$cotDiemAttrs['finalTerm1']        = 'finalTerm1';
+			$cotDiemAttrs['tbTerm1']           = 'tbTerm1';
+			$cotDiemAttrs['sundayTicketTerm1'] = 'sundayTicketTerm1';
+			
+			$cotDiemLabels['cc9']               = 'điểm Chuyên-cần tháng 9';
+			$cotDiemLabels['cc10']              = 'điểm Chuyên-cần tháng 10';
+			$cotDiemLabels['cc11']              = 'điểm Chuyên-cần tháng 11';
+			$cotDiemLabels['cc12']              = 'điểm Chuyên-cần tháng 12';
+			$cotDiemLabels['tbCCTerm1']         = 'điểm Trung-bình Chuyên-cần';
+			$cotDiemLabels['quizTerm1']         = 'điểm Trung-bình Miệng';
+			$cotDiemLabels['midTerm1']          = 'điểm 1 Tiết/Giữa-kỳ';
+			$cotDiemLabels['finalTerm1']        = 'điểm Thi Cuối-kỳ';
+			$cotDiemLabels['tbTerm1']           = 'điểm Trung-bình Học-kỳ 1';
+			$cotDiemLabels['sundayTicketTerm1'] = 'phiếu lễ Chúa-nhật';
+			
+			$cotDiemCellFormats ['cc9']               = "type:'numeric', format: '0,0.0'";
+			$cotDiemCellFormats ['cc10']              = "type:'numeric', format: '0,0.0'";
+			$cotDiemCellFormats ['cc11']              = "type:'numeric', format: '0,0.0'";
+			$cotDiemCellFormats ['cc12']              = "type:'numeric', format: '0,0.0'";
+			$cotDiemCellFormats ['tbCCTerm1']         = "type:'numeric',readOnly:true, format: '0,0.00'";
+			$cotDiemCellFormats ['quizTerm1']         = "type:'numeric', format: '0,0.0'";
+			$cotDiemCellFormats ['midTerm1']          = "type:'numeric', format: '0,0.0'";
+			$cotDiemCellFormats ['finalTerm1']        = "type:'numeric', format: '0,0.00'";
+			$cotDiemCellFormats ['tbTerm1']           = "type:'numeric',readOnly:true, format: '0,0.00'";
+			$cotDiemCellFormats ['sundayTicketTerm1'] = "type:'numeric'";
+		} elseif($hocKy === 2) {
+		
+		}
+		
+		$cacCotDiemBiLoaiBo = $chiDoan->getCotDiemBiLoaiBo();
+		foreach($cacCotDiemBiLoaiBo as $cotDiemBiLoaiBo) {
+			unset($cotDiemHeaders[ $cotDiemBiLoaiBo ], $cotDiemAttrs[ $cotDiemBiLoaiBo ], $cotDiemCellFormats[ $cotDiemBiLoaiBo ], $cotDiemLabels[ $cotDiemBiLoaiBo ]);
+		}
+		
 		if($request->isMethod('post')) {
-//			$doi      = $request->request->getInt('doi', 0);
-//			$phanBoId = $request->request->get('phanBoId');
-//			if( ! (empty($doi) || empty($phanBo = $this->getDoctrine()->getRepository(PhanBo::class)->find($phanBoId)))) {
-//				$dngl = $chiDoan->getDoiNhomGiaoLy($doi);
-//				$dngl->getPhanBoHangNam()->add($phanBo);
-//				$phanBo->setDoiNhomGiaoLy($dngl);
-//				$manager = $this->get('doctrine.orm.default_entity_manager');
-//				$manager->persist($dngl);
+			$diem    = floatval($request->request->get('diem', 0));
+			$cotDiem = $request->request->getAlnum('cotDiem');
+			if( ! in_array($cotDiem, array_values($cotDiemAttrs))) {
+				return new JsonResponse([ 415, 'Không hỗ trợ Cột-điểm này' ], 415);
+			}
+			$phanBoId = $request->request->get('phanBoId');
+			if( ! (empty($diem) || empty($phanBo = $this->getDoctrine()->getRepository(PhanBo::class)->find($phanBoId)))) {
+				$bangDiem = $phanBo->getBangDiem();
+				$setter   = 'set' . ucfirst($cotDiem);
+				$bangDiem->$setter($diem);
+				$manager = $this->get('doctrine.orm.default_entity_manager');
+				if(substr($cotDiem, 0, 2) == 'cc') {
+					$bangDiem->tinhDiemChuyenCan($hocKy);
+				}
+				$tbCC = 0;
+				if($hocKy === 1) {
+					$tbCC = $bangDiem->getTbCCTerm1();
+				} elseif($hocKy === 2) {
+					$tbCC = $bangDiem->getTbCCTerm2();
+				}
+				
+				$manager->persist($bangDiem);
 //				$manager->persist($phanBo);
 //				$manager->persist($chiDoan);
-//				$manager->flush();
+				$manager->flush();
+
 //
-//				return new JsonResponse('OK', 200);
-//			} else {
-//				return new JsonResponse([ 415, 'Unsupported Data Type' ], 415);
-//			}
+				return new JsonResponse([ 'tbCC' => $tbCC ], 200);
+			} else {
+				return new JsonResponse([ 404, 'Không thể tìm thấy Thiếu-nhi này' ], 404);
+			}
+			
 			return new JsonResponse('OK', 200);
 			
 		}
+		
+		$cacTruongPT   = $phanBo->getCacTruongPhuTrachDoi();
+		$phanBoHangNam = new ArrayCollection();
+		/** @var TruongPhuTrachDoi $truongPT */
+		foreach($cacTruongPT as $truongPT) {
+			$phanBoHangNam = new ArrayCollection(array_merge($phanBoHangNam->toArray(), $truongPT->getDoiNhomGiaoLy()->getPhanBoHangNam()->toArray()));
+		}
+		
+		if($phanBoHangNam->count() > 0) {
+			$array       = $phanBoHangNam->toArray();
+			$phanBoArray = [];
+			$sortedArray = [];
+			$returnArray = [];
+			/** @var PhanBo $phanBo */
+			foreach($array as $phanBo) {
+				$firstName                       = $phanBo->getThanhVien()->getFirstname();
+				$sortedArray[ $phanBo->getId() ] = $firstName;
+				$phanBoArray[ $phanBo->getId() ] = $phanBo;
+				$manager->persist($phanBo->createBangDiem());
+			}
+			$manager->flush();
+			$phanBoHangNamSorted = true;
+			$collator            = new \Collator('vi_VN');
+			$collator->asort($sortedArray);
+			foreach($sortedArray as $id => $name) {
+				$returnArray[] = $phanBoArray[ $id ];
+			}
+			$phanBoHangNam = new ArrayCollection(($returnArray));
+		}
+		
+		$admin->setAction('nhap-diem-thieu-nhi');
+		$admin->setActionParams([
+			'chiDoan'        => $phanBo->getChiDoan(),
+			'phanBo'         => $phanBo,
+			'phanBoHangNam'  => $phanBoHangNam,
+			'hocKy'          => $hocKy,
+			'cotDiemHeaders' => $cotDiemHeaders,
+			'cotDiemAttrs'   => $cotDiemAttrs,
+			'cotDiemLabels'  => $cotDiemLabels,
+			
+			'cotDiemCellFormats' => $cotDiemCellFormats,
+			'christianNames'     => ThanhVien::$christianNames
+		]);
 		
 		return parent::listAction();
 	}
