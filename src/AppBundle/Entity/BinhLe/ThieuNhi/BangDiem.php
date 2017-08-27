@@ -69,6 +69,89 @@ class BangDiem {
 		return $tbCC;
 	}
 	
+	public function tinhDiemHocKy($hocKy = 1) {
+		$cacCotDiemBiLoaiBo = $this->phanBo->getChiDoan()->getCotDiemBiLoaiBo();
+		$cols               = null;
+		$tbCC               = 0;
+		if($hocKy === 1) {
+			$cols = [
+				'tbCCTerm1' => 'tbCCTerm1',
+				'quizTerm1' => 'quizTerm1',
+				'midTerm1'  => 'midTerm1',
+				
+				'finalTerm1-1' => 'finalTerm1',
+				'finalTerm1-2' => 'finalTerm1'
+			];
+		} elseif($hocKy === 2) {
+			$cols = [
+				'tbCCTerm2'    => 'tbCCTerm2',
+				'quizTerm2'    => 'quizTerm2',
+				'midTerm2'     => 'midTerm2',
+				'finalTerm2-1' => 'finalTerm2',
+				'finalTerm2-2' => 'finalTerm2'
+			];
+		} else {
+			return null;
+		}
+		
+		foreach($cacCotDiemBiLoaiBo as $cotDiemBiLoaiBo) {
+			if($cotDiemBiLoaiBo === 'finalTerm1') {
+				unset($cols['finalTerm1-1']);
+				unset($cols['finalTerm1-2']);
+			} elseif($cotDiemBiLoaiBo === 'finalTerm2') {
+				unset($cols['finalTerm2-1']);
+				unset($cols['finalTerm2-2']);
+			} else {
+				unset($cols[ $cotDiemBiLoaiBo ]);
+			}
+		}
+		
+		$colCount = count($cols);
+		$sumDiem  = 0;
+		foreach($cols as $col) {
+			if(empty($_diem = $this->$col)) {
+				continue;
+			}
+			
+			$sumDiem += $_diem;
+		}
+		
+		if($hocKy === 1) {
+			$tbTerm = $this->tbTerm1 = $sumDiem / $colCount;
+		} elseif($hocKy === 2) {
+			$tbTerm              = $this->tbTerm2 = $sumDiem / $colCount;
+			$this->tbYear        = ($this->tbTerm1 + $this->tbTerm2) / 2;
+			$this->sundayTickets = $this->sundayTicketTerm1 + $this->sundayTicketTerm2;
+			
+			$namHoc = $this->phanBo->getNamHoc();
+			switch(true) {
+				case $this->tbYear >= $namHoc->getDiemGioi():
+					$this->category = self::GIOI;
+					break;
+				case $this->tbYear >= $namHoc->getDiemKha():
+					$this->category = self::KHA;
+					break;
+				case $this->tbYear >= $namHoc->getDiemTB():
+					$this->category = self::TRUNG_BINH;
+					break;
+				default:
+					$this->category = self::YEU;
+					break;
+			}
+			if(($sundayTickets = $this->sundayTickets) >= $namHoc->getPhieuLenLop() && $this->category !== self::YEU) {
+				$this->gradeRetention = 0;
+				if($sundayTickets >= $namHoc->getPhieuKhenThuong() && $this->tbYear >= $namHoc->getDiemKha()) {
+					$this->awarded = 1;
+				}
+			} else {
+				$this->gradeRetention = 1;
+			}
+		}
+		
+		
+		return $tbTerm;
+	}
+	
 	/**
 	 * @var PhanBo
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\PhanBo",inversedBy="bangDiem")

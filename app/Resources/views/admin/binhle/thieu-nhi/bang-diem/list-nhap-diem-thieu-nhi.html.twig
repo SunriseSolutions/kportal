@@ -86,6 +86,7 @@
         {% set colLabels = admin.actionParams['cotDiemLabels'] %}
         {% set colCellFormats = admin.actionParams['cotDiemCellFormats'] %}
         {% set ccIndex = -1 %}
+        {% set tbTermIndex = -1 %}
 
         {#{{ parent() }}#}
         <script src="{{ asset('bundles/sonatacore/vendor/jquery/dist/jquery.min.js') }}"></script>
@@ -190,15 +191,26 @@
                                 {% for attr in colAttrs %}
 
                                 {% if hocKy == 1 %}
-                                {% if attr == 'tbCCTerm1' %}
-                                {% set ccIndex = loop.index0 %}
-                                {% endif %}
-                                {% elseif hocKy == 2 %}
-                                {% if attr == 'tbCCTerm2' %}
-                                {% set ccIndex = loop.index0 %}
-                                {% endif %}
+                                    {% if attr == 'tbCCTerm1' %}
+                                    {% set ccIndex = loop.index0 %}
+                                    {% endif %}
+
+                                    {% if attr == 'tbTerm1' %}
+                                    {% set tbTermIndex = loop.index0 %}
+                                    {% endif %}
+
+                                    {% elseif hocKy == 2 %}
+                                        {% if attr == 'tbCCTerm2' %}
+                                        {% set ccIndex = loop.index0 %}
+                                        {% endif %}
+
+                                        {% if attr == 'tbTerm2' %}
+                                        {% set tbTermIndex = loop.index0 %}
+                                        {% endif %}
+
                                 {% endif %}
                                 {% endfor %}
+
                                 {% if ccIndex > -1 %}
                                 $.each(window.data, function (key, row) {
                                     if (row[0] === thanhVienCode) {
@@ -207,7 +219,16 @@
                                         return false;
                                     }
                                 });
-                                {% else %}
+                                {% endif %}
+
+                                {% if tbTermIndex > -1 %}
+                                $.each(window.data, function (key, row) {
+                                    if (row[0] === thanhVienCode) {
+                                        window.data[key][{{ tbTermIndex + 5 }}] = data.tbTerm;
+                                        window.hot.loadData(window.data);
+                                        return false;
+                                    }
+                                });
                                 {% endif %}
 
                             })

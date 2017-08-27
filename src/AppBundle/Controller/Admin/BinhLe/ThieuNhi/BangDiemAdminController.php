@@ -128,20 +128,38 @@ class BangDiemAdminController extends BaseCRUDController {
 			if( ! in_array($cotDiem, array_values($cotDiemAttrs))) {
 				return new JsonResponse([ 415, 'Không hỗ trợ Cột-điểm này' ], 415);
 			}
-			$phanBoId = $request->request->get('phanBoId');
-			if( ! (empty($diem) || empty($phanBo = $this->getDoctrine()->getRepository(PhanBo::class)->find($phanBoId)))) {
+			
+			$phanBoId      = $request->request->get('phanBoId');
+			$phanBo        = $this->getDoctrine()->getRepository(PhanBo::class)->find($phanBoId);
+			
+			if( ! ($diem === null || empty($phanBo))) {
 				$bangDiem = $phanBo->getBangDiem();
 				$setter   = 'set' . ucfirst($cotDiem);
 				$bangDiem->$setter($diem);
 				$manager = $this->get('doctrine.orm.default_entity_manager');
-				if(substr($cotDiem, 0, 2) == 'cc') {
+				
+				if(substr($cotDiem, 0, 2) === 'cc') {
 					$bangDiem->tinhDiemChuyenCan($hocKy);
+					$bangDiem->tinhDiemHocKy($hocKy);
+				} elseif(substr($cotDiem, 0, 6) !== 'sunday') {
+					$bangDiem->tinhDiemHocKy($hocKy);
 				}
+				
 				$tbCC = 0;
 				if($hocKy === 1) {
-					$tbCC = $bangDiem->getTbCCTerm1();
+					$tbCC      = $bangDiem->getTbCCTerm1();
+					$tbTerm    = $bangDiem->getTbTerm1();
+					$tbYear    = 0;
+					$category  = '';
+					$retention = '';
+					$awarded   = '';
 				} elseif($hocKy === 2) {
-					$tbCC = $bangDiem->getTbCCTerm2();
+					$tbCC      = $bangDiem->getTbCCTerm2();
+					$tbTerm    = $bangDiem->getTbTerm2();
+					$tbYear    = $bangDiem->getTbYear();
+					$category  = $bangDiem->getCategory();
+					$retention = $bangDiem->isGradeRetention();
+					$awarded   = $bangDiem->isAwarded();
 				}
 				
 				$manager->persist($bangDiem);
@@ -150,7 +168,7 @@ class BangDiemAdminController extends BaseCRUDController {
 				$manager->flush();
 
 //
-				return new JsonResponse([ 'tbCC' => $tbCC ], 200);
+				return new JsonResponse([ 'tbCC' => $tbCC, 'tbTerm' => $tbTerm, 'tbYear' => $tbYear ], 200);
 			} else {
 				return new JsonResponse([ 404, 'Không thể tìm thấy Thiếu-nhi này' ], 404);
 			}
@@ -170,7 +188,7 @@ class BangDiemAdminController extends BaseCRUDController {
 			$returnArray = [];
 			/** @var PhanBo $phanBoItem */
 			foreach($array as $phanBoItem) {
-				$firstName                       = $phanBoItem->getThanhVien()->getFirstname();
+				$firstName                           = $phanBoItem->getThanhVien()->getFirstname();
 				$sortedArray[ $phanBoItem->getId() ] = $firstName;
 				$phanBoArray[ $phanBoItem->getId() ] = $phanBoItem;
 				$manager->persist($phanBoItem->createBangDiem());
