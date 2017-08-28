@@ -117,6 +117,7 @@ class ThanhVienAdminHelper {
 				'translation_domain' => self::$translationDomain
 			))
 			->add('chiDoan', ChoiceType::class, array(
+				'required'           => false,
 				'label'              => 'list.label_chi_doan',
 				'placeholder'        => 'Chọn Chi Đoàn',
 				'choices'            => $danhSachChiDoan,
@@ -131,7 +132,7 @@ class ThanhVienAdminHelper {
 			))
 			->add('enabled', null, array())
 			->add('dob', DatePickerType::class, array(
-				'format' => 'dd/MM/yyyy',
+				'format'   => 'dd/MM/yyyy',
 				'required' => false,
 			))
 			->add('soDienThoai', null, array( 'required' => false ))

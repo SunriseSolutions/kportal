@@ -23,7 +23,9 @@ class InlineLayoutAdmin extends GenericLayoutAdmin {
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
-			->addIdentifier('id')->add('_action', 'actions', array(
+			->addIdentifier('id')
+			->add('name')
+			->add('_action', 'actions', array(
 				'actions' => array(
 					'content_pieces' => array( 'template' => '::admin/content/layout/list__action__inline_layout_content_pieces.html.twig' ),
 				)

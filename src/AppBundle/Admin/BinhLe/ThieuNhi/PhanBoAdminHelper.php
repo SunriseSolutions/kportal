@@ -110,6 +110,7 @@ class PhanBoAdminHelper {
 			
 			))
 			->add('chiDoan', ModelAutocompleteType::class, array(
+				'required'           => false,
 				'label' => 'list.label_chi_doan',
 				'property'           => 'id',
 				'to_string_callback' => function(ChiDoan $entity, $property) {
