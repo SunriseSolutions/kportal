@@ -340,6 +340,7 @@ sonata_media:
                 - xml
             allowed_mime_types:
                 - audio/mpeg
+                - application/octet-stream
 #                - video/mp4
                 - application/vnd.openxmlformats-officedocument.wordprocessingml.document
                 # Defaults:
