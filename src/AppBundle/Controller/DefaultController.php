@@ -67,7 +67,7 @@ class DefaultController extends Controller {
 				return new Response('{404}');
 			}
 			$ext = $medium->getExtension();
-			if($ext === 'mpga') {
+			if($ext === 'mpga' || $ext === 'bin') {
 				$metaData = $medium->getProviderMetadata();
 				$ext      = explode('.', $metaData['filename'])[1];
 			}
