@@ -201,7 +201,7 @@ jQuery('.playAudioOnClick').click(function () {
         initAudio(audioalias);
         playAudio();
     } else {
-        if (beanAudio.currentAudio.playing === true) {
+        if (!song.paused && beanAudio.currentAudio.playing === true) {
             stopAudio();
         } else {
             playAudio();
