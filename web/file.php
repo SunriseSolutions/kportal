@@ -18,6 +18,8 @@ if(empty($ext) || empty($fileName)) {
 	die();
 }
 
+$fileServerBase = 'http://www.sunrise.vn/get-file-url';
+
 $hash = hash('md5', $fileName);
 
 $root = 'data';
@@ -55,7 +57,7 @@ $path = $root . '/' . $lev1 . '/' . $lev2 . '/' . $lev3;
 $filePath = $path . '/' . $fileName . '.' . $ext;
 
 if( ! file_exists($filePath)) {
-	$fileServerUrl = 'http://file-server.local.com:81/kportal/web/app_dev.php/get-file-url/' . $fileName . '?bean-secret-key=' . $secret . '&ext=' . $ext;
+	$fileServerUrl = $fileServerBase . '/' . $fileName . '?bean-secret-key=' . $secret . '&ext=' . $ext;
 	$fileUrl       = file_get_contents($fileServerUrl);
 	
 	if($fileUrl === '{404}') {
