@@ -8,6 +8,10 @@
     {#<link rel='stylesheet' id='h5p-cachedassets-532072e10b6e5351315fce011ff12cbf5bdac6f9-css'  href='http://localhost/001/wordpress/wp-content/uploads/h5p/cachedassets/532072e10b6e5351315fce011ff12cbf5bdac6f9.css?ver=4.7.5' type='text/css' media='all' />#}
 
     <style>
+        .article-title {
+            text-align: center;
+            margin: 20px 0 20px 0;
+        }
     </style>
 {% endblock %}
 {% block javascripts %}
@@ -90,7 +94,7 @@
                             {#<button class="btn btn-white btn-xs" type="button">Modern</button>#}
                         </div>
                         <div class="text-center article-title">
-                            <span class="text-muted"><i class="fa fa-clock-o"></i> 28th Oct 2015</span>
+                            <span class="text-muted"><i class="fa fa-clock-o"></i> {{ article.updatedAt | date('d/m/Y') }} </span>
                             <h3>
                                 {{ article.title }}
                             </h3>
