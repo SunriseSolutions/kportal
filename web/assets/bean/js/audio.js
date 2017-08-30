@@ -208,3 +208,274 @@ jQuery('.playAudioOnClick').click(function () {
         }
     }
 });
+
+
+
+
+// ////////////// AUDIO //////////////////////
+jQuery('[data-audioalias]').each(function (index, element) {
+    // var this_class = jQuery(this).attr('class');
+    // var audioName = jQuery(this).data("audioalias");
+    // var audioId = jQuery(this).attr('id');
+    // // console.log( jQuery( this ).text() );
+    // song_list[audioId] = audioName;
+
+    initAudio(jQuery(this).data("audioalias"));
+});
+
+
+jQuery('.playlist [data-audioalias]')
+    .click(
+        function (e) {
+            e.preventDefault();
+            if (jQuery(this).parent().hasClass(
+                    'playlist')) {
+                var plid = jQuery(this).parent().attr(
+                    'id');
+                var phraseIndex = jQuery(this).index();
+                // alert(jQuery(this).index()
+                // + " "
+                // + plid + " "
+                // + phraseCurrentIndex[plid]);
+                phraseCurrentIndex[plid] = jQuery(this)
+                    .index();
+
+                stopAudio();
+                var audioalias = jQuery(this).data(
+                    'audioalias');
+                initAudio(audioalias);
+
+                if (audioalias == '#') {
+                    initAudio(jQuery(this).parent()
+                        .data('audioalias'));
+
+
+                    var plindex = plid;
+                    var playlistJQ = playlist[plindex][0][0];
+                    var phraselist = playlist[plindex];
+                    var plist = [];
+                    for (var _x = 0; _x < phraselist.length; _x++) {
+                        plist[_x] = phraselist[_x][0];
+                    }
+
+                    var _audiorange = jQuery(this).data(
+                        'audiorange');
+                    var _rangearray = _audiorange
+                        .split(';');
+                    var _x1 = _rangearray[0];
+                    var _x2 = _rangearray[1];
+                    try {
+                        seekAudio(_x1);
+                    } catch (e) {
+                        console.log(e.message);
+                    }
+                    var _pci = jQuery(this).index();
+
+                    if (_pci < plist.length - 1) {
+                        _audiorange = jQuery(
+                            plist[_pci + 1][0])
+                            .data('audiorange');
+                        _rangearray = _audiorange
+                            .split(';');
+                        var _y1 = _rangearray[0];
+                        var _y2 = _rangearray[1];
+
+                    }
+
+                    playAudioParent(
+                        audioalias,
+                        function () {// on ended
+                        },
+                        0,
+                        function () {
+
+                            var _audiorange = jQuery(
+                                plist[_pci][0])
+                                .data(
+                                    'audiorange');
+                            var _rangearray = _audiorange
+                                .split(';');
+                            var _x1 = _rangearray[0];
+                            var _x2 = _rangearray[1];
+                            if (_x1 < song.currentTime) {
+                                var phraseObj = jQuery(plist[_pci][0]);
+                                jQuery("body")
+                                    .scrollTop(
+                                        phraseObj
+                                            .offset().top - 40);
+//                                                    phraseObj
+//                                                        .css({
+//                                                            'color': 'darkred'
+//                                                        });
+
+                                phraseObj.addClass('phrase-played');
+                                phraseObj
+                                    .show();
+                            }
+
+                            if (_x2 > 0
+                                && song.currentTime >= _x2) {
+                                song.pause()
+                            }
+                            if (_y1 != undefined
+                                && _y1 != null
+                                && song.currentTime >= _y1) {
+                                song.pause();
+                            }
+
+                            ;
+
+                            jQuery("#globaldiv")
+                                .text(
+                                    song.currentTime
+                                    + " plist.length"
+                                    + plist.length
+                                    + " _pci "
+                                    + _pci
+                                    + "phraseCurrentIndex[jQuery(plist[0][0]).attr('id')]"
+                                    + phraseCurrentIndex[jQuery(
+                                    plist[0][0])
+                                        .attr(
+                                            'id')]
+                                    + " --- x1 is  "
+                                    + _x1
+                                    + "		 --- y1 is  "
+                                    + _y1
+                                    + " --- audiorange index 2  "
+                                    + jQuery(
+                                    plist[2][0])
+                                        .data(
+                                            'audiorange'));
+                            // SAudio.currentTime
+                            // =
+                            // song.currentTime;
+                        });
+                }
+
+                playAudio();
+                jQuery('.startPlaylist').button('reset');
+                var phraselist = playlist[plid];
+                for (var i = 1; i < phraseIndex + 1; i++) {
+//                                        phraselist[i][0].css({
+//                                            'color': 'darkred'
+//                                        }).show();
+
+                    phraselist[i][0].addClass('phrase-played').show();
+
+                    // iterate subphrase
+                    for (var j = 1; j < phraselist[i].length; j++) {
+//                                            phraselist[i][j].css({
+//                                                'color': 'darkred'
+//                                            }).show();
+                        phraselist[i][j].addClass('phrase-played').show();
+                    }
+                }
+                for (var i = phraseIndex + 1; i < phraselist.length; i++) {
+                    phraselist[i][0].removeAttr(
+                        "style").show();
+                    // iterate subphrase
+                    for (var j = 1; j < phraselist[i].length; j++) {
+                        phraselist[i][j]
+                            .removeAttr("style")
+                            .show();
+                    }
+                }
+                song_paused = true;
+
+            }
+        });
+
+// initialization - first element in playlist
+
+// play click
+jQuery('.play').click(function (e) {
+    e.preventDefault();
+    playAudio();
+});
+
+// pause click
+jQuery('.pause').click(function (e) {
+    e.preventDefault();
+    stopAudio();
+});
+
+// /////////////// PLAYLIST - DIALOGUE - TEXTE Play
+// Strategies
+// //////////////////////
+var playlist = [];
+// var phraselist = [];
+
+// var audioitemlist = [];
+
+// pli 0 0 is div jobject
+// pli 1 0 is span object for phrase
+// pli 1 1 is span object for subphrase
+
+jQuery('.playlist')
+    .each(
+        function (index, element) {
+
+            playlist_index = jQuery(this).attr('id');
+            playlist[playlist_index] = [];
+            playlist[playlist_index][0] = [];
+            playlist[playlist_index][0][0] = jQuery(this);
+            // jQuery(this).hide();
+            jQuery(this)
+                .children('[data-audioalias]')
+                .each(
+                    function (index1,
+                              element1) {
+                        playlist[playlist_index][index1 + 1] = [];
+                        playlist[playlist_index][index1 + 1][0] = jQuery(this);
+                        // jQuery(this).hide();
+
+                        // item list -
+                        // subphrase list
+                        jQuery(this)
+                            .children(
+                                '[data-audioalias]')
+                            .each(
+                                function (index2,
+                                          element1) {
+                                    playlist[playlist_index][index1 + 1][index2 + 1] = jQuery(this);
+                                    // jQuery(this).hide();
+
+                                });
+                    });
+
+            // event
+
+        });
+
+jQuery('.startPlaylist').click(
+    function (e) {
+        e.preventDefault();
+
+        var methodName = jQuery(this).data("playstrat");
+        if (song_paused == true) {
+            song_paused = false;
+            window['playStrat'
+            + methodName.charAt(0)
+                .toUpperCase()
+            + methodName.slice(1)](jQuery(this)
+                .data("playlist"), playlist);
+            jQuery(this).button('playing');
+        } else if (song_paused == false) {
+            song_paused = true;
+            stopAudio();
+            jQuery(this).button('clicktoplay');
+        }
+
+    });// end for click
+
+jQuery('.startPlaylist').each(
+    function () {
+        var methodName = jQuery(this).data("playstrat");
+        if (!stratList.hasOwnProperty(methodName)) {
+            stratList[methodName] = 1;
+            jQuery.getScript(sroot
+                + '/audio-strats/'
+                + methodName + '.js', function () {
+            });
+        }
+    });
