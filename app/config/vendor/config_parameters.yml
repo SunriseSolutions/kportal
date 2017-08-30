@@ -30,8 +30,15 @@ parameters:
 
     default_site:
         theme: standard
-        locale: en_GB
+        locale: vi_VN
         file_server: server.local.com:81/kportal/web
+        modules: []
+
+    sunrise.vn:
+        theme: standard
+        locale: vi_VN
+        topic: hoc_tieng_phap
+        file_server: server.sunrise.vn
         modules: []
 
     tiengphap.org:

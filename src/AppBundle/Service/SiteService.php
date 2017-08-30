@@ -19,7 +19,7 @@ class SiteService extends BaseService {
 	}
 	
 	public function getHostName() {
-		return $this->container->get('request_stack')->getCurrentRequest()->getHost();
+		return str_replace('www.', '', $this->container->get('request_stack')->getCurrentRequest()->getHost());
 	}
 	
 	public function getHostParams() {
