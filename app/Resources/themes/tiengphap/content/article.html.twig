@@ -32,21 +32,6 @@
     <script>
 
         $(document).ready(function () {
-            if ($(this).width() < 1024) {
-                $('body').addClass('mini-navbar')
-            } else {
-//                $('body').removeClass('body-small')
-            }
-
-            // Minimalize menu when screen is less than 768px
-            $(window).bind("resize", function () {
-                if ($(this).width() < 1024) {
-                    $('body').addClass('mini-navbar')
-                } else {
-//                    $('body').removeClass('body-small')
-                }
-            });
-
 
             $('.btn-content').on('click', function (e) {
                 _h5pId = $(this).data('h5ptarget');

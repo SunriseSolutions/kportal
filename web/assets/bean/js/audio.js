@@ -71,14 +71,12 @@ function seekAudio(pos) {
 function playAudio() {
     if (song != undefined && song != null) {
         song.play();
-        beanAudio.currentAudio.playing = true;
     }
 }
 
 function stopAudio() {
     if (song != undefined && song != null) {
         song.pause();
-        beanAudio.currentAudio.playing = false;
     }
 }
 
@@ -193,6 +191,10 @@ function playNextAudio() {
     playAudio();
 }
 
+function isAudioPlaying() {
+    return song !== undefined && !song.paused && song.currentTime > 0 && !song.ended;
+}
+
 // alert(playAudio_list.length);
 jQuery('.playAudioOnClick').click(function () {
     var audioalias = jQuery(this).data('audioalias');
@@ -201,15 +203,13 @@ jQuery('.playAudioOnClick').click(function () {
         initAudio(audioalias);
         playAudio();
     } else {
-        if (!song.paused && beanAudio.currentAudio.playing === true) {
+        if (isAudioPlaying()) {
             stopAudio();
         } else {
             playAudio();
         }
     }
 });
-
-
 
 
 // ////////////// AUDIO //////////////////////
@@ -381,7 +381,6 @@ jQuery('.playlist [data-audioalias]')
                     }
                 }
                 song_paused = true;
-
             }
         });
 
