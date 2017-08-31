@@ -4,7 +4,7 @@ parameters:
     sonata.media.provider.file.class: AppBundle\Service\Media\Provider\AppFileProvider
     sonata.media.manager.media.class: AppBundle\Service\Media\Entity\AppMediaManager
 
-#    sonata.media.admin.media.class: Application\Sonata\MediaBundle\Admin\AppMediaAdmin
+    sonata.media.admin.media.class: AppBundle\Admin\Media\AppMediaAdmin
 #    sonata.media.admin.gallery.class: Application\Sonata\MediaBundle\Admin\AppGalleryAdmin
 
     max_file_size: 150 # 150 MB per file
