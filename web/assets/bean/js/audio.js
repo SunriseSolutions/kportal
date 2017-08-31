@@ -199,12 +199,12 @@ jQuery('.playAudioOnClick').click(function () {
     if (beanAudio.currentAudio.alias !== audioalias) {
         stopAudio();
         initAudio(audioalias);
+        seekAudio(0);
         playAudio();
     } else {
         if (isAudioPlaying()) {
             stopAudio();
         } else {
-            seekAudio(0);
             playAudio();
         }
     }
