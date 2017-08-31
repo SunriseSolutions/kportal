@@ -21,7 +21,7 @@ list:
     label_id: ID/Serial Number
     label_slug: Slug
     label_title: Title
-
+    label_layout_name: Layout
 
 form:
     label_screen_size: Screen

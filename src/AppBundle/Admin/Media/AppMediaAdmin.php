@@ -13,6 +13,6 @@ use Sonata\MediaBundle\Provider\Pool;
 class AppMediaAdmin extends MediaAdmin {
 	public function configureListFields(ListMapper $listMapper) {
 		parent::configureListFields($listMapper);
-		$listMapper->add('contentType');
+//		$listMapper->add('contentType');
 	}
 }
