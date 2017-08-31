@@ -37,7 +37,8 @@ function initAudio(alias) {
         && alias.trim().length > 0) {
 
         var _scache = SAudio.song_cache[alias];
-        if (_scache == undefined || _scache == null) {
+        var _isIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/i);
+        if (_scache == undefined || _scache == null || _isIOS) {
             SAudio.song_cache[alias] = new Audio(audio_server_url
                 + '/file.php?f=' + alias + '.mp3');
         }
@@ -50,7 +51,7 @@ function initAudio(alias) {
     // song = document.getElementById('globalaudio');
 
     // song.src = audio_server_url + '/file.php?ext=mp3&alias=' + alias;
-    if (song != undefined && song != null) {
+    if (song !== undefined && song !== null) {
         jQuery(song).off();
     }
 
@@ -61,19 +62,19 @@ function initAudio(alias) {
 }
 
 function seekAudio(pos) {
-    if (song != undefined && song != null) {
+    if (song !== undefined && song !== null) {
         song.currentTime = pos;
     }
 }
 
 function playAudio() {
-    if (song != undefined && song != null) {
+    if (song !== undefined && song !== null) {
         song.play();
     }
 }
 
 function stopAudio() {
-    if (song != undefined && song != null) {
+    if (song !== undefined && song !== null) {
         song.pause();
     }
 }
