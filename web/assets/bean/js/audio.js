@@ -20,7 +20,6 @@ var auto_next = false;
 var beanAudio = {};
 beanAudio.currentAudio = {};
 beanAudio.currentAudio.alias = '';
-beanAudio.currentAudio.playing = false;
 
 function playOnEnded(_auto_next) {
     auto_next = _auto_next;
@@ -41,7 +40,6 @@ function initAudio(alias) {
         if (_scache == undefined || _scache == null) {
             SAudio.song_cache[alias] = new Audio(audio_server_url
                 + '/file.php?f=' + alias + '.mp3');
-        } else {
         }
         song = SAudio.song_cache[alias];
 
@@ -206,6 +204,7 @@ jQuery('.playAudioOnClick').click(function () {
         if (isAudioPlaying()) {
             stopAudio();
         } else {
+            seekAudio(0);
             playAudio();
         }
     }
