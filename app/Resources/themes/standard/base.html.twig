@@ -54,6 +54,10 @@
                 right: 10px; /* padding from the left side of the window */
             }
 
+            .table > tbody > tr > td {
+                vertical-align: middle;
+            }
+
             .tip {
                 background-color: #F9F2F4;
                 border-radius: 4px;
@@ -63,15 +67,15 @@
                 white-space: normal;
             }
 
-            .menu-item, .nav-label{
+            .menu-item, .nav-label {
                 font-size: 13px;
             }
 
-            .btn-info a{
+            .btn-info a {
                 color: #FFFFFF;
             }
 
-            body{
+            body {
                 font-size: 14px;
             }
         </style>
@@ -324,7 +328,8 @@
 
 
             <span id="scrollToTop">
-                <a href="#top" class="well well-sm"  onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
+                <a href="#top" class="well well-sm"
+                   onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
                     <i class="glyphicon glyphicon-chevron-up"></i> Back to Top
                 </a>
             </span><!-- /scrollToTop -->
@@ -334,7 +339,8 @@
 
                 </div>
                 <div>
-                    {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }} <strong>Copyright</strong> Sunrise Solutions Co., ltd &copy; 2008-2017
+                    {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }} <strong>Copyright</strong> Sunrise
+                    Solutions Co., ltd &copy; 2008-2017
                 </div>
             </div>
 
@@ -363,7 +369,7 @@
         (function ($) {
             $('#scrollToTop').affix({
                 // how far to scroll down before link "slides" into view
-                offset: {top:50}
+                offset: {top: 50}
             });
 
             $(document).on("click", ".vocab-entry-popover-audio", function () {
@@ -378,6 +384,8 @@
             /* OnLoad Page */
             $(document).ready(
                 function ($) {
+
+                    $('[data-toggle="tooltip"]').tooltip()
 
                     $('.menu-item').hover(
                         function (e) {
