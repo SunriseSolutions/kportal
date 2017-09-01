@@ -342,8 +342,6 @@ app.request.attributes.get('_route_params')) %}
             $(document).ready(
                 function ($) {
 
-                    $('[data-toggle="tooltip"]').tooltip()
-
                     $('.menu-item').hover(
                         function (e) {
                             $(this).siblings().removeClass('active').children('ul').removeClass('in');
@@ -358,7 +356,10 @@ app.request.attributes.get('_route_params')) %}
             /* OnLoad Window */
             var init = function () {
 
+//                $('[data-toggle="tooltip"]').tooltip()
+
             };
+
             window.onload = init;
 
         })(jQuery);
