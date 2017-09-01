@@ -22,6 +22,9 @@ list:
     label_slug: Slug
     label_title: Title
     label_layout_name: Layout
+    label_layout_children: Chidren Layouts
+    label_owner: Owner
+
 
 form:
     label_screen_size: Screen

@@ -119,7 +119,7 @@ class ArticleNodeAdmin extends BaseAdmin {
 //				$sql = $childrenQuery->getQuery()->getSQL();
 				$formMapper->add('layout.children', ModelType::class, array(
 						'translation_domain' => $this->translationDomain,
-//					'label' => 'form.label_work_location',
+						'label' => 'list.label_layout_children',
 						'property'           => 'name',
 						
 						'btn_add'     => false,
