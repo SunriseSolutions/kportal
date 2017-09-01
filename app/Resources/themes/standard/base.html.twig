@@ -381,11 +381,11 @@
 
                     $('.menu-item').hover(
                         function (e) {
+                            $(this).siblings().removeClass('active').children('ul').removeClass('in');
                             $(this).addClass('active');
                             $(this).children('ul').addClass('in');
                         }, function (e) {
-                            $(this).removeClass('active');
-                            $(this).children('ul').removeClass('in');
+
                         });
 
                 }
