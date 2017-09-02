@@ -25,6 +25,7 @@
 
     <link rel="icon" type="image/x-icon" href="{{ asset('themes/tiengphap/favicon.ico') }}"/>
     <script>
+        var isIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/i);
         var sroot = '{{ asset('assets/bean/js') }}';
         var audio_server_url = '{{ app.request.scheme ~ '://' ~ fileServerURL('audio') }}';
     </script>
@@ -277,8 +278,6 @@ app.request.attributes.get('_route_params')) %}
     {% endjavascripts %}
 
     <script>
-        var _isIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/i);
-
         (function ($) {
             $('#scrollToTop').affix({
                 // how far to scroll down before link "slides" into view
