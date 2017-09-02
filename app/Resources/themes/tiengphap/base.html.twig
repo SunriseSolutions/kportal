@@ -10,11 +10,11 @@
 
     {% block stylesheets %}
         {% stylesheets
-        'themes/standard/css/base.css'
         'themes/standard/css/bootstrap.min.css'
         'themes/standard/font-awesome/css/font-awesome.css'
         'themes/standard/css/animate.css'
         'themes/standard/css/style.css'
+        'themes/standard/css/base.css'
         filter='cssrewrite' output='css/compiled/app.css' %}
         <link rel="stylesheet" href="{{ asset_url }}"/>
 
