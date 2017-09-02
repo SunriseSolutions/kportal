@@ -10,6 +10,7 @@
 
     {% block stylesheets %}
         {% stylesheets
+        'themes/standard/css/base.css'
         'themes/standard/css/bootstrap.min.css'
         'themes/standard/font-awesome/css/font-awesome.css'
         'themes/standard/css/animate.css'
@@ -20,69 +21,6 @@
         {# {{ app.request.basePath ~ '/css/compiled/app.css' }} #}
 
         {% endstylesheets %}
-
-        <style>
-            .phrase-played {
-                color: darkolivegreen;
-            }
-
-            .word-played {
-                color: darkgoldenrod;
-            }
-
-            .playlist [data-audioalias] {
-                cursor: pointer;
-            }
-
-            .pagination > li {
-                font-size: 16px;
-            }
-
-            .article .ibox-content {
-                padding: 10px;
-            }
-
-            #scrollToTop.affix-top {
-                position: absolute; /* allows it to "slide" up into view */
-                bottom: 20px; /* negative of the offset - height of link element */
-                right: 10px; /* padding from the left side of the window */
-            }
-
-            #scrollToTop.affix {
-                position: fixed; /* keeps it on the bottom once in view */
-                bottom: 50px; /* height of link element */
-                right: 10px; /* padding from the left side of the window */
-            }
-
-            .table > tbody > tr > td[rowspan] {
-                border: 1px solid #e7eaec;
-            }
-
-            .table > tbody > tr > td, .table > tbody > tr > th {
-                vertical-align: middle;
-            }
-
-            .tip {
-                background-color: #F9F2F4;
-                border-radius: 4px;
-                color: #ca4440;
-                font-size: 90%;
-                padding: 2px 4px;
-                white-space: normal;
-            }
-
-            .menu-item, .nav-label{
-                font-size: 13px;
-            }
-
-            .btn-info a{
-                color: #FFFFFF;
-            }
-
-            body{
-                font-size: 14px;
-            }
-        </style>
     {% endblock %}
 
     <link rel="icon" type="image/x-icon" href="{{ asset('themes/tiengphap/favicon.ico') }}"/>
