@@ -32,7 +32,7 @@ class ContentMultiChoice extends AppContentMultiChoice {
 		parent::__construct();
 		
 	}
-	
+
 //	/**
 //	 * @return array
 //	 */
@@ -127,13 +127,8 @@ class ContentMultiChoice extends AppContentMultiChoice {
 		return $obj;
 	}
 	
-	
-	/**
-	 * @param ContentMedia $multichoiceMedia
-	 */
-	public function setMultichoiceMedia($multichoiceMedia) {
-		$this->multichoiceMedia = $multichoiceMedia;
-		if( ! empty($multichoiceMedia)) {
+	public function setupMultichoiceMediaLibraries() {
+		if( ! empty($multichoiceMedia = $this->multichoiceMedia)) {
 //			$multichoiceMedia->setQuestion($this);
 			if($multichoiceMedia->isImage()) {
 				array_unshift($this->libraries, $multichoiceMedia->getImageLib());
@@ -143,6 +138,14 @@ class ContentMultiChoice extends AppContentMultiChoice {
 				array_unshift($this->libraries, $multichoiceMedia->getFlowplayerLib(), $multichoiceMedia->getVidLib());
 			}
 		}
+	}
+	
+	/**
+	 * @param ContentMedia $multichoiceMedia
+	 */
+	public function setMultichoiceMedia($multichoiceMedia) {
+		$this->multichoiceMedia = $multichoiceMedia;
+		$this->setupMultichoiceMediaLibraries();
 	}
 	
 	/**

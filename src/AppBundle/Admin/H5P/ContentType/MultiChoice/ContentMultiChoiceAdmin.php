@@ -113,19 +113,20 @@ class ContentMultiChoiceAdmin extends BaseAdmin {
 		$object->setupLibraries();
 //		$object->setMultichoiceMedia($object->getMultichoiceMedia());
 		$objLibs = $object->getLibraries();
-		foreach($objLibs as $lib) {
-			$library                   = array();
-			$library['dependencyType'] = array_key_exists('dependencyType', $lib) ? $lib['dependencyType'] : Dependency::TYPE_PRELOADED;
-			$library['object']         = $libRepo->findOneBy([
-				'machineName'  => $lib['machineName'],
-				'majorVersion' => $lib['majorVersion'],
-				'minorVersion' => $lib['minorVersion'],
-				'patchVersion' => $lib['patchVersion'],
-			]);
-			$libraries[]               = $library;
-		}
-		
-		$object->initiateDependencies($libraries);
+		/**
+//		foreach($objLibs as $lib) {
+//			$library                   = array();
+//			$library['dependencyType'] = array_key_exists('dependencyType', $lib) ? $lib['dependencyType'] : Dependency::TYPE_PRELOADED;
+//			$library['object']         = $libRepo->findOneBy([
+//				'machineName'  => $lib['machineName'],
+//				'majorVersion' => $lib['majorVersion'],
+//				'minorVersion' => $lib['minorVersion'],
+//				'patchVersion' => $lib['patchVersion'],
+//			]);
+//			$libraries[]               = $library;
+//		}
+		 */
+//		$object->initiateDependencies($libraries);
 //		$media = $object->getMultichoiceMedia();
 //		$stop = $media;
 		$answers = $object->getAnswers();

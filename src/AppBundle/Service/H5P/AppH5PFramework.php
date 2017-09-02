@@ -750,9 +750,78 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 	 *   - dropCss(optional): csv of machine names
 	 */
 	public function loadContentDependencies($id, $type = null) {
+		$registry = $this->container->get('doctrine');
 		/** @var QueryBuilder $libraryQb */
-		$libraryQb = $this->container->get('doctrine')->getManager()->createQueryBuilder();
-		$expr      = $libraryQb->expr();
+		$libraryQb   = $registry->getManager()->createQueryBuilder();
+		$expr        = $libraryQb->expr();
+		$contentRepo = $registry->getRepository(Content::class);
+		/** @var Content $content */
+		$content = $contentRepo->find($id);
+		if(empty($content)) {
+			return [];
+		}
+		$libraries = $content->getLibraries();
+		
+		$libraryQb->select(array(
+			'library.id as libraryId',
+			'library.machineName',
+			'library.title',
+			'library.majorVersion',
+			'library.minorVersion',
+			'library.patchVersion',
+			'library.embedTypes',
+			'library.preloadedJs',
+			'library.preloadedCss'
+		))->from(Library::class, 'library');
+		
+		$contentLibs = [];
+		foreach($libraries as $library) {
+			$contentLib = [];
+			if(array_key_exists('dependencyType', $library)) {
+				$dependencyType = $library['dependencyType'];
+			} else {
+				$dependencyType = Dependency::TYPE_PRELOADED;
+			}
+			if( ! empty($type) && $dependencyType !== $type) {
+				continue;
+			}
+			if(array_key_exists('dropCss', $library)) {
+				$contentLib['dropCss'] = $library['dropCss'];
+			} else {
+				$contentLib['dropCss'] = false;
+			}
+			$contentLib['dependencyType'] = $dependencyType;
+//			$contentLib['libraryId'] =
+			$contentLib['machineName']  = $library['machineName'];
+			$contentLib['majorVersion'] = $library['majorVersion'];
+			$contentLib['minorVersion'] = $library['minorVersion'];
+			$contentLib['patchVersion'] = $library['patchVersion'];
+			$libraryQb->orWhere(
+				$expr->andX(
+					$expr->eq('library.machineName', $expr->literal($contentLib['machineName'])),
+					$expr->eq('library.majorVersion', $expr->literal($contentLib['majorVersion'])),
+					$expr->eq('library.minorVersion', $expr->literal($contentLib['minorVersion']))
+				)
+			);
+			$contentLibs[] = $contentLib;
+		};
+		
+		$returnedLibs = [];
+		$libResults   = $libraryQb->getQuery()->getResult();
+		foreach($contentLibs as $contentLib) {
+			foreach($libResults as $lib) {
+				if($lib['machineName'] === $contentLib['machineName']) {
+					$lib['dropCss']        = $contentLib['dropCss'];
+					$lib['dependencyType'] = $contentLib['dependencyType'];
+					$returnedLibs[]        = $lib;
+				}
+			}
+		}
+
+		return $returnedLibs;
+		
+		/** @var QueryBuilder $libraryQb */
+		$libraryQb = $registry->getManager()->createQueryBuilder();
 		$libraryQb->select(array(
 			'contentLibrary.dropCSS as dropCss',
 			'contentLibrary.dependencyType',
@@ -777,8 +846,9 @@ class AppH5PFramework implements \H5PFrameworkInterface {
 		$libraryQb
 			->setParameter('contentId', $id)
 			->orderBy('contentLibrary.position', 'ASC');
+		$result = $libraryQb->getQuery()->getResult();
 		
-		return $libraryQb->getQuery()->getResult();
+		return $result;
 	}
 	
 	/**

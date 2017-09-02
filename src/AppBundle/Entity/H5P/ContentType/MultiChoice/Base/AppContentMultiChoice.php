@@ -73,13 +73,13 @@ abstract class AppContentMultiChoice extends Content {
 				],
 				$this->getLibraryVersion()
 			];
+			$this->setupMultichoiceMediaLibraries();
 		}
 		
 		return $this->libraries;
 	}
 	
-	
-	
+	protected abstract function setupMultichoiceMediaLibraries();
 	
 	/**
 	 * @var ArrayCollection
