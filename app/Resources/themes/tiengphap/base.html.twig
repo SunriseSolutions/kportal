@@ -277,6 +277,8 @@ app.request.attributes.get('_route_params')) %}
     {% endjavascripts %}
 
     <script>
+        var _isIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/i);
+
         (function ($) {
             $('#scrollToTop').affix({
                 // how far to scroll down before link "slides" into view
@@ -295,7 +297,7 @@ app.request.attributes.get('_route_params')) %}
             /* OnLoad Page */
             $(document).ready(
                 function ($) {
-                    if ($(window).width() > 992) {
+                    if ($(window).width() > 992 || window.isIOS) {
                         $('.menu-item').hover(
                             function (e) {
                                 $(this).siblings().removeClass('active').children('ul').removeClass('in');

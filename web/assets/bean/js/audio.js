@@ -37,8 +37,8 @@ function initAudio(alias) {
         && alias.trim().length > 0) {
 
         var _scache = SAudio.song_cache[alias];
-        var _isIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/i);
-        if (_scache == undefined || _scache == null || _isIOS) {
+
+        if (_scache == undefined || _scache == null || window.isIOS) {
             SAudio.song_cache[alias] = new Audio(audio_server_url
                 + '/file.php?f=' + alias + '.mp3');
         }

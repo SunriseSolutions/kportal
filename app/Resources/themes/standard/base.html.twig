@@ -309,6 +309,8 @@
     {% endjavascripts %}
 
     <script>
+        var _isIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/i);
+
         (function ($) {
             $('#scrollToTop').affix({
                 // how far to scroll down before link "slides" into view
@@ -330,14 +332,16 @@
 
                     $('[data-toggle="tooltip"]').tooltip()
 
-                    $('.menu-item').hover(
-                        function (e) {
-                            $(this).siblings().removeClass('active').children('ul').removeClass('in');
-                            $(this).addClass('active');
-                            $(this).children('ul').addClass('in');
-                        }, function (e) {
+                    if ($(window).width() > 992 || window.isIOS) {
+                        $('.menu-item').hover(
+                            function (e) {
+                                $(this).siblings().removeClass('active').children('ul').removeClass('in');
+                                $(this).addClass('active');
+                                $(this).children('ul').addClass('in');
+                            }, function (e) {
 
-                        });
+                            });
+                    }
 
                 }
             );
