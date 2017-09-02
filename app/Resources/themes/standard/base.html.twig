@@ -302,58 +302,12 @@
     'themes/standard/js/plugins/pace/pace.min.js'
 
     'assets/bean/js/audio.js'
+    'themes/standard/js/base.js'
 
     output='js/compiled/app.js' %}
     <script src=" {{ asset_url }}"></script>
     {#app.request.basePath ~ '/js/compiled/app.js'#}
     {% endjavascripts %}
-
-    <script>
-        var _isIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/i);
-
-        (function ($) {
-            $('#scrollToTop').affix({
-                // how far to scroll down before link "slides" into view
-                offset: {top: 50}
-            });
-
-            $(document).on("click", ".vocab-entry-popover-audio", function () {
-                var audioalias = $(this).data('audioalias');
-                stopAudio();
-                initAudio(audioalias);
-                playAudio();
-            });
-
-            /* ----------------------------------------------- */
-            /* ----------------------------------------------- */
-            /* OnLoad Page */
-            $(document).ready(
-                function ($) {
-
-                    $('[data-toggle="tooltip"]').tooltip()
-
-                    if ($(window).width() > 992 || window.isIOS) {
-                        $('.menu-item').hover(
-                            function (e) {
-                                $(this).siblings().removeClass('active').children('ul').removeClass('in');
-                                $(this).addClass('active');
-                                $(this).children('ul').addClass('in');
-                            }, function (e) {
-
-                            });
-                    }
-
-                }
-            );
-            /* OnLoad Window */
-            var init = function () {
-
-            };
-            window.onload = init;
-
-        })(jQuery);
-
-    </script>
 
 {% endblock %}
 
