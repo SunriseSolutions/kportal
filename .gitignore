@@ -47,6 +47,11 @@ web/test.php
 /var/tmp/*
 !var/tmp/.gitkeep
 
+!/var/jwt
+/var/jwt/*
+!var/jwt/.gitkeep
+
+
 
 # default sym3
 /app/config/parameters.yml

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -10,7 +9,6 @@
     <title>Học Tiếng Pháp mỗi ngày nhanh và hiệu quả</title>
 
     <link rel="stylesheet" href="http://test.local.com/001/app.css"/>
-
 
 
     <style>
@@ -55,15 +53,15 @@
             white-space: normal;
         }
 
-        .menu-item, .nav-label{
+        .menu-item, .nav-label {
             font-size: 13px;
         }
 
-        .btn-info a{
+        .btn-info a {
             color: #FFFFFF;
         }
 
-        body{
+        body {
             font-size: 14px;
         }
     </style>
@@ -81,10 +79,10 @@
         var sroot = '/assets/bean/js';
         var audio_server_url = 'http://audio-server.sunrise.vn';
     </script>
-
-
+    
 </head>
-<body>
+<body data-spy="scroll"
+      data-target=".navbar-spied">
 <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -141,6 +139,85 @@
 
             </nav>
         </div>
+            <div class="row col-lg-6">
+                <nav id="navbar1" class="navbar-spied navbar navbar-inverse" style="z-index: 9;" data-spy="affix"
+                     data-offset-top="60" data-offset-bottom="200">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">Brand</a>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#sectionA1">Link AAA</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                       aria-haspopup="true" aria-expanded="false">Dropdown <span
+                                                class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#sectionA2">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#sectionA4">Something else here</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#sectionA5">Separated link</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">One more separated link</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#sectionA3">Link</a></li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+            </div>
+            <div class="row col-lg-6">
+                <nav id="navbar2" class="navbar-spied navbar navbar-inverse" style="z-index: 9;" data-spy="affix"
+                     data-offset-top="60" data-offset-bottom="200">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#sectionB1">B1</a></li>
+                                <li><a href="#sectionB2">B2</a></li>
+                                <li><a href="#sectionB3">B3</a></li>
+                            </ul>
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#sectionB4">B4</a></li>
+                                <li><a href="#sectionB5">B5</a></li>
+                                <li><a href="#sectionB6">B6</a></li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+            </div>
+        
+        
+
+        
         <div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row">
                 <div class="col-sm-8 col-lg-8 col-lg-offset-1">
@@ -155,11 +232,15 @@
                                 </h3>
                             </div>
                             <div class="article-content row">
-                                <div style="text-align: left;" class = "col-md-6" ><div class="table-responsive">
+                                <div style="text-align: left;" class="col-md-6" >
+                                    <h1 id="sectionA1">test A1</h1>
+                                    <div class="table-responsive">
                                         <table class="table table-striped">
                                             <tr>
                                                 <td>
-                                                    <span class="btn btn-default playAudioOnClick" data-audioalias="JH9N-0000-0000-00OV-G4IE"><i class="fa fa-volume-up" aria-hidden="true"> A &#91;a&#93; </i></span>
+                                                    <span class="btn btn-default playAudioOnClick"
+                                                          data-audioalias="JH9N-0000-0000-00OV-G4IE"><i
+                                                                class="fa fa-volume-up" aria-hidden="true"> A &#91;a&#93; </i></span>
                                                 </td>
                                                 <td>
                                                     <span class="btn btn-info disabled">Như chữ <strong>A</strong> tiếng Việt</span>
@@ -168,16 +249,20 @@
 
                                             <tr>
                                                 <td>
-                                                    <span class="btn btn-default playAudioOnClick" data-audioalias="R126-0000-0000-00OV-G4M7"><i class="fa fa-volume-up" aria-hidden="true"> B &#91;be&#93; </i></span>
+                                                    <span class="btn btn-default playAudioOnClick"
+                                                          data-audioalias="R126-0000-0000-00OV-G4M7"><i
+                                                                class="fa fa-volume-up" aria-hidden="true"> B &#91;be&#93; </i></span>
                                                 </td>
                                                 <td>
                                                     <span class="btn btn-info disabled">Như <strong>Bê</strong> tiếng Việt</span>
                                                 </td>
                                             </tr>
 
-                                            <tr>
+                                            <tr id="sectionA2">
                                                 <td>
-                                                    <span class="btn btn-default playAudioOnClick" data-audioalias="31J1-0000-0000-00OV-G4MM"><i class="fa fa-volume-up" aria-hidden="true"> C &#91;se&#93; </i></span>
+                                                    <span class="btn btn-default playAudioOnClick"
+                                                          data-audioalias="31J1-0000-0000-00OV-G4MM"><i
+                                                                class="fa fa-volume-up" aria-hidden="true"> C &#91;se&#93; </i></span>
                                                 </td>
                                                 <td>
                                                     <span class="btn btn-info disabled">Như <strong>Xê</strong> tiếng Việt</span>
@@ -186,16 +271,20 @@
 
                                             <tr>
                                                 <td>
-                                                    <span class="btn btn-default playAudioOnClick" data-audioalias="FMAN-0000-0000-00OV-G4MR"><i class="fa fa-volume-up" aria-hidden="true"> D &#91;de&#93; </i></span>
+                                                    <span class="btn btn-default playAudioOnClick"
+                                                          data-audioalias="FMAN-0000-0000-00OV-G4MR"><i
+                                                                class="fa fa-volume-up" aria-hidden="true"> D &#91;de&#93; </i></span>
                                                 </td>
                                                 <td>
                                                     <span class="btn btn-info disabled">Như <strong>Đê</strong> tiếng Việt</span>
                                                 </td>
                                             </tr>
 
-                                            <tr>
+                                            <tr id="sectionA3">
                                                 <td>
-                                                    <span class="btn btn-default playAudioOnClick" data-audioalias="O197-0000-0000-00OV-G4N3"><i class="fa fa-volume-up" aria-hidden="true"> E &#91;ø&#93; </i></span>
+                                                    <span class="btn btn-default playAudioOnClick"
+                                                          data-audioalias="O197-0000-0000-00OV-G4N3"><i
+                                                                class="fa fa-volume-up" aria-hidden="true"> E &#91;ø&#93; </i></span>
                                                 </td>
                                                 <td>
                                                     <span class="btn btn-info"><strong><a href="#ø">Hơi khác Ơ tiếng Việt 1 xíu</a></strong> </span>
@@ -204,7 +293,9 @@
 
                                             <tr>
                                                 <td>
-                                                    <span class="btn btn-default playAudioOnClick" data-audioalias="8P72-0000-0000-00OV-G4ND"><i class="fa fa-volume-up" aria-hidden="true"> F &#91;ɛf&#93; </i></span>
+                                                    <span class="btn btn-default playAudioOnClick"
+                                                          data-audioalias="8P72-0000-0000-00OV-G4ND"><i
+                                                                class="fa fa-volume-up" aria-hidden="true"> F &#91;ɛf&#93; </i></span>
                                                 </td>
                                                 <td>
                                                     <span class="btn btn-info disabled">Na ná <strong>Ép ph(ờ)</strong> tiếng Việt</span>
@@ -213,16 +304,20 @@
 
                                             <tr>
                                                 <td>
-                                                    <span class="btn btn-default playAudioOnClick" data-audioalias="XQPJ-0000-0000-00OV-G4NI"><i class="fa fa-volume-up" aria-hidden="true"> G &#91;ʒe&#93; </i></span>
+                                                    <span class="btn btn-default playAudioOnClick"
+                                                          data-audioalias="XQPJ-0000-0000-00OV-G4NI"><i
+                                                                class="fa fa-volume-up" aria-hidden="true"> G &#91;ʒe&#93; </i></span>
                                                 </td>
                                                 <td>
                                                     <span class="btn btn-info"><strong><a href="#ʒe">KHÁC tiếng Việt</a></strong></span>
                                                 </td>
                                             </tr>
 
-                                            <tr>
+                                            <tr id="sectionA4">
                                                 <td>
-                                                    <span class="btn btn-default playAudioOnClick" data-audioalias="V7JA-0000-0000-00OV-G4NN"><i class="fa fa-volume-up" aria-hidden="true"> H &#91;aʃ&#93; </i></span>
+                                                    <span class="btn btn-default playAudioOnClick"
+                                                          data-audioalias="V7JA-0000-0000-00OV-G4NN"><i
+                                                                class="fa fa-volume-up" aria-hidden="true"> H &#91;aʃ&#93; </i></span>
                                                 </td>
                                                 <td>
                                                     <span class="btn btn-info"><strong><a href="#aʃ">KHÁC tiếng Việt</a></strong></span>
@@ -231,16 +326,20 @@
 
                                             <tr>
                                                 <td>
-                                                    <span class="btn btn-default playAudioOnClick" data-audioalias="KDIQ-0000-0000-00OV-G4O0"><i class="fa fa-volume-up" aria-hidden="true"> I &#91;i&#93; </i></span>
+                                                    <span class="btn btn-default playAudioOnClick"
+                                                          data-audioalias="KDIQ-0000-0000-00OV-G4O0"><i
+                                                                class="fa fa-volume-up" aria-hidden="true"> I &#91;i&#93; </i></span>
                                                 </td>
                                                 <td>
                                                     <span class="btn btn-info disabled">Như <strong>i</strong> tiếng Việt</span>
                                                 </td>
                                             </tr>
 
-                                            <tr>
+                                            <tr id="sectionA5">
                                                 <td>
-                                                    <span class="btn btn-default playAudioOnClick" data-audioalias="3DKY-0000-0000-00OV-G4O7"><i class="fa fa-volume-up" aria-hidden="true"> J &#91;ʒi&#93; </i></span>
+                                                    <span class="btn btn-default playAudioOnClick"
+                                                          data-audioalias="3DKY-0000-0000-00OV-G4O7"><i
+                                                                class="fa fa-volume-up" aria-hidden="true"> J &#91;ʒi&#93; </i></span>
                                                 </td>
                                                 <td>
                                                     <span class="btn btn-info disabled">Tương tự <strong>G</strong> tiếng Pháp</span>
@@ -248,40 +347,326 @@
                                             </tr>
 
                                         </table>
-                                    </div></div><div style="text-align: left;" class = "col-md-6" ><h3><a href="#" name="ø">[ø] Nguyên-âm nửa-đóng tròn-môi trước</a></h3>
+                                    </div>
+                                </div>
+                                <div style="text-align: left;" class="col-md-6" >
+                                    <h3 id="sectionB1" ><a href="#" name="ø">[ø] Nguyên-âm
+                                            nửa-đóng tròn-môi trước</a></h3>
                                     <h4>Voyelle mi-fermée antérieure arrondie</h4>
-                                    <span class="btn btn-default playAudioOnClick" data-audioalias="O197-0000-0000-00OV-G4N3"><i class="fa fa-volume-up" aria-hidden="true"> E &#91;ø&#93; </i></span>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4><h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4><h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4><h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4><h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4><h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4><h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <h4>Voyelle mi-fermée antérieure arrondie</h4>
+                                    <span class="btn btn-default playAudioOnClick"
+                                          data-audioalias="O197-0000-0000-00OV-G4N3"><i class="fa fa-volume-up"
+                                                                                        aria-hidden="true"> E &#91;ø&#93; </i></span>
                                     <ol>
                                         Chữ cái E tiếng Pháp phát âm như sau:
-                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm Ơ của tiếng Việt</li>
-                                        <li><strong>Nguyên âm nửa-đóng (Voyelle mi-fermée)</strong> nghĩa là bạn đặt đầu lưỡi ở khoảng 1/4 miệng tính từ môi trên xuống</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm Ơ của
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Nguyên âm nửa-đóng (Voyelle mi-fermée)</strong> nghĩa là bạn đặt đầu
+                                            lưỡi ở khoảng 1/4 miệng tính từ môi trên xuống
+                                        </li>
                                         <li><strong>Tròn-môi</strong> nghĩa là bạn tròn môi như chữ O tiếng Việt</li>
-                                        <li><strong>Phần cuống lưỡi</strong> thả lỏng, đưa về phía trước chứ không đưa nhẹ lên như âm Ơ tiếng Việt</li>
+                                        <li><strong>Phần cuống lưỡi</strong> thả lỏng, đưa về phía trước chứ không đưa
+                                            nhẹ lên như âm Ơ tiếng Việt
+                                        </li>
                                     </ol>
                                     <span class="tip"><i class="fa fa-hand-o-right" aria-hidden="true"> </i> Nếu thấy khó quá thì bạn cứ phát âm như âm Ơ tiếng Việt. Người Pháp vẫn có thể hiểu được.</span>
 
-                                    <h3><a href="#" name="ʒe">[ʒ] Xuýt-âm hữu-thanh vòm-miệng - chân-răng </a></h3>
+                                    <h3 id="sectionB2" ><a href="#" name="ʒe">[ʒ] Xuýt-âm hữu-thanh vòm-miệng - chân-răng </a></h3>
                                     <h4>Consonne fricative palato-alvéolaire voisée</h4>
-                                    <span class="btn btn-default playAudioOnClick" data-audioalias="XQPJ-0000-0000-00OV-G4NI"><i class="fa fa-volume-up" aria-hidden="true"> G &#91;ʒe&#93; </i></span>
+                                    <span class="btn btn-default playAudioOnClick"
+                                          data-audioalias="XQPJ-0000-0000-00OV-G4NI"><i class="fa fa-volume-up"
+                                                                                        aria-hidden="true"> G &#91;ʒe&#93; </i></span>
                                     <ol>
                                         Chữ cái G tiếng Pháp phát âm như sau:
-                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm Giê của miền Bắc</li>
-                                        <li><strong>Thay vì chỉ có đầu lưỡi chạm vào chân răng</strong> bạn nâng phần thân lưỡi lên cho nó chạm luôn vào <strong>vòm họng</strong> </li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm Giê của
+                                            miền Bắc
+                                        </li>
+                                        <li><strong>Thay vì chỉ có đầu lưỡi chạm vào chân răng</strong> bạn nâng phần
+                                            thân lưỡi lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
                                     </ol>
+                                    <ol>
+                                        Chữ cái G tiếng Pháp phát âm như sau:
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm Giê của
+                                            miền Bắc
+                                        </li>
+                                        <li><strong>Thay vì chỉ có đầu lưỡi chạm vào chân răng</strong> bạn nâng phần
+                                            thân lưỡi lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    <ol>
+                                        Chữ cái G tiếng Pháp phát âm như sau:
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm Giê của
+                                            miền Bắc
+                                        </li>
+                                        <li><strong>Thay vì chỉ có đầu lưỡi chạm vào chân răng</strong> bạn nâng phần
+                                            thân lưỡi lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    <ol>
+                                        Chữ cái G tiếng Pháp phát âm như sau:
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm Giê của
+                                            miền Bắc
+                                        </li>
+                                        <li><strong>Thay vì chỉ có đầu lưỡi chạm vào chân răng</strong> bạn nâng phần
+                                            thân lưỡi lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    <ol>
+                                        Chữ cái G tiếng Pháp phát âm như sau:
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm Giê của
+                                            miền Bắc
+                                        </li>
+                                        <li><strong>Thay vì chỉ có đầu lưỡi chạm vào chân răng</strong> bạn nâng phần
+                                            thân lưỡi lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    <ol>
+                                        Chữ cái G tiếng Pháp phát âm như sau:
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm Giê của
+                                            miền Bắc
+                                        </li>
+                                        <li><strong>Thay vì chỉ có đầu lưỡi chạm vào chân răng</strong> bạn nâng phần
+                                            thân lưỡi lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    
                                     <span class="tip"><i class="fa fa-hand-o-right" aria-hidden="true"> </i> Giống chữ cái G tiếng Việt khi được phát âm theo kiểu cũ (hệ Pháp).</span>
 
 
-                                    <h3><a href="#" name="aʃ">[ ʃ ] Xuýt-âm vô-thanh vòm-miệng - chân-răng </a></h3>
+                                    <h3 id="sectionB3" ><a href="#" name="aʃ">[ ʃ ] Xuýt-âm vô-thanh vòm-miệng - chân-răng </a></h3>
                                     <h4>Consonne fricative palato-alvéolaire sourde</h4>
-                                    <span class="btn btn-default playAudioOnClick" data-audioalias="V7JA-0000-0000-00OV-G4NN"><i class="fa fa-volume-up" aria-hidden="true"> H &#91;aʃ&#93; </i></span>
+                                    <span class="btn btn-default playAudioOnClick"
+                                          data-audioalias="V7JA-0000-0000-00OV-G4NN"><i class="fa fa-volume-up"
+                                                                                        aria-hidden="true"> H &#91;aʃ&#93; </i></span>
                                     Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
                                     <ol>
                                         Chữ cái H tiếng Pháp phát âm như sau:
                                         <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
-                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT tiếng Việt</li>
-                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
                                     </ol>
-                                    <span class="tip"><i class="fa fa-hand-o-right" aria-hidden="true"> </i> Tương tự <strong>ash</strong> tiếng Anh</span></div>
+                                    <span class="tip"><i class="fa fa-hand-o-right"
+                                                         aria-hidden="true"> </i> Tương tự <strong>ash</strong> tiếng Anh</span>
+
+
+
+                                    <h3 id="sectionB4" ><a href="#" name="aʃ">[ ʃ ] Xuýt-âm vô-thanh vòm-miệng - chân-răng </a></h3>
+                                    <h4>Consonne fricative palato-alvéolaire sourde</h4>
+                                    <span class="btn btn-default playAudioOnClick"
+                                          data-audioalias="V7JA-0000-0000-00OV-G4NN"><i class="fa fa-volume-up"
+                                                                                        aria-hidden="true"> H &#91;aʃ&#93; </i></span>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+
+
+                                    <h3 id="sectionB5" ><a href="#" name="aʃ">[ ʃ ] Xuýt-âm vô-thanh vòm-miệng - chân-răng </a></h3>
+                                    <h4>Consonne fricative palato-alvéolaire sourde</h4>
+                                    <span class="btn btn-default playAudioOnClick"
+                                          data-audioalias="V7JA-0000-0000-00OV-G4NN"><i class="fa fa-volume-up"
+                                                                                        aria-hidden="true"> H &#91;aʃ&#93; </i></span>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+
+
+                                    <h3 id="sectionB6" ><a href="#" name="aʃ">[ ʃ ] Xuýt-âm vô-thanh vòm-miệng - chân-răng </a></h3>
+                                    <h4>Consonne fricative palato-alvéolaire sourde</h4>
+                                    <span class="btn btn-default playAudioOnClick"
+                                          data-audioalias="V7JA-0000-0000-00OV-G4NN"><i class="fa fa-volume-up"
+                                                                                        aria-hidden="true"> H &#91;aʃ&#93; </i></span>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+                                    Thường H là âm câm nhưng khi đánh vần Chữ-cái, nó được phát âm cách riêng.
+                                    <ol>
+                                        Chữ cái H tiếng Pháp phát âm như sau:
+                                        <li>H [aʃ] là sự kết hợp giữa âm A và S (sờ nặng) tiếng Việt [ ʃ ]</li>
+                                        <li><strong>Bắt đầu</strong> bằng cách đặt miệng và lưỡi như khi phát âm ÁT
+                                            tiếng Việt
+                                        </li>
+                                        <li><strong>Thay âm T bằng âm S (sờ nặng)</strong> bằng cách nâng phần thân lưỡi
+                                            lên cho nó chạm luôn vào <strong>vòm họng</strong></li>
+                                    </ol>
+
+                                </div>
                             </div>
                             <hr/>
                             <div class="row">
@@ -312,7 +697,8 @@
 
 
         <span id="scrollToTop">
-                <a href="#top" class="well well-sm"  onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
+                <a href="#top" class="well well-sm"
+                   onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
                     <i class="glyphicon glyphicon-chevron-up"></i> Back to Top
                 </a>
             </span><!-- /scrollToTop -->
@@ -322,7 +708,8 @@
 
             </div>
             <div>
-                3.2.6 <a href="http://www.web4u.vn" target="_blank"><strong>Thiết kế web</strong></a> và phát triển bởi Sunrise Solutions Co., ltd &copy; 2008-2017
+                3.2.6 <a href="http://www.web4u.vn" target="_blank"><strong>Thiết kế web</strong></a> và phát triển bởi
+                Sunrise Solutions Co., ltd &copy; 2008-2017
             </div>
         </div>
 
@@ -339,7 +726,7 @@
     (function ($) {
         $('#scrollToTop').affix({
             // how far to scroll down before link "slides" into view
-            offset: {top:50}
+            offset: {top: 50}
         });
 
         $(document).on("click", ".vocab-entry-popover-audio", function () {
@@ -376,13 +763,9 @@
 </script>
 
 
-
-
 <script>
     H5PIntegration = []
 </script>
-
-
 
 
 <script>
@@ -419,7 +802,6 @@
 //            $('#h5p-mcq0').text('testing ahihi');
     });
 </script>
-
 
 
 </body>

@@ -32,7 +32,7 @@
 
 </head>
 
-<body {% block html_body_attr %} {% endblock %}>
+{% block html_body_open %}<body {% block html_body_attr %} {% endblock %}>{% endblock %}
 {% block html_body %}
     <div id="wrapper">
         {% block navigation %}

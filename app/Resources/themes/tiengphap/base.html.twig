@@ -53,7 +53,7 @@
 app.request.attributes.get('_route_params')) %}
 {% set bangChuCaiPath = path('content_article',{'entitySlug':'peterbean', 'articleSlug':'bang-chu-cai'}) %}
 {#{% set isBangChuCaiActive = isCurrentPage(bangChuCaiPath) %}#}
-<body>
+{% block html_body_open %}<body {% block html_body_attr %} {% endblock %}>{% endblock %}
 <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
