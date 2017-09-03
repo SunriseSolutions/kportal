@@ -48,6 +48,8 @@ parameters:
     google_client_id: ~
     google_client_secret: ~
 
+    jwt_key_pass_phrase: ~
+
 # Sonata
 #    sonata.media.admin.media.class: Application\Sonata\MediaBundle\Admin\PHPCR\ApplicationMediaAdmin
     s3_bucket_name: magenta-consulting.com

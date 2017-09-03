@@ -42,6 +42,29 @@ security:
                 path:           /system/logout
             anonymous:          true
         # -> end custom admin configuration
+
+        api_refresh:
+            pattern:  ^/api/token/refresh
+            stateless: true
+            anonymous: true
+
+        api_login:
+            pattern:  ^/api/login
+            stateless: true
+            anonymous: true
+            form_login:
+                check_path:               /api/login_check
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+
+        api:
+            pattern:   ^/api
+            stateless: true
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
         main:
             anonymous:          true
             # activate different ways to authenticate
@@ -61,7 +84,6 @@ security:
 #                failure_handler: app.security.user_login.failure_handler # just in case I am going mad
             logout:             true
 
-
             oauth:
                 failure_path: /login
                 login_path: /login
@@ -76,7 +98,6 @@ security:
 #                oauth_user_provider:
 #                    service: app.provider.oauth
 
-
     access_control:
         # URL of FOSUserBundle which need to be available to anonymous users
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -87,6 +108,7 @@ security:
         - { path: ^(/(vi|fr|en))?/system/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^(/(vi|fr|en))?/system/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^(/(vi|fr|en))?/system/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin/employer role for the admin/employer part.
