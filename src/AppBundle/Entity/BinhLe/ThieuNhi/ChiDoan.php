@@ -1,5 +1,4 @@
 <?php
-
 namespace AppBundle\Entity\BinhLe\ThieuNhi;
 
 use AppBundle\Entity\NLP\Sense;

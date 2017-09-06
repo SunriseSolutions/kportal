@@ -61,13 +61,31 @@ class DoiNhomGiaoLy {
 	 * @var boolean
 	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
+	protected $duyetBangDiemHK1CDT = false;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $duyetBangDiemHK1PDT = false;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
 	protected $hoanTatBangDiemHK1 = false;
 	
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
-	protected $duocDuyetBangDiemHK1 = false;
+	protected $duyetBangDiemHK2CDT = false;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $duyetBangDiemHK2PDT = false;
 	
 	/**
 	 * @var boolean
@@ -75,12 +93,6 @@ class DoiNhomGiaoLy {
 	 */
 	protected $hoanTatBangDiemHK2 = false;
 	
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean", options={"default":false})
-	 */
-	protected $duocDuyetBangDiemHK2 = false;
-
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
@@ -172,30 +184,73 @@ class DoiNhomGiaoLy {
 	}
 	
 	/**
-	 * @return bool
-	 */
-	public function isDuocDuyetBangDiemHK1() {
-		return $this->duocDuyetBangDiemHK1;
-	}
-	
-	/**
 	 * @param bool $duocDuyetBangDiemHK1
 	 */
 	public function setDuocDuyetBangDiemHK1($duocDuyetBangDiemHK1) {
 		$this->duocDuyetBangDiemHK1 = $duocDuyetBangDiemHK1;
 	}
 	
-	/**
-	 * @return bool
-	 */
-	public function isDuocDuyetBangDiemHK2() {
-		return $this->duocDuyetBangDiemHK2;
-	}
 	
 	/**
 	 * @param bool $duocDuyetBangDiemHK2
 	 */
 	public function setDuocDuyetBangDiemHK2($duocDuyetBangDiemHK2) {
 		$this->duocDuyetBangDiemHK2 = $duocDuyetBangDiemHK2;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isDuyetBangDiemHK1CDT() {
+		return $this->duyetBangDiemHK1CDT;
+	}
+	
+	/**
+	 * @param bool $duyetBangDiemHK1CDT
+	 */
+	public function setDuyetBangDiemHK1CDT($duyetBangDiemHK1CDT) {
+		$this->duyetBangDiemHK1CDT = $duyetBangDiemHK1CDT;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isDuyetBangDiemHK1PDT() {
+		return $this->duyetBangDiemHK1PDT;
+	}
+	
+	/**
+	 * @param bool $duyetBangDiemHK1PDT
+	 */
+	public function setDuyetBangDiemHK1PDT($duyetBangDiemHK1PDT) {
+		$this->duyetBangDiemHK1PDT = $duyetBangDiemHK1PDT;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isDuyetBangDiemHK2CDT() {
+		return $this->duyetBangDiemHK2CDT;
+	}
+	
+	/**
+	 * @param bool $duyetBangDiemHK2CDT
+	 */
+	public function setDuyetBangDiemHK2CDT($duyetBangDiemHK2CDT) {
+		$this->duyetBangDiemHK2CDT = $duyetBangDiemHK2CDT;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isDuyetBangDiemHK2PDT() {
+		return $this->duyetBangDiemHK2PDT;
+	}
+	
+	/**
+	 * @param bool $duyetBangDiemHK2PDT
+	 */
+	public function setDuyetBangDiemHK2PDT($duyetBangDiemHK2PDT) {
+		$this->duyetBangDiemHK2PDT = $duyetBangDiemHK2PDT;
 	}
 }

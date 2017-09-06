@@ -4,7 +4,7 @@ namespace AppBundle\Entity\Dictionary\Base;
 
 use AppBundle\Entity\Content\ContentPiece\ContentPieceVocabEntry;
 use AppBundle\Entity\Media\Media;
-use AppBundle\Entity\NLP\Sense;
+use AppBundle\Entity\NLP\Sense\Sense;
 use Bean\Component\Dictionary\Model\Entry as Model;
 use AppBundle\Entity\Dictionary\Entry as Entity;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -78,7 +78,7 @@ class AppEntry extends Model {
 	
 	/**
 	 * @var Sense
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\NLP\Sense",inversedBy="entries")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\NLP\Sense\Sense",inversedBy="entries")
 	 * @ORM\JoinColumn(name="id_sense", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected $sense;

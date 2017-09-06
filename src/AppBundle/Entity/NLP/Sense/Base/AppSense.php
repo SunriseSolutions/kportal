@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity\NLP\Base;
+namespace AppBundle\Entity\NLP\Sense\Base;
 
 use AppBundle\Entity\Dictionary\Entry;
 use Bean\Component\NLP\Model\Sense;
