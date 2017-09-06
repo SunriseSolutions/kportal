@@ -1,4 +1,13 @@
 {#{% extends 'SonataAdminBundle:CRUD:base_list.html.twig' %}#}
+{% set hocKy = admin.actionParams['hocKy'] %}
+{% set chiDoan = admin.actionParams['chiDoan'] %}
+{% set phanBo = admin.actionParams['phanBo'] %}
+{% set phanBoHangNam = admin.actionParams['phanBoHangNam'] %}
+{% set christianNames =  admin.actionParams['christianNames'] %}
+{% set colHeaders = admin.actionParams['cotDiemHeaders'] %}
+{% set colAttrs = admin.actionParams['cotDiemAttrs'] %}
+{% set colLabels = admin.actionParams['cotDiemLabels'] %}
+{% set colCellFormats = admin.actionParams['cotDiemCellFormats'] %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,15 +85,7 @@
     {% endblock %}
 
     {% block javascripts %}
-        {% set hocKy = admin.actionParams['hocKy'] %}
-        {% set chiDoan = admin.actionParams['chiDoan'] %}
-        {% set phanBo = admin.actionParams['phanBo'] %}
-        {% set phanBoHangNam = admin.actionParams['phanBoHangNam'] %}
-        {% set christianNames =  admin.actionParams['christianNames'] %}
-        {% set colHeaders = admin.actionParams['cotDiemHeaders'] %}
-        {% set colAttrs = admin.actionParams['cotDiemAttrs'] %}
-        {% set colLabels = admin.actionParams['cotDiemLabels'] %}
-        {% set colCellFormats = admin.actionParams['cotDiemCellFormats'] %}
+
         {% set ccIndex = -1 %}
         {% set tbTermIndex = -1 %}
 
@@ -165,7 +166,7 @@
                 window.postDiem = function (diem, cotDiem, cotDiemLbl, phanBoId, thanhVienCode, thanhVienFirstName, change) {
                     // Assign handlers immediately after making the request,
 // and remember the jqxhr object for this request
-                    var nhapDiemPostURL = "{{ path('admin_app_binhle_thieunhi_bangdiem_nhapDiemThieuNhi',{'phanBo':phanBo.id}) }}";
+                    var nhapDiemPostURL = "{{ path('admin_app_binhle_thieunhi_phanbo_nhapDiemThieuNhi',{'id':phanBo.id}) }}";
                     if ($.isNumeric(diem) && phanBoId != 'undefined' && phanBoId != null) {
                         var jqxhr = $.post(nhapDiemPostURL, {diem: diem, cotDiem: cotDiem, phanBoId: phanBoId})
                             .done(function (data) {
@@ -422,7 +423,6 @@
     {% endblock %}
 </head>
 <body>
-{% set hocKy = admin.actionParams['hocKy'] %}
 <div class="row">
     <div class="col-xs-12">
         {% block sonata_admin_content_actions_wrappers %}
@@ -431,7 +431,7 @@
                     <a class=""
                        href="{{ path('admin_app_binhle_thieunhi_thanhvien_thieuNhiNhom',{'phanBo':admin.actionParams['phanBo'].getId()}) }}">
                         <i class="fa fa-address-book" aria-hidden="true"></i>
-                        Danh sách nhóm
+                        Danh-sách nhóm
                     </a>
                 </li>
                 <li class="dropdown sonata-actions">
@@ -442,11 +442,19 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <li><a class="dropdown-item"
-                               href="{{ path('admin_app_binhle_thieunhi_thanhvien_thieuNhiNhomDownloadBangDiem',{'phanBo':admin.actionParams['phanBo'].getId(), 'hocKy':1}) }}">Bang
-                                diem Hoc ky I</a>
+                               href="{{ path('admin_app_binhle_thieunhi_phanbo_thieuNhiNhomDownloadBangDiem',{'id':admin.actionParams['phanBo'].getId(), 'hocKy':hocKy}) }}">Bảng điểm Học-kỳ I</a>
                         </li>
                     </ul>
                 </li>
+                {% if admin.isGranted('NOP_BANG_DIEM',phanBo) %}
+                    <li class="sonata-actions">
+                        <a class=""
+                           href="{{ path('admin_app_binhle_thieunhi_phanbo_nopBangDiem',{'id':admin.actionParams['phanBo'].getId(), 'hocKy':hocKy}) }}">
+                            <i class="fa fa-address-book" aria-hidden="true"></i>
+                            Nộp Bảng điểm
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         {% endblock sonata_admin_content_actions_wrappers %}
 

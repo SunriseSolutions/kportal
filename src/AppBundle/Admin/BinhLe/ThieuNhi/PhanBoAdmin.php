@@ -4,6 +4,7 @@ namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan;
+use AppBundle\Entity\BinhLe\ThieuNhi\PhanBo;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
 use Bean\Bundle\CoreBundle\Service\StringService;
 
@@ -54,15 +55,21 @@ class PhanBoAdmin extends BaseAdmin {
 	
 	public function getTemplate($name) {
 		if($name === 'list') {
+			if($this->action = 'nhap-diem-thieu-nhi' || $this->action === 'nop-bang-diem') {
+				return '::admin/binhle/thieu-nhi/phan-bo/list-nhap-diem-thieu-nhi.html.twig';
+			}
+			
+			
 			return '::admin/binhle/thieu-nhi/phan-bo/list.html.twig';
 		}
 		
 		return parent::getTemplate($name);
 	}
 	
-	
 	public function configureRoutes(RouteCollection $collection) {
-		
+		$collection->add('nhapDiemThieuNhi', $this->getRouterIdParameter() . '/nhap-diem-thieu-nhi');
+		$collection->add('thieuNhiNhomDownloadBangDiem', 'thieu-nhi/nhom-giao-ly/' . $this->getRouterIdParameter() . '/bang-diem/hoc-ky-{hocKy}/download');
+		$collection->add('nopBangDiem', $this->getRouterIdParameter() . '/nop-bang-diem/{hocKy}');
 		parent::configureRoutes($collection);
 	}
 	
@@ -94,8 +101,8 @@ class PhanBoAdmin extends BaseAdmin {
 	}
 	
 	/**
-	 * @param string    $name
-	 * @param ThanhVien $object
+	 * @param string $name
+	 * @param PhanBo $object
 	 *
 	 * @return bool|mixed
 	 */
@@ -107,6 +114,14 @@ class PhanBoAdmin extends BaseAdmin {
 		
 		if($name === 'DELETE') {
 			return false;
+		}
+		
+		if($name === 'NOP_BANG_DIEM') {
+			if(empty($object) || empty($hocKy = $this->actionParams['hocKy'])) {
+				return false;
+			}
+			
+			return $object->coTheNopBangDiem($hocKy);
 		}
 		
 		$user = $container->get('app.user')->getUser();

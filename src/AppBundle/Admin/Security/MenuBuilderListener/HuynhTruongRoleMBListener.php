@@ -96,13 +96,13 @@ class HuynhTruongRoleMBListener {
 			}
 			
 			$this->diemGiaoLy->addChild('nhap bang diem cho nhom minh', array(
-				'route'           => 'admin_app_binhle_thieunhi_bangdiem_nhapDiemThieuNhi',
-				'routeParameters' => [ 'phanBo' => $phanBo->getId() ],
+				'route'           => 'admin_app_binhle_thieunhi_phanbo_nhapDiemThieuNhi',
+				'routeParameters' => [ 'id' => $phanBo->getId() ],
 				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 			))->setLabel($translator->trans('dashboard.thieunhi_nhapdiem_nhomphutrach', [], 'BinhLeAdmin'));
 			
 			$this->menu->addChild('thieu nhi trong nhom minh', array(
-				'route'           => 'admin_app_binhle_thieunhi_phanbo_thieuNhiNhom',
+				'route'           => 'admin_app_binhle_thieunhi_thanhvien_thieuNhiNhom',
 				'routeParameters' => [ 'phanBo' => $phanBo->getId() ],
 				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 			))->setLabel($translator->trans('dashboard.thieunhi_nhomphutrach', [], 'BinhLeAdmin'));

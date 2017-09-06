@@ -27,6 +27,24 @@ class PhanBo {
 		$this->cacTruongPhuTrachDoi = new ArrayCollection();
 	}
 	
+	/**
+	 * @param $hocKy
+	 *
+	 * @return bool
+	 */
+	public function coTheNopBangDiem($hocKy) {
+		$hocKy = intval($hocKy);
+		if($hocKy === 1 && $this->isHoanTatBangDiemHK1()) {
+			return false;
+		}
+		
+		if($hocKy === 2 && $this->isHoanTatBangDiemHK2()) {
+			return false;
+		}
+		
+		return true;
+	}
+	
 	public function quanLy(PhanBo $phanBo) {
 		/** @var TruongPhuTrachDoi $truongPT */
 		foreach($this->cacTruongPhuTrachDoi as $truongPT) {
@@ -54,6 +72,16 @@ class PhanBo {
 		return $this->bangDiem;
 	}
 	
+	public function hoanTatBangDiemHK1() {
+		if( ! $this->coTheNopBangDiem(1)) {
+			return false;
+		}
+		/** @var TruongPhuTrachDoi $truongPT */
+		foreach($this->cacTruongPhuTrachDoi as $truongPT) {
+			$truongPT->getDoiNhomGiaoLy()->setHoanTatBangDiemHK1(true);
+		}
+	}
+	
 	public function isHoanTatBangDiemHK1() {
 		/** @var TruongPhuTrachDoi $truongPT */
 		foreach($this->cacTruongPhuTrachDoi as $truongPT) {
@@ -63,6 +91,16 @@ class PhanBo {
 		}
 		
 		return true;
+	}
+	
+	public function hoanTatBangDiemHK2() {
+		if( ! $this->coTheNopBangDiem(2)) {
+			return false;
+		}
+		/** @var TruongPhuTrachDoi $truongPT */
+		foreach($this->cacTruongPhuTrachDoi as $truongPT) {
+			$truongPT->getDoiNhomGiaoLy()->setHoanTatBangDiemHK2(true);
+		}
 	}
 	
 	public function isHoanTatBangDiemHK2() {
