@@ -40,7 +40,6 @@ class DoiNhomGiaoLyAdmin extends BaseAdmin {
 	
 	
 	public function configureRoutes(RouteCollection $collection) {
-
 		parent::configureRoutes($collection);
 	}
 	
@@ -86,7 +85,7 @@ class DoiNhomGiaoLyAdmin extends BaseAdmin {
 			->add('number')
 			->add('_action', 'actions', array(
 				'actions' => array(
-					'edit' => array(),
+					'edit'   => array(),
 					'delete' => array(),
 //					'send_evoucher' => array( 'template' => '::admin/employer/employee/list__action_send_evoucher.html.twig' )
 
@@ -105,8 +104,7 @@ class DoiNhomGiaoLyAdmin extends BaseAdmin {
 		$formMapper
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
-			->add('id', null, array( 'label' => 'list.label_nam_hoc' ))
-		;
+			->add('id', null, array( 'label' => 'list.label_nam_hoc' ));
 		
 		
 		$formMapper
@@ -124,6 +122,6 @@ class DoiNhomGiaoLyAdmin extends BaseAdmin {
 	
 	/** @param NamHoc $object */
 	public function prePersist($object) {
-
+	
 	}
 }

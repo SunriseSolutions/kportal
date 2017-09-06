@@ -39,7 +39,7 @@ class TruongPhuTrachDoiAdmin extends BaseAdmin {
 	}
 	
 	public function configureRoutes(RouteCollection $collection) {
-
+		$collection->add('nopBangDiem', $this->getRouterIdParameter() . '/nop-bang-diem/{hocKy}');
 		parent::configureRoutes($collection);
 	}
 	

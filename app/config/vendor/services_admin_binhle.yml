@@ -66,7 +66,7 @@ services:
 
     app.admin.binhle_thieunhi_truongphutrachdoi:
         class: AppBundle\Admin\BinhLe\ThieuNhi\TruongPhuTrachDoiAdmin
-        arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\TruongPhuTrachDoi, ~]
+        arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\TruongPhuTrachDoi, AppBundle:Admin/BinhLe/ThieuNhi/TruongPhuTrachDoiAdmin]
         calls:
 #            - [setRouteBuilder,['@sonata.admin.route.path_info_slashes']]
             - [setIvoryCkeditor,['default']]
