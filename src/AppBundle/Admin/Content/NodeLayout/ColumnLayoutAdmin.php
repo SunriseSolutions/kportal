@@ -68,7 +68,11 @@ class ColumnLayoutAdmin extends GenericLayoutAdmin {
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
 		;
-		$formMapper->add('name')
+		$formMapper->add('name',null, array(
+			'label'=>'list.label_name'
+		));
+		
+		$formMapper
 		           ->add('span', ChoiceType::class, array(
 			           'required'           => true,
 			           'choices'            => $spanChoices,

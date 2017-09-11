@@ -79,6 +79,9 @@ class ArticleNodeAdmin extends BaseAdmin {
 			->add('topic', null, array())
 			->add('slug', null, array())
 			->add('owner', ModelAutocompleteType::class, array(
+					'translation_domain' => $this->translationDomain,
+					'label' => 'list.label_owner',
+				
 					'property'           => 'slug',
 					'to_string_callback' => function(IndividualEntity $entity, $property) {
 						return $entity->getSlug();
@@ -139,6 +142,7 @@ class ArticleNodeAdmin extends BaseAdmin {
 			->with('form.group_extra');//            ->add('children')
 		$formMapper->add('taxonomyItems', CollectionType::class,
 			array(
+				'translation_domain' => $this->translationDomain,
 				'required'    => false,
 				'constraints' => new Valid(),
 //					'label'       => false,
@@ -161,6 +165,9 @@ class ArticleNodeAdmin extends BaseAdmin {
 		
 		$formMapper->add('layout.columns', CollectionType::class,
 			array(
+				'translation_domain' => $this->translationDomain,
+				'label' => 'list.label_layout__columns',
+				
 				'required'    => false,
 				'constraints' => new Valid(),
 //					'label'       => false,
@@ -178,6 +185,9 @@ class ArticleNodeAdmin extends BaseAdmin {
 		$formMapper->with('form.group_row');
 		$formMapper->add('layout.rows', CollectionType::class,
 			array(
+				'translation_domain' => $this->translationDomain,
+				'label' => 'list.label_layout__rows',
+				
 				'required'    => false,
 				'constraints' => new Valid(),
 //					'label'       => false,
@@ -200,6 +210,9 @@ class ArticleNodeAdmin extends BaseAdmin {
 			->with('form.group_general');
 		$formMapper->add('layout.inlineLayouts', CollectionType::class,
 			array(
+				'translation_domain' => $this->translationDomain,
+				'label' => 'list.label_layout__inline_layouts',
+				
 				'required'    => false,
 				'constraints' => new Valid(),
 //					'label'       => false,

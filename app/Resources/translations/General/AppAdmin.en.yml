@@ -18,13 +18,17 @@ filter:
     label_clinic_organisation_name: Clinic Name
 
 list:
+    label__action: Actions
     label_id: ID/Serial Number
     label_slug: Slug
     label_title: Title
+    label_name: Name
     label_layout_name: Layout
     label_layout_children: Chidren Layouts
     label_owner: Owner
-
+    label_layout__columns: Column Layouts
+    label_layout__rows: Row Layouts
+    label_layout__inline_layouts: Inline Layouts
 
 form:
     label_screen_size: Screen
@@ -51,6 +55,8 @@ form:
     tab_main_body_info: Main Body
     group_general: General
     group_extra: Extra
+    group_column: Columns
+    group_row: Rows
 #    Taxonomy
     label_taxonomy_items: Taxonomy Items
 # H5P Multichoice Media

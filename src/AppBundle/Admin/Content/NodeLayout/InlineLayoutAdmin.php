@@ -23,7 +23,9 @@ class InlineLayoutAdmin extends GenericLayoutAdmin {
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
-			->addIdentifier('id')
+			->add('id', null, [
+				'template' => '::admin/content/layout/list__field__inline_layout__id.html.twig'
+			])
 			->add('name')
 			->add('_action', 'actions', array(
 				'actions' => array(
@@ -42,10 +44,13 @@ class InlineLayoutAdmin extends GenericLayoutAdmin {
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
 		;
-		$formMapper->add('name');
+		$formMapper->add('name', null, array(
+			'label' => 'list.label_name'
+		));
 		
 		$formMapper->add('parent', ModelType::class, array(
-//					'label' => 'form.label_work_location',
+				'translation_domain' => $this->translationDomain,
+				'label'    => 'list.label_parent',
 				'property' => 'name',
 				
 				'btn_add'     => false,

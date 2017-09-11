@@ -36,7 +36,9 @@ class RowLayoutAdmin extends GenericLayoutAdmin {
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
 		;
-		$formMapper->add('name');
+		$formMapper->add('name',null, array(
+			'label'=>'list.label_name'
+		));
 		
 		$formMapper->add('parent', ModelType::class, array(
 //					'label' => 'form.label_work_location',
