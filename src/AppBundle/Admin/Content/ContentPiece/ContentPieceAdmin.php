@@ -31,7 +31,7 @@ class ContentPieceAdmin extends BaseAdmin {
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
 			->addIdentifier('id')
-			->addIdentifier('name',null,['editable'=>true])
+			->addIdentifier('name','text',['editable'=>true])
 			->addIdentifier('layout.name')
 		;
 	}
