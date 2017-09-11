@@ -17,6 +17,7 @@ use AppBundle\Entity\H5P\ContentType\MultiChoice\ContentMultiChoice;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
@@ -33,9 +34,18 @@ class ArticleNodeAdmin extends BaseAdmin {
 		return ($object->getTitle()) ?: $object->getTopic();
 	}
 	
+	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+		// this text filter will be used to retrieve autocomplete fields
+		$datagridMapper
+			->add('id',null,array('label'=>'list.label_id'))
+			->add('title',null,array('label'=>'list.label_name'))
+			->add('slug',null,array('label'=>'list.label_slug'));
+	}
+	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
 			->addIdentifier('id')
+			->add('title', 'text', [ 'editable' => true ])
 			->add('slug', 'text', [ 'editable' => true ])
 			->add('_action', 'actions', array(
 				'actions' => array(

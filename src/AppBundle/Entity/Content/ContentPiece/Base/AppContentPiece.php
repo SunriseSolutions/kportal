@@ -91,6 +91,12 @@ abstract class AppContentPiece {
 	
 	/**
 	 * @var string
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $name;
+	
+	/**
+	 * @var string
 	 * @ORM\Column(type="text",nullable=true)
 	 */
 	protected $raw;
@@ -216,4 +222,20 @@ abstract class AppContentPiece {
 	public function setVocabEntries($vocabEntries) {
 		$this->vocabEntries = $vocabEntries;
 	}
+	
+	/**
+	 * @return string
+	 */
+	public function getName() {
+		return $this->name;
+	}
+	
+	/**
+	 * @param string $name
+	 */
+	public function setName($name) {
+		$this->name = $name;
+	}
+	
+	
 }

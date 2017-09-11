@@ -29,6 +29,8 @@ list:
     label_layout__columns: Column Layouts
     label_layout__rows: Row Layouts
     label_layout__inline_layouts: Inline Layouts
+    label_parent: Parent
+
 
 form:
     label_screen_size: Screen

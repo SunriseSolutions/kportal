@@ -23,12 +23,15 @@ class ContentPieceAdmin extends BaseAdmin {
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
 		// this text filter will be used to retrieve autocomplete fields
 		$datagridMapper
-			->add('id');
+			->add('id',null,array('label'=>'list.label_id'))
+			->add('name',null,array('label'=>'list.label_name'))
+;
 	}
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
 			->addIdentifier('id')
+			->addIdentifier('name',null,['editable'=>true])
 			->addIdentifier('layout.name')
 		;
 	}
@@ -49,7 +52,7 @@ class ContentPieceAdmin extends BaseAdmin {
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
 		;
-		
+		$formMapper->add('name',null,array('label'=>'list.label_name'));
 		$formMapper->add('vocabEntries', CollectionType::class,
 			array(
 				'required'    => false,
