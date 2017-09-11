@@ -18,6 +18,11 @@
     padding: 10px;
 }
 
+.article-content .row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
 #scrollToTop.affix-top {
     position: absolute; /* allows it to "slide" up into view */
     bottom: 20px; /* negative of the offset - height of link element */
