@@ -1,5 +1,4 @@
 <?php
-
 namespace AppBundle\Entity\BinhLe\ThieuNhi;
 
 use AppBundle\Entity\Content\Base\AppContentEntity;
@@ -222,6 +221,12 @@ class PhanBo {
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\HienDien", mappedBy="huynhTruong", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $diemDanhThieuNhi;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $daDongQuy = false;
 	
 	/**
 	 * @var boolean
@@ -519,5 +524,19 @@ class PhanBo {
 	 */
 	public function setCacTruongPhuTrachDoi($cacTruongPhuTrachDoi) {
 		$this->cacTruongPhuTrachDoi = $cacTruongPhuTrachDoi;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isDaDongQuy() {
+		return $this->daDongQuy;
+	}
+	
+	/**
+	 * @param bool $daDongQuy
+	 */
+	public function setDaDongQuy($daDongQuy) {
+		$this->daDongQuy = $daDongQuy;
 	}
 }

@@ -100,6 +100,11 @@ class NamHoc {
 	 */
 	protected $enabled = false;
 	
+	/** @var integer
+	 * @ORM\Column(type="integer", options={"default":120000} )
+	 */
+	protected $tienQuy = 120000;
+	
 	/** @var float
 	 * @ORM\Column(type="float", options={"default":5} )
 	 */
@@ -280,5 +285,17 @@ class NamHoc {
 		$this->phanBoHangNam = $phanBoHangNam;
 	}
 	
+	/**
+	 * @return int
+	 */
+	public function getTienQuy() {
+		return $this->tienQuy;
+	}
 	
+	/**
+	 * @param int $tienQuy
+	 */
+	public function setTienQuy($tienQuy) {
+		$this->tienQuy = $tienQuy;
+	}
 }
