@@ -97,7 +97,7 @@ class ThanhVienAdminHelper {
 			->add('christianname', ChoiceType::class, array(
 				'label'              => 'list.label_christianname',
 				'placeholder'        => 'Chọn Tên Thánh',
-				'required'           => true,
+				'required'           => false,
 				'choices'            => ThanhVien::$christianNames,
 				'data'               => $christianName,
 				'translation_domain' => self::$translationDomain
