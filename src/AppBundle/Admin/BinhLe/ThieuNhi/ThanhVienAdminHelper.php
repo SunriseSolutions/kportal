@@ -96,6 +96,7 @@ class ThanhVienAdminHelper {
 			->add('user', ModelAutocompleteType::class, array( 'property' => 'username' ))
 			->add('christianname', ChoiceType::class, array(
 				'label'              => 'list.label_christianname',
+				'placeholder'        => 'Chọn Tên Thánh',
 				'required'           => true,
 				'choices'            => ThanhVien::$christianNames,
 				'data'               => $christianName,
