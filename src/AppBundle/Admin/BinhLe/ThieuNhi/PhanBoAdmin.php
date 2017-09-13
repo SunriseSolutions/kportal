@@ -55,7 +55,7 @@ class PhanBoAdmin extends BaseAdmin {
 	
 	public function getTemplate($name) {
 		if($name === 'list') {
-			if($this->action = 'nhap-diem-thieu-nhi' || $this->action === 'nop-bang-diem') {
+			if($this->action === 'nhap-diem-thieu-nhi' || $this->action === 'nop-bang-diem') {
 				return '::admin/binhle/thieu-nhi/phan-bo/list-nhap-diem-thieu-nhi.html.twig';
 			}
 			
