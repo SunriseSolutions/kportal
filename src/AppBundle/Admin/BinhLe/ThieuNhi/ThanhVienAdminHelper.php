@@ -93,7 +93,11 @@ class ThanhVienAdminHelper {
 			->with('form.group_general')//            ->add('children')
 		;
 		$formMapper
-			->add('user', ModelAutocompleteType::class, array( 'property' => 'username' ))
+			->add('user', ModelAutocompleteType::class, array(
+				'property' => 'username'
+			,
+				'required' => false,
+			))
 			->add('christianname', ChoiceType::class, array(
 				'label'              => 'list.label_christianname',
 				'placeholder'        => 'Chọn Tên Thánh',
