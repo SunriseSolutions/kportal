@@ -39,7 +39,6 @@ class BangDiemAdmin extends BaseAdmin {
 	
 	public function getTemplate($name) {
 		if($name === 'list') {
-			
 			return '::admin/binhle/thieu-nhi/bang-diem/list.html.twig';
 		}
 		
@@ -47,8 +46,7 @@ class BangDiemAdmin extends BaseAdmin {
 	}
 	
 	public function configureRoutes(RouteCollection $collection) {
-		$collection->add('bangDiemImport', 'import /{
-					namHoc}');
+//		$collection->add('bangDiemImport', 'import/{namHoc}');
 		parent::configureRoutes($collection);
 	}
 	

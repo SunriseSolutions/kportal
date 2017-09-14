@@ -118,7 +118,7 @@ class ThanhVien {
 		'VINH-SƠN (VINCENTE)'          => 'Vincent',
 		'CATARINA'                     => 'Catherine',
 		'TOMA'                         => 'Thomas',
-		'MICAE'                        => 'Michel',
+		'MICAE'                        => 'Michael',
 		'ANTON'                        => 'Anthony',
 		'ĐA-MINH (Daminh)'             => 'Dominic',
 		'GIOAN-BAOTIXITA'              => 'John the Baptist',

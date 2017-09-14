@@ -24,6 +24,7 @@ filter:
     label_phan_bo_chi_doan_name: Chi Đoàn
     label_phan_bo_chi_doan_nam_hoc_id: Năm Học
 list:
+    label_doi_nhom_giao_ly: Đội
     label_code: Mã số
     label__action: Thao-tác
     label_id: ID

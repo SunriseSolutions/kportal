@@ -25,6 +25,11 @@ class ThanhVienAdmin extends BaseAdmin {
 	protected $actionParams = [];
 	
 	/**
+	 * @var integer
+	 */
+	protected $namHoc;
+	
+	/**
 	 * @return array
 	 */
 	public function getActionParams() {
@@ -50,6 +55,8 @@ class ThanhVienAdmin extends BaseAdmin {
 			if($this->action === 'list-thieu-nhi-nhom') {
 				return '::admin/binhle/thieu-nhi/thanh-vien/list-thieu-nhi-nhom.html.twig';
 			}
+			
+			return '::admin/binhle/thieu-nhi/thanh-vien/list.html.twig';
 		}
 		
 		return parent::getTemplate($name);
@@ -58,6 +65,7 @@ class ThanhVienAdmin extends BaseAdmin {
 	
 	public function configureRoutes(RouteCollection $collection) {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
+		$collection->add('import', 'import/{namHoc}');
 		$collection->add('thieuNhi', 'thieu-nhi/list');
 		$collection->add('thieuNhiNhom', 'thieu-nhi/nhom-giao-ly/{phanBo}/list');
 		$collection->add('truongChiDoan', 'truong/chi-doan-{chiDoan}/list');
@@ -308,4 +316,20 @@ class ThanhVienAdmin extends BaseAdmin {
 		$object->setCode(strtoupper(User::generate4DigitCode($object->getId())));
 		$this->getModelManager()->update($object);
 	}
+	
+	/**
+	 * @return int
+	 */
+	public function getNamHoc() {
+		return $this->namHoc;
+	}
+	
+	/**
+	 * @param int $namHoc
+	 */
+	public function setNamHoc($namHoc) {
+		$this->namHoc = $namHoc;
+	}
+	
+	
 }

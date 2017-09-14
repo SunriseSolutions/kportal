@@ -3,3 +3,8 @@ services:
         class: AppBundle\Service\BinhLe\ThieuNhi\ThanhVienService
         arguments:
             - "@service_container"
+
+    app.binhle_thieunhi_namhoc:
+        class: AppBundle\Service\BinhLe\ThieuNhi\NamHocService
+        arguments:
+            - "@service_container"

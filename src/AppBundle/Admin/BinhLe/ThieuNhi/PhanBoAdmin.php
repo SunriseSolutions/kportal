@@ -203,13 +203,17 @@ class PhanBoAdmin extends BaseAdmin {
 			->add('thanhVien.middleName', null, array(
 				'label' => 'list.label_middlename'
 			))
-			->add('thanhVien.firstName', null, array(
+			->add('thanhVien.firstName', 'text', array(
 				'label' => 'list.label_firstname'
 			));
 		if($this->action === 'chia-doi-thieu-nhi') {
 			$listMapper->add('phanBoTruoc.bangDiem', null, array( 'associated_property' => 'tbYear' ));
 		}
 		$listMapper->add('chiDoan', null, array(
+			'associated_property' => 'id'
+		));
+		
+		$listMapper->add('doiNhomGiaoLy', null, array(
 			'associated_property' => 'number'
 		));
 	}

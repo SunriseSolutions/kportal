@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Service;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -23,7 +24,23 @@ class BaseService
     {
         return $this->container->getParameter($parameter);
     }
-
+	
+	/**
+	 * Shortcut to return the Doctrine Registry service.
+	 *
+	 * @return Registry
+	 *
+	 * @throws \LogicException If DoctrineBundle is not available
+	 */
+	protected function getDoctrine()
+	{
+		if (!$this->container->has('doctrine')) {
+			throw new \LogicException('The DoctrineBundle is not registered in your application.');
+		}
+		
+		return $this->container->get('doctrine');
+	}
+	
     public function getRequest()
     {
         return $this->container->get('request_stack')->getCurrentRequest();
