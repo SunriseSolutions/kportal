@@ -133,7 +133,7 @@ class ThanhVienAdminController extends BaseCRUDController {
 							if(array_key_exists($_cname, $_cnameArray)) {
 								$_cname = mb_strtoupper($_cname);
 							} else {
-								throw new InvalidArgumentException();
+								throw new InvalidArgumentException('Christian Name no found: ' . $_cname);
 							};
 						}
 					}
