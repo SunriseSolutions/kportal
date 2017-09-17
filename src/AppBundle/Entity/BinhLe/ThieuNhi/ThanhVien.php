@@ -138,6 +138,7 @@ class ThanhVien {
 		'PHILIPPHE'                    => 'Philip',
 		'ELIZABETH'                    => 'Elizabeth',
 		'MONICA'                       => 'Monica of Hippo',
+		'GIUSE-GIERADO'                => 'GIUSE-GIERADO',
 		'GIERADO (GIÊ-RA-ĐÔ)'          => 'Gerard',
 		'BENADO (BÊ-NA-ĐÔ)'            => 'Bernard',
 		'AGNES'                        => 'Agnes of Rome',
@@ -150,7 +151,8 @@ class ThanhVien {
 		'GIOAN-BOSCO'                  => 'John Bosco',
 		'DAMINH SAVIO (ĐA-MINH-SAVIO)' => 'Dominic Savio',
 		'PIO (PI-Ô)'                   => 'Pius',
-	
+		'GIEROMINO'                    => 'Jerome',
+		'NI-CÔ-LA (Santa Claus)'                     => 'Nicholas'
 	
 	];
 	
@@ -299,7 +301,7 @@ class ThanhVien {
 	public function getTitle() {
 		if($this->sex === 'NAM') {
 			return 'anh';
-		}elseif($this->sex === 'NỮ'){
+		} elseif($this->sex === 'NỮ') {
 			return 'chị';
 		}
 	}
