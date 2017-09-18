@@ -4,6 +4,7 @@ namespace AppBundle\Entity\Content;
 
 use AppBundle\Entity\Content\Base\AppContentNode;
 use AppBundle\Entity\Content\NodeLayout\ColumnLayout;
+use AppBundle\Entity\Content\NodeLayout\GenericLayout;
 use AppBundle\Entity\Content\NodeLayout\InlineLayout;
 use AppBundle\Entity\Content\NodeLayout\RootLayout;
 use AppBundle\Entity\Content\NodeLayout\RowLayout;
@@ -34,6 +35,33 @@ abstract class ContentNode extends AppContentNode {
 		$this->layout = $layout;
 		if( ! empty($layout)) {
 			$layout->setNode($this);
+		}
+	}
+	
+	public function resetLayoutHierarchy() {
+		$rows     = $this->layout->getRows();
+		$columns  = $this->layout->getColumns();
+		$inlines  = $this->layout->getInlineLayouts();
+		$children = $this->layout->getChildren();
+		/** @var GenericLayout $layout */
+		foreach($rows as $layout) {
+			$layout->setRoot(null);
+			$layout->setRootContainer(null);
+		}
+		/** @var GenericLayout $layout */
+		foreach($columns as $layout) {
+			$layout->setRoot(null);
+			$layout->setRootContainer(null);
+		}
+		/** @var GenericLayout $layout */
+		foreach($inlines as $layout) {
+			$layout->setRoot(null);
+			$layout->setRootContainer(null);
+		}
+		/** @var GenericLayout $layout */
+		foreach($children as $layout) {
+			$layout->setRoot(null);
+			$layout->setRootContainer(null);
 		}
 	}
 	

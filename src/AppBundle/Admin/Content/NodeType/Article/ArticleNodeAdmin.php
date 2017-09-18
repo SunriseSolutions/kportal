@@ -37,9 +37,9 @@ class ArticleNodeAdmin extends BaseAdmin {
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
 		// this text filter will be used to retrieve autocomplete fields
 		$datagridMapper
-			->add('id',null,array('label'=>'list.label_id'))
-			->add('title',null,array('label'=>'list.label_name'))
-			->add('slug',null,array('label'=>'list.label_slug'));
+			->add('id', null, array( 'label' => 'list.label_id' ))
+			->add('title', null, array( 'label' => 'list.label_name' ))
+			->add('slug', null, array( 'label' => 'list.label_slug' ));
 	}
 	
 	protected function configureListFields(ListMapper $listMapper) {
@@ -90,8 +90,8 @@ class ArticleNodeAdmin extends BaseAdmin {
 			->add('slug', null, array())
 			->add('owner', ModelAutocompleteType::class, array(
 					'translation_domain' => $this->translationDomain,
-					'label' => 'list.label_owner',
-				
+					'label'              => 'list.label_owner',
+					
 					'property'           => 'slug',
 					'to_string_callback' => function(IndividualEntity $entity, $property) {
 						return $entity->getSlug();
@@ -132,7 +132,7 @@ class ArticleNodeAdmin extends BaseAdmin {
 //				$sql = $childrenQuery->getQuery()->getSQL();
 				$formMapper->add('layout.children', ModelType::class, array(
 						'translation_domain' => $this->translationDomain,
-						'label' => 'list.label_layout_children',
+						'label'              => 'list.label_layout_children',
 						'property'           => 'name',
 						
 						'btn_add'     => false,
@@ -153,8 +153,8 @@ class ArticleNodeAdmin extends BaseAdmin {
 		$formMapper->add('taxonomyItems', CollectionType::class,
 			array(
 				'translation_domain' => $this->translationDomain,
-				'required'    => false,
-				'constraints' => new Valid(),
+				'required'           => false,
+				'constraints'        => new Valid(),
 //					'label'       => false,
 				//                                'btn_catalogue' => 'InterviewQuestionSetAdmin'
 			), array(
@@ -176,7 +176,7 @@ class ArticleNodeAdmin extends BaseAdmin {
 		$formMapper->add('layout.columns', CollectionType::class,
 			array(
 				'translation_domain' => $this->translationDomain,
-				'label' => 'list.label_layout__columns',
+				'label'              => 'list.label_layout__columns',
 				
 				'required'    => false,
 				'constraints' => new Valid(),
@@ -196,7 +196,7 @@ class ArticleNodeAdmin extends BaseAdmin {
 		$formMapper->add('layout.rows', CollectionType::class,
 			array(
 				'translation_domain' => $this->translationDomain,
-				'label' => 'list.label_layout__rows',
+				'label'              => 'list.label_layout__rows',
 				
 				'required'    => false,
 				'constraints' => new Valid(),
@@ -221,7 +221,7 @@ class ArticleNodeAdmin extends BaseAdmin {
 		$formMapper->add('layout.inlineLayouts', CollectionType::class,
 			array(
 				'translation_domain' => $this->translationDomain,
-				'label' => 'list.label_layout__inline_layouts',
+				'label'              => 'list.label_layout__inline_layouts',
 				
 				'required'    => false,
 				'constraints' => new Valid(),
@@ -275,8 +275,8 @@ class ArticleNodeAdmin extends BaseAdmin {
 	 * @param ArticleNode $object
 	 */
 	public function preValidate($object) {
-
-//
+		$object->resetLayoutHierarchy();
+		
 		$layout         = $object->getLayout();
 		$layoutChildren = $layout->getChildren();
 		/** @var GenericLayout $child */

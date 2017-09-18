@@ -95,12 +95,12 @@ abstract class AppRootLayout {
 	 */
 	protected $children;
 	
-	public function addChild(GenericLayout $layout) {
+	public function addChildren(GenericLayout $layout) {
 		$this->children->add($layout);
 		$layout->setRoot($this);
 	}
 	
-	public function removeChild(GenericLayout $layout) {
+	public function removeChildren(GenericLayout $layout) {
 		$this->children->remove($layout);
 		$layout->setRoot(null);
 	}
