@@ -69,7 +69,7 @@
 
 {% block javascripts %}
     {% set chiDoan = admin.actionParams['chiDoan'] %}
-
+    {% set namHoc = chiDoan.namHoc %}
     {% set phanBoHangNam = chiDoan.phanBoHangNam %}
     {% set christianNames =  admin.actionParams['christianNames'] %}
 
@@ -86,11 +86,40 @@
 
     <script>
         $(document).ready(function () {
-            window.phanBo = {
-                    {%  set _counter = 0 %}
+
+            window.phanBoXepLoai = {
+                    {% set _counter = 0 %}
                     {% for phanBo in phanBoHangNam %}
                     {% if phanBo.thieuNhi is not empty %}
-                    {%  set _counter = _counter + 1 %}
+                    {% set _counter = _counter + 1 %}
+
+                    {% set phanBoTruoc = phanBo.phanBoTruoc %}
+                    {% if phanBoTruoc is not empty %}
+                    {% set bangDiemTruoc = phanBo.phanBoTruoc.bangDiem %}
+                    {% if bangDiemTruoc is not empty %}
+                    {% set xepLoaiNamTruoc = bangDiemTruoc.gradeRetention is empty?bangDiemTruoc.category:'Ở LẠI' %}
+                    {% else %}
+                    {% set xepLoaiNamTruoc = '---' %}
+                    {% endif %}
+                    {% else %}
+                    {% set xepLoaiNamTruoc =  'Mới tham gia' %}
+                    {% endif %}
+                    {% set thanhVien = phanBo.thanhVien %}
+                    {% spaceless %}
+                    {% if _counter > 1 %}, {% endif %}
+                "{{ thanhVien.code }}"
+        :
+            "{{ xepLoaiNamTruoc }}"
+            {% endspaceless %}
+            {% endif %}
+            {% endfor %}
+        }
+
+            window.phanBo = {
+                    {% set _counter = 0 %}
+                    {% for phanBo in phanBoHangNam %}
+                    {% if phanBo.thieuNhi is not empty %}
+                    {% set _counter = _counter + 1 %}
 
                     {% set thanhVien = phanBo.thanhVien %}
                     {% spaceless %}
@@ -102,8 +131,10 @@
             {% endif %}
             {% endfor %}
         }
+            {% set cellMetaData = '' %}
             window.data =
                 [
+                    {% set _counter = 0 %}
                     {% for phanBo in phanBoHangNam %}
                     {% set thanhVien = phanBo.thanhVien %}
                     {% set doiNhomGiaoLy = phanBo.doiNhomGiaoLy %}
@@ -119,15 +150,22 @@
                     {% set diemNamTruoc = '---' %}
                     {% set oLai = '---' %}
                     {% endif %}
-
                     {% else %}
                     {% set diemNamTruoc =  'Mới tham gia' %}
                     {% set oLai = '' %}
                     {% endif %}
+                    {% set _cname =  thanhVien.christianName %}
+                    {% if _cname|length > 7 %}
+                    {% set cellMetaData = cellMetaData ~  "{row: "~_counter~", col: 1, comment: {value: '"~_cname~"'}}," %}
+                    {% set _cname =  _cname[:6] ~ '...' %}
+                    {% endif %}
+
                     {#"{{ phanBo.id }}",#}
                     {% spaceless %}
-                    ["{{ thanhVien.code }}", '{{ thanhVien.christianName }}', '{{ thanhVien.lastName }}', '{{ thanhVien.middleName }}', '{{ thanhVien.firstName }}', {{ diemNamTruoc }}, '{{ doi }}', '{{ thanhVien.sex }}', '{{ oLai }}'],
+                    ["{{ thanhVien.code }}", '{{ _cname }}', '{{ thanhVien.lastName }}', '{{ thanhVien.middleName }}', '{{ thanhVien.firstName }}', {{ diemNamTruoc }}, '{{ doi }}', '{{ thanhVien.sex }}', '{{ oLai }}'],
                     {% endspaceless %}
+
+                    {% set _counter = _counter + 1 %}
                     {% endif %}
                     {% endfor %}
                 ];
@@ -135,8 +173,6 @@
 
             var container = document.getElementById('chiDoanSpreadSheet'),
                 hot;
-            var container1 = document.getElementById('example1'),
-                hot1;
 
             window.postDoi = function (doi, phanBoId, thanhVienCode, thanhVienFirstName) {
                 // Assign handlers immediately after making the request,
@@ -267,7 +303,8 @@
                     {readOnly: true},
                     {
                         readOnly: true,
-                        type: 'numeric'
+                        type: 'numeric',
+                        format: '0,0.0'
                     },
                     {
                         type: 'dropdown',
@@ -284,45 +321,66 @@
                 ]
             });
 
-            function bindButtons() {
+            function xepLoaiRenderer(instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.TextRenderer.apply(this, arguments);
 
-                Handsontable.dom.addEvent(document.body, 'click', function (e) {
+                // if row contains negative number
+                if (parseInt(value, 10) < 0) {
+                    // add class "negative"
+                    td.className = 'make-me-red';
+                }
 
-                    var element = e.target || e.srcElement;
-
-                    if (element.nodeName == "BUTTON" && element.name == 'save') {
-                        var name = element.getAttribute('data-dump');
-                        var instance = element.getAttribute('data-instance');
-                        var hot = window[instance];
-                        data = hot.getData();
-                        console.log(window.data[0][0]);
-                        window.data[0][0] = 'aaaaaaaaaaaaaa';
-//                        console.log(name);
-//                        console.log(instance);
-                        console.log(window.data[0][0]);
-                        console.log('data of ' + name, hot.getData());
-                        hot.loadData(window.data);
-
-                        $.notify({
-                            // options
-                            message: 'Dumping Data ' + name
-                        }, {
-                            // settings
-                            type: 'success',
-                            allow_dismiss: true,
-                            delay: 7000,
-                            newest_on_top: false,
-                            showProgressbar: false,
-                            placement: {
-                                from: "top",
-                                align: "center"
-                            },
-                        });
+                if (col === 5) {
+                    td.style.fontWeight = 'bold';
+                    td.style.color  = '#000';
+                    var _thanhVienCode = window.hot.getDataAtCell(row,0);
+                    if(window.phanBoXepLoai[_thanhVienCode] === 'GIOI'){
+                        td.style.background = '#FF0';
+                    }else if(window.phanBoXepLoai[_thanhVienCode] === 'KHA'){
+                        td.style.background = '#ADD8E6';
+                    }else if(window.phanBoXepLoai[_thanhVienCode] === 'TRUNG_BINH'){
+                        td.style.background = '#98FB98';
+                    }else if(window.phanBoXepLoai[_thanhVienCode] === 'Ở LẠI'){
+                        td.style.background = '#FFB6C1';
                     }
-                });
+
+                }
+                if (!value || value === '') {
+                    td.style.background = '#EEE';
+                }
+                else {
+                    if (value === 'Nissan') {
+                        td.style.fontStyle = 'italic';
+                    }
+                }
             }
 
-            bindButtons();
+            // maps function to lookup string
+            Handsontable.renderers.registerRenderer('xepLoaiRenderer', xepLoaiRenderer);
+
+            window.hot.validateCells(
+                function () {
+                    window.hot.updateSettings(
+                        {
+                            comments: true,
+                            cell: [
+                                {{ cellMetaData | raw }}
+                            ],
+                            cells: function (row, col, prop) {
+                                var cellProperties = {};
+
+                                if (row === 0 || this.instance.getData()[row][col] === 'readOnly') {
+                                    cellProperties.readOnly = true; // make cell read-only if it is first row or the text reads 'readOnly'
+                                }
+                                cellProperties.renderer = "xepLoaiRenderer"; // uses lookup map
+                                return cellProperties;
+                            }
+
+                        }
+                    );
+                }
+            );
+
 
         });
     </script>
