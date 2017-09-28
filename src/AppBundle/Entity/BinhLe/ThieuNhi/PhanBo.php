@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Entity\BinhLe\ThieuNhi;
 
 use AppBundle\Entity\Content\Base\AppContentEntity;
@@ -24,6 +25,39 @@ class PhanBo {
 	
 	function __construct() {
 		$this->cacTruongPhuTrachDoi = new ArrayCollection();
+	}
+	
+	public function getCacPhanBoThieuNhiPhuTrach() {
+		$cacTruongPT   = $this->cacTruongPhuTrachDoi;
+		$phanBoHangNam = new ArrayCollection();
+		/** @var TruongPhuTrachDoi $truongPT */
+		foreach($cacTruongPT as $truongPT) {
+			$phanBoHangNam = new ArrayCollection(array_merge($phanBoHangNam->toArray(), $truongPT->getDoiNhomGiaoLy()->getPhanBoHangNam()->toArray()));
+		}
+		
+		if($phanBoHangNam->count() > 0) {
+			$array       = $phanBoHangNam->toArray();
+			$phanBoArray = [];
+			$sortedArray = [];
+			$returnArray = [];
+			/** @var PhanBo $phanBoItem */
+			foreach($array as $phanBoItem) {
+				$firstName                           = $phanBoItem->getThanhVien()->getFirstname();
+				$sortedArray[ $phanBoItem->getId() ] = $firstName;
+				$phanBoArray[ $phanBoItem->getId() ] = $phanBoItem;
+//				$manager->persist();
+				$phanBoItem->createBangDiem();
+			}
+			
+			$collator = new \Collator('vi_VN');
+			$collator->asort($sortedArray);
+			foreach($sortedArray as $id => $name) {
+				$returnArray[] = $phanBoArray[ $id ];
+			}
+			$phanBoHangNam = new ArrayCollection(($returnArray));
+		}
+		
+		return $phanBoHangNam;
 	}
 	
 	/**
@@ -221,6 +255,12 @@ class PhanBo {
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\HienDien", mappedBy="huynhTruong", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $diemDanhThieuNhi;
+	
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", options={"default":0})
+	 */
+	protected $tienQuyDong = 0;
 	
 	/**
 	 * @var boolean
@@ -539,4 +579,47 @@ class PhanBo {
 	public function setDaDongQuy($daDongQuy) {
 		$this->daDongQuy = $daDongQuy;
 	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getDiemDanh() {
+		return $this->diemDanh;
+	}
+	
+	/**
+	 * @param ArrayCollection $diemDanh
+	 */
+	public function setDiemDanh($diemDanh) {
+		$this->diemDanh = $diemDanh;
+	}
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getDiemDanhThieuNhi() {
+		return $this->diemDanhThieuNhi;
+	}
+	
+	/**
+	 * @param ArrayCollection $diemDanhThieuNhi
+	 */
+	public function setDiemDanhThieuNhi($diemDanhThieuNhi) {
+		$this->diemDanhThieuNhi = $diemDanhThieuNhi;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getTienQuyDong() {
+		return $this->tienQuyDong;
+	}
+	
+	/**
+	 * @param int $tienQuyDong
+	 */
+	public function setTienQuyDong($tienQuyDong) {
+		$this->tienQuyDong = $tienQuyDong;
+	}
+	
 }

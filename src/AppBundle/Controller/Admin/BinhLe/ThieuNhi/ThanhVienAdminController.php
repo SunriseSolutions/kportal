@@ -27,7 +27,9 @@ class ThanhVienAdminController extends BaseCRUDController {
 		$admin = $this->admin;
 		$admin->setAction('truong-chi-doan');
 		$admin->setActionParams([ 'chiDoan' => $chiDoan ]);
-		
+		if( ! empty($namHoc = $this->get('app.binhle_thieunhi_namhoc')->getNamHocHienTai())) {
+			$admin->setNamHoc($namHoc->getId());
+		}
 		return parent::listAction();
 	}
 	

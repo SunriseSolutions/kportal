@@ -29,10 +29,15 @@ use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
 class TVTruongPhuTrachDoiAdmin extends BaseAdmin {
+	protected $baseRouteName = 'admin_app_binhle_thieunhi_tv_truongphutrachdoi';
+	
+	protected $baseRoutePattern = '/app/binhle-thieunhi-tv-truongphutrachdoi';
 	
 	public function getTemplate($name) {
 		if($name === 'list') {
-//			return '::admin/binhle/thieu-nhi/phan-bo/list.html.twig';
+			if($this->action === 'dong-quy') {
+				return '::admin/binhle/thieu-nhi/tv-truong-phu-trach-doi/list-dong-quy-thieu-nhi.html.twig';
+			}
 		}
 		
 		return parent::getTemplate($name);
@@ -40,6 +45,7 @@ class TVTruongPhuTrachDoiAdmin extends BaseAdmin {
 	
 	public function configureRoutes(RouteCollection $collection) {
 		parent::configureRoutes($collection);
+		$collection->add('dongQuy', $this->getRouterIdParameter() . '/dong-quy');
 	}
 	
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
@@ -55,19 +61,7 @@ class TVTruongPhuTrachDoiAdmin extends BaseAdmin {
 	 * @return bool|mixed
 	 */
 	public function isGranted($name, $object = null) {
-		$container = $this->getConfigurationPool()->getContainer();
-		
-		if($this->isAdmin()) {
-			return true;
-		}
-		$user = $container->get('app.user')->getUser();
-		if(empty($thanhVien = $user->getThanhVien())) {
-			return false;
-		} elseif($thanhVien->isBQT()) {
-			return true;
-		}
-		
-		return parent::isGranted($name, $object);
+		return true;
 	}
 	
 	public function createQuery($context = 'list') {
@@ -83,7 +77,7 @@ class TVTruongPhuTrachDoiAdmin extends BaseAdmin {
 			->add('id', 'text', array())
 			->add('_action', 'actions', array(
 				'actions' => array(
-					'edit' => array(),
+					'edit'   => array(),
 					'delete' => array(),
 //					'send_evoucher' => array( 'template' => '::admin/employer/employee/list__action_send_evoucher.html.twig' )
 
@@ -102,8 +96,7 @@ class TVTruongPhuTrachDoiAdmin extends BaseAdmin {
 		$formMapper
 			->tab('form.tab_info')
 			->with('form.group_general')//            ->add('children')
-			->add('id', null, array( 'label' => 'list.label_nam_hoc' ))
-		;
+			->add('id', null, array( 'label' => 'list.label_nam_hoc' ));
 		
 		
 		$formMapper
@@ -121,6 +114,6 @@ class TVTruongPhuTrachDoiAdmin extends BaseAdmin {
 	
 	/** @param NamHoc $object */
 	public function prePersist($object) {
-
+	
 	}
 }

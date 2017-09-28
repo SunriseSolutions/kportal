@@ -87,13 +87,20 @@ class HuynhTruongRoleMBListener {
 					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 				))->setLabel($translator->trans('dashboard.thieunhi_chia_truong_chi_doan', [], 'BinhLeAdmin'));
 				
-				
-				$this->menu->addChild('truong chi doan', array(
-					'route'           => 'admin_app_binhle_thieunhi_thanhvien_truongChiDoan',
-					'routeParameters' => [ 'chiDoan' => $phanBo->getChiDoan()->getId() ],
-					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
-				))->setLabel($translator->trans('dashboard.thieunhi_truong_chi_doan', [], 'BinhLeAdmin'));
 			}
+			
+			$this->dauNam->addChild('truong phu trach ghi nhan tien quy', array(
+				'route'           => 'admin_app_binhle_thieunhi_tv_truongphutrachdoi_dongQuy',
+				'routeParameters' => [ 'id' => $phanBo->getId() ],
+				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+			))->setLabel($translator->trans('dashboard.thieunhi_dong_quy', [], 'BinhLeAdmin'));
+			
+			
+			$this->menu->addChild('truong chi doan', array(
+				'route'           => 'admin_app_binhle_thieunhi_thanhvien_truongChiDoan',
+				'routeParameters' => [ 'chiDoan' => $phanBo->getChiDoan()->getId() ],
+				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+			))->setLabel($translator->trans('dashboard.thieunhi_truong_chi_doan', [], 'BinhLeAdmin'));
 			
 			$this->diemGiaoLy->addChild('nhap bang diem cho nhom minh', array(
 				'route'           => 'admin_app_binhle_thieunhi_phanbo_nhapDiemThieuNhi',

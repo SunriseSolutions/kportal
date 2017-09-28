@@ -273,34 +273,9 @@ class PhanBoAdminController extends BaseCRUDController {
 			}
 		}
 		
-		$cacTruongPT   = $phanBo->getCacTruongPhuTrachDoi();
-		$phanBoHangNam = new ArrayCollection();
-		/** @var TruongPhuTrachDoi $truongPT */
-		foreach($cacTruongPT as $truongPT) {
-			$phanBoHangNam = new ArrayCollection(array_merge($phanBoHangNam->toArray(), $truongPT->getDoiNhomGiaoLy()->getPhanBoHangNam()->toArray()));
-		}
-		
-		if($phanBoHangNam->count() > 0) {
-			$array       = $phanBoHangNam->toArray();
-			$phanBoArray = [];
-			$sortedArray = [];
-			$returnArray = [];
-			/** @var PhanBo $phanBoItem */
-			foreach($array as $phanBoItem) {
-				$firstName                           = $phanBoItem->getThanhVien()->getFirstname();
-				$sortedArray[ $phanBoItem->getId() ] = $firstName;
-				$phanBoArray[ $phanBoItem->getId() ] = $phanBoItem;
-				$manager->persist($phanBoItem->createBangDiem());
-			}
-			$manager->flush();
-			$phanBoHangNamSorted = true;
-			$collator            = new \Collator('vi_VN');
-			$collator->asort($sortedArray);
-			foreach($sortedArray as $id => $name) {
-				$returnArray[] = $phanBoArray[ $id ];
-			}
-			$phanBoHangNam = new ArrayCollection(($returnArray));
-		}
+		$phanBoHangNam = $phanBo->getCacPhanBoThieuNhiPhuTrach();
+		$manager->persist($phanBo);
+		$manager->flush();
 		
 		$admin->setAction('nhap-diem-thieu-nhi');
 		$admin->setActionParams([

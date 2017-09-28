@@ -36,6 +36,28 @@ abstract class BaseAdmin extends AbstractAdmin {
 //        ),
 	);
 	
+	protected $action = '';
+	protected $actionParams = [];
+	
+	/**
+	 * @return array
+	 */
+	public function getActionParams() {
+		return $this->actionParams;
+	}
+	
+	/**
+	 * @param array $actionParams
+	 */
+	public function setActionParams($actionParams) {
+		$this->actionParams = $actionParams;
+	}
+	
+	public function setAction($action) {
+		$this->action = $action;
+	}
+	
+	
 	public function toString($object) {
 		if(method_exists($object, 'getTitle')) {
 			return $object->getTitle();
