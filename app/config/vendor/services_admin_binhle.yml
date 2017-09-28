@@ -12,6 +12,20 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.binhle_thieunhi_thanhvien, group: binhle, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
+    app.admin.binhle_thieunhi_tv_truongphutrachdoi:
+        class: AppBundle\Admin\BinhLe\ThieuNhi\TVTruongPhuTrachDoiAdmin
+        arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\PhanBo, AppBundle:Admin/BinhLe/ThieuNhi/TVTruongPhuTrachDoiAdmin]
+        calls:
+#            - [setRouteBuilder,['@sonata.admin.route.path_info_slashes']]
+            - [setIvoryCkeditor,['default']]
+#            - [setStringService, ['@bean_core.string']]
+#            - [setPHPCRService, ['@app.phpcr']]
+#            - [addChild, ['@app.admin.product_clinics']]
+            - [setTranslationDomain, ['BinhLeAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.binhle_thieunhi_tv_truongphutrachdoi, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+
+
     app.admin.binhle_thieunhi_phanbo:
         class: AppBundle\Admin\BinhLe\ThieuNhi\PhanBoAdmin
         arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\PhanBo, AppBundle:Admin/BinhLe/ThieuNhi/PhanBoAdmin]
