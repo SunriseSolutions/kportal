@@ -3,6 +3,7 @@
 namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BaseAdmin;
+use AppBundle\Entity\BinhLe\ThieuNhi\DoiNhomGiaoLy;
 use AppBundle\Entity\BinhLe\ThieuNhi\NamHoc;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
 use Bean\Bundle\CoreBundle\Service\StringService;
@@ -50,12 +51,15 @@ class DoiNhomGiaoLyAdmin extends BaseAdmin {
 	}
 	
 	/**
-	 * @param string $name
-	 * @param NamHoc $object
+	 * @param string        $name
+	 * @param DoiNhomGiaoLy $object
 	 *
 	 * @return bool|mixed
 	 */
 	public function isGranted($name, $object = null) {
+		if(is_array($name)) {
+			$name = $name[0];
+		}
 		$container = $this->getConfigurationPool()->getContainer();
 		
 		if($this->isAdmin()) {
@@ -66,6 +70,22 @@ class DoiNhomGiaoLyAdmin extends BaseAdmin {
 			return false;
 		} elseif($thanhVien->isBQT()) {
 			return true;
+		}
+		
+		if($thanhVien->isChiDoanTruong()) {
+			$phanBoNamNay = $thanhVien->getPhanBoNamNay();
+			if($phanBoNamNay->isChiDoanTruong()) {
+				if($name === 'LIST') {
+					return true;
+				}
+				if( ! empty($object)) {
+					if($phanBoNamNay->getChiDoan()->getId() === $object->getChiDoan()->getId()) {
+						return true;
+					}
+				}
+				
+				return false;
+			}
 		}
 		
 		return parent::isGranted($name, $object);

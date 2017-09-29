@@ -2,6 +2,8 @@ user:
     email_exists: This email has already been used by another user.
 
 dashboard:
+    thieunhi_doi_nhom_giao_ly: Nhóm Giáo-lý
+    thieunhi_doi_nhom_giao_ly_duyet_diem: Duyệt Bảng-điểm
     thieunhi_banquantri: Ban Quản-trị
     thieunhi_daunam: Thao-tác đầu năm
     thieunhi_diemgiaoly: Điểm Giáo-lý
@@ -27,6 +29,7 @@ filter:
     label_phan_bo_chi_doan_name: Chi Đoàn
     label_phan_bo_chi_doan_nam_hoc_id: Năm Học
 list:
+    label_number: Nhóm/Đoàn số
     label_created_at: Created At
     label_username: Username
     label_password: Mật khẩu

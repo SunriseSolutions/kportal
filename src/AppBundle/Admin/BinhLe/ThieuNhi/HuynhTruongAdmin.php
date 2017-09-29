@@ -399,6 +399,12 @@ class HuynhTruongAdmin extends BaseAdmin {
 		           ->add('huynhTruong', null, array(
 			           'label' => 'list.label_huynh_truong',
 		           ))
+		           ->add('chiDoanTruong', null, array(
+			           'label' => 'list.label_chi_doan_truong',
+		           ))
+		           ->add('phanDoanTruong', null, array(
+			           'label' => 'list.label_phan_doan_truong',
+		           ))
 		           ->add('xuDoanPhoNoi', null, array(
 			           'label' => 'list.label_xu_doan_pho_noi',
 		           ))
@@ -450,7 +456,7 @@ class HuynhTruongAdmin extends BaseAdmin {
 			throw new Exception();
 		}
 //		$user = $container->get('sonata.user.user_manager')->createUser();
-		$user = $object->getUser();
+		$user     = $object->getUser();
 		$username = $object->getUser()->getUsername();
 //		$user->setUsername();
 		$user->setPassword($username);

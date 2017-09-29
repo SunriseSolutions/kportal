@@ -90,6 +90,12 @@ class HuynhTruongRoleMBListener {
 					'routeParameters' => [ 'id' => $phanBo->getChiDoan()->getId() ],
 					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 				))->setLabel($translator->trans('dashboard.thieunhi_chia_truong_chi_doan', [], 'BinhLeAdmin'));
+				
+				$this->diemGiaoLy->addChild('doi nhom giao ly (duyet diem)', array(
+					'route'           => 'admin_app_binhle_thieunhi_doinhomgiaoly_list',
+					'routeParameters' => [  ],
+					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+				))->setLabel($translator->trans('dashboard.thieunhi_doi_nhom_giao_ly_duyet_diem', [], 'BinhLeAdmin'));
 			}
 			
 			if( ! empty($this->dauNam)) {
