@@ -119,7 +119,8 @@ class ThanhVienAdminHelper {
 				'label'              => 'list.label_phan_doan',
 				'placeholder'        => 'Chọn Phân Đoàn',
 				'choices'            => ThanhVien::$danhSachPhanDoan,
-				'translation_domain' => self::$translationDomain
+				'translation_domain' => self::$translationDomain,
+				'required' => false
 			))
 			->add('chiDoan', ChoiceType::class, array(
 				'required'           => false,
@@ -135,7 +136,18 @@ class ThanhVienAdminHelper {
 			->add('huynhTruong', null, array(
 				'label' => 'list.label_huynh_truong',
 			))
-			->add('enabled', null, array())
+			->add('xuDoanPhoNoi', null, array(
+				'label' => 'list.label_xu_doan_pho_noi',
+			))
+			->add('xuDoanPhoNgoai', null, array(
+				'label' => 'list.label_xu_doan_pho_ngoai',
+			))
+			->add('xuDoanTruong', null, array(
+				'label' => 'list.label_xu_doan_truong',
+			))
+			->add('enabled', null, array(
+				'label' => 'list.label_enabled',
+			))
 			->add('dob', DatePickerType::class, array(
 				'format'   => 'dd/MM/yyyy',
 				'required' => false,

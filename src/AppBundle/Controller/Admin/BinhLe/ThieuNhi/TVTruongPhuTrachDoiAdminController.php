@@ -32,10 +32,40 @@ class TVTruongPhuTrachDoiAdminController extends BaseCRUDController {
 		
 		/** @var TVTruongPhuTrachDoiAdmin $admin */
 		$admin = $this->admin;
+		$manager = $this->get('doctrine.orm.default_entity_manager');
+		
+		if($request->isMethod('post')) {
+			$diem    = floatval($request->request->get('diem', 0));
+			$soTien  = $request->request->getInt('soTien', 0);
+			$dongQuy = $request->request->getBoolean('dongQuy', false);
+			
+			$phanBoId = $request->request->get('phanBoId');
+			$phanBo   = $this->getDoctrine()->getRepository(PhanBo::class)->find($phanBoId);
+			
+			if( ! ($dongQuy === false || $soTien <= 0 || empty($phanBo))) {
+				
+				
+				$phanBo->setTienQuyDong($soTien);
+				$phanBo->setDaDongQuy($dongQuy);
+				
+				$manager->persist($phanBo);
+				$manager->flush();
+
+//
+				return new JsonResponse([ 'OK' ], 200);
+			} else {
+				return new JsonResponse([ 404, 'Không thể tìm thấy Thiếu-nhi này' ], 404);
+			}
+		}
+		
+		$phanBoHangNam = $phanBo->getCacPhanBoThieuNhiPhuTrach();
+		$manager->persist($phanBo);
+		$manager->flush();
 		
 		
 		$phanBoHangNam = $phanBo->getCacPhanBoThieuNhiPhuTrach();
 		
+		$admin->namHoc = $phanBo->getNamHoc();
 		$admin->setAction('dong-quy');
 		$admin->setActionParams([
 			'chiDoan'        => $phanBo->getChiDoan(),

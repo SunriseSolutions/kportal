@@ -217,10 +217,11 @@ class PhanBoAdminController extends BaseCRUDController {
 		}
 		
 		$cacCotDiemBiLoaiBo = $chiDoan->getCotDiemBiLoaiBo();
-		foreach($cacCotDiemBiLoaiBo as $cotDiemBiLoaiBo) {
-			unset($cotDiemHeaders[ $cotDiemBiLoaiBo ], $cotDiemAttrs[ $cotDiemBiLoaiBo ], $cotDiemCellFormats[ $cotDiemBiLoaiBo ], $cotDiemLabels[ $cotDiemBiLoaiBo ]);
+		if(is_array($cacCotDiemBiLoaiBo)) {
+			foreach($cacCotDiemBiLoaiBo as $cotDiemBiLoaiBo) {
+				unset($cotDiemHeaders[ $cotDiemBiLoaiBo ], $cotDiemAttrs[ $cotDiemBiLoaiBo ], $cotDiemCellFormats[ $cotDiemBiLoaiBo ], $cotDiemLabels[ $cotDiemBiLoaiBo ]);
+			}
 		}
-		
 		if($request->isMethod('post')) {
 			$diem    = floatval($request->request->get('diem', 0));
 			$cotDiem = $request->request->getAlnum('cotDiem');

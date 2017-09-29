@@ -1,19 +1,8 @@
 <?php
-
 namespace AppBundle\Admin\Security\MenuBuilderListener;
 
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
-use AppBundle\Entity\ChannelPartner\BusinessChannelPartner;
-use AppBundle\Entity\ChannelPartner\ChannelPartner;
-use AppBundle\Entity\ChannelPartner\ChannelPartnerEmployer;
-use AppBundle\Entity\Employer\BusinessEmployer;
-use AppBundle\Entity\SalesPartner\SalesPartner;
-use AppBundle\Entity\SalesPartner\SalesPartnerBusinessChannelPartner;
-use AppBundle\Entity\SalesPartner\SalesPartnerConsumerChannelPartner;
 use AppBundle\Entity\User\User;
-use Application\Bean\OrganisationBundle\Entity\Organisation;
-use Application\Bean\OrganisationBundle\Entity\Position;
-use Application\Sylius\OrderBundle\Entity\Payment;
 use Knp\Menu\ItemInterface;
 use Sonata\AdminBundle\Event\ConfigureMenuEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -37,6 +26,11 @@ class HuynhTruongRoleMBListener {
 	/**
 	 * @var ItemInterface
 	 */
+	private $banQuanTri;
+	
+	/**
+	 * @var ItemInterface
+	 */
 	private $diemGiaoLy;
 	
 	function __construct(ContainerInterface $c) {
@@ -44,8 +38,8 @@ class HuynhTruongRoleMBListener {
 	}
 	
 	public function addMenuItems(ConfigureMenuEvent $event) {
-		$user       = $this->container->get('app.user')->getUser();
-		$request    = $this->container->get('request_stack')->getCurrentRequest();
+		$user    = $this->container->get('app.user')->getUser();
+		$request = $this->container->get('request_stack')->getCurrentRequest();
 //        $pos = $user->getPosition(['roles' => [Position::ROLE_ADMIN]]);
 		
 		if( ! empty($thanhVien = $user->getThanhVien())) {
@@ -55,22 +49,32 @@ class HuynhTruongRoleMBListener {
 				$translator = $this->container->get('translator');
 				
 				$menu->setChildren([]);
-				$this->dauNam = $menu->addChild('thieunhi_daunam')->setLabel($translator->trans('dashboard.thieunhi_daunam', [], 'BinhLeAdmin'));
-				$this->diemGiaoLy = $menu->addChild('thieunhi_diemgiaoly')->setLabel($translator->trans('dashboard.thieunhi_diemgiaoly', [], 'BinhLeAdmin'));
+				if($thanhVien->isBQT()) {
+					$this->banQuanTri = $menu->addChild('thieunhi_banquantri')->setLabel($translator->trans('dashboard.thieunhi_banquantri', [], 'BinhLeAdmin'));
+					$this->addBanQuanTriMenuItems($translator, $thanhVien, []);
+				}
+				
+				if( ! empty($thanhVien->getPhanBoNamNay()->getChiDoan())) {
+					$this->dauNam     = $menu->addChild('thieunhi_daunam')->setLabel($translator->trans('dashboard.thieunhi_daunam', [], 'BinhLeAdmin'));
+					$this->diemGiaoLy = $menu->addChild('thieunhi_diemgiaoly')->setLabel($translator->trans('dashboard.thieunhi_diemgiaoly', [], 'BinhLeAdmin'));
+				}
 				
 				$this->addThanhVienMenuItems($translator, $thanhVien);
 			}
 		}
 	}
 	
+	private function addBanQuanTriMenuItems($translator, ThanhVien $thanhVien, $params = array()) {
+		$phanBo = $thanhVien->getPhanBoNamNay();
+		$this->banQuanTri->addChild('chia doi trong chi doan', array(
+			'route'           => 'admin_app_binhle_thieunhi_huynhtruong_list',
+			'routeParameters' => [ ],
+			'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+		))->setLabel($translator->trans('dashboard.binhle_thieunhi_huynhtruong', [], 'BinhLeAdmin'));
+	}
+	
 	private function addThanhVienMenuItems($translator, ThanhVien $thanhVien, $params = array()) {
 		$phanBo = $thanhVien->getPhanBoNamNay();
-		
-		$this->menu->addChild('list thieu nhi toan xu doan', array(
-			'route'           => 'admin_app_binhle_thieunhi_thanhvien_thieuNhi',
-//			'routeParameters' => [ 'id' => $salesPartnerId ],
-			'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
-		))->setLabel($translator->trans('dashboard.list_thieunhi_xudoan', [], 'BinhLeAdmin'));
 		
 		if( ! empty($phanBo)) {
 			if($phanBo->isChiDoanTruong()) {
@@ -86,38 +90,42 @@ class HuynhTruongRoleMBListener {
 					'routeParameters' => [ 'id' => $phanBo->getChiDoan()->getId() ],
 					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 				))->setLabel($translator->trans('dashboard.thieunhi_chia_truong_chi_doan', [], 'BinhLeAdmin'));
-				
 			}
 			
-			$this->dauNam->addChild('truong phu trach ghi nhan tien quy', array(
-				'route'           => 'admin_app_binhle_thieunhi_tv_truongphutrachdoi_dongQuy',
-				'routeParameters' => [ 'id' => $phanBo->getId() ],
+			if( ! empty($this->dauNam)) {
+				$this->dauNam->addChild('truong phu trach ghi nhan tien quy', array(
+					'route'           => 'admin_app_binhle_thieunhi_tv_truongphutrachdoi_dongQuy',
+					'routeParameters' => [ 'id' => $phanBo->getId() ],
+					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+				))->setLabel($translator->trans('dashboard.thieunhi_dong_quy', [], 'BinhLeAdmin'));
+			}
+			
+			if( ! $phanBo->isXuDoanTruong()) {
+				$this->diemGiaoLy->addChild('nhap bang diem cho nhom minh', array(
+					'route'           => 'admin_app_binhle_thieunhi_phanbo_nhapDiemThieuNhi',
+					'routeParameters' => [ 'id' => $phanBo->getId() ],
+					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+				))->setLabel($translator->trans('dashboard.thieunhi_nhapdiem_nhomphutrach', [], 'BinhLeAdmin'));
+				
+				$this->menu->addChild('thieu nhi trong nhom minh', array(
+					'route'           => 'admin_app_binhle_thieunhi_thanhvien_thieuNhiNhom',
+					'routeParameters' => [ 'phanBo' => $phanBo->getId() ],
+					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+				))->setLabel($translator->trans('dashboard.thieunhi_nhomphutrach', [], 'BinhLeAdmin'));
+				
+				
+				$this->menu->addChild('truong chi doan', array(
+					'route'           => 'admin_app_binhle_thieunhi_thanhvien_truongChiDoan',
+					'routeParameters' => [ 'chiDoan' => $phanBo->getChiDoan()->getId() ],
+					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+				))->setLabel($translator->trans('dashboard.thieunhi_truong_chi_doan', [], 'BinhLeAdmin'));
+			}
+			
+			$this->menu->addChild('list thieu nhi toan xu doan', array(
+				'route'           => 'admin_app_binhle_thieunhi_thanhvien_thieuNhi',
+//			'routeParameters' => [ 'id' => $salesPartnerId ],
 				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
-			))->setLabel($translator->trans('dashboard.thieunhi_dong_quy', [], 'BinhLeAdmin'));
-			
-			
-			$this->menu->addChild('truong chi doan', array(
-				'route'           => 'admin_app_binhle_thieunhi_thanhvien_truongChiDoan',
-				'routeParameters' => [ 'chiDoan' => $phanBo->getChiDoan()->getId() ],
-				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
-			))->setLabel($translator->trans('dashboard.thieunhi_truong_chi_doan', [], 'BinhLeAdmin'));
-			
-			$this->diemGiaoLy->addChild('nhap bang diem cho nhom minh', array(
-				'route'           => 'admin_app_binhle_thieunhi_phanbo_nhapDiemThieuNhi',
-				'routeParameters' => [ 'id' => $phanBo->getId() ],
-				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
-			))->setLabel($translator->trans('dashboard.thieunhi_nhapdiem_nhomphutrach', [], 'BinhLeAdmin'));
-			
-			$this->menu->addChild('thieu nhi trong nhom minh', array(
-				'route'           => 'admin_app_binhle_thieunhi_thanhvien_thieuNhiNhom',
-				'routeParameters' => [ 'phanBo' => $phanBo->getId() ],
-				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
-			))->setLabel($translator->trans('dashboard.thieunhi_nhomphutrach', [], 'BinhLeAdmin'));
-			
-
-			
-			
-			
+			))->setLabel($translator->trans('dashboard.list_thieunhi_xudoan', [], 'BinhLeAdmin'));
 		}
 	}
 	

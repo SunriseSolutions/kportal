@@ -33,6 +33,9 @@ class TVTruongPhuTrachDoiAdmin extends BaseAdmin {
 	
 	protected $baseRoutePattern = '/app/binhle-thieunhi-tv-truongphutrachdoi';
 	
+	/** @var  NamHoc $namHoc */
+	public $namHoc;
+	
 	public function getTemplate($name) {
 		if($name === 'list') {
 			if($this->action === 'dong-quy') {

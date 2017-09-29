@@ -152,7 +152,7 @@ class ThanhVien {
 		'DAMINH SAVIO (ĐA-MINH-SAVIO)' => 'Dominic Savio',
 		'PIO (PI-Ô)'                   => 'Pius',
 		'GIEROMINO'                    => 'Jerome',
-		'NI-CÔ-LA (Santa Claus)'                     => 'Nicholas'
+		'NI-CÔ-LA (Santa Claus)'       => 'Nicholas'
 	
 	];
 	
@@ -233,10 +233,14 @@ class ThanhVien {
 	public function getPhanBoNamNay() {
 		/** @var PhanBo $phanBo */
 		foreach($this->phanBoHangNam as $phanBo) {
-			$chiDoan = $phanBo->getChiDoan();
-			if($chiDoan->getNamHoc()->isEnabled()) {
+			if($phanBo->getNamHoc()->isEnabled()) {
 				return $phanBo;
 			}
+//			if( ! empty($chiDoan = $phanBo->getChiDoan())) {
+//				if($chiDoan->getNamHoc()->isEnabled()) {
+//					return $phanBo;
+//				}
+//			}
 		}
 		
 		return null;

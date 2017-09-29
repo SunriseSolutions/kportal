@@ -102,41 +102,50 @@ class PhanBoAdminHelper {
 		;
 		$formMapper
 			->add('thanhVien', ModelAutocompleteType::class, array(
-				'label' => 'list.label_thanh_vien',
+				'label'              => 'list.label_thanh_vien',
 				'property'           => 'name',
 				'to_string_callback' => function(ThanhVien $entity, $property) {
 					return $entity->getName();
 				},
 			
-			))
+			),['admin_code'         => 'app.admin.binhle_thieunhi_thanhvien'])
 			->add('chiDoan', ModelAutocompleteType::class, array(
 				'required'           => false,
-				'label' => 'list.label_chi_doan',
+				'label'              => 'list.label_chi_doan',
 				'property'           => 'id',
 				'to_string_callback' => function(ChiDoan $entity, $property) {
 					return $entity->getId();
 				},
 			))
 			->add('namHoc', ModelType::class, array(
-				'label' => 'list.label_nam_hoc',
+				'label'    => 'list.label_nam_hoc',
 				'property' => 'id'
 			))
 			->add('phanDoan', ChoiceType::class, array(
-				'label' => 'list.label_phan_doan',
+				'label'              => 'list.label_phan_doan',
 				'placeholder'        => 'Chọn Phân Đoàn',
 				'choices'            => ThanhVien::$danhSachPhanDoan,
-				'translation_domain' => self::$translationDomain
+				'translation_domain' => self::$translationDomain,
+				'required'           => false
 			))
-			->add('phanDoanTruong',null,array(
+			->add('phanDoanTruong', null, array(
 				'label' => 'list.label_phan_doan_truong',
 			))
-			->add('chiDoanTruong',null,array(
+			->add('chiDoanTruong', null, array(
 				'label' => 'list.label_chi_doan_truong',
 			))
-			->add('huynhTruong',null,array(
+			->add('huynhTruong', null, array(
 				'label' => 'list.label_huynh_truong',
 			))
-		;
+			->add('xuDoanPhoNoi', null, array(
+				'label' => 'list.label_xu_doan_pho_noi',
+			))
+			->add('xuDoanPhoNgoai', null, array(
+				'label' => 'list.label_xu_doan_pho_ngoai',
+			))
+			->add('xuDoanTruong', null, array(
+				'label' => 'list.label_xu_doan_truong',
+			));
 		
 		$formMapper
 			->end()

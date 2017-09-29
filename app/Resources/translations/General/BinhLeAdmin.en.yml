@@ -2,6 +2,7 @@ user:
     email_exists: This email has already been used by another user.
 
 dashboard:
+    thieunhi_banquantri: Ban Quản-trị
     thieunhi_daunam: Thao-tác đầu năm
     thieunhi_diemgiaoly: Điểm Giáo-lý
     thieunhi_dong_quy: Quỹ Thiếu-nhi
@@ -14,6 +15,7 @@ dashboard:
     thieunhi_chia_doi_chi_doan: Chia đội Thiếu-nhi
     binhle_thieunhi_namhoc: Năm học Giáo-lý
     binhle_thieunhi_thanhvien: Thành-viên
+    binhle_thieunhi_huynhtruong: Huynh-trưởng
     binhle_thieunhi_phanbo: Phân-bổ
     binhle_thieunhi_bangdiem: Bảng điểm
     list_thieunhi_xudoan: Thiếu-nhi toàn Xứ-đoàn
@@ -25,6 +27,12 @@ filter:
     label_phan_bo_chi_doan_name: Chi Đoàn
     label_phan_bo_chi_doan_nam_hoc_id: Năm Học
 list:
+    label_username: Username
+    label_password: Mật khẩu
+    label_active: Sanh hoạt
+    label_xu_doan_pho_ngoai: Phó Ngoại-vụ
+    label_xu_doan_pho_noi: Phó Nội-vụ
+    label_xu_doan_truong: Xứ-đoàn Trưởng
     label_doi_nhom_giao_ly: Đội
     label_code: Mã số
     label__action: Thao-tác
@@ -64,6 +72,7 @@ list:
     label_so_dien_thoai_me: SĐT Mẹ
     label_so_dien_thoai_bo: SĐT Bố
     label_dia_chi_thuong_tru: Đ/c thường trú
+    label_email_address: Email Address
 form:
     label_user: User
     label_nam_truoc: Năm-học trước
@@ -90,5 +99,4 @@ form:
 
 
 breadcrumb:
-    link_content_node_list: Content Nodes
-    link_article_node_list: Article Nodes
+    link_thanh_vien_list: DS Thành Viên
