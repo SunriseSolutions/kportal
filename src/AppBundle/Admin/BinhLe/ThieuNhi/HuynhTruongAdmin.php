@@ -387,10 +387,10 @@ class HuynhTruongAdmin extends BaseAdmin {
 			           'placeholder'        => 'Chọn Phân Đoàn',
 			           'choices'            => ThanhVien::$danhSachPhanDoan,
 			           'translation_domain' => $this->translationDomain,
-			           'required'           => false
+			           'required'           => true
 		           ))
 		           ->add('chiDoan', ChoiceType::class, array(
-			           'required'           => false,
+			           'required'           => true,
 			           'label'              => 'list.label_chi_doan',
 			           'placeholder'        => 'Chọn Chi Đoàn',
 			           'choices'            => $danhSachChiDoan,
@@ -436,10 +436,7 @@ class HuynhTruongAdmin extends BaseAdmin {
 		$object->setName($christianName . ' ' . $lastname . ' ' . $middlename . ' ' . $firstname);
 		
 		$container = $this->getConfigurationPool()->getContainer();
-		$namHocHienTai = $container->get('app.binhle_thieunhi_namhoc')->getNamHocHienTai();
-		$object->setNamHoc($namHocHienTai->getId());
 		$object->setHuynhTruong(true);
-		
 	}
 	
 	/**

@@ -46,8 +46,10 @@ class BangDiem {
 			return null;
 		}
 		
-		foreach($cacCotDiemBiLoaiBo as $cotDiemBiLoaiBo) {
-			unset($cols[ $cotDiemBiLoaiBo ]);
+		if(is_array($cacCotDiemBiLoaiBo)) {
+			foreach($cacCotDiemBiLoaiBo as $cotDiemBiLoaiBo) {
+				unset($cols[ $cotDiemBiLoaiBo ]);
+			}
 		}
 		
 		$colCount = count($cols);
@@ -94,15 +96,17 @@ class BangDiem {
 			return null;
 		}
 		
-		foreach($cacCotDiemBiLoaiBo as $cotDiemBiLoaiBo) {
-			if($cotDiemBiLoaiBo === 'finalTerm1') {
-				unset($cols['finalTerm1-1']);
-				unset($cols['finalTerm1-2']);
-			} elseif($cotDiemBiLoaiBo === 'finalTerm2') {
-				unset($cols['finalTerm2-1']);
-				unset($cols['finalTerm2-2']);
-			} else {
-				unset($cols[ $cotDiemBiLoaiBo ]);
+		if(is_array($cacCotDiemBiLoaiBo)) {
+			foreach($cacCotDiemBiLoaiBo as $cotDiemBiLoaiBo) {
+				if($cotDiemBiLoaiBo === 'finalTerm1') {
+					unset($cols['finalTerm1-1']);
+					unset($cols['finalTerm1-2']);
+				} elseif($cotDiemBiLoaiBo === 'finalTerm2') {
+					unset($cols['finalTerm2-1']);
+					unset($cols['finalTerm2-2']);
+				} else {
+					unset($cols[ $cotDiemBiLoaiBo ]);
+				}
 			}
 		}
 		

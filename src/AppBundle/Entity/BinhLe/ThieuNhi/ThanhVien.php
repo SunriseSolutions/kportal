@@ -246,6 +246,50 @@ class ThanhVien {
 		return null;
 	}
 	
+	public function timPhanBoNamHoc(NamHoc $namHoc) {
+		/** @var PhanBo $phanBo */
+		foreach($this->phanBoHangNam as $phanBo) {
+			if($phanBo->getNamHoc()->getId() === $namHoc->getId()) {
+				return $phanBo;
+			}
+		}
+		
+		return null;
+	}
+	
+	public function initiatePhanBo(NamHoc $namHoc) {
+		$phanBo = null;
+		if( ! $this->enabled) {
+			return $phanBo;
+		}
+		if($this->isHuynhTruong()) {
+			if(empty($phanBo = $this->timPhanBoNamHoc($namHoc))) {
+				$phanBoMoi = new PhanBo();
+				$phanBoMoi->setThanhVien($this);
+				$phanBoMoi->setPhanDoan($this->phanDoan);
+				
+				$phanBoMoi->setVaiTro();
+				$phanBoMoi->createBangDiem();
+				
+				$this->phanBoHangNam->add($phanBoMoi);
+				
+				$newCDNumber = $this->chiDoan;
+				
+				$chiDoanMoi = $namHoc->getChiDoanWithNumber($newCDNumber);
+				$phanBoMoi->setChiDoan($chiDoanMoi);
+				$chiDoanMoi->getPhanBoHangNam()->add($phanBoMoi);
+				
+				$phanBoMoi->setNamHoc($namHoc);
+				$namHoc->getPhanBoHangNam()->add($phanBoMoi);
+				$phanBoMoi->setThieuNhi(true);
+				
+				return $phanBoMoi;
+			}
+		}
+		
+		return $phanBo;
+	}
+	
 	/**
 	 * @param NamHoc $namHoc
 	 *

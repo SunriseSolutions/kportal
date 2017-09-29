@@ -107,7 +107,6 @@ class PhanBoAdminHelper {
 				'to_string_callback' => function(ThanhVien $entity, $property) {
 					return $entity->getName();
 				},
-			
 			),['admin_code'         => 'app.admin.binhle_thieunhi_thanhvien'])
 			->add('chiDoan', ModelAutocompleteType::class, array(
 				'required'           => false,

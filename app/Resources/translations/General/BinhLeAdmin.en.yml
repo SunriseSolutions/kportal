@@ -27,6 +27,7 @@ filter:
     label_phan_bo_chi_doan_name: Chi Đoàn
     label_phan_bo_chi_doan_nam_hoc_id: Năm Học
 list:
+    label_created_at: Created At
     label_username: Username
     label_password: Mật khẩu
     label_active: Sanh hoạt

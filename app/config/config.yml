@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: vendor/config_doctrine.yml }
+    - { resource: vendor/config_doctrine_binhle.yml }
     - { resource: vendor/config_sonata.yml }
     - { resource: vendor/config_cmf.yml }
     - { resource: vendor/config_others.yml }
@@ -13,6 +14,7 @@ imports:
     - { resource: vendor/services_admin.yml }
 
     - { resource: vendor/services_admin_binhle.yml }
+    - { resource: vendor/services_doctrine_binhle.yml }
     - { resource: vendor/services_binhle.yml }
 
 framework:

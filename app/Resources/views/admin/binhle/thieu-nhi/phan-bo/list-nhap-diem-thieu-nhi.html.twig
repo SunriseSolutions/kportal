@@ -164,6 +164,7 @@
                     hot1;
 
                 window.postDiem = function (diem, cotDiem, cotDiemLbl, phanBoId, thanhVienCode, thanhVienFirstName, change) {
+                    {#var _nopBangDiem = {{  }}#}
                     // Assign handlers immediately after making the request,
 // and remember the jqxhr object for this request
                     var nhapDiemPostURL = "{{ path('admin_app_binhle_thieunhi_phanbo_nhapDiemThieuNhi',{'id':phanBo.id}) }}";

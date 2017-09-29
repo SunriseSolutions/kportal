@@ -91,6 +91,7 @@ class PhanBoAdmin extends BaseAdmin {
 			))
 			->add('thanhVien', 'doctrine_orm_model_autocomplete', array(
 				'label' => 'list.label_thanh_vien',
+				'admin_code'         => 'app.admin.binhle_thieunhi_thanhvien'
 			), null, array(
 				// in related CategoryAdmin there must be datagrid filter on `title` field to make the autocompletion work
 				'property'           => 'name',
@@ -191,20 +192,20 @@ class PhanBoAdmin extends BaseAdmin {
 		];
 		
 		$listMapper
-//			->addIdentifier('id')
-			->addIdentifier('id', null, array())
+			->addIdentifier('id')
+			->addIdentifier('createdAt', null, array())
 //			->add('thanhVien', null, array( 'associated_property' => 'name' ))
 			->add('thanhVien.christianName', null, array(
-				'label' => 'list.label_christianname'
+				'label' => 'list.label_christianname',
 			))
 			->add('thanhVien.lastName', null, array(
 				'label' => 'list.label_lastname'
 			))
 			->add('thanhVien.middleName', null, array(
-				'label' => 'list.label_middlename'
+				'label' => 'list.label_middlename',
 			))
 			->add('thanhVien.firstName', 'text', array(
-				'label' => 'list.label_firstname'
+				'label' => 'list.label_firstname',
 			));
 		if($this->action === 'chia-doi-thieu-nhi') {
 			$listMapper->add('phanBoTruoc.bangDiem', null, array( 'associated_property' => 'tbYear' ));

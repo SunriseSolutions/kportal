@@ -7,6 +7,7 @@ use AppBundle\Entity\NLP\Sense;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Exception\InvalidArgumentException;
 
 /**
  * @ORM\Entity
@@ -25,6 +26,22 @@ class PhanBo {
 	
 	function __construct() {
 		$this->cacTruongPhuTrachDoi = new ArrayCollection();
+		$this->createdAt            = new \DateTime();
+	}
+	
+	public function setVaiTro() {
+		$tv                = $this->thanhVien;
+		$this->huynhTruong = $tv->isHuynhTruong();
+		$this->thieuNhi    = $tv->isThieuNhi();
+		
+		if($this->huynhTruong && $this->thieuNhi) {
+			throw new InvalidArgumentException();
+		}
+		
+		$this->xuDoanTruong   = $tv->isXuDoanTruong();
+		$this->xuDoanPhoNoi   = $tv->isXuDoanPhoNoi();
+		$this->xuDoanPhoNgoai = $tv->isXuDoanPhoNgoai();
+		
 	}
 	
 	public function getCacPhanBoThieuNhiPhuTrach() {
@@ -255,6 +272,11 @@ class PhanBo {
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\HienDien", mappedBy="huynhTruong", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $diemDanhThieuNhi;
+	
+	/** @var \DateTime
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	protected $createdAt;
 	
 	/**
 	 * @var integer
@@ -622,4 +644,17 @@ class PhanBo {
 		$this->tienQuyDong = $tienQuyDong;
 	}
 	
+	/**
+	 * @return \DateTime
+	 */
+	public function getCreatedAt() {
+		return $this->createdAt;
+	}
+	
+	/**
+	 * @param \DateTime $createdAt
+	 */
+	public function setCreatedAt($createdAt) {
+		$this->createdAt = $createdAt;
+	}
 }

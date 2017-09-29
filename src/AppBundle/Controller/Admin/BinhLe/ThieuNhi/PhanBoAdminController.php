@@ -164,6 +164,11 @@ class PhanBoAdminController extends BaseCRUDController {
 			$hocKy = 2;
 		}
 		
+		$readOnly = false;
+		if(($phanBo->isHoanTatBangDiemHK1() && $hocKy === 1) || ($phanBo->isHoanTatBangDiemHK2() && $hocKy === 2)) {
+			$readOnly = true;
+		}
+		
 		$cotDiemHeaders     = [];
 		$cotDiemAttrs       = [];
 		$cotDiemLabels      = [];
@@ -202,14 +207,14 @@ class PhanBoAdminController extends BaseCRUDController {
 			$cotDiemLabels['tbTerm1']           = 'điểm Trung-bình Học-kỳ 1';
 			$cotDiemLabels['sundayTicketTerm1'] = 'phiếu lễ Chúa-nhật';
 			
-			$cotDiemCellFormats ['cc9']               = "type:'numeric', format: '0,0.0'";
-			$cotDiemCellFormats ['cc10']              = "type:'numeric', format: '0,0.0'";
-			$cotDiemCellFormats ['cc11']              = "type:'numeric', format: '0,0.0'";
-			$cotDiemCellFormats ['cc12']              = "type:'numeric', format: '0,0.0'";
+			$cotDiemCellFormats ['cc9']               = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['cc10']              = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['cc11']              = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['cc12']              = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
 			$cotDiemCellFormats ['tbCCTerm1']         = "type:'numeric',readOnly:true, format: '0,0.00'";
-			$cotDiemCellFormats ['quizTerm1']         = "type:'numeric', format: '0,0.0'";
-			$cotDiemCellFormats ['midTerm1']          = "type:'numeric', format: '0,0.0'";
-			$cotDiemCellFormats ['finalTerm1']        = "type:'numeric', format: '0,0.00'";
+			$cotDiemCellFormats ['quizTerm1']         = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['midTerm1']          = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['finalTerm1']        = "type:'numeric', format: '0,0.00'" . ($readOnly ? ', readOnly: true' : '');
 			$cotDiemCellFormats ['tbTerm1']           = "type:'numeric',readOnly:true, format: '0,0.00'";
 			$cotDiemCellFormats ['sundayTicketTerm1'] = "type:'numeric'";
 		} elseif($hocKy === 2) {
@@ -233,6 +238,10 @@ class PhanBoAdminController extends BaseCRUDController {
 			$phanBo   = $this->getDoctrine()->getRepository(PhanBo::class)->find($phanBoId);
 			
 			if( ! ($diem === null || empty($phanBo))) {
+				if($readOnly) {
+					throw new AccessDeniedHttpException();
+				}
+				
 				$bangDiem = $phanBo->getBangDiem();
 				$setter   = 'set' . ucfirst($cotDiem);
 				$bangDiem->$setter($diem);
