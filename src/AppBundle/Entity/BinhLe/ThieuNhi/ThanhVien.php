@@ -452,6 +452,12 @@ class ThanhVien {
 	protected $xuDoanPhoNgoai = false;
 	
 	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $thuKyXuDoan = false;
+	
+	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
@@ -1023,5 +1029,19 @@ class ThanhVien {
 	 */
 	public function setSoDienThoaiSecours($soDienThoaiSecours) {
 		$this->soDienThoaiSecours = $soDienThoaiSecours;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isThuKyXuDoan() {
+		return $this->thuKyXuDoan;
+	}
+	
+	/**
+	 * @param bool $thuKyXuDoan
+	 */
+	public function setThuKyXuDoan($thuKyXuDoan) {
+		$this->thuKyXuDoan = $thuKyXuDoan;
 	}
 }

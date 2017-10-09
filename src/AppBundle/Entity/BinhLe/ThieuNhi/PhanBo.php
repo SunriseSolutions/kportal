@@ -345,6 +345,12 @@ class PhanBo {
 	protected $xuDoanPhoNgoai = false;
 	
 	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $thuKyXuDoan = false;
+	
+	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
@@ -657,4 +663,19 @@ class PhanBo {
 	public function setCreatedAt($createdAt) {
 		$this->createdAt = $createdAt;
 	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isThuKyXuDoan() {
+		return $this->thuKyXuDoan;
+	}
+	
+	/**
+	 * @param bool $thuKyXuDoan
+	 */
+	public function setThuKyXuDoan($thuKyXuDoan) {
+		$this->thuKyXuDoan = $thuKyXuDoan;
+	}
+	
 }
