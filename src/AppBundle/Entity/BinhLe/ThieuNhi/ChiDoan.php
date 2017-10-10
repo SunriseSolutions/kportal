@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Entity\BinhLe\ThieuNhi;
 
 use AppBundle\Entity\NLP\Sense;
@@ -17,6 +18,49 @@ class ChiDoan {
 	 * @ORM\Column(type="string")
 	 */
 	protected $id;
+	
+	/** @var integer */
+	private $soThieuNhi = null;
+	/** @var integer */
+	private $soThieuNhiDongQuy = null;
+	
+	public function getPhanTramDongQuy() {
+		return ($this->getSoThieuNhiDongQuy() / $this->getSoThieuNhi()) * 100;
+	}
+	
+	public function getSoThieuNhiDongQuy() {
+		if($this->soThieuNhiDongQuy === null) {
+			$this->soThieuNhi = 0;
+			$counter          = 0;
+			/** @var PhanBo $phanBo */
+			foreach($this->phanBoHangNam as $phanBo) {
+				if($phanBo->getThanhVien()->isEnabled()) {
+					$this->soThieuNhi ++;
+					if($phanBo->isDaDongQuy()) {
+						$counter ++;
+					}
+				}
+			}
+			$this->soThieuNhiDongQuy = $counter;
+		}
+		
+		return $this->soThieuNhiDongQuy;
+	}
+	
+	public function getSoThieuNhi() {
+		if($this->soThieuNhi === null) {
+			$counter = 0;
+			/** @var PhanBo $phanBo */
+			foreach($this->phanBoHangNam as $phanBo) {
+				if($phanBo->getThanhVien()->isEnabled()) {
+					$counter ++;
+				}
+			}
+			$this->soThieuNhi = $counter;
+		}
+		
+		return $this->soThieuNhi;
+	}
 	
 	function __construct() {
 		$this->phanBoHangNam    = new ArrayCollection();

@@ -2,6 +2,7 @@ user:
     email_exists: This email has already been used by another user.
 
 dashboard:
+    thieunhi_bao_cao_tien_quy: Báo-cáo Tiền-quỹ
     thieunhi_doi_nhom_giao_ly: Nhóm Giáo-lý
     thieunhi_doi_nhom_giao_ly_duyet_diem: Duyệt Bảng-điểm
     thieunhi_banquantri: Ban Quản-trị
@@ -29,6 +30,8 @@ filter:
     label_phan_bo_chi_doan_name: Chi Đoàn
     label_phan_bo_chi_doan_nam_hoc_id: Năm Học
 list:
+    label_so_thieu_nhi: Số Thiếu-nhi
+    label_progress: Tiến-trình
     label_thu_ky_xu_doan: Thư-ký Xứ-đoàn
     label_number: Nhóm/Đoàn số
     label_created_at: Created At
@@ -104,5 +107,6 @@ form:
 
 
 breadcrumb:
+    link_chi_doan_list: Danh-sách Chi-đoàn
     link_thanh_vien_list: DS Thành Viên
     link_doi_nhom_giao_ly_list: Đội - Nhóm Giáo-lý

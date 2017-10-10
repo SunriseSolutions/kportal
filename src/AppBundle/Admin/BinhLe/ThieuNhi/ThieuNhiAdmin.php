@@ -3,6 +3,7 @@
 namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BaseAdmin;
+use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
 use Bean\Bundle\CoreBundle\Service\StringService;
 
 use Doctrine\ORM\Query\Expr;
@@ -25,13 +26,22 @@ use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
 abstract class ThieuNhiAdmin extends BaseAdmin {
-	protected function getUserChiDoan() {
-		/** @var ContainerInterface $container */
-		$container = $this->configurationPool->getContainer();
-		$user      = $container->get('app.user')->getUser();
-		$thanhVien = $user->getThanhVien();
+	/** @var ThanhVien $thanhVien */
+	protected $thanhVien = null;
+	
+	protected function getUserThanhVien() {
+		if(empty($this->thanhVien)) {
+			$container       = $this->getConfigurationPool()->getContainer();
+			$user            = $container->get('app.user')->getUser();
+			$this->thanhVien = $user->getThanhVien();
+		}
 		
-		return $thanhVien->getChiDoan();
+		return $this->thanhVien;
+	}
+	
+	protected function getUserChiDoan() {
+		
+		return $this->getUserThanhVien()->getChiDoan();
 		
 	}
 }

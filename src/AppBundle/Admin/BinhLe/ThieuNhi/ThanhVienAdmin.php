@@ -80,8 +80,7 @@ class ThanhVienAdmin extends BaseAdmin {
 			->add('name', null, array( 'label' => 'list.label_name', 'show_filter' => true ))
 			->add('chiDoan', null, array( 'label' => 'list.label_chi_doan', 'show_filter' => true ))
 			->add('namHoc', null, array( 'label' => 'list.label_nam_hoc', 'show_filter' => true ))
-			->add('enabled', null, array( 'label' => 'list.label_active', 'show_filter' => true ))
-		;
+			->add('enabled', null, array( 'label' => 'list.label_active', 'show_filter' => true ));
 	}
 	
 	/**
@@ -195,9 +194,11 @@ class ThanhVienAdmin extends BaseAdmin {
 			} else {
 				$this->clearResults($query);
 			}
-		}
-		
-		if($this->action === 'truong-chi-doan') {
+		} elseif($this->action === 'thieu-nhi-chua-dong-quy') {
+			// chiDoan
+			
+			
+		} elseif($this->action === 'truong-chi-doan') {
 			$query->andWhere($expr->eq($rootAlias . '.huynhTruong', $expr->literal(true)));
 			$qb->join($rootAlias . '.phanBoHangNam', 'phanBo');
 			$qb->join('phanBo.chiDoan', 'chiDoan');
@@ -264,7 +265,7 @@ class ThanhVienAdmin extends BaseAdmin {
 				'choices'  => $danhSachChiDoan,
 			))
 			->add('namHoc', 'text', array( 'editable' => false ))
-			->add('enabled', null, array( 'editable' => false,'label'=>'list.label_active' ))
+			->add('enabled', null, array( 'editable' => false, 'label' => 'list.label_active' ))
 			->add('_action', 'actions', array(
 				'actions' => array(
 					'edit' => array(),
