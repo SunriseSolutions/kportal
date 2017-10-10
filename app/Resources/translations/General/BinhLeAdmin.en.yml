@@ -29,6 +29,7 @@ filter:
     label_phan_bo_chi_doan_name: Chi Đoàn
     label_phan_bo_chi_doan_nam_hoc_id: Năm Học
 list:
+    label_thu_ky_xu_doan: Thư-ký Xứ-đoàn
     label_number: Nhóm/Đoàn số
     label_created_at: Created At
     label_username: Username
@@ -104,3 +105,4 @@ form:
 
 breadcrumb:
     link_thanh_vien_list: DS Thành Viên
+    link_doi_nhom_giao_ly_list: Đội - Nhóm Giáo-lý

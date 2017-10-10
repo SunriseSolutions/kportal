@@ -11,6 +11,7 @@ use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
+use Psr\Container\ContainerInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -91,7 +92,8 @@ class ChiDoanAdmin extends BaseAdmin {
 	 * @return bool|mixed
 	 */
 	public function isGranted($name, $object = null) {
-		$container = $this->getConfigurationPool()->getContainer();
+		/** @var ContainerInterface $container */
+		$container = $this->configurationPool->getContainer();
 		
 		if($this->isAdmin()) {
 			return true;

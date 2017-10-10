@@ -71,6 +71,7 @@ class ChiDoanAdminController extends BaseCRUDController {
 		if( ! $admin->isGranted('chia-doi-thieu-nhi', $chiDoan)) {
 			throw new AccessDeniedHttpException();
 		}
+		
 		$admin->setAction('chia-doi-thieu-nhi');
 		$admin->setActionParams([ 'chiDoan' => $chiDoan, 'christianNames' => ThanhVien::$christianNames ]);
 		if($request->isMethod('post')) {

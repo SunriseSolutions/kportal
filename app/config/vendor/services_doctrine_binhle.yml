@@ -1,6 +1,0 @@
-services:
-    app_binhle__thieunhi__thanhvien__doctrine_entity_listener:
-        class: AppBundle\Doctrine\ORM\Listener\BinhLe\ThieuNhi\ThanhVienListener
-        arguments: ['@service_container']
-        tags:
-            - { name: doctrine.orm.entity_listener }

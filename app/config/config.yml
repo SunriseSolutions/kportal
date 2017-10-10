@@ -2,20 +2,20 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
-    - { resource: vendor/config_doctrine.yml }
-    - { resource: vendor/config_doctrine_binhle.yml }
-    - { resource: vendor/config_sonata.yml }
-    - { resource: vendor/config_cmf.yml }
-    - { resource: vendor/config_others.yml }
-    - { resource: vendor/config_parameters.yml }
+    - { resource: custom/config_doctrine.yml }
+    - { resource: custom/config_doctrine_binhle.yml }
+    - { resource: custom/config_sonata.yml }
+    - { resource: custom/config_cmf.yml }
+    - { resource: custom/config_others.yml }
+    - { resource: custom/config_parameters.yml }
 
-    - { resource: vendor/services_listener.yml }
-    - { resource: vendor/services_doctrine.yml }
-    - { resource: vendor/services_admin.yml }
+    - { resource: custom/services_listener.yml }
+#    - { resource: custom/services_doctrine.yml }
+    - { resource: custom/services_admin.yml }
 
-    - { resource: vendor/services_admin_binhle.yml }
-    - { resource: vendor/services_doctrine_binhle.yml }
-    - { resource: vendor/services_binhle.yml }
+    - { resource: custom/services_admin_binhle.yml }
+#    - { resource: custom/services_doctrine_binhle.yml }
+    - { resource: custom/services_binhle.yml }
 
 framework:
     #esi:             ~

@@ -2,7 +2,6 @@
 
 namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
-use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\BinhLe\ThieuNhi\DoiNhomGiaoLy;
 use AppBundle\Entity\BinhLe\ThieuNhi\NamHoc;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
@@ -29,7 +28,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
-class DoiNhomGiaoLyAdmin extends BaseAdmin {
+class DoiNhomGiaoLyAdmin extends ThieuNhiAdmin {
 	
 	public function getTemplate($name) {
 		if($name === 'list') {
@@ -39,9 +38,9 @@ class DoiNhomGiaoLyAdmin extends BaseAdmin {
 		return parent::getTemplate($name);
 	}
 	
-	
 	public function configureRoutes(RouteCollection $collection) {
 		parent::configureRoutes($collection);
+		$collection->add('bangDiem', $this->getRouterIdParameter() . '/bang-diem/{hocKy}/{action}');
 	}
 	
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
@@ -60,6 +59,11 @@ class DoiNhomGiaoLyAdmin extends BaseAdmin {
 		if(is_array($name)) {
 			$name = $name[0];
 		}
+		
+		if($name === 'EDIT') {
+			return false;
+		}
+		
 		$container = $this->getConfigurationPool()->getContainer();
 		
 		if($this->isAdmin()) {
@@ -75,7 +79,7 @@ class DoiNhomGiaoLyAdmin extends BaseAdmin {
 		if($thanhVien->isChiDoanTruong()) {
 			$phanBoNamNay = $thanhVien->getPhanBoNamNay();
 			if($phanBoNamNay->isChiDoanTruong()) {
-				if($name === 'LIST') {
+				if(in_array($name, [ 'LIST', 'duyet-bang-diem' ])) {
 					return true;
 				}
 				if( ! empty($object)) {
@@ -94,6 +98,12 @@ class DoiNhomGiaoLyAdmin extends BaseAdmin {
 	public function createQuery($context = 'list') {
 		/** @var ProxyQuery $query */
 		$query = parent::createQuery($context);
+		/** @var Expr $expr */
+		$expr = $query->expr();
+		/** @var QueryBuilder $qb */
+		$qb        = $query->getQueryBuilder();
+		$rootAlias = $qb->getRootAliases()[0];
+		$query->andWhere($expr->eq($rootAlias . '.chiDoan', $this->getUserChiDoan()));
 		
 		return $query;
 	}
@@ -105,10 +115,8 @@ class DoiNhomGiaoLyAdmin extends BaseAdmin {
 			->add('number')
 			->add('_action', 'actions', array(
 				'actions' => array(
-					'edit'   => array(),
-					'delete' => array(),
-//					'send_evoucher' => array( 'template' => '::admin/employer/employee/list__action_send_evoucher.html.twig' )
-
+					'duyet_bang_diem' => array( 'template' => '::admin/binhle/thieu-nhi/doi-nhom-giao-ly/list__action__duyet_bang_diem.html.twig' ),
+					'delete'          => array(),
 //                ,
 //                    'view_description' => array('template' => '::admin/product/description.html.twig')
 //                ,
@@ -134,13 +142,13 @@ class DoiNhomGiaoLyAdmin extends BaseAdmin {
 	}
 	
 	/**
-	 * @param NamHoc $object
+	 * @param DoiNhomGiaoLy $object
 	 */
 	public function preValidate($object) {
 	
 	}
 	
-	/** @param NamHoc $object */
+	/** @param DoiNhomGiaoLy $object */
 	public function prePersist($object) {
 	
 	}

@@ -268,7 +268,6 @@ class ThanhVien {
 				$phanBoMoi->setThanhVien($this);
 				$phanBoMoi->setPhanDoan($this->phanDoan);
 				
-				$phanBoMoi->setVaiTro();
 				$phanBoMoi->createBangDiem();
 				
 				$this->phanBoHangNam->add($phanBoMoi);
@@ -284,6 +283,10 @@ class ThanhVien {
 				$phanBoMoi->setThieuNhi(true);
 				
 				return $phanBoMoi;
+			} else {
+				$phanBo->setVaiTro();
+				
+				return $phanBo;
 			}
 		}
 		

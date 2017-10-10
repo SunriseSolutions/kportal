@@ -73,7 +73,6 @@ class ThanhVienAdminController extends BaseCRUDController {
 		if(empty($namHoc)) {
 			throw new NotFoundHttpException();
 		}
-		
 		$manager = $this->get('doctrine.orm.entity_manager');
 		if($request->isMethod('post')) {
 			$fileFieldName = 'bang-diem';

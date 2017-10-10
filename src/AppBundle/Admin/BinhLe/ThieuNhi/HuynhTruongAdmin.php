@@ -390,7 +390,7 @@ class HuynhTruongAdmin extends BaseAdmin {
 			           'required'           => true
 		           ))
 		           ->add('chiDoan', ChoiceType::class, array(
-			           'required'           => true,
+			           'required'           => false,
 			           'label'              => 'list.label_chi_doan',
 			           'placeholder'        => 'Chọn Chi Đoàn',
 			           'choices'            => $danhSachChiDoan,
@@ -404,6 +404,9 @@ class HuynhTruongAdmin extends BaseAdmin {
 		           ))
 		           ->add('phanDoanTruong', null, array(
 			           'label' => 'list.label_phan_doan_truong',
+		           ))
+		           ->add('thuKyXuDoan', null, array(
+			           'label' => 'list.label_thu_ky_xu_doan',
 		           ))
 		           ->add('xuDoanPhoNoi', null, array(
 			           'label' => 'list.label_xu_doan_pho_noi',

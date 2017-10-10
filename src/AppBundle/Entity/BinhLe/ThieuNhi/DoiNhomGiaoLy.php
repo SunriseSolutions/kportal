@@ -47,7 +47,7 @@ class DoiNhomGiaoLy {
 	
 	/**
 	 * @var ArrayCollection
-	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\PhanBo", mappedBy="doiNhomGiaoLy", cascade={"persist","merge"}, orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\PhanBo", mappedBy="doiNhomGiaoLy", cascade={"persist","merge"})
 	 */
 	protected $phanBoHangNam;
 	

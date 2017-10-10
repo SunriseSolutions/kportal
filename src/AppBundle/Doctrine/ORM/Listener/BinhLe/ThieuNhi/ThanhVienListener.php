@@ -2,6 +2,7 @@
 
 namespace AppBundle\Doctrine\ORM\Listener\BinhLe\ThieuNhi;
 
+use AppBundle\Entity\BinhLe\ThieuNhi\NamHoc;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
 use AppBundle\Entity\Content\ContentPiece\ContentPiece;
 use AppBundle\Entity\Content\ContentPiece\ContentPieceVocabEntry;
@@ -34,7 +35,13 @@ class ThanhVienListener {
 		if(empty($object->getNamHoc())) {
 			$object->setNamHoc($namHocHienTai->getId());
 		}
-		$object->initiatePhanBo($namHocHienTai);
+		
+		/** @var NamHoc $namHoc */
+		$namHoc = $this->container->get('doctrine')->getRepository(NamHoc::class)->find($object->getNamHoc());
+		
+		if( ! empty($namHoc) && $namHoc->isEnabled()) {
+			$object->initiatePhanBo($namHocHienTai);
+		}
 		
 	}
 	

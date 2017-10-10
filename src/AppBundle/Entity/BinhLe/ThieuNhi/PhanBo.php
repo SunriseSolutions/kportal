@@ -41,7 +41,7 @@ class PhanBo {
 		$this->xuDoanTruong   = $tv->isXuDoanTruong();
 		$this->xuDoanPhoNoi   = $tv->isXuDoanPhoNoi();
 		$this->xuDoanPhoNgoai = $tv->isXuDoanPhoNgoai();
-		
+		$this->thuKyXuDoan    = $tv->isThuKyXuDoan();
 	}
 	
 	public function getCacPhanBoThieuNhiPhuTrach() {
