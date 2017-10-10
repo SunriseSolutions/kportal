@@ -4,7 +4,7 @@ user:
 dashboard:
     thieunhi_bao_cao_tien_quy: Báo-cáo Tiền-quỹ
     thieunhi_doi_nhom_giao_ly: Nhóm Giáo-lý
-    thieunhi_doi_nhom_giao_ly_duyet_diem: Duyệt Bảng-điểm
+    thieunhi_duyet_diem: Duyệt Bảng-điểm
     thieunhi_banquantri: Ban Quản-trị
     thieunhi_daunam: Thao-tác đầu năm
     thieunhi_diemgiaoly: Điểm Giáo-lý

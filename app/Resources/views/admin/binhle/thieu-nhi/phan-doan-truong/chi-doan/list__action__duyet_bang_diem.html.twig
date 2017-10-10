@@ -1,0 +1,23 @@
+{% if admin.isGranted('duyet-bang-diem',object) %}
+    {% if object.hoanTatBangDiemHK2 is empty %}
+    {% if object.hoanTatBangDiemHK1 is not empty %}
+        {% if object.duyetBangDiemHK1CDT is empty %}
+            <a class="btn btn-sm btn-primary"
+               href="{{ path('admin_app_binhle_thieunhi_phandoantruong_chidoan_bangDiem', {'id': object.id, 'hocKy':1,'action':'duyet' }) }}">Duyệt
+                Bảng điểm Học-kỳ I</a>
+            <a class="btn btn-sm btn-info"
+               href="{{ path('admin_app_binhle_thieunhi_phandoantruong_chidoan_bangDiem', {'id': object.id, 'hocKy':1,'action':'tra-ve' }) }}">Trả
+                Bảng điểm về</a>
+        {% else %}
+            <a class="btn btn-sm btn-primary disabled"
+               href="#">Bảng điểm Học-kỳ I đã được duyệt</a>
+        {% endif %}
+        {% else %}
+            <a class="btn btn-sm btn-primary disabled"
+               href="#">Bảng điểm Học-kỳ I chưa hoàn tất</a>
+    {% endif %}
+    {% else %}
+        {# object.hoanTatBangDiemHK2 is NOT empty #}
+    {% endif %}
+{% endif %}
+

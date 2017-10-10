@@ -53,7 +53,11 @@ class DoiNhomGiaoLyAdminController extends BaseCRUDController {
 		try {
 			$manager->persist($dngl);
 			$manager->flush();
-			$this->addFlash('sonata_flash_success', sprintf("Đội %s đã được duyệt.", $dngl->getNumber()));
+			if($action === 'duyet') {
+				$this->addFlash('sonata_flash_success', sprintf("Bảng điểm đội %s đã được duyệt.", $dngl->getNumber()));
+			} elseif($action === 'tra-ve') {
+				$this->addFlash('sonata_flash_success', sprintf("Bảng điểm đội %s đã bị trả về.", $dngl->getNumber()));
+			}
 			
 		} catch(\Exception $exception) {
 			$this->addFlash('sonata_flash_error', $exception->getMessage());

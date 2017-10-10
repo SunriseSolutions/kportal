@@ -96,7 +96,7 @@ class HuynhTruongRoleMBListener {
 					'route'           => 'admin_app_binhle_thieunhi_doinhomgiaoly_list',
 					'routeParameters' => [],
 					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
-				))->setLabel($translator->trans('dashboard.thieunhi_doi_nhom_giao_ly_duyet_diem', [], 'BinhLeAdmin'));
+				))->setLabel($translator->trans('dashboard.thieunhi_duyet_diem', [], 'BinhLeAdmin'));
 			}
 			
 			if( ! empty($this->dauNam)) {
@@ -137,6 +137,13 @@ class HuynhTruongRoleMBListener {
 					'routeParameters' => [],
 					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 				))->setLabel($translator->trans('dashboard.thieunhi_bao_cao_tien_quy', [], 'BinhLeAdmin'));
+				
+				$this->diemGiaoLy->addChild('chi doan (duyet diem)', array(
+					'route'           => 'admin_app_binhle_thieunhi_phandoantruong_chidoan_list',
+					'routeParameters' => [ 'action' => 'duyet-bang-diem' ],
+					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+				))->setLabel($translator->trans('dashboard.thieunhi_duyet_diem', [], 'BinhLeAdmin'));
+				
 			}
 			
 			$this->menu->addChild('list thieu nhi toan xu doan', array(

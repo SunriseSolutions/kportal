@@ -60,16 +60,18 @@ class PhanDoanTruongChiDoanAdmin extends ThieuNhiAdmin {
 		if($name === 'list') {
 			if($this->action === 'bao-cao-tien-quy') {
 				return '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list-bao-cao-tien-quy.html.twig';
+			} elseif($this->action === 'duyet-bang-diem') {
+			
 			}
 		}
 		
 		return parent::getTemplate($name);
 	}
 	
-	
 	public function configureRoutes(RouteCollection $collection) {
 		$collection->add('baoCaoTienQuy', 'bao-cao-tien-quy');
 		$collection->add('baoCaoTienQuyChiDoan', 'bao-cao-tien-quy/' . $this->getRouterIdParameter());
+		$collection->add('bangDiem', $this->getRouterIdParameter() . '/bang-diem/{hocKy}/{action}');
 		parent::configureRoutes($collection);
 	}
 	
@@ -158,16 +160,36 @@ class PhanDoanTruongChiDoanAdmin extends ThieuNhiAdmin {
 			'Dự Trưởng (19 tuổi)' => 19,
 		];
 		
+		if(empty($this->action)) {
+			$request      = $this->getRequest();
+			$this->action = $request->query->get('action', '');
+		}
+		
 		$listMapper
 //			->addIdentifier('id')
 			->add('id', null, array());
 		if($this->action === 'bao-cao-tien-quy') {
 			$listMapper->add('name', null, array(
-				'label' => 'list.label_progress'
-			,'template' => '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list-bao-cao-tien-quy__field__progress.html.twig' ));
+				'label'    => 'list.label_progress'
+			,
+				'template' => '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list-bao-cao-tien-quy__field__progress.html.twig'
+			));
 			$listMapper->add('number', null, array(
-				'label' => 'list.label_so_thieu_nhi'
-			,'template' => '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list-bao-cao-tien-quy__field__so_thieu_nhi.html.twig' ));
+				'label'    => 'list.label_so_thieu_nhi'
+			,
+				'template' => '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list-bao-cao-tien-quy__field__so_thieu_nhi.html.twig'
+			));
+		} elseif($this->action === 'duyet-bang-diem') {
+			$listMapper->add('_action', 'actions', array(
+				'actions' => array(
+					'duyet_bang_diem' => array( 'template' => '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list__action__duyet_bang_diem.html.twig' ),
+					'delete'          => array(),
+//                ,
+//                    'view_description' => array('template' => '::admin/product/description.html.twig')
+//                ,
+//                    'view_tos' => array('template' => '::admin/product/tos.html.twig')
+				)
+			));
 		}
 		
 	}
