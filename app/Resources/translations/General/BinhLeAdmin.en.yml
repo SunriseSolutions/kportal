@@ -2,6 +2,7 @@ user:
     email_exists: This email has already been used by another user.
 
 dashboard:
+
     thieunhi_bao_cao_tien_quy: Báo-cáo Tiền-quỹ
     thieunhi_doi_nhom_giao_ly: Nhóm Giáo-lý
     thieunhi_duyet_diem: Duyệt Bảng-điểm
@@ -19,6 +20,7 @@ dashboard:
     binhle_thieunhi_namhoc: Năm học Giáo-lý
     binhle_thieunhi_thanhvien: Thành-viên
     binhle_thieunhi_huynhtruong: Huynh-trưởng
+    binhle_thieunhi_thieunhi: Thiếu-nhi
     binhle_thieunhi_phanbo: Phân-bổ
     binhle_thieunhi_bangdiem: Bảng điểm
     list_thieunhi_xudoan: Thiếu-nhi toàn Xứ-đoàn

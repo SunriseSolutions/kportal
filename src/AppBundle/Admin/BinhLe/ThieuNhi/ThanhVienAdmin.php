@@ -95,6 +95,10 @@ class ThanhVienAdmin extends BaseAdmin {
 			return true;
 		}
 		
+		if(is_array($name)) {
+			$name = $name[0];
+		}
+		
 		if($name === 'DELETE') {
 			return false;
 		}
@@ -102,8 +106,6 @@ class ThanhVienAdmin extends BaseAdmin {
 		$user = $container->get('app.user')->getUser();
 		if(empty($thanhVien = $user->getThanhVien())) {
 			return false;
-		} elseif($thanhVien->isBQT()) {
-			return true;
 		}
 		
 		if($name === 'LIST' || $name === 'VIEW') {

@@ -128,8 +128,6 @@ class PhanBoAdmin extends BaseAdmin {
 		$user = $container->get('app.user')->getUser();
 		if(empty($thanhVien = $user->getThanhVien())) {
 			return false;
-		} elseif($thanhVien->isBQT()) {
-			return true;
 		}
 		
 		

@@ -30,10 +30,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
-class PhanDoanTruongChiDoanAdmin extends BinhLeThieuNhiAdmin {
-	protected $baseRouteName = 'admin_app_binhle_thieunhi_phandoantruong_chidoan';
+class BanQuanTriChiDoanAdmin extends BinhLeThieuNhiAdmin {
+	protected $baseRouteName = 'admin_app_binhle_thieunhi_banquantri_chidoan';
 	
-	protected $baseRoutePattern = '/app/binhle-thieunhi-phandoantruong-chidoan';
+	protected $baseRoutePattern = '/app/binhle-thieunhi-banquantri-chidoan';
 	
 	protected $action = '';
 	protected $actionParams = [];
@@ -99,11 +99,15 @@ class PhanDoanTruongChiDoanAdmin extends BinhLeThieuNhiAdmin {
 		
 		$tv = $this->getUserThanhVien();
 		
+		if($name === 'CREATE') {
+			return false;
+		}
+		
 		if( ! $tv->isEnabled()) {
 			return false;
 		}
 		
-		if( ! $tv->isPhanDoanTruong()) {
+		if( ! $tv->isBQT()) {
 			return false;
 		}
 		
@@ -124,16 +128,15 @@ class PhanDoanTruongChiDoanAdmin extends BinhLeThieuNhiAdmin {
 		$tv       = $this->getUserThanhVien();
 		$phanDoan = $tv->getPhanDoan();
 		
-		$query->andWhere($expr->eq($rootAlias . '.phanDoan', $expr->literal($phanDoan)));
 		$query->andWhere($expr->eq($rootAlias . '.namHoc', $expr->literal($tv->getNamHoc())));
 		
 		return $query;
 	}
 	
 	public function generateUrl($name, array $parameters = array(), $absolute = UrlGeneratorInterface::ABSOLUTE_PATH) {
-		if($this->action === 'list-thieu-nhi') {
+		if($this->action === 'bao-cao-tien-quy') {
 			if($name === 'list') {
-				$name = 'thieuNhi';
+				$name = 'baoCaoTienQuy';
 			}
 		}
 		
@@ -167,14 +170,14 @@ class PhanDoanTruongChiDoanAdmin extends BinhLeThieuNhiAdmin {
 		
 		$listMapper
 //			->addIdentifier('id')
-			->add('id', null, array());
+			->add('number', 'numeric', array());
 		if($this->action === 'bao-cao-tien-quy') {
 			$listMapper->add('name', null, array(
 				'label'    => 'list.label_progress'
 			,
 				'template' => '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list-bao-cao-tien-quy__field__progress.html.twig'
 			));
-			$listMapper->add('number', null, array(
+			$listMapper->add('id', null, array(
 				'label'    => 'list.label_so_thieu_nhi'
 			,
 				'template' => '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list-bao-cao-tien-quy__field__so_thieu_nhi.html.twig'

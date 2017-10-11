@@ -28,7 +28,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
-class DoiNhomGiaoLyAdmin extends ThieuNhiAdmin {
+class DoiNhomGiaoLyAdmin extends BinhLeThieuNhiAdmin {
 	
 	public function getTemplate($name) {
 		if($name === 'list') {

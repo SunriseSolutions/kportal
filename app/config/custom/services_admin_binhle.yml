@@ -25,6 +25,20 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.binhle_thieunhi_huynhtruong, group: binhle, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
+    app.admin.binhle_thieunhi_thieunhi:
+        class: AppBundle\Admin\BinhLe\ThieuNhi\ThieuNhiAdmin
+        arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien, AppBundle:Admin/BinhLe/ThieuNhi/ThieuNhiAdmin]
+        calls:
+#            - [setRouteBuilder,['@sonata.admin.route.path_info_slashes']]
+            - [setIvoryCkeditor,['default']]
+#            - [setStringService, ['@bean_core.string']]
+#            - [setPHPCRService, ['@app.phpcr']]
+#            - [addChild, ['@app.admin.product_clinics']]
+            - [setTranslationDomain, ['BinhLeAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.binhle_thieunhi_thieunhi, group: binhle, label_translator_strategy: sonata.admin.label.strategy.underscore }
+
+
     app.admin.binhle_thieunhi_phandoantruong_chidoan:
         class: AppBundle\Admin\BinhLe\ThieuNhi\PhanDoanTruongChiDoanAdmin
         arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan, AppBundle:Admin/BinhLe/ThieuNhi/PhanDoanTruongChiDoanAdmin]
@@ -37,6 +51,19 @@ services:
             - [setTranslationDomain, ['BinhLeAdmin']]
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.binhle_thieunhi_phandoantruong_chidoan, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+
+    app.admin.binhle_thieunhi_banquantri_chidoan:
+        class: AppBundle\Admin\BinhLe\ThieuNhi\BanQuanTriChiDoanAdmin
+        arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan, AppBundle:Admin/BinhLe/ThieuNhi/BanQuanTriChiDoanAdmin]
+        calls:
+#            - [setRouteBuilder,['@sonata.admin.route.path_info_slashes']]
+            - [setIvoryCkeditor,['default']]
+#            - [setStringService, ['@bean_core.string']]
+#            - [setPHPCRService, ['@app.phpcr']]
+#            - [addChild, ['@app.admin.product_clinics']]
+            - [setTranslationDomain, ['BinhLeAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.binhle_thieunhi_banquantri_chidoan, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
 
     app.admin.binhle_thieunhi_tv_truongphutrachdoi:

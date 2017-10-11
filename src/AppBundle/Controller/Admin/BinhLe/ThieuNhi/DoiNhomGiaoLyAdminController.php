@@ -3,7 +3,7 @@
 namespace AppBundle\Controller\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BinhLe\ThieuNhi\ChiDoanAdmin;
-use AppBundle\Admin\BinhLe\ThieuNhi\DoiNhomGiaoLyAdmin;
+use AppBundle\Admin\BinhLe\ThieuNhi\DoiNhomGiaoLyAdminBinhLe;
 use AppBundle\Controller\Admin\BaseCRUDController;
 use AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan;
 use AppBundle\Entity\BinhLe\ThieuNhi\DoiNhomGiaoLy;
@@ -28,7 +28,7 @@ class DoiNhomGiaoLyAdminController extends BaseCRUDController {
 			throw new NotFoundHttpException(sprintf('Unable to find the DoiNhomGiaoLy with id : %s', $id));
 		}
 		
-		/** @var DoiNhomGiaoLyAdmin $admin */
+		/** @var DoiNhomGiaoLyAdminBinhLe $admin */
 		$admin = $this->admin;
 		
 		if( ! in_array($action, [ 'duyet', 'tra-ve' ])) {
