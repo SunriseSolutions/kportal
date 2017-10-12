@@ -99,7 +99,7 @@ class PhanDoanTruongChiDoanAdmin extends BinhLeThieuNhiAdmin {
 		
 		$tv = $this->getUserThanhVien();
 		
-		if( ! $tv->isEnabled()) {
+		if(empty($tv) || ! $tv->isEnabled()) {
 			return false;
 		}
 		

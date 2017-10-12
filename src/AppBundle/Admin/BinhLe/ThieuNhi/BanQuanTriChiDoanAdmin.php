@@ -103,7 +103,7 @@ class BanQuanTriChiDoanAdmin extends BinhLeThieuNhiAdmin {
 			return false;
 		}
 		
-		if( ! $tv->isEnabled()) {
+		if(empty($tv) || ! $tv->isEnabled()) {
 			return false;
 		}
 		
