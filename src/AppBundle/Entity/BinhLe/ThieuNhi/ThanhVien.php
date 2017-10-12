@@ -289,6 +289,18 @@ class ThanhVien {
 				return $phanBoMoi;
 			} else {
 				$phanBo->setVaiTro();
+				$phanBo->setPhanDoan($this->phanDoan);
+				
+				$newCDNumber = $this->chiDoan;
+				$chiDoanCu   = $phanBo->getChiDoan();
+				
+				if( ! empty($newCDNumber) && (empty($chiDoanCu) || ! empty($chiDoanCu) && $newCDNumber !== $chiDoanCu->getNumber())) {
+					$chiDoanMoi = $namHoc->getChiDoanWithNumber($newCDNumber);
+					$phanBo->getChiDoan()->getPhanBoHangNam()->removeElement($phanBo);
+					
+					$phanBo->setChiDoan($chiDoanMoi);
+					$chiDoanMoi->getPhanBoHangNam()->add($phanBo);
+				}
 				
 				return $phanBo;
 			}
