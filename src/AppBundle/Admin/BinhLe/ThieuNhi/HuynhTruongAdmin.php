@@ -326,12 +326,12 @@ class HuynhTruongAdmin extends BaseAdmin {
 			->tab('form.tab_info')
 			->with('form.group_general');
 		if($this->isAdmin()) {
-			$formMapper
-				->add('user', ModelAutocompleteType::class, array(
-					'property' => 'username'
-				,
-					'required' => false,
-				));
+//			$formMapper
+//				->add('user', ModelAutocompleteType::class, array(
+//					'property' => 'username'
+//				,
+//					'required' => false,
+//				));
 		}
 		if(empty($subject->getId())) {
 			$subject->setUser(new User());
@@ -387,7 +387,7 @@ class HuynhTruongAdmin extends BaseAdmin {
 			           'placeholder'        => 'Chọn Phân Đoàn',
 			           'choices'            => ThanhVien::$danhSachPhanDoan,
 			           'translation_domain' => $this->translationDomain,
-			           'required'           => true
+			           'required'           => false
 		           ))
 		           ->add('chiDoan', ChoiceType::class, array(
 			           'required'           => false,
@@ -455,17 +455,21 @@ class HuynhTruongAdmin extends BaseAdmin {
 		$container = $this->getConfigurationPool()->getContainer();
 		$registry  = $container->get('doctrine');
 		$userRepo  = $registry->getRepository(User::class);
-		if( ! empty($userRepo->findOneBy([ 'username' => $object->getUser()->getUsername() ]))) {
-			throw new Exception();
-		}
+		/** @var User $userFound */
+		if( ! empty($userFound = $userRepo->findOneBy([ 'username' => $object->getUser()->getUsername() ]))) {
+			if( ! empty($userFound->getThanhVien())) {
+				throw new Exception();
+			}
+			$user = $userFound;
+			$object->setUser($user);
+		} else {
 //		$user = $container->get('sonata.user.user_manager')->createUser();
-		$user     = $object->getUser();
+			$user = $object->getUser();
+		}
 		$username = $object->getUser()->getUsername();
-//		$user->setUsername();
 		$user->setPassword($username);
 		$user->setEnabled(true);
 		$user->addRole(User::ROLE_HUYNH_TRUONG);
-		
 		$this->getModelManager()->update($user);
 	}
 	

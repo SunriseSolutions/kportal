@@ -274,9 +274,11 @@ class ThanhVien {
 				
 				$newCDNumber = $this->chiDoan;
 				
-				$chiDoanMoi = $namHoc->getChiDoanWithNumber($newCDNumber);
-				$phanBoMoi->setChiDoan($chiDoanMoi);
-				$chiDoanMoi->getPhanBoHangNam()->add($phanBoMoi);
+				if( ! empty($newCDNumber)) {
+					$chiDoanMoi = $namHoc->getChiDoanWithNumber($newCDNumber);
+					$phanBoMoi->setChiDoan($chiDoanMoi);
+					$chiDoanMoi->getPhanBoHangNam()->add($phanBoMoi);
+				}
 				
 				$phanBoMoi->setNamHoc($namHoc);
 				$namHoc->getPhanBoHangNam()->add($phanBoMoi);
