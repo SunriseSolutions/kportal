@@ -12,9 +12,9 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * ORM\Entity
  * ORM\Table(name="content__node__blog")
  *
- * @Hateoas\Relation(
+ * Hateoas\Relation(
  *  "self",
- *  href= @Hateoas\Route(
+ *  href= Hateoas\Route(
  *         "get_jobs",
  *         parameters = { "user" = "expr(object.getId())"},
  *         absolute = true
