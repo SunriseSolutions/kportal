@@ -467,7 +467,7 @@ class HuynhTruongAdmin extends BaseAdmin {
 			$user = $object->getUser();
 		}
 		$username = $object->getUser()->getUsername();
-		$user->setPassword($username);
+		$user->setPlainPassword($username);
 		$user->setEnabled(true);
 		$user->addRole(User::ROLE_HUYNH_TRUONG);
 		$this->getModelManager()->update($user);
