@@ -74,6 +74,7 @@ class ThanhVien {
 		'ANPHONGSO (AN-PHÔNG-SÔ)' => 'NAM',
 		'STEPHANO'                => 'NAM',
 		'ISAVE'                   => 'NỮ',
+		'MÁC-CÔ (MARK)'           => 'NAM',
 		
 		'ALBERTO'                      => 'NAM',
 		'GIOAN-PHAOLO'                 => 'NAM',
@@ -85,11 +86,12 @@ class ThanhVien {
 	];
 	
 	public static $christianNames = [
-		'PHERO'  => 'Peter',
-		'PHAOLO' => 'Paul',
-		'GIUSE'  => 'Joseph',
-		'LUCA'   => 'Luke',
-		'ANRE'   => 'Andrew',
+		'MÁC-CÔ (MARK)' => 'Mark',
+		'PHERO'         => 'Peter',
+		'PHAOLO'        => 'Paul',
+		'GIUSE'         => 'Joseph',
+		'LUCA'          => 'Luke',
+		'ANRE'          => 'Andrew',
 		
 		'TERESA'            => 'Therese',
 		'MARIA'             => 'Mary',
