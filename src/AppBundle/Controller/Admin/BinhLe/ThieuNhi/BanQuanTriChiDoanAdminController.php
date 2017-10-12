@@ -82,7 +82,7 @@ class BanQuanTriChiDoanAdminController extends BaseCRUDController {
 			$this->addFlash('sonata_flash_error', $exception->getMessage());
 		}
 		
-		return new RedirectResponse($this->generateUrl('admin_app_binhle_thieunhi_phandoantruong_chidoan_list', ['action'=>'duyet-bang-diem']));
+		return new RedirectResponse($this->generateUrl('admin_app_binhle_thieunhi_banquantri_chidoan_list', ['action'=>'duyet-bang-diem']));
 	}
 	
 }

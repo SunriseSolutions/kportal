@@ -135,6 +135,10 @@ class PhanDoanTruongChiDoanAdmin extends BinhLeThieuNhiAdmin {
 			if($name === 'list') {
 				$name = 'thieuNhi';
 			}
+		} elseif($this->action === 'duyet-bang-diem') {
+			if($name === 'list') {
+				$parameters['action'] = 'duyet-bang-diem';
+			}
 		}
 		
 		return parent::generateUrl($name, $parameters, $absolute);

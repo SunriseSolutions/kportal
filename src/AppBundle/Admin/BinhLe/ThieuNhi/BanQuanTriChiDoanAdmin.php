@@ -138,6 +138,10 @@ class BanQuanTriChiDoanAdmin extends BinhLeThieuNhiAdmin {
 			if($name === 'list') {
 				$name = 'baoCaoTienQuy';
 			}
+		} elseif($this->action === 'duyet-bang-diem') {
+			if($name === 'list') {
+				$parameters['action'] = 'duyet-bang-diem';
+			}
 		}
 		
 		return parent::generateUrl($name, $parameters, $absolute);
@@ -175,17 +179,17 @@ class BanQuanTriChiDoanAdmin extends BinhLeThieuNhiAdmin {
 			$listMapper->add('name', null, array(
 				'label'    => 'list.label_progress'
 			,
-				'template' => '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list-bao-cao-tien-quy__field__progress.html.twig'
+				'template' => '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list-bao-cao-tien-quy__field__progress.html.twig'
 			));
 			$listMapper->add('id', null, array(
 				'label'    => 'list.label_so_thieu_nhi'
 			,
-				'template' => '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list-bao-cao-tien-quy__field__so_thieu_nhi.html.twig'
+				'template' => '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list-bao-cao-tien-quy__field__so_thieu_nhi.html.twig'
 			));
 		} elseif($this->action === 'duyet-bang-diem') {
 			$listMapper->add('_action', 'actions', array(
 				'actions' => array(
-					'duyet_bang_diem' => array( 'template' => '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list__action__duyet_bang_diem.html.twig' ),
+					'duyet_bang_diem' => array( 'template' => '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list__action__duyet_bang_diem.html.twig' ),
 					'delete'          => array(),
 //                ,
 //                    'view_description' => array('template' => '::admin/product/description.html.twig')
