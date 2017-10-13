@@ -160,7 +160,7 @@ class HuynhTruongRoleMBListener {
 			}
 			
 			$this->menu->addChild('list thieu nhi toan xu doan', array(
-				'route'           => 'admin_app_binhle_thieunhi_thanhvien_thieuNhi',
+				'route'           => 'admin_app_binhle_thieunhi_thieunhi_list',
 //			'routeParameters' => [ 'id' => $salesPartnerId ],
 				'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 			))->setLabel($translator->trans('dashboard.list_thieunhi_xudoan', [], 'BinhLeAdmin'));

@@ -396,9 +396,6 @@ class HuynhTruongAdmin extends BaseAdmin {
 			           'choices'            => $danhSachChiDoan,
 			           'translation_domain' => $this->translationDomain
 		           ))
-		           ->add('huynhTruong', null, array(
-			           'label' => 'list.label_huynh_truong',
-		           ))
 		           ->add('chiDoanTruong', null, array(
 			           'label' => 'list.label_chi_doan_truong',
 		           ))
@@ -429,9 +426,6 @@ class HuynhTruongAdmin extends BaseAdmin {
 	 * @param ThanhVien $object
 	 */
 	public function preValidate($object) {
-		if( ! empty($object->isHuynhTruong())) {
-			$object->setThieuNhi(false);
-		}
 		$christianName = $object->getChristianname();
 		if( ! empty($christianName)) {
 			$cNames        = array_flip(ThanhVien::$christianNames);
@@ -445,6 +439,8 @@ class HuynhTruongAdmin extends BaseAdmin {
 		$object->setName($christianName . ' ' . $lastname . ' ' . $middlename . ' ' . $firstname);
 		
 		$container = $this->getConfigurationPool()->getContainer();
+		
+		$object->setThieuNhi(false);
 		$object->setHuynhTruong(true);
 	}
 	
