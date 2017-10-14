@@ -82,6 +82,7 @@ class PhanBoAdmin extends BaseAdmin {
 			->add('id')
 			->add('chiDoan', 'doctrine_orm_model_autocomplete', array(
 				'label' => 'list.label_chi_doan',
+				'admin_code' => 'app.admin.binhle_thieunhi_chidoan'
 			), null, array(
 				// in related CategoryAdmin there must be datagrid filter on `title` field to make the autocompletion work
 				'property'           => 'id',
@@ -90,8 +91,8 @@ class PhanBoAdmin extends BaseAdmin {
 				},
 			))
 			->add('thanhVien', 'doctrine_orm_model_autocomplete', array(
-				'label' => 'list.label_thanh_vien',
-				'admin_code'         => 'app.admin.binhle_thieunhi_thanhvien'
+				'label'      => 'list.label_thanh_vien',
+				'admin_code' => 'app.admin.binhle_thieunhi_thanhvien'
 			), null, array(
 				// in related CategoryAdmin there must be datagrid filter on `title` field to make the autocompletion work
 				'property'           => 'name',
@@ -209,7 +210,9 @@ class PhanBoAdmin extends BaseAdmin {
 			$listMapper->add('phanBoTruoc.bangDiem', null, array( 'associated_property' => 'tbYear' ));
 		}
 		$listMapper->add('chiDoan', null, array(
-			'associated_property' => 'id'
+			'associated_property' => 'id',
+			'admin_code' => 'app.admin.binhle_thieunhi_chidoan'
+		), array(
 		));
 		
 		$listMapper->add('doiNhomGiaoLy', null, array(

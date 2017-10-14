@@ -281,10 +281,9 @@ class ThanhVien {
 					$phanBoMoi->setChiDoan($chiDoanMoi);
 					$chiDoanMoi->getPhanBoHangNam()->add($phanBoMoi);
 				}
-				
+				$phanBoMoi->setVaiTro();
 				$phanBoMoi->setNamHoc($namHoc);
 				$namHoc->getPhanBoHangNam()->add($phanBoMoi);
-				$phanBoMoi->setThieuNhi(true);
 				
 				return $phanBoMoi;
 			} else {

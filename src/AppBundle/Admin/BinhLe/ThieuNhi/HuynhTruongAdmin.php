@@ -478,6 +478,13 @@ class HuynhTruongAdmin extends BaseAdmin {
 	}
 	
 	/**
+	 * @param ThanhVien $object
+	 */
+	public function preUpdate($object) {
+		$object->getPhanBoNamNay()->setVaiTro();
+	}
+	
+	/**
 	 * @return int
 	 */
 	public function getNamHoc() {
