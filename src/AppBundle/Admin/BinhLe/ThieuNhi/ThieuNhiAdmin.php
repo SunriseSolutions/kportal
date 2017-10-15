@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BaseAdmin;
@@ -65,6 +66,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 	
 	public function configureRoutes(RouteCollection $collection) {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
+		$collection->add('thieuNhiNhom', 'thieu-nhi/nhom-giao-ly/{phanBo}/list');
 		parent::configureRoutes($collection);
 	}
 	
@@ -85,6 +87,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 	 * @return bool|mixed
 	 */
 	public function isGranted($name, $object = null) {
+		$this->getAction();
 		$container = $this->getConfigurationPool()->getContainer();
 		if($this->isAdmin()) {
 			return true;
@@ -168,14 +171,31 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		$expr      = $qb->expr();
 		$rootAlias = $qb->getRootAliases()[0];
 		
-		
 		$query->andWhere($expr->eq($rootAlias . '.huynhTruong', $expr->literal(false)));
 		
-		if($this->action === 'truong-chi-doan') {
-//			$query->andWhere($expr->eq($rootAlias . '.huynhTruong', $expr->literal(true)));
-			$qb->join($rootAlias . '.phanBoHangNam', 'phanBo');
-			$qb->join('phanBo.chiDoan', 'chiDoan');
-			$qb->andWhere($expr->eq('chiDoan.id', $expr->literal($this->actionParams['chiDoan']->getId())));
+		$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
+		
+		
+		if($this->action === 'list-thieu-nhi-nhom') {
+			/** @var array $dngl */
+			$cacDoiNhomGiaoLy = $this->actionParams['cacDoiNhomGiaoLy'];
+			if(count($cacDoiNhomGiaoLy) > 0) {
+				$dnglIds = [];
+				/** @var DoiNhomGiaoLy $dngl */
+				foreach($cacDoiNhomGiaoLy as $dngl) {
+					$dnglIds[] = $dngl->getId();
+				}
+				
+				$qb->join($rootAlias . '.phanBoHangNam', 'phanBo');
+				$qb->join('phanBo.doiNhomGiaoLy', 'doiNhomGiaoLy');
+				
+				$query->andWhere($expr->in('doiNhomGiaoLy.id', $dnglIds));
+			} else {
+				$this->clearResults($query);
+			}
+		} elseif($this->action === 'thieu-nhi-chua-dong-quy') {
+			// chiDoan
+			
 			
 		}
 		
@@ -187,12 +207,36 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			if($this->action === 'list-thieu-nhi') {
 				$name = 'thieuNhi';
 			} elseif($this->action === 'list-thieu-nhi-nhom') {
-				$name                 = 'thieuNhiNhom';
-				$parameters['phanBo'] = $this->actionParams['phanBo']->getId();
+				$name = 'thieuNhiNhom';
+				if(array_key_exists('phanBo', $this->actionParams)) {
+					$phanBoId = $this->actionParams['phanBo']->getId();
+				} else {
+					$phanBoId = $this->getRequest()->query->get('phanBoId');
+				}
+				$parameters['phanBo'] = $phanBoId;
 			}
+		} elseif($name === 'edit') {
+		
 		}
 		
 		return parent::generateUrl($name, $parameters, $absolute);
+	}
+	
+	public function getPersistentParameters() {
+		$parameters = parent::getPersistentParameters();
+		if( ! $this->hasRequest() || empty($this->action)) {
+			return $parameters;
+		}
+		if(array_key_exists('phanBo', $this->actionParams)) {
+			$phanBoId = $this->actionParams['phanBo']->getId();
+		} else {
+			$phanBoId = $this->getRequest()->query->get('phanBoId');
+		}
+		
+		return array_merge($parameters, array(
+			'action'   => $this->action,
+			'phanBoId' => $phanBoId
+		));
 	}
 	
 	protected function configureListFields(ListMapper $listMapper) {
@@ -238,7 +282,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				'choices'  => $danhSachChiDoan,
 			))
 			->add('namHoc', 'text', array( 'editable' => false ))
-			->add('enabled', null, array( 'editable' => false, 'label' => 'list.label_active' ))
+			->add('enabled', null, array( 'editable' => true, 'label' => 'list.label_active' ))
 			->add('_action', 'actions', array(
 				'actions' => array(
 					'edit' => array(),
@@ -260,7 +304,6 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		$user                                    = $container->get('app.user')->getUser();
 		$thanhVien                               = $user->getThanhVien();
 		ThanhVienAdminHelper::$translationDomain = $this->translationDomain;
-		
 		
 		$danhSachChiDoan = [
 			'Chiên Con 4 tuổi'    => 4,
@@ -313,27 +356,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		$formMapper
 			->tab('form.tab_info')
 			->with('form.group_general');
-		if($this->isAdmin()) {
-			$formMapper
-				->add('user', ModelAutocompleteType::class, array(
-					'property' => 'username'
-				,
-					'required' => false,
-				));
-		}
-		if(empty($subject->getId())) {
-			$subject->setUser(new User());
-			$formMapper
-				->add('user.username', null, array(
-					'required' => true,
-					'label'    => 'list.label_username'
-				));
-		}
-		$formMapper
-			->add('user.email', null, array(
-				'required' => true,
-				'label'    => 'list.label_email_address'
-			));
+		
 		$formMapper
 			->add('christianname', ChoiceType::class, array(
 				'label'              => 'list.label_christianname',
@@ -384,27 +407,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			           'choices'            => $danhSachChiDoan,
 			           'translation_domain' => $this->translationDomain
 		           ))
-		           ->add('huynhTruong', null, array(
-			           'label' => 'list.label_huynh_truong',
-		           ))
-		           ->add('chiDoanTruong', null, array(
-			           'label' => 'list.label_chi_doan_truong',
-		           ))
-		           ->add('phanDoanTruong', null, array(
-			           'label' => 'list.label_phan_doan_truong',
-		           ))
-		           ->add('thuKyXuDoan', null, array(
-			           'label' => 'list.label_thu_ky_xu_doan',
-		           ))
-		           ->add('xuDoanPhoNoi', null, array(
-			           'label' => 'list.label_xu_doan_pho_noi',
-		           ))
-		           ->add('xuDoanPhoNgoai', null, array(
-			           'label' => 'list.label_xu_doan_pho_ngoai',
-		           ))
-		           ->add('xuDoanTruong', null, array(
-			           'label' => 'list.label_xu_doan_truong',
-		           ))
+			
 		           ->add('enabled', null, array(
 			           'label' => 'list.label_enabled',
 		           ));
@@ -417,9 +420,9 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 	 * @param ThanhVien $object
 	 */
 	public function preValidate($object) {
-		if( ! empty($object->isHuynhTruong())) {
-			$object->setThieuNhi(false);
-		}
+		$object->setThieuNhi(true);
+		$object->setHuynhTruong(false);
+		
 		$christianName = $object->getChristianname();
 		if( ! empty($christianName)) {
 			$cNames        = array_flip(ThanhVien::$christianNames);
@@ -433,7 +436,6 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		$object->setName($christianName . ' ' . $lastname . ' ' . $middlename . ' ' . $firstname);
 		
 		$container = $this->getConfigurationPool()->getContainer();
-		$object->setHuynhTruong(true);
 	}
 	
 	/**

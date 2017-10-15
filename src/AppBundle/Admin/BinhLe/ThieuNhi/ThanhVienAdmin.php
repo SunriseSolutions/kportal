@@ -67,7 +67,6 @@ class ThanhVienAdmin extends BaseAdmin {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
 		$collection->add('import', 'import/{namHoc}');
 		$collection->add('thieuNhi', 'thieu-nhi/list');
-		$collection->add('thieuNhiNhom', 'thieu-nhi/nhom-giao-ly/{phanBo}/list');
 		$collection->add('truongChiDoan', 'truong/chi-doan-{chiDoan}/list');
 		
 		parent::configureRoutes($collection);

@@ -33,30 +33,6 @@ class ThanhVienAdminController extends BaseCRUDController {
 		return parent::listAction();
 	}
 	
-	public function thieuNhiNhomAction(PhanBo $phanBo, Request $request) {
-		
-		/** @var ThanhVienAdmin $admin */
-		$admin = $this->admin;
-		
-		$cacTruongPT      = $phanBo->getCacTruongPhuTrachDoi();
-		$cacDoiNhomGiaoLy = [];
-		
-		/** @var TruongPhuTrachDoi $truongPT */
-		foreach($cacTruongPT as $truongPT) {
-			$cacDoiNhomGiaoLy [] = $truongPT->getDoiNhomGiaoLy();
-		}
-		
-		$admin->setAction('list-thieu-nhi-nhom');
-		$admin->setActionParams([
-			'phanBo'           => $phanBo,
-			'cacDoiNhomGiaoLy' => $cacDoiNhomGiaoLy,
-			'chiDoan'          => $phanBo->getChiDoan()
-		]);
-		
-		return parent::listAction();
-	}
-	
-	
 	public function thieuNhiAction(Request $request) {
 		/** @var ThanhVienAdmin $admin */
 		$admin = $this->admin;

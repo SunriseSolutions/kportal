@@ -131,7 +131,7 @@ class HuynhTruongRoleMBListener {
 				))->setLabel($translator->trans('dashboard.thieunhi_nhapdiem_nhomphutrach', [], 'BinhLeAdmin'));
 				
 				$this->menu->addChild('thieu nhi trong nhom minh', array(
-					'route'           => 'admin_app_binhle_thieunhi_thanhvien_thieuNhiNhom',
+					'route'           => 'admin_app_binhle_thieunhi_thieunhi_thieuNhiNhom',
 					'routeParameters' => [ 'phanBo' => $phanBo->getId() ],
 					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 				))->setLabel($translator->trans('dashboard.thieunhi_nhomphutrach', [], 'BinhLeAdmin'));
