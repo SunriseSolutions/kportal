@@ -38,6 +38,8 @@ class PhanBo {
 			throw new InvalidArgumentException();
 		}
 		
+		$this->chiDoanTruong  = $tv->isChiDoanTruong();
+		$this->phanDoanTruong = $tv->isPhanDoanTruong();
 		$this->xuDoanTruong   = $tv->isXuDoanTruong();
 		$this->xuDoanPhoNoi   = $tv->isXuDoanPhoNoi();
 		$this->xuDoanPhoNgoai = $tv->isXuDoanPhoNgoai();
