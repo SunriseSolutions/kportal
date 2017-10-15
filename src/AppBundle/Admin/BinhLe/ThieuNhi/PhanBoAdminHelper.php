@@ -114,7 +114,7 @@ class PhanBoAdminHelper {
 				'property'           => 'id',
 				'to_string_callback' => function(ChiDoan $entity, $property) {
 					return $entity->getId();
-				},
+				},['admin_code' => 'app.admin.binhle_thieunhi_chidoan']
 			))
 			->add('namHoc', ModelType::class, array(
 				'label'    => 'list.label_nam_hoc',
