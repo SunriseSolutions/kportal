@@ -107,15 +107,15 @@ class PhanBoAdminHelper {
 				'to_string_callback' => function(ThanhVien $entity, $property) {
 					return $entity->getName();
 				},
-			),['admin_code'         => 'app.admin.binhle_thieunhi_thanhvien'])
+			), [ 'admin_code' => 'app.admin.binhle_thieunhi_thanhvien' ])
 			->add('chiDoan', ModelAutocompleteType::class, array(
 				'required'           => false,
 				'label'              => 'list.label_chi_doan',
 				'property'           => 'id',
 				'to_string_callback' => function(ChiDoan $entity, $property) {
 					return $entity->getId();
-				},['admin_code' => 'app.admin.binhle_thieunhi_chidoan']
-			))
+				}
+			), [ 'admin_code' => 'app.admin.binhle_thieunhi_chidoan' ])
 			->add('namHoc', ModelType::class, array(
 				'label'    => 'list.label_nam_hoc',
 				'property' => 'id'
