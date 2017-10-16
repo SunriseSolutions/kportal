@@ -47,6 +47,7 @@ class ThieuNhiCommand extends ContainerAwareCommand {
 						$tenThanh->setTiengAnh($enName);
 						$tenThanh->setCode($enName);
 						$manager->persist($tenThanh);
+						$manager->flush();
 					}
 					$tv->setTenThanh($tenThanh);
 					$manager->persist($tv);
