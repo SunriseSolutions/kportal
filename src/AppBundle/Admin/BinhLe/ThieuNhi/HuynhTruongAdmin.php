@@ -2,6 +2,7 @@
 
 namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
+use Sonata\AdminBundle\Form\Type\ModelType;
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\BinhLe\ThieuNhi\DoiNhomGiaoLy;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
@@ -347,14 +348,19 @@ class HuynhTruongAdmin extends BaseAdmin {
 				'label'    => 'list.label_email_address'
 			));
 		$formMapper
-			->add('christianname', ChoiceType::class, array(
-				'label'              => 'list.label_christianname',
-				'placeholder'        => 'Chọn Tên Thánh',
-				'required'           => false,
-				'choices'            => ThanhVien::$christianNames,
-				'data'               => $christianName,
-				'translation_domain' => $this->translationDomain
+			->add('tenThanh', ModelType::class, array(
+				'required' => false,
+				'label'    => 'list.label_christianname',
+				'property' => 'tiengViet'
 			))
+//			->add('christianname', ChoiceType::class, array(
+//				'label'              => 'list.label_christianname',
+//				'placeholder'        => 'Chọn Tên Thánh',
+//				'required'           => false,
+//				'choices'            => ThanhVien::$christianNames,
+//				'data'               => $christianName,
+//				'translation_domain' => $this->translationDomain
+//			))
 			->add('lastname', null, array(
 				'label' => 'list.label_lastname',
 			))
@@ -432,11 +438,6 @@ class HuynhTruongAdmin extends BaseAdmin {
 			$christianName = $cNames[ $christianName ];
 			$object->setSex(ThanhVien::$christianNameSex[ $christianName ]);
 		}
-		$object->setChristianname($christianName);
-		$lastname   = $object->getLastname() ?: '';
-		$middlename = $object->getMiddlename() ?: '';
-		$firstname  = $object->getFirstname() ?: '';
-		$object->setName($christianName . ' ' . $lastname . ' ' . $middlename . ' ' . $firstname);
 		
 		$container = $this->getConfigurationPool()->getContainer();
 		

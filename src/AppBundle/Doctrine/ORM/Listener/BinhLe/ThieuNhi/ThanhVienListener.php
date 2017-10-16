@@ -27,6 +27,27 @@ class ThanhVienListener {
 		$request = $this->container->get('request_stack')->getCurrentRequest();
 		$router  = $this->container->get('router');
 		$trans   = $this->container->get('translator');
+		
+		if( ! empty($tenThanh = $object->getTenThanh())) {
+			$christianName = $tenThanh->getTiengViet();
+			$object->setSex($object->getSex());
+		} else {
+			$christianName = $object->getChristianname();
+			if( ! empty($christianName)) {
+				$cNames        = array_flip(ThanhVien::$christianNames);
+				$christianName = $cNames[ $christianName ];
+				$object->setSex(ThanhVien::$christianNameSex[ $christianName ]);
+			}
+		}
+		if( ! empty($christianName)) {
+			$object->setChristianname($christianName);
+		}
+		
+		$lastname   = $object->getLastname() ?: '';
+		$middlename = $object->getMiddlename() ?: '';
+		$firstname  = $object->getFirstname() ?: '';
+		$object->setName($christianName . ' ' . $lastname . ' ' . $middlename . ' ' . $firstname);
+		
 		if( ! empty($chiDoan = $object->getChiDoan())) {
 			$object->setPhanDoan(ThanhVien::$danhSachChiDoan[ $chiDoan ]);
 		}

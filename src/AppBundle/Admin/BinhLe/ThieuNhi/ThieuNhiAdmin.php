@@ -2,6 +2,7 @@
 
 namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
+use Sonata\AdminBundle\Form\Type\ModelType;
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\BinhLe\ThieuNhi\DoiNhomGiaoLy;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
@@ -358,14 +359,19 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			->with('form.group_general');
 		
 		$formMapper
-			->add('christianname', ChoiceType::class, array(
-				'label'              => 'list.label_christianname',
-				'placeholder'        => 'Chọn Tên Thánh',
-				'required'           => false,
-				'choices'            => ThanhVien::$christianNames,
-				'data'               => $christianName,
-				'translation_domain' => $this->translationDomain
+			->add('tenThanh', ModelType::class, array(
+				'required' => false,
+				'label'    => 'list.label_christianname',
+				'property' => 'tiengViet'
 			))
+//			->add('christianname', ChoiceType::class, array(
+//				'label'              => 'list.label_christianname',
+//				'placeholder'        => 'Chọn Tên Thánh',
+//				'required'           => false,
+//				'choices'            => ThanhVien::$christianNames,
+//				'data'               => $christianName,
+//				'translation_domain' => $this->translationDomain
+//			))
 			->add('lastname', null, array(
 				'label' => 'list.label_lastname',
 			))
@@ -407,7 +413,6 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			           'choices'            => $danhSachChiDoan,
 			           'translation_domain' => $this->translationDomain
 		           ))
-			
 		           ->add('enabled', null, array(
 			           'label' => 'list.label_enabled',
 		           ));
@@ -422,18 +427,6 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 	public function preValidate($object) {
 		$object->setThieuNhi(true);
 		$object->setHuynhTruong(false);
-		
-		$christianName = $object->getChristianname();
-		if( ! empty($christianName)) {
-			$cNames        = array_flip(ThanhVien::$christianNames);
-			$christianName = $cNames[ $christianName ];
-			$object->setSex(ThanhVien::$christianNameSex[ $christianName ]);
-		}
-		$object->setChristianname($christianName);
-		$lastname   = $object->getLastname() ?: '';
-		$middlename = $object->getMiddlename() ?: '';
-		$firstname  = $object->getFirstname() ?: '';
-		$object->setName($christianName . ' ' . $lastname . ' ' . $middlename . ' ' . $firstname);
 		
 		$container = $this->getConfigurationPool()->getContainer();
 	}

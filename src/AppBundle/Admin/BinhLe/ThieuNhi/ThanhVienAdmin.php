@@ -302,17 +302,6 @@ class ThanhVienAdmin extends BaseAdmin {
 		if( ! empty($object->isHuynhTruong())) {
 			$object->setThieuNhi(false);
 		}
-		$christianName = $object->getChristianname();
-		if( ! empty($christianName)) {
-			$cNames        = array_flip(ThanhVien::$christianNames);
-			$christianName = $cNames[ $christianName ];
-			$object->setSex(ThanhVien::$christianNameSex[ $christianName ]);
-		}
-		$object->setChristianname($christianName);
-		$lastname   = $object->getLastname() ?: '';
-		$middlename = $object->getMiddlename() ?: '';
-		$firstname  = $object->getFirstname() ?: '';
-		$object->setName($christianName . ' ' . $lastname . ' ' . $middlename . ' ' . $firstname);
 	}
 	
 	/**

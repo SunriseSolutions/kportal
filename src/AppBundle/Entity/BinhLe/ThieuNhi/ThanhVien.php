@@ -20,6 +20,8 @@ class ThanhVien {
 		'GIUSE'  => 'NAM',
 		'LUCA'   => 'NAM',
 		'ANRE'   => 'NAM',
+		'GIEROMINO' => 'NAM',
+		'NI-CÔ-LA (SANTA CLAUS)' => 'NAM',
 		
 		'TERESA'            => 'NỮ',
 		'MARIA'             => 'NỮ',
@@ -42,6 +44,7 @@ class ThanhVien {
 		'MARIA-GIUSE'  => 'NỮ',
 		'MARIA-AGATA'  => 'NỮ',
 		'MARIA-TERESA' => 'NỮ',
+		'GIUSE-GIERADO' => 'NAM',
 		
 		'MAGARITA'                => 'NỮ',
 		'MARIA-GORETTI'           => 'NỮ',
@@ -50,7 +53,7 @@ class ThanhVien {
 		'TOMA'                    => 'NAM',
 		'MICAE'                   => 'NAM',
 		'ANTON'                   => 'NAM',
-		'ĐA-MINH (Daminh)'        => 'NAM',
+		'ĐA-MINH (DAMINH)'        => 'NAM',
 		'GIOAN-BAOTIXITA'         => 'NAM',
 		'GIOAN-KIM'               => 'NAM',
 		'FAUSTINA'                => 'NỮ',
@@ -75,13 +78,14 @@ class ThanhVien {
 		'STEPHANO'                => 'NAM',
 		'ISAVE'                   => 'NỮ',
 		'MÁC-CÔ (MARK)'           => 'NAM',
+		'EMMANUEL'                => 'NAM',
 		
 		'ALBERTO'                      => 'NAM',
 		'GIOAN-PHAOLO'                 => 'NAM',
 		'GIOAN-BOSCO'                  => 'NAM',
 		'DAMINH SAVIO (ĐA-MINH-SAVIO)' => 'NAM',
 		'PIO (PI-Ô)'                   => 'NAM',
-	
+		'M.NELLA'                      => 'NAM'
 	
 	];
 	
@@ -122,7 +126,7 @@ class ThanhVien {
 		'TOMA'                         => 'Thomas',
 		'MICAE'                        => 'Michael',
 		'ANTON'                        => 'Anthony',
-		'ĐA-MINH (Daminh)'             => 'Dominic',
+		'ĐA-MINH (DAMINH)'             => 'Dominic',
 		'GIOAN-BAOTIXITA'              => 'John the Baptist',
 		'GIOAN-KIM'                    => 'Joachim',
 		'FAUSTINA'                     => 'Faustina',
@@ -154,7 +158,7 @@ class ThanhVien {
 		'DAMINH SAVIO (ĐA-MINH-SAVIO)' => 'Dominic Savio',
 		'PIO (PI-Ô)'                   => 'Pius',
 		'GIEROMINO'                    => 'Jerome',
-		'NI-CÔ-LA (Santa Claus)'       => 'Nicholas'
+		'NI-CÔ-LA (SANTA CLAUS)'       => 'Nicholas'
 	
 	];
 	
@@ -384,6 +388,13 @@ class ThanhVien {
 	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\PhanBo", mappedBy="thanhVien", cascade={"persist","merge"}, orphanRemoval=true)
 	 */
 	protected $phanBoHangNam;
+	
+	/**
+	 * @var ChristianName
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ChristianName", inversedBy="cacThanhVien", cascade={"persist","merge"})
+	 * @ORM\JoinColumn(name="id_ten_thanh", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $tenThanh;
 	
 	/**
 	 * @var \DateTime
@@ -1062,4 +1073,19 @@ class ThanhVien {
 	public function setThuKyXuDoan($thuKyXuDoan) {
 		$this->thuKyXuDoan = $thuKyXuDoan;
 	}
+	
+	/**
+	 * @return ChristianName
+	 */
+	public function getTenThanh() {
+		return $this->tenThanh;
+	}
+	
+	/**
+	 * @param ChristianName $tenThanh
+	 */
+	public function setTenThanh($tenThanh) {
+		$this->tenThanh = $tenThanh;
+	}
+	
 }
