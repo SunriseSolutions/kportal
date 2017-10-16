@@ -39,7 +39,7 @@ class ThieuNhiCommand extends ContainerAwareCommand {
 				try {
 //					$output->writeln($tv->getName());
 					$enName = ThanhVien::$christianNames[ $cname ];
-					if(empty($tenThanh = $cNameRepo->findBy([ 'code' => $enName ]))) {
+					if(empty($tenThanh = $cNameRepo->findOneBy([ 'code' => $enName ]))) {
 						$tenThanh = new ChristianName();
 						$tenThanh->getCacThanhVien()->add($tv);
 						$tenThanh->setSex(ThanhVien::$christianNameSex[ $cname ]);
