@@ -143,15 +143,14 @@ class BangDiem {
 					break;
 			}
 			if(($sundayTickets = $this->sundayTickets) >= $namHoc->getPhieuLenLop() && $this->category !== self::YEU) {
-				$this->gradeRetention = 0;
+				$this->gradeRetention = false;
 				if($sundayTickets >= $namHoc->getPhieuKhenThuong() && $this->tbYear >= $namHoc->getDiemKha()) {
-					$this->awarded = 1;
+					$this->awarded = true;
 				}
 			} else {
-				$this->gradeRetention = 1;
+				$this->gradeRetention = true;
 			}
 		}
-		
 		
 		return $tbTerm;
 	}
@@ -301,6 +300,12 @@ class BangDiem {
 	protected $sundayTickets;
 	
 	/**
+	 * @var  integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $specialTreatmentTarget;
+	
+	/**
 	 * @var  boolean
 	 * @ORM\Column(type="boolean", nullable=true)
 	 */
@@ -312,6 +317,18 @@ class BangDiem {
 	 * @ORM\Column(type="boolean", nullable=false)
 	 */
 	protected $submitted = false;
+	
+	/**
+	 * @var  boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $specialTreatment = false;
+	
+	/**
+	 * @var  boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $specialTreatmentApproved = false;
 	
 	/**
 	 * @var  boolean
@@ -738,4 +755,45 @@ class BangDiem {
 		$this->submitted = $submitted;
 	}
 	
+	/**
+	 * @return bool
+	 */
+	public function isSpecialTreatment() {
+		return $this->specialTreatment;
+	}
+	
+	/**
+	 * @param bool $specialTreatment
+	 */
+	public function setSpecialTreatment($specialTreatment) {
+		$this->specialTreatment = $specialTreatment;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getSpecialTreatmentTarget() {
+		return $this->specialTreatmentTarget;
+	}
+	
+	/**
+	 * @param int $specialTreatmentTarget
+	 */
+	public function setSpecialTreatmentTarget($specialTreatmentTarget) {
+		$this->specialTreatmentTarget = $specialTreatmentTarget;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isSpecialTreatmentApproved() {
+		return $this->specialTreatmentApproved;
+	}
+	
+	/**
+	 * @param bool $specialTreatmentApproved
+	 */
+	public function setSpecialTreatmentApproved($specialTreatmentApproved) {
+		$this->specialTreatmentApproved = $specialTreatmentApproved;
+	}
 }
