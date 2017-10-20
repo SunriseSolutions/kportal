@@ -15,12 +15,12 @@ use Doctrine\ORM\Mapping as ORM;
 class ThanhVien {
 	
 	public static $christianNameSex = [
-		'PHERO'  => 'NAM',
-		'PHAOLO' => 'NAM',
-		'GIUSE'  => 'NAM',
-		'LUCA'   => 'NAM',
-		'ANRE'   => 'NAM',
-		'GIEROMINO' => 'NAM',
+		'PHERO'                  => 'NAM',
+		'PHAOLO'                 => 'NAM',
+		'GIUSE'                  => 'NAM',
+		'LUCA'                   => 'NAM',
+		'ANRE'                   => 'NAM',
+		'GIEROMINO'              => 'NAM',
 		'NI-CÔ-LA (SANTA CLAUS)' => 'NAM',
 		
 		'TERESA'            => 'NỮ',
@@ -41,9 +41,9 @@ class ThanhVien {
 		'M.MARIE' => 'NỮ',
 		'SILAO'   => 'NAM',
 		
-		'MARIA-GIUSE'  => 'NỮ',
-		'MARIA-AGATA'  => 'NỮ',
-		'MARIA-TERESA' => 'NỮ',
+		'MARIA-GIUSE'   => 'NỮ',
+		'MARIA-AGATA'   => 'NỮ',
+		'MARIA-TERESA'  => 'NỮ',
 		'GIUSE-GIERADO' => 'NAM',
 		
 		'MAGARITA'                => 'NỮ',
@@ -85,17 +85,21 @@ class ThanhVien {
 		'GIOAN-BOSCO'                  => 'NAM',
 		'DAMINH SAVIO (ĐA-MINH-SAVIO)' => 'NAM',
 		'PIO (PI-Ô)'                   => 'NAM',
-		'M.NELLA'                      => 'NAM'
-	
+		'M.NELLA'                      => 'NAM',
+		'DOMINICO'                     => 'NAM',
+		
+		'GIACÔBÊ (GIACOBE)' => 'NAM',
+		'MÁTTHÊU (MATTHÊU)' => 'NAM'
 	];
 	
 	public static $christianNames = [
-		'MÁC-CÔ (MARK)' => 'Mark',
-		'PHERO'         => 'Peter',
-		'PHAOLO'        => 'Paul',
-		'GIUSE'         => 'Joseph',
-		'LUCA'          => 'Luke',
-		'ANRE'          => 'Andrew',
+		'MÁC-CÔ (MARK)'     => 'Mark',
+		'MÁTTHÊU (MATTHÊU)' => 'Matthew',
+		'PHERO'             => 'Peter',
+		'PHAOLO'            => 'Paul',
+		'GIUSE'             => 'Joseph',
+		'LUCA'              => 'Luke',
+		'ANRE'              => 'Andrew',
 		
 		'TERESA'            => 'Therese',
 		'MARIA'             => 'Mary',
@@ -126,6 +130,7 @@ class ThanhVien {
 		'TOMA'                         => 'Thomas',
 		'MICAE'                        => 'Michael',
 		'ANTON'                        => 'Anthony',
+		'DOMINICO'                     => 'DOMINICO',
 		'ĐA-MINH (DAMINH)'             => 'Dominic',
 		'GIOAN-BAOTIXITA'              => 'John the Baptist',
 		'GIOAN-KIM'                    => 'Joachim',
@@ -158,7 +163,8 @@ class ThanhVien {
 		'DAMINH SAVIO (ĐA-MINH-SAVIO)' => 'Dominic Savio',
 		'PIO (PI-Ô)'                   => 'Pius',
 		'GIEROMINO'                    => 'Jerome',
-		'NI-CÔ-LA (SANTA CLAUS)'       => 'Nicholas'
+		'NI-CÔ-LA (SANTA CLAUS)'       => 'Nicholas',
+		'GIACÔBÊ (GIACOBE)'            => 'James'
 	
 	];
 	
@@ -397,6 +403,13 @@ class ThanhVien {
 	protected $tenThanh;
 	
 	/**
+	 * @var ChristianName
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ChristianName", cascade={"persist","merge"})
+	 * @ORM\JoinColumn(name="id_ten_giao_khu", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $tenGiaoKhu;
+	
+	/**
 	 * @var \DateTime
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
@@ -515,6 +528,18 @@ class ThanhVien {
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $soDienThoaiNha;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $hoTenBo;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $hoTenMe;
 	
 	/**
 	 * @var string
@@ -1086,6 +1111,48 @@ class ThanhVien {
 	 */
 	public function setTenThanh($tenThanh) {
 		$this->tenThanh = $tenThanh;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getHoTenBo() {
+		return $this->hoTenBo;
+	}
+	
+	/**
+	 * @param string $hoTenBo
+	 */
+	public function setHoTenBo($hoTenBo) {
+		$this->hoTenBo = $hoTenBo;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getHoTenMe() {
+		return $this->hoTenMe;
+	}
+	
+	/**
+	 * @param string $hoTenMe
+	 */
+	public function setHoTenMe($hoTenMe) {
+		$this->hoTenMe = $hoTenMe;
+	}
+	
+	/**
+	 * @return ChristianName
+	 */
+	public function getTenGiaoKhu() {
+		return $this->tenGiaoKhu;
+	}
+	
+	/**
+	 * @param ChristianName $tenGiaoKhu
+	 */
+	public function setTenGiaoKhu($tenGiaoKhu) {
+		$this->tenGiaoKhu = $tenGiaoKhu;
 	}
 	
 }

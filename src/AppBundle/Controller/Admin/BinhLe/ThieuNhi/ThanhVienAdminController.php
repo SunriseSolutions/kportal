@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Admin\BinhLe\ThieuNhi;
 use AppBundle\Admin\BinhLe\ThieuNhi\ThanhVienAdmin;
 use AppBundle\Controller\Admin\BaseCRUDController;
 use AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan;
+use AppBundle\Entity\BinhLe\ThieuNhi\ChristianName;
 use AppBundle\Entity\BinhLe\ThieuNhi\DoiNhomGiaoLy;
 use AppBundle\Entity\BinhLe\ThieuNhi\NamHoc;
 use AppBundle\Entity\BinhLe\ThieuNhi\PhanBo;
@@ -30,6 +31,7 @@ class ThanhVienAdminController extends BaseCRUDController {
 		if( ! empty($namHoc = $this->get('app.binhle_thieunhi_namhoc')->getNamHocHienTai())) {
 			$admin->setNamHoc($namHoc->getId());
 		}
+		
 		return parent::listAction();
 	}
 	
@@ -101,7 +103,9 @@ class ThanhVienAdminController extends BaseCRUDController {
 					}
 					$_lname = mb_strtoupper(trim($_lname));
 					
-					$_cname = $phpExcelObject->getActiveSheet()->getCell('B' . $row)->getValue();
+					$christianNameRepo = $this->getDoctrine()->getRepository(ChristianName::class);
+					$_cname            = $phpExcelObject->getActiveSheet()->getCell('B' . $row)->getValue();
+					$_tenThanh         = null;
 					if( ! empty($_cname)) {
 						$_cname = trim($_cname);
 						if( ! empty($_cname)) {
@@ -113,7 +117,9 @@ class ThanhVienAdminController extends BaseCRUDController {
 								throw new InvalidArgumentException('Christian Name no found: ' . $_cname);
 							};
 						}
+						$_tenThanh = $christianNameRepo->findOneBy([ 'tiengViet' => $_cname ]);
 					}
+					
 					
 					$_mname = $phpExcelObject->getActiveSheet()->getCell('D' . $row)->getValue();
 					if( ! empty($_mname)) {
@@ -136,16 +142,26 @@ class ThanhVienAdminController extends BaseCRUDController {
 					$_address  = (trim($phpExcelObject->getActiveSheet()->getCell('H' . $row)->getValue()));
 					$_doi      = (trim($phpExcelObject->getActiveSheet()->getCell('I' . $row)->getValue()));
 					$_chiDoan  = (trim($phpExcelObject->getActiveSheet()->getCell('J' . $row)->getValue()));
-
-
-//					$_dobCell     = $phpExcelObject->getActiveSheet()->getCell('F' . $row);
-//					$_dobString   = $_dobCell->getValue();
-
-//					if(\PHPExcel_Shared_Date::isDateTime($_dobCell)) {
-//						$_dob = new \DateTime('@' . \PHPExcel_Shared_Date::ExcelToPHP($_dobString));
-//					} elseif( ! empty($_dobString)) {
-//						$_dob = \DateTime::createFromFormat('d/m/Y', $_dobString);
-//					}
+					
+					$_tenGiaoKhuStr = (trim($phpExcelObject->getActiveSheet()->getCell('K' . $row)->getValue()));
+					$_tenGiaoKhu    = null;
+					if( ! empty($_tenGiaoKhuStr)) {
+						$_tenGiaoKhu = $christianNameRepo->findOneBy([ 'tiengViet' => $_cname ]);
+					}
+					
+					$_tenBo = (trim($phpExcelObject->getActiveSheet()->getCell('L' . $row)->getValue()));
+					$_sdtBo = (trim($phpExcelObject->getActiveSheet()->getCell('M' . $row)->getValue()));
+					$_tenMe = (trim($phpExcelObject->getActiveSheet()->getCell('N' . $row)->getValue()));
+					$_sdtMe = (trim($phpExcelObject->getActiveSheet()->getCell('O' . $row)->getValue()));
+					
+					$_dobCell   = $phpExcelObject->getActiveSheet()->getCell('P' . $row);
+					$_dobString = $_dobCell->getValue();
+					$_dob       = null;
+					if(\PHPExcel_Shared_Date::isDateTime($_dobCell)) {
+						$_dob = new \DateTime('@' . \PHPExcel_Shared_Date::ExcelToPHP($_dobString));
+					} elseif( ! empty($_dobString)) {
+						$_dob = \DateTime::createFromFormat('d/m/Y', $_dobString);
+					}
 
 //					$_gender = $phpExcelObject->getActiveSheet()->getCell('G' . $row)->getValue();
 //					if(mb_strtoupper($_gender) === 'MALE') {
@@ -174,6 +190,16 @@ class ThanhVienAdminController extends BaseCRUDController {
 						$thanhVien->setApproved(true);
 						
 						$thanhVien->setQuickName($_qname);
+						$thanhVien->setHoTenBo($_tenBo);
+						$thanhVien->setHoTenMe($_tenMe);
+						$thanhVien->setSoDienThoaiBo($_sdtBo);
+						$thanhVien->setSoDienThoaiMe($_sdtMe);
+						if( ! empty($_dob)) {
+							$thanhVien->setDob($_dob);
+						}
+						
+						$thanhVien->setTenGiaoKhu($_tenGiaoKhu);
+						$thanhVien->setTenThanh($_tenThanh);
 						$thanhVien->setChristianname($_cname);
 						if(array_key_exists($_cname, ThanhVien::$christianNameSex)) {
 							$thanhVien->setSex(ThanhVien::$christianNameSex[ $_cname ]);
