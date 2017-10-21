@@ -52,6 +52,14 @@ abstract class BaseAdmin extends AbstractAdmin {
 		return $this->action;
 	}
 	
+	public function getActionParam($key) {
+		if(array_key_exists($key, $this->actionParams)) {
+			return $this->actionParams[ $key ];
+		}
+		
+		return null;
+	}
+	
 	/**
 	 * @return array
 	 */

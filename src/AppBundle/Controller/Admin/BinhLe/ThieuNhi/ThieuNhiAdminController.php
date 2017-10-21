@@ -47,6 +47,20 @@ class ThieuNhiAdminController extends BaseCRUDController {
 		return parent::listAction();
 	}
 	
+	public function thieuNhiChiDoanAction(PhanBo $phanBo, Request $request) {
+		
+		/** @var ThanhVienAdmin $admin */
+		$admin = $this->admin;
+		
+		$admin->setAction('list-thieu-nhi-chi-doan');
+		$admin->setActionParams([
+			'phanBo'           => $phanBo,
+			'chiDoan'          => $phanBo->getChiDoan()
+		]);
+		
+		return parent::listAction();
+	}
+	
 	public function listAction() {
 		/** @var ThieuNhiAdmin $admin */
 		$admin = $this->admin;

@@ -136,6 +136,13 @@ class HuynhTruongRoleMBListener {
 					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
 				))->setLabel($translator->trans('dashboard.thieunhi_nhomphutrach', [], 'BinhLeAdmin'));
 				
+				
+				$this->menu->addChild('thieu nhi trong Chi-doan minh', array(
+					'route'           => 'admin_app_binhle_thieunhi_thieunhi_thieuNhiChiDoan',
+					'routeParameters' => [ 'phanBo' => $phanBo->getId() ],
+					'labelAttributes' => array( 'icon' => 'fa fa-bar-chart' ),
+				))->setLabel($translator->trans('dashboard.thieunhi_chidoanphutrach', [], 'BinhLeAdmin'));
+				
 				$this->menu->addChild('truong chi doan', array(
 					'route'           => 'admin_app_binhle_thieunhi_thanhvien_truongChiDoan',
 					'routeParameters' => [ 'chiDoan' => $phanBo->getChiDoan()->getId() ],

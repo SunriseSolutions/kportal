@@ -2,6 +2,8 @@
 
 namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
+use AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan;
+use AppBundle\Entity\BinhLe\ThieuNhi\PhanBo;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\BinhLe\ThieuNhi\DoiNhomGiaoLy;
@@ -68,6 +70,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 	public function configureRoutes(RouteCollection $collection) {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
 		$collection->add('thieuNhiNhom', 'thieu-nhi/nhom-giao-ly/{phanBo}/list');
+		$collection->add('thieuNhiChiDoan', 'thieu-nhi/chi-doan/{phanBo}/list');
 		parent::configureRoutes($collection);
 	}
 	
@@ -75,10 +78,12 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		// this text filter will be used to retrieve autocomplete fields
 		$datagridMapper
 			->add('id', null, array( 'label' => 'list.label_id' ))
-			->add('name', null, array( 'label' => 'list.label_name', 'show_filter' => true ))
-			->add('chiDoan', null, array( 'label' => 'list.label_chi_doan', 'show_filter' => true ))
-			->add('namHoc', null, array( 'label' => 'list.label_nam_hoc', 'show_filter' => true ))
-			->add('enabled', null, array( 'label' => 'list.label_active', 'show_filter' => true ));
+			->add('name', null, array( 'label' => 'list.label_name', 'show_filter' => true ));
+		if( ! in_array($this->action, [ 'list-thieu-nhi-nhom', 'list-thieu-nhi-chi-doan' ])) {
+			$datagridMapper->add('chiDoan', null, array( 'label' => 'list.label_chi_doan', 'show_filter' => true ))
+			               ->add('namHoc', null, array( 'label' => 'list.label_nam_hoc', 'show_filter' => true ));
+		}
+		$datagridMapper->add('enabled', null, array( 'label' => 'list.label_active', 'show_filter' => true ));
 	}
 	
 	/**
@@ -94,6 +99,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			return true;
 		}
 		
+		
 		if($name === 'DELETE') {
 			return false;
 		}
@@ -103,6 +109,46 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			return false;
 		} elseif($thanhVien->isBQT()) {
 			return true;
+		}
+		if( ! $thanhVien->isEnabled()) {
+			return false;
+		}
+		if($name === 'xet-len-lop') {
+			if(empty($object)) {
+				return false;
+			}
+			$bangDiem = $object->getPhanBoNamNay()->createBangDiem();
+			
+			if(empty($bangDiem->isGradeRetention())) {
+				return false;
+			}
+			
+			if( ! $thanhVien->isHuynhTruong()) {
+				return false;
+			}
+			if($thanhVien->isPhanDoanTruong()) {
+				return true;
+			}
+			if($thanhVien->getChiDoan() !== $object->getChiDoan()) {
+				return false;
+			}
+			if($thanhVien->isChiDoanTruong()) {
+				return true;
+			}
+			$phanBo    = $thanhVien->getPhanBoNamNay();
+			$cacTruong = $phanBo->getCacTruongPhuTrachDoi();
+			/** @var TruongPhuTrachDoi $truong */
+			foreach($cacTruong as $truong) {
+				$doiNhomGiaoLy = $truong->getDoiNhomGiaoLy();
+				/** @var PhanBo $_phanBoTN */
+				foreach($doiNhomGiaoLy->getPhanBoHangNam() as $_phanBoTN) {
+					if($_phanBoTN === $object) {
+						return true;
+					}
+				}
+			}
+			
+			return false;
 		}
 		
 		if($name === 'LIST' || $name === 'VIEW') {
@@ -128,12 +174,15 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				}
 				
 				return false;
-			} elseif($this->action === 'list-thieu-nhi-nhom') {
+			} elseif(in_array($this->action, [ 'list-thieu-nhi-nhom', 'list-thieu-nhi-chi-doan' ])) {
 				if($name === 'EXPORT') {
 					return true;
 				}
 				
 				if($name === 'EDIT') {
+					if($thanhVien->isChiDoanTruong()) {
+						return true;
+					}
 					if(empty($object)) {
 						return false;
 					}
@@ -176,7 +225,8 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		
 		$query->andWhere($expr->eq($rootAlias . '.thieuNhi', $expr->literal(true)));
 		
-		
+		/** @var ChiDoan $chiDoan */
+		$chiDoan = $this->getActionParam('chiDoan');
 		if($this->action === 'list-thieu-nhi-nhom') {
 			/** @var array $dngl */
 			$cacDoiNhomGiaoLy = $this->actionParams['cacDoiNhomGiaoLy'];
@@ -186,7 +236,6 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				foreach($cacDoiNhomGiaoLy as $dngl) {
 					$dnglIds[] = $dngl->getId();
 				}
-				
 				$qb->join($rootAlias . '.phanBoHangNam', 'phanBo');
 				$qb->join('phanBo.doiNhomGiaoLy', 'doiNhomGiaoLy');
 				
@@ -194,10 +243,9 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			} else {
 				$this->clearResults($query);
 			}
-		} elseif($this->action === 'thieu-nhi-chua-dong-quy') {
-			// chiDoan
-			
-			
+		} elseif($this->action === 'list-thieu-nhi-chi-doan') {
+			$query->andWhere($expr->eq($rootAlias . '.chiDoan', $chiDoan->getNumber()));
+			$query->andWhere($expr->eq($rootAlias . '.namHoc', $chiDoan->getNamHoc()->getId()));
 		}
 		
 		return $query;
@@ -265,6 +313,14 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 //			->addIdentifier('christianname', null, array())
 			->addIdentifier('name', null, array())
 			->add('dob', null, array( 'editable' => true ))
+			->add('soDienThoaiBo', null, array(
+				'label'    => 'list.label_so_dien_thoai_bo',
+				'editable' => true
+			))
+			->add('soDienThoaiMe', null, array(
+				'label'    => 'list.label_so_dien_thoai_me',
+				'editable' => true
+			))
 			->add('soDienThoai', null, array(
 				'label'    => 'list.label_so_dien_thoai',
 				'editable' => true
@@ -274,28 +330,31 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				'editable' => true
 			))
 			->add('diaChiThuongTru', null, array(
-				'label'    => 'list.label_dia_chi_thuong_tru',
+				'label'    => 'list.label_dia_chi',
 				'editable' => true
-			))
-			->add('chiDoan', 'choice', array(
+			));
+		
+		if( ! in_array($this->action, [ 'list-thieu-nhi-chi-doan', 'list-thieu-nhi-nhom' ])) {
+			$listMapper->add('chiDoan', 'choice', array(
 				'editable' => false,
 //				'class' => 'Vendor\ExampleBundle\Entity\ExampleStatus',
 				'choices'  => $danhSachChiDoan,
 			))
-			->add('namHoc', 'text', array( 'editable' => false ))
-			->add('enabled', null, array( 'editable' => true, 'label' => 'list.label_active' ))
-			->add('_action', 'actions', array(
-				'actions' => array(
-					'edit' => array(),
+			           ->add('namHoc', 'text', array( 'editable' => false ));
+		}
+		$listMapper->add('enabled', null, array( 'editable' => true, 'label' => 'list.label_active' ))
+		           ->add('_action', 'actions', array(
+			           'actions' => array(
+				           'edit'        => array(),
 //					'delete' => array(),
-//					'send_evoucher' => array( 'template' => '::admin/employer/employee/list__action_send_evoucher.html.twig' )
+				           'xet_len_lop' => array( 'template' => '::admin/binhle/thieu-nhi/thieu-nhi/list__action__xet_len_lop.html.twig' )
 
 //                ,
 //                    'view_description' => array('template' => '::admin/product/description.html.twig')
 //                ,
 //                    'view_tos' => array('template' => '::admin/product/tos.html.twig')
-				)
-			));
+			           )
+		           ));
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {

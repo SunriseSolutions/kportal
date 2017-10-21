@@ -2,7 +2,7 @@ user:
     email_exists: This email has already been used by another user.
 
 dashboard:
-
+    thieunhi_chidoanphutrach: Danh-sách Chi-đoàn
     thieunhi_bao_cao_tien_quy: Báo-cáo Tiền-quỹ
     thieunhi_doi_nhom_giao_ly: Nhóm Giáo-lý
     thieunhi_duyet_diem: Duyệt Bảng-điểm
@@ -11,7 +11,7 @@ dashboard:
     thieunhi_diemgiaoly: Điểm Giáo-lý
     thieunhi_dong_quy: Quỹ Thiếu-nhi
     thieunhi_nhapdiem_nhomphutrach: Nhập điểm
-    thieunhi_nhomphutrach: Danh sách nhóm
+    thieunhi_nhomphutrach: Danh-sách Nhóm phụ-trách
     thieunhi_chia_truong_chi_doan: Chia Trưởng phụ-trách
     thieunhi_truong_chi_doan: Trưởng Chi-đoàn
     binhle_thieunhi_doinhomgiaoly: Đội Nhóm Giáo-lý
@@ -83,6 +83,8 @@ list:
     label_so_dien_thoai_me: SĐT Mẹ
     label_so_dien_thoai_bo: SĐT Bố
     label_dia_chi_thuong_tru: Đ/c thường trú
+    label_dia_chi: Địa-chỉ
+
     label_email_address: Email Address
 form:
     label_user: User
