@@ -39,10 +39,8 @@ class ThanhVienAdminController extends BaseCRUDController {
 		/** @var ThanhVienAdmin $admin */
 		$admin = $this->admin;
 		$admin->setAction('list-thieu-nhi');
-		
 		return parent::listAction();
 	}
-	
 	
 	public
 	function importAction(

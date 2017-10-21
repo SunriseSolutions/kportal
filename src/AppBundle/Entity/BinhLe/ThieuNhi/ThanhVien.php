@@ -239,6 +239,46 @@ class ThanhVien {
 		$this->phanBoHangNam = new ArrayCollection();
 	}
 	
+	public function isCDTorGreater(ThanhVien $thanhVien) {
+		if( ! $thanhVien->isHuynhTruong()) {
+			return false;
+		}
+		if($thanhVien->isPhanDoanTruong()) {
+			return true;
+		}
+		if($thanhVien->getChiDoan() !== $this->getChiDoan()) {
+			return false;
+		}
+		if($thanhVien->isChiDoanTruong()) {
+			return true;
+		}
+		
+		return null;
+	}
+	
+	public function sanhHoatLai(NamHoc $namHoc) {
+		if($this->enabled) {
+			return false;
+		}
+		$this->enabled = true;
+		
+		return $this->initiatePhanBo($namHoc);
+	}
+	
+	public function getPhanBoSauCung() {
+		$namHoc         = 0;
+		$phanBoCuoiCung = null;
+		/** @var PhanBo $phanBo */
+		foreach($this->phanBoHangNam as $phanBo) {
+			if(($_namHocSau = $phanBo->getNamHoc()->getId()) > $namHoc) {
+				$namHoc         = $_namHocSau;
+				$phanBoCuoiCung = $phanBo;
+			}
+		}
+		
+		return $phanBoCuoiCung;
+	}
+	
 	/**
 	 * @return PhanBo|null
 	 */
@@ -274,7 +314,8 @@ class ThanhVien {
 		if( ! $this->enabled) {
 			return $phanBo;
 		}
-		if($this->isHuynhTruong()) {
+		
+		if($this->isHuynhTruong() || true) {
 			if(empty($phanBo = $this->timPhanBoNamHoc($namHoc))) {
 				$phanBoMoi = new PhanBo();
 				$phanBoMoi->setThanhVien($this);

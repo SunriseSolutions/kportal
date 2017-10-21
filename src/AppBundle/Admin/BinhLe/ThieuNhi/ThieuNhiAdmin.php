@@ -18,7 +18,9 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\CoreBundle\Form\Type\BooleanType;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
+use Sonata\CoreBundle\Form\Type\EqualType;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -38,6 +40,11 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		
 		// name of the ordered field (default = the model's id field, if any)
 		'_sort_by'    => 'updatedAt',
+		
+		'enabled' => array(
+			'type'  => EqualType::TYPE_IS_EQUAL, // => 1
+			'value' => BooleanType::TYPE_YES     // => 1
+		)
 	);
 	
 	
@@ -71,6 +78,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
 		$collection->add('thieuNhiNhom', 'thieu-nhi/nhom-giao-ly/{phanBo}/list');
 		$collection->add('thieuNhiChiDoan', 'thieu-nhi/chi-doan/{phanBo}/list');
+		$collection->add('sanhHoatLai', 'thieu-nhi/' . $this->getRouterIdParameter() . '/sanh-hoat-lai');
 		parent::configureRoutes($collection);
 	}
 	
@@ -80,10 +88,14 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			->add('id', null, array( 'label' => 'list.label_id' ))
 			->add('name', null, array( 'label' => 'list.label_name', 'show_filter' => true ));
 		if( ! in_array($this->action, [ 'list-thieu-nhi-nhom', 'list-thieu-nhi-chi-doan' ])) {
-			$datagridMapper->add('chiDoan', null, array( 'label' => 'list.label_chi_doan', 'show_filter' => true ))
-			               ->add('namHoc', null, array( 'label' => 'list.label_nam_hoc', 'show_filter' => true ));
+			$datagridMapper->add('chiDoan', null, array( 'label' => 'list.label_chi_doan', 'show_filter' => true ));
 		}
-		$datagridMapper->add('enabled', null, array( 'label' => 'list.label_active', 'show_filter' => true ));
+		$datagridMapper->add('namHoc', null, array( 'label' => 'list.label_nam_hoc', 'show_filter' => true ));
+		$datagridMapper->add('enabled', null, array(
+			'label'       => 'list.label_active',
+			'show_filter' => true,
+			'default'     => true
+		));
 	}
 	
 	/**
@@ -113,28 +125,34 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		if( ! $thanhVien->isEnabled()) {
 			return false;
 		}
+		
+		if($name === 'sanh-hoat-lai') {
+			if(empty($object)) {
+				return false;
+			}
+			if($object->isEnabled()) {
+				return false;
+			}
+			
+			return ! empty($object->isCDTorGreater($thanhVien));
+		}
+		
 		if($name === 'xet-len-lop') {
 			if(empty($object)) {
 				return false;
 			}
-			$bangDiem = $object->getPhanBoNamNay()->createBangDiem();
-			
-			if(empty($bangDiem->isGradeRetention())) {
-				return false;
+			if( ! empty($phanBoNamNay = $object->getPhanBoNamNay())) {
+				$bangDiem = $phanBoNamNay->createBangDiem();
+				
+				if(empty($bangDiem->isGradeRetention())) {
+					return false;
+				}
 			}
 			
-			if( ! $thanhVien->isHuynhTruong()) {
-				return false;
+			if(($permission = $object->isCDTorGreater($thanhVien)) !== null) {
+				return $permission;
 			}
-			if($thanhVien->isPhanDoanTruong()) {
-				return true;
-			}
-			if($thanhVien->getChiDoan() !== $object->getChiDoan()) {
-				return false;
-			}
-			if($thanhVien->isChiDoanTruong()) {
-				return true;
-			}
+			
 			$phanBo    = $thanhVien->getPhanBoNamNay();
 			$cacTruong = $phanBo->getCacTruongPhuTrachDoi();
 			/** @var TruongPhuTrachDoi $truong */
@@ -245,7 +263,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			}
 		} elseif($this->action === 'list-thieu-nhi-chi-doan') {
 			$query->andWhere($expr->eq($rootAlias . '.chiDoan', $chiDoan->getNumber()));
-			$query->andWhere($expr->eq($rootAlias . '.namHoc', $chiDoan->getNamHoc()->getId()));
+//			$query->andWhere($expr->eq($rootAlias . '.namHoc', $chiDoan->getNamHoc()->getId()));
 		}
 		
 		return $query;
@@ -257,6 +275,14 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				$name = 'thieuNhi';
 			} elseif($this->action === 'list-thieu-nhi-nhom') {
 				$name = 'thieuNhiNhom';
+				if(array_key_exists('phanBo', $this->actionParams)) {
+					$phanBoId = $this->actionParams['phanBo']->getId();
+				} else {
+					$phanBoId = $this->getRequest()->query->get('phanBoId');
+				}
+				$parameters['phanBo'] = $phanBoId;
+			} elseif($this->action === 'list-thieu-nhi-chi-doan') {
+				$name = 'thieuNhiChiDoan';
 				if(array_key_exists('phanBo', $this->actionParams)) {
 					$phanBoId = $this->actionParams['phanBo']->getId();
 				} else {
@@ -339,15 +365,17 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				'editable' => false,
 //				'class' => 'Vendor\ExampleBundle\Entity\ExampleStatus',
 				'choices'  => $danhSachChiDoan,
-			))
-			           ->add('namHoc', 'text', array( 'editable' => false ));
+			));
 		}
+		$listMapper->add('namHoc', 'text', array( 'editable' => false ));
+		
 		$listMapper->add('enabled', null, array( 'editable' => true, 'label' => 'list.label_active' ))
 		           ->add('_action', 'actions', array(
 			           'actions' => array(
-				           'edit'        => array(),
+				           'edit'          => array(),
 //					'delete' => array(),
-				           'xet_len_lop' => array( 'template' => '::admin/binhle/thieu-nhi/thieu-nhi/list__action__xet_len_lop.html.twig' )
+				           'xet_len_lop'   => array( 'template' => '::admin/binhle/thieu-nhi/thieu-nhi/list__action__xet_len_lop.html.twig' ),
+				           'sanh_hoat_lai' => array( 'template' => '::admin/binhle/thieu-nhi/thieu-nhi/list__action__sanh_hoat_lai.html.twig' )
 
 //                ,
 //                    'view_description' => array('template' => '::admin/product/description.html.twig')
