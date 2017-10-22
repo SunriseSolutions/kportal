@@ -337,7 +337,7 @@
                         var thanhVienCode = dataChangeRow[0];
                         var thanhVienFirstName = data[changedRow][4];
                         var phanBoId = window.phanBo[thanhVienCode];
-                        var diem = parseInt(change[0][3]);
+                        var diem = parseFloat(change[0][3]);
                         window.postDiem(diem, window.colAttrs[parseInt(changeCol) - 5], window.colLabels[parseInt(changeCol) - 5], phanBoId, thanhVienCode, thanhVienFirstName, change);
 
                     }
