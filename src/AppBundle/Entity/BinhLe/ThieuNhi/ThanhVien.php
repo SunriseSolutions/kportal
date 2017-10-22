@@ -286,8 +286,10 @@ class ThanhVien {
 	public function getPhanBoNamNay() {
 		/** @var PhanBo $phanBo */
 		foreach($this->phanBoHangNam as $phanBo) {
-			if($phanBo->getNamHoc()->isEnabled()) {
-				return $phanBo;
+			if( ! empty($namHoc = $phanBo->getNamHoc())) {
+				if($namHoc->isEnabled()) {
+					return $phanBo;
+				}
 			}
 //			if( ! empty($chiDoan = $phanBo->getChiDoan())) {
 //				if($chiDoan->getNamHoc()->isEnabled()) {
