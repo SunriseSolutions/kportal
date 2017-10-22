@@ -135,6 +135,24 @@ class ChiDoan {
 		return true;
 	}
 	
+	public function hoanTatBangDiemHK2() {
+		/** @var PhanBo $phanBo */
+		foreach($this->phanBoHangNam as $phanBo) {
+			if($phanBo->isHuynhTruong() && $phanBo->getThanhVien()->isEnabled()) {
+				$cacTruong = $phanBo->getCacTruongPhuTrachDoi();
+				/** @var TruongPhuTrachDoi $truongPT */
+				foreach($cacTruong as $truongPT) {
+					if( ! $truongPT->getDoiNhomGiaoLy()->isHoanTatBangDiemHK2()) {
+						return false;
+					}
+				}
+			}
+		}
+		$this->hoanTatBangDiemHK2 = true;
+		
+		return true;
+	}
+	
 	/**
 	 * @param DoiNhomGiaoLy $dngl
 	 * @param PhanBo        $phanBo

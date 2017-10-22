@@ -218,7 +218,54 @@ class PhanBoAdminController extends BaseCRUDController {
 			$cotDiemCellFormats ['tbTerm1']           = "type:'numeric',readOnly:true, format: '0,0.00'";
 			$cotDiemCellFormats ['sundayTicketTerm1'] = "type:'numeric'";
 		} elseif($hocKy === 2) {
-		
+			$cotDiemHeaders['cc1']               = 'CC-1';
+			$cotDiemHeaders['cc2']              = 'CC-2';
+			$cotDiemHeaders['cc3']              = 'CC-3';
+			$cotDiemHeaders['cc4']              = 'CC-4';
+			$cotDiemHeaders['cc5']              = 'CC-5';
+			$cotDiemHeaders['tbCCTerm2']         = 'TB. CC';
+			$cotDiemHeaders['quizTerm2']         = 'TB. Miệng';
+			$cotDiemHeaders['midTerm2']          = 'Điểm 1 Tiết';
+			$cotDiemHeaders['finalTerm2']        = 'Thi HK2';
+			$cotDiemHeaders['tbTerm2']           = 'TB. HK2';
+			$cotDiemHeaders['sundayTicketTerm2'] = 'Phiếu lễ CN';
+			
+			$cotDiemAttrs['cc1']               = 'cc1';
+			$cotDiemAttrs['cc2']              = 'cc2';
+			$cotDiemAttrs['cc3']              = 'cc3';
+			$cotDiemAttrs['cc4']              = 'cc4';
+			$cotDiemAttrs['cc5']              = 'cc5';
+			$cotDiemAttrs['tbCCTerm2']         = 'tbCCTerm2';
+			$cotDiemAttrs['quizTerm2']         = 'quizTerm2';
+			$cotDiemAttrs['midTerm2']          = 'midTerm2';
+			$cotDiemAttrs['finalTerm2']        = 'finalTerm2';
+			$cotDiemAttrs['tbTerm2']           = 'tbTerm2';
+			$cotDiemAttrs['sundayTicketTerm2'] = 'sundayTicketTerm2';
+			
+			$cotDiemLabels['cc1']               = 'điểm Chuyên-cần tháng 1';
+			$cotDiemLabels['cc2']              = 'điểm Chuyên-cần tháng 2';
+			$cotDiemLabels['cc3']              = 'điểm Chuyên-cần tháng 3';
+			$cotDiemLabels['cc4']              = 'điểm Chuyên-cần tháng 4';
+			$cotDiemLabels['cc5']              = 'điểm Chuyên-cần tháng 5';
+			$cotDiemLabels['tbCCTerm2']         = 'điểm Trung-bình Chuyên-cần';
+			$cotDiemLabels['quizTerm2']         = 'điểm Trung-bình Miệng';
+			$cotDiemLabels['midTerm2']          = 'điểm 1 Tiết/Giữa-kỳ';
+			$cotDiemLabels['finalTerm2']        = 'điểm Thi Cuối-kỳ';
+			$cotDiemLabels['tbTerm2']           = 'điểm Trung-bình Học-kỳ 2';
+			$cotDiemLabels['sundayTicketTerm2'] = 'phiếu lễ Chúa-nhật';
+			
+			$cotDiemCellFormats ['cc1']               = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['cc2']              = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['cc3']              = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['cc4']              = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['cc5']              = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['tbCCTerm2']         = "type:'numeric',readOnly:true, format: '0,0.00'";
+			$cotDiemCellFormats ['quizTerm2']         = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['midTerm2']          = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['finalTerm2']        = "type:'numeric', format: '0,0.00'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['tbTerm2']           = "type:'numeric',readOnly:true, format: '0,0.00'";
+			$cotDiemCellFormats ['sundayTicketTerm2'] = "type:'numeric'";
+			
 		}
 		
 		$cacCotDiemBiLoaiBo = $chiDoan->getCotDiemBiLoaiBo();
