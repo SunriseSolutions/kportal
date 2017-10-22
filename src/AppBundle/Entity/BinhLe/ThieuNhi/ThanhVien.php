@@ -261,6 +261,7 @@ class ThanhVien {
 			return false;
 		}
 		$this->enabled = true;
+		$this->setNamHoc($namHoc->getId());
 		
 		return $this->initiatePhanBo($namHoc);
 	}
