@@ -189,8 +189,9 @@ class BanQuanTriChiDoanAdmin extends BinhLeThieuNhiAdmin {
 		} elseif($this->action === 'duyet-bang-diem') {
 			$listMapper->add('_action', 'actions', array(
 				'actions' => array(
-					'duyet_bang_diem' => array( 'template' => '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list__action__duyet_bang_diem.html.twig' ),
+					'edit'            => array(),
 					'delete'          => array(),
+					'duyet_bang_diem' => array( 'template' => '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list__action__duyet_bang_diem.html.twig' ),
 //                ,
 //                    'view_description' => array('template' => '::admin/product/description.html.twig')
 //                ,
@@ -244,7 +245,11 @@ class BanQuanTriChiDoanAdmin extends BinhLeThieuNhiAdmin {
 					'Chuyên cần T4'  => 'cc4',
 					'Chuyên cần T5'  => 'cc5',
 					'TB Miệng HK-1'  => 'quizTerm1',
-					'TB Miệng HK-2'  => 'quizTerm2'
+					'TB Miệng HK-2'  => 'quizTerm2',
+					'Giữa HK-1'      => 'midTerm1',
+					'Thi HK-1'       => 'finalTerm1',
+					'Giữa HK-2'      => 'midTerm2',
+					'Thi HK-2'       => 'finalTerm2'
 				],
 				'translation_domain' => $this->translationDomain
 			));

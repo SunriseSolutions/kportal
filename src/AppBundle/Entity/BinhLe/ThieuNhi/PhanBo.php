@@ -132,6 +132,8 @@ class PhanBo {
 		foreach($this->cacTruongPhuTrachDoi as $truongPT) {
 			$truongPT->getDoiNhomGiaoLy()->setHoanTatBangDiemHK1(true);
 		}
+		
+		$this->chiDoan->hoanTatBangDiemHK1();
 	}
 	
 	public function isHoanTatBangDiemHK1() {

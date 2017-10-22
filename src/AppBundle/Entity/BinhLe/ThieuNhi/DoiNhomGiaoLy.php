@@ -21,7 +21,6 @@ class DoiNhomGiaoLy {
 	 */
 	protected $id;
 	
-	
 	/**
 	 * @return string
 	 */

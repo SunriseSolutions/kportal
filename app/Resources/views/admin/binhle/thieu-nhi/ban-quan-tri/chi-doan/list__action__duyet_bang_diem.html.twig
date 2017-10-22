@@ -4,13 +4,16 @@
         {% if object.duyetBangDiemHK1CDT is empty %}
 
         {% else %}
+            <br/>
             <a class="btn btn-sm btn-primary disabled"
                href="#">Bảng điểm Học-kỳ I đã được duyệt</a>
         {% endif %}
+        <br/>
         <a class="btn btn-sm btn-info"
            href="{{ path('admin_app_binhle_thieunhi_banquantri_chidoan_bangDiem', {'id': object.id, 'hocKy':1,'action':'tra-ve' }) }}">Trả
             Bảng điểm về</a>
         {% else %}
+            <br/>
             <a class="btn btn-sm btn-primary disabled"
                href="#">Bảng điểm Học-kỳ I chưa hoàn tất</a>
     {% endif %}

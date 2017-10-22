@@ -59,7 +59,7 @@ class PhanDoanTruongChiDoanAdminController extends BaseCRUDController {
 		
 		$manager = $this->get('doctrine.orm.entity_manager');
 		
-		$setterDuyetBandDiemMethod   = 'setDuocDuyetBangDiemHK' . $hocKy . 'CDT';
+		$setterDuyetBandDiemMethod   = 'setDuocDuyetBangDiemHK' . $hocKy;
 		$setterHoanTatBandDiemMethod = 'setHoanTatBangDiemHK' . $hocKy;
 		
 		if($action === 'duyet') {
@@ -82,7 +82,7 @@ class PhanDoanTruongChiDoanAdminController extends BaseCRUDController {
 			$this->addFlash('sonata_flash_error', $exception->getMessage());
 		}
 		
-		return new RedirectResponse($this->generateUrl('admin_app_binhle_thieunhi_phandoantruong_chidoan_list', ['action'=>'duyet-bang-diem']));
+		return new RedirectResponse($this->generateUrl('admin_app_binhle_thieunhi_phandoantruong_chidoan_list', [ 'action' => 'duyet-bang-diem' ]));
 	}
 	
 }

@@ -260,12 +260,14 @@ class ThanhVienAdmin extends BaseAdmin {
 				'label'    => 'list.label_dia_chi_thuong_tru',
 				'editable' => true
 			))
+			->add('phanBoNamNay',null,array('template'=>'::admin/binhle/thieu-nhi/thanh-vien/list__field__phanbo.html.twig',
+				'label'=>'Đội'))
 			->add('chiDoan', 'choice', array(
 				'editable' => false,
 //				'class' => 'Vendor\ExampleBundle\Entity\ExampleStatus',
 				'choices'  => $danhSachChiDoan,
 			))
-			->add('namHoc', 'text', array( 'editable' => false ))
+			
 			->add('enabled', null, array( 'editable' => false, 'label' => 'list.label_active' ))
 			->add('_action', 'actions', array(
 				'actions' => array(
