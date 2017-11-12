@@ -287,6 +287,12 @@ class PhanBo {
 	 * @ORM\Column(type="integer", options={"default":0})
 	 */
 	protected $tienQuyDong = 0;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $ngheoKho = false;	
 	
 	/**
 	 * @var boolean
@@ -611,6 +617,20 @@ class PhanBo {
 	public function setDaDongQuy($daDongQuy) {
 		$this->daDongQuy = $daDongQuy;
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function isNgheoKho() {
+		return $this->ngheoKho;
+	}
+	
+	/**
+	 * @param bool $ngheoKho
+	 */
+	public function setNgheoKho($ngheoKho) {
+		$this->ngheoKho = $ngheoKho;
+	}	
 	
 	/**
 	 * @return ArrayCollection

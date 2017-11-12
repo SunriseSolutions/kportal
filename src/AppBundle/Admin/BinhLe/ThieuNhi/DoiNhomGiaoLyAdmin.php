@@ -69,11 +69,11 @@ class DoiNhomGiaoLyAdmin extends BinhLeThieuNhiAdmin {
 		if($this->isAdmin()) {
 			return true;
 		}
-		$user = $container->get('app.user')->getUser();
-		if(empty($thanhVien = $user->getThanhVien())) {
+
+		$thanhVien = $this->getUserThanhVien();
+
+		if(empty($thanhVien)) {
 			return false;
-		} elseif($thanhVien->isBQT()) {
-			return true;
 		}
 		
 		if($thanhVien->isChiDoanTruong()) {
@@ -90,6 +90,13 @@ class DoiNhomGiaoLyAdmin extends BinhLeThieuNhiAdmin {
 				
 				return false;
 			}
+		}else{
+			if($name !== 'LIST'){
+				return false;
+			}
+			if($thanhVien->isBQT()) {
+				return true;
+			}			
 		}
 		
 		return parent::isGranted($name, $object);
@@ -103,7 +110,9 @@ class DoiNhomGiaoLyAdmin extends BinhLeThieuNhiAdmin {
 		/** @var QueryBuilder $qb */
 		$qb        = $query->getQueryBuilder();
 		$rootAlias = $qb->getRootAliases()[0];
-		$query->andWhere($expr->eq($rootAlias . '.chiDoan', $this->getUserChiDoan()));
+		if(!empty($chiDoan = $this->getUserChiDoan())){
+		$query->andWhere($expr->eq($rootAlias . '.chiDoan', $chiDoan));
+	}
 		
 		return $query;
 	}

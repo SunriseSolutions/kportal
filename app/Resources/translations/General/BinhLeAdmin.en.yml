@@ -35,9 +35,11 @@ filter:
 list:
     label__nhom_giao_ly: Nhóm Giáo-lý
     label_so_thieu_nhi: Số Thiếu-nhi
+    label_so_thieu_nhi_ngheo:  Số Thiếu-nhi nghèo
+    label_so_tien: Số tiền (VND)
     label_progress: Tiến-trình
     label_thu_ky_xu_doan: Thư-ký Xứ-đoàn
-    label_number: Nhóm/Đoàn số
+    label_number: Đội/Chi Đoàn
     label_created_at: Created At
     label_username: Username
     label_password: Mật khẩu

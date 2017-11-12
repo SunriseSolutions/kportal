@@ -31,12 +31,22 @@ use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
 class BanQuanTriChiDoanAdmin extends BinhLeThieuNhiAdmin {
+
 	protected $baseRouteName = 'admin_app_binhle_thieunhi_banquantri_chidoan';
-	
-	protected $baseRoutePattern = '/app/binhle-thieunhi-banquantri-chidoan';
-	
+	protected $baseRoutePattern = '/app/binhle-thieunhi-banquantri-chidoan';	
 	protected $action = '';
 	protected $actionParams = [];
+
+	protected $datagridValues = array(
+		// display the first page (default = 1)
+		'_page'       => 1,
+		
+		// reverse order (default = 'DESC')
+		'_sort_order' => 'ASC',
+		
+		// name of the ordered field (default = the model's id field, if any)
+		'_sort_by'    => 'number',		
+	);	
 	
 	/**
 	 * @return array
@@ -174,17 +184,29 @@ class BanQuanTriChiDoanAdmin extends BinhLeThieuNhiAdmin {
 		
 		$listMapper
 //			->addIdentifier('id')
-			->add('number', 'numeric', array());
+			->add('number', 'numeric', array('label'=>'list.label_chi_doan'));
 		if($this->action === 'bao-cao-tien-quy') {
-			$listMapper->add('name', null, array(
+			$listMapper->add('_progress', null, array(
+				'header_style' => 'width: 30%; text-align: center',
+				
 				'label'    => 'list.label_progress'
 			,
 				'template' => '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list-bao-cao-tien-quy__field__progress.html.twig'
 			));
-			$listMapper->add('id', null, array(
+			$listMapper->add('_so_thieu_nhi', null, array(
 				'label'    => 'list.label_so_thieu_nhi'
 			,
 				'template' => '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list-bao-cao-tien-quy__field__so_thieu_nhi.html.twig'
+			));
+			$listMapper->add('_so_tien', null, array(
+				'label'    => 'list.label_so_tien'
+			,
+				'template' => '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list-bao-cao-tien-quy__field__so_tien.html.twig'
+			));
+			$listMapper->add('_so_thieu_nhi_ngheo', null, array(
+				'label'    => 'list.label_so_thieu_nhi_ngheo'
+			,
+				'template' => '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list-bao-cao-tien-quy__field__so_thieu_nhi_ngheo.html.twig'
 			));
 		} elseif($this->action === 'duyet-bang-diem') {
 			$listMapper->add('_action', 'actions', array(

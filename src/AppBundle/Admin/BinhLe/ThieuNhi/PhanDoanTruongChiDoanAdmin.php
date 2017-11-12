@@ -59,7 +59,7 @@ class PhanDoanTruongChiDoanAdmin extends BinhLeThieuNhiAdmin {
 	public function getTemplate($name) {
 		if($name === 'list') {
 			if($this->action === 'bao-cao-tien-quy') {
-				return '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list-bao-cao-tien-quy.html.twig';
+				return '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list-bao-cao-tien-quy.html.twig';
 			} elseif($this->action === 'duyet-bang-diem') {
 			
 			}
@@ -173,15 +173,27 @@ class PhanDoanTruongChiDoanAdmin extends BinhLeThieuNhiAdmin {
 //			->addIdentifier('id')
 			->add('id', null, array());
 		if($this->action === 'bao-cao-tien-quy') {
-			$listMapper->add('name', null, array(
+			$listMapper->add('_progress', null, array(
+				'header_style' => 'width: 30%; text-align: center',
+				
 				'label'    => 'list.label_progress'
 			,
-				'template' => '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list-bao-cao-tien-quy__field__progress.html.twig'
+				'template' => '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list-bao-cao-tien-quy__field__progress.html.twig'
 			));
-			$listMapper->add('number', null, array(
+			$listMapper->add('_so_thieu_nhi', null, array(
 				'label'    => 'list.label_so_thieu_nhi'
 			,
-				'template' => '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list-bao-cao-tien-quy__field__so_thieu_nhi.html.twig'
+				'template' => '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list-bao-cao-tien-quy__field__so_thieu_nhi.html.twig'
+			));
+			$listMapper->add('_so_tien', null, array(
+				'label'    => 'list.label_so_tien'
+			,
+				'template' => '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list-bao-cao-tien-quy__field__so_tien.html.twig'
+			));
+			$listMapper->add('_so_thieu_nhi_ngheo', null, array(
+				'label'    => 'list.label_so_thieu_nhi_ngheo'
+			,
+				'template' => '::admin/binhle/thieu-nhi/ban-quan-tri/chi-doan/list-bao-cao-tien-quy__field__so_thieu_nhi_ngheo.html.twig'
 			));
 		} elseif($this->action === 'duyet-bang-diem') {
 			$listMapper->add('_action', 'actions', array(

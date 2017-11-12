@@ -23,9 +23,44 @@ class ChiDoan {
 	private $soThieuNhi = null;
 	/** @var integer */
 	private $soThieuNhiDongQuy = null;
-	
+	/** @var integer */
+	private $soTienQuyDaDong = null;
+/** @var integer */
+	private $soThieuNhiNgheo = null;
+
+	public function getSoThieuNhiNgheo(){
+		if($this->soThieuNhiNgheo === null){
+			$this->soThieuNhiNgheo = 0;
+			/** @var PhanBo $phanBo */
+			foreach($this->phanBoHangNam as $phanBo) {
+				if($phanBo->getThanhVien()->isEnabled()) {					
+					if($phanBo->isNgheoKho()) {
+						$this->soThieuNhiNgheo++;
+					}
+				}
+			}			
+		}
+		return $this->soThieuNhiNgheo;
+	}
+
 	public function getPhanTramDongQuy() {
 		return ($this->getSoThieuNhiDongQuy() / $this->getSoThieuNhi()) * 100;
+	}
+
+	public function getSoTienQuyDaDong(){
+		if($this->soTienQuyDaDong === null){
+			$this->soTienQuyDaDong = 0;
+			
+			/** @var PhanBo $phanBo */
+			foreach($this->phanBoHangNam as $phanBo) {
+				if($phanBo->getThanhVien()->isEnabled()) {					
+					if($phanBo->isDaDongQuy()) {
+						$this->soTienQuyDaDong += $phanBo->getTienQuyDong();						
+					}
+				}
+			}			
+		}
+		return $this->soTienQuyDaDong;
 	}
 	
 	public function getSoThieuNhiDongQuy() {
