@@ -336,8 +336,14 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		
 		$listMapper
 			->addIdentifier('code')
-//			->addIdentifier('christianname', null, array())
-			->addIdentifier('name', null, array())
+			->addIdentifier('christianname', null, array())
+			// ->addIdentifier('name', null, array())
+			// ->addIdentifier('firstname', null, array())
+			->addIdentifier('lastname', null, array())
+			->addIdentifier('middlename', null, array())
+			->addIdentifier('firstname', null, array());
+			if(!empty($thanhVien = $this->getUserThanhVien()) && $thanhVien->isBQT()){
+			$listMapper
 			->add('dob', null, array( 'editable' => true ))
 			->add('soDienThoaiBo', null, array(
 				'label'    => 'list.label_so_dien_thoai_bo',
@@ -359,8 +365,13 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				'label'    => 'list.label_dia_chi',
 				'editable' => true
 			));
+		}
 		
 		if( ! in_array($this->action, [ 'list-thieu-nhi-chi-doan', 'list-thieu-nhi-nhom' ])) {
+			$listMapper    ->add('_nhomGiaoLy', 'actions', array(
+				'template'=>'::admin/binhle/thieu-nhi/thieu-nhi/list__field__doi_giao_ly.html.twig'
+			));
+
 			$listMapper->add('chiDoan', 'choice', array(
 				'editable' => false,
 //				'class' => 'Vendor\ExampleBundle\Entity\ExampleStatus',

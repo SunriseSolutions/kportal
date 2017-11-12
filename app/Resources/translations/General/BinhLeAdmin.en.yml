@@ -33,6 +33,7 @@ filter:
     label_phan_bo_chi_doan_name: Chi Đoàn
     label_phan_bo_chi_doan_nam_hoc_id: Năm Học
 list:
+    label__nhom_giao_ly: Nhóm Giáo-lý
     label_so_thieu_nhi: Số Thiếu-nhi
     label_progress: Tiến-trình
     label_thu_ky_xu_doan: Thư-ký Xứ-đoàn

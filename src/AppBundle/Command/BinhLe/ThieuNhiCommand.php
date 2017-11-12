@@ -14,9 +14,9 @@ class ThieuNhiCommand extends ContainerAwareCommand {
 	protected function configure() {
 		$this
 			// the name of the command (the part after "bin/console")
-			->setName('app:binhle:thieunhi:migrate-christiannames')
+			->setName('app:binhle:thieunhi:migrate')
 			// the short description shown while running "php bin/console list"
-			->setDescription('Migrate CNames')
+			->setDescription('Migrate CNames and Missing phanbo in ThanhVien')
 			// the full command description shown when running the command with
 			// the "--help" option
 			->setHelp('This command allows you to migrate cnames of all Members...');
@@ -31,14 +31,25 @@ class ThieuNhiCommand extends ContainerAwareCommand {
 		]);
 		$manager      = $this->getContainer()->get('doctrine.orm.default_entity_manager');
 		$cNameRepo    = $this->getContainer()->get('doctrine')->getRepository(ChristianName::class);
-		$cacThanhVien = $this->getContainer()->get('doctrine')->getRepository(ThanhVien::class)->findBy([ 'tenThanh' => null ]);
+		// $cacThanhVien = $this->getContainer()->get('doctrine')->getRepository(ThanhVien::class)->findBy([ 'tenThanh' => null ]);
+		$cacThanhVien = $this->getContainer()->get('doctrine')->getRepository(ThanhVien::class)->findAll();
 		/** @var ThanhVien $tv */
 		foreach($cacThanhVien as $tv) {
+		/** @var PhanBo $phanBo */
+		foreach($tv->getPhanBoHangNam() as $phanBo) {
+			if(empty($phanBo->getNamHoc())){
+				$phanBo->setNamHoc($phanBo->getChiDoan()->getNamHoc());
+				$output->writeln(['phanBo '.$tv->getName(),' duoc gan vao namhoc '.$phanBo->getChiDoan()->getNamHoc()->getId()]);
+				$manager->persist($phanBo);
+				$manager->flush();				
+			}
+		}
+
 			if( ! empty($cname = $tv->getChristianname())) {
 				$cname = mb_strtoupper(trim($cname));
 				try {
 //					$output->writeln($tv->getName());
-					$enName = ThanhVien::$christianNames[ $cname ];
+					$enName = ThanhVien::$christianNames[ $cname ];					
 					if(empty($tenThanh = $cNameRepo->findOneBy([ 'code' => $enName ]))) {
 						$tenThanh = new ChristianName();
 						$tenThanh->getCacThanhVien()->add($tv);

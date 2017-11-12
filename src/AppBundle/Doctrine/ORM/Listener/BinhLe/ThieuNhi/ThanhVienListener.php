@@ -61,7 +61,7 @@ class ThanhVienListener {
 		$namHoc = $this->container->get('doctrine')->getRepository(NamHoc::class)->find($object->getNamHoc());
 		
 		if( ! empty($namHoc) && $namHoc->isEnabled()) {
-			$object->initiatePhanBo($namHocHienTai);
+			$object->initiatePhanBo($namHoc);
 		}
 		
 	}
