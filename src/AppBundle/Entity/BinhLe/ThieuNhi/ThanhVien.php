@@ -349,7 +349,9 @@ class ThanhVien {
 				
 				if( ! empty($newCDNumber) && (empty($chiDoanCu) || ! empty($chiDoanCu) && $newCDNumber !== $chiDoanCu->getNumber())) {
 					$chiDoanMoi = $namHoc->getChiDoanWithNumber($newCDNumber);
-					$phanBo->getChiDoan()->getPhanBoHangNam()->removeElement($phanBo);
+					if(!empty($chiDoanCu)){
+					$chiDoanCu->getPhanBoHangNam()->removeElement($phanBo);
+				}
 					
 					$phanBo->setChiDoan($chiDoanMoi);
 					$chiDoanMoi->getPhanBoHangNam()->add($phanBo);
