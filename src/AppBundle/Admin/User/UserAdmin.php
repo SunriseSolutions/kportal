@@ -137,8 +137,9 @@ class UserAdmin extends BaseUserAdmin
                 ])
                 ->end()
                 ->with('Profile')
+	            ->add('lastname', null, ['required' => false])
+	            ->add('middlename', null, ['required' => false])
                 ->add('firstname', null, ['required' => false])
-                ->add('lastname', null, ['required' => false])
                 ->end();
         }
 

@@ -45,6 +45,12 @@ class AppUser extends BaseUser {
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
+	protected $middlename;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
 	protected $christianName;
 	
 	/**
@@ -94,4 +100,19 @@ class AppUser extends BaseUser {
 	public function setThanhVien($thanhVien) {
 		$this->thanhVien = $thanhVien;
 	}
+	
+	/**
+	 * @return string
+	 */
+	public function getMiddlename() {
+		return $this->middlename;
+	}
+	
+	/**
+	 * @param string $middlename
+	 */
+	public function setMiddlename($middlename) {
+		$this->middlename = $middlename;
+	}
+	
 }

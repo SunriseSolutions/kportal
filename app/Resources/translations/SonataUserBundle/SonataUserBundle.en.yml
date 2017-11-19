@@ -31,6 +31,7 @@ list:
 form:
     label_admin: Admin User
     label_firstname: First name
+    label_middlename: Middle name
     label_lastname: Last name
     organisation_name: Your Company's name
     user_phone: Your Mobile Phone Number
