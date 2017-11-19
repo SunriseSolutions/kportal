@@ -432,15 +432,6 @@ class HuynhTruongAdmin extends BaseAdmin {
 	 * @param ThanhVien $object
 	 */
 	public function preValidate($object) {
-		$christianName = $object->getChristianname();
-		if( ! empty($christianName)) {
-			$cNames        = array_flip(ThanhVien::$christianNames);
-			$christianName = $cNames[ $christianName ];
-			$object->setSex(ThanhVien::$christianNameSex[ $christianName ]);
-		}
-		
-		$container = $this->getConfigurationPool()->getContainer();
-		
 		$object->setThieuNhi(false);
 		$object->setHuynhTruong(true);
 	}
