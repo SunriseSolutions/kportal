@@ -354,7 +354,13 @@ class ThanhVien {
 				$newCDNumber = $this->chiDoan;
 				$chiDoanCu   = $phanBo->getChiDoan();
 				
-				if( ! empty($newCDNumber) && (empty($chiDoanCu) || ! empty($chiDoanCu) && $newCDNumber !== $chiDoanCu->getNumber())) {
+				if(empty($newCDNumber)) {
+					if( ! empty($chiDoanCu)) {
+						// Learning Point: switch these 2 lines and you will see loll
+						$chiDoanCu->getPhanBoHangNam()->removeElement($phanBo);
+						$phanBo->setChiDoan(null);
+					}
+				} elseif( ! empty($newCDNumber) && (empty($chiDoanCu) || ! empty($chiDoanCu) && $newCDNumber !== $chiDoanCu->getNumber())) {
 					$chiDoanMoi = $namHoc->getChiDoanWithNumber($newCDNumber);
 					if( ! empty($chiDoanCu)) {
 						$chiDoanCu->getPhanBoHangNam()->removeElement($phanBo);
@@ -363,7 +369,6 @@ class ThanhVien {
 					$phanBo->setChiDoan($chiDoanMoi);
 					$chiDoanMoi->getPhanBoHangNam()->add($phanBo);
 				}
-				
 				return $phanBo;
 			}
 		}

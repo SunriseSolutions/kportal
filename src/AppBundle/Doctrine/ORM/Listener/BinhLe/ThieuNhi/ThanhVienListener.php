@@ -3,6 +3,7 @@
 namespace AppBundle\Doctrine\ORM\Listener\BinhLe\ThieuNhi;
 
 use AppBundle\Entity\BinhLe\ThieuNhi\NamHoc;
+use AppBundle\Entity\BinhLe\ThieuNhi\PhanBo;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
 use AppBundle\Entity\Content\ContentPiece\ContentPiece;
 use AppBundle\Entity\Content\ContentPiece\ContentPieceVocabEntry;
@@ -11,6 +12,8 @@ use AppBundle\Entity\Content\NodeShortcode\ShortcodeFactory;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\Tests\ODM\PHPCR\Mapping\Model\LifecycleCallbackMappingObject;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ThanhVienListener {
@@ -23,7 +26,7 @@ class ThanhVienListener {
 		$this->container = $container;
 	}
 	
-	private function updateProperties(ThanhVien $object) {
+	private function updateProperties(ThanhVien $object, LifecycleEventArgs $event) {
 		$request = $this->container->get('request_stack')->getCurrentRequest();
 		$router  = $this->container->get('router');
 		$trans   = $this->container->get('translator');
@@ -61,18 +64,27 @@ class ThanhVienListener {
 		$namHoc = $this->container->get('doctrine')->getRepository(NamHoc::class)->find($object->getNamHoc());
 		
 		if( ! empty($namHoc) && $namHoc->isEnabled()) {
-			$object->initiatePhanBo($namHoc);
+			if( ! empty($phanBo = $object->initiatePhanBo($namHoc))) {
+//				$em = $event->getEntityManager();
+//
+//				$em->persist($phanBo);
+//
+//				$uow = $em->getUnitOfWork();
+//
+//				$uow->recomputeSingleEntityChangeSet($em->getClassMetadata(PhanBo::class), $phanBo);
+//				$uow->computeChangeSet($em->getClassMetadata(PhanBo::class), $phanBo);
+			};
 		}
 		
 	}
 	
 	public function prePersistHandler(ThanhVien $object, LifecycleEventArgs $event) {
-		$this->updateProperties($object);
+		$this->updateProperties($object, $event);
 	}
 	
 	
 	public function preUpdateHandler(ThanhVien $object, LifecycleEventArgs $event) {
-		$this->updateProperties($object);
+		$this->updateProperties($object, $event);
 	}
 	
 	public function postUpdateHandler(ThanhVien $object, LifecycleEventArgs $event) {
@@ -88,7 +100,6 @@ class ThanhVienListener {
 	}
 	
 	public function postPersistHandler(ThanhVien $employer, LifecycleEventArgs $event) {
-	
 	
 	}
 }
