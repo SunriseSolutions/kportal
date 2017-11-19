@@ -3,7 +3,9 @@
 namespace AppBundle\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan;
+use AppBundle\Entity\BinhLe\ThieuNhi\ChristianName;
 use AppBundle\Entity\BinhLe\ThieuNhi\PhanBo;
+use Doctrine\ORM\Query\Expr;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use AppBundle\Admin\BaseAdmin;
 use AppBundle\Entity\BinhLe\ThieuNhi\DoiNhomGiaoLy;
@@ -342,36 +344,36 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			->addIdentifier('lastname', null, array())
 			->addIdentifier('middlename', null, array())
 			->addIdentifier('firstname', null, array());
-			if(!empty($thanhVien = $this->getUserThanhVien()) && $thanhVien->isBQT()){
+		if( ! empty($thanhVien = $this->getUserThanhVien()) && $thanhVien->isBQT()) {
 			$listMapper
-			->add('dob', null, array( 'editable' => true ))
-			->add('soDienThoaiBo', null, array(
-				'label'    => 'list.label_so_dien_thoai_bo',
-				'editable' => true
-			))
-			->add('soDienThoaiMe', null, array(
-				'label'    => 'list.label_so_dien_thoai_me',
-				'editable' => true
-			))
-			->add('soDienThoai', null, array(
-				'label'    => 'list.label_so_dien_thoai',
-				'editable' => true
-			))
-			->add('soDienThoaiSecours', null, array(
-				'label'    => 'list.label_so_dien_thoai_secours',
-				'editable' => true
-			))
-			->add('diaChiThuongTru', null, array(
-				'label'    => 'list.label_dia_chi',
-				'editable' => true
-			));
+				->add('dob', null, array( 'editable' => true ))
+				->add('soDienThoaiBo', null, array(
+					'label'    => 'list.label_so_dien_thoai_bo',
+					'editable' => true
+				))
+				->add('soDienThoaiMe', null, array(
+					'label'    => 'list.label_so_dien_thoai_me',
+					'editable' => true
+				))
+				->add('soDienThoai', null, array(
+					'label'    => 'list.label_so_dien_thoai',
+					'editable' => true
+				))
+				->add('soDienThoaiSecours', null, array(
+					'label'    => 'list.label_so_dien_thoai_secours',
+					'editable' => true
+				))
+				->add('diaChiThuongTru', null, array(
+					'label'    => 'list.label_dia_chi',
+					'editable' => true
+				));
 		}
 		
 		if( ! in_array($this->action, [ 'list-thieu-nhi-chi-doan', 'list-thieu-nhi-nhom' ])) {
-			$listMapper    ->add('_nhomGiaoLy', 'actions', array(
-				'template'=>'::admin/binhle/thieu-nhi/thieu-nhi/list__field__doi_giao_ly.html.twig'
+			$listMapper->add('_nhomGiaoLy', 'actions', array(
+				'template' => '::admin/binhle/thieu-nhi/thieu-nhi/list__field__doi_giao_ly.html.twig'
 			));
-
+			
 			$listMapper->add('chiDoan', 'choice', array(
 				'editable' => false,
 //				'class' => 'Vendor\ExampleBundle\Entity\ExampleStatus',
@@ -439,6 +441,8 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			->tab('form.tab_info')
 			->with('form.group_general', [ 'class' => 'col-md-6' ])->end()
 			->with('form.group_extra', [ 'class' => 'col-md-6' ])->end()
+			->with('form.group_lien_lac', [ 'class' => 'col-md-3' ])->end()
+			->with('form.group_gia_dinh', [ 'class' => 'col-md-3' ])->end()
 			//->with('form.group_job_locations', ['class' => 'col-md-4'])->end()
 			->end();
 
@@ -484,14 +488,10 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				'required' => false,
 				'label'    => 'list.label_dob'
 			))
-			->add('soDienThoai', null, array( 'required' => false, 'label' => 'list.label_so_dien_thoai', ))
-			->add('soDienThoaiSecours', null, array(
-				'label'    => 'list.label_so_dien_thoai_secours',
-				'required' => false
-			))
-//			->add('soDienThoaiMe', null, array( 'required' => false,  ))
-//			->add('soDienThoaiBo', null, array( 'required' => false ))
-			->add('diaChiThuongTru', null, array( 'required' => false, 'label' => 'list.label_dia_chi_thuong_tru', ));
+			->add('notes', CKEditorType::class, array(
+				'required' => false,
+				'label'    => 'list.label_notes'
+			));
 		
 		$formMapper
 			->end();
@@ -514,7 +514,63 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		           ->add('enabled', null, array(
 			           'label' => 'list.label_enabled',
 		           ));
-		$formMapper->end()->end();
+		$formMapper->end();
+		
+		$formMapper->with('form.group_lien_lac')
+		           ->add('soDienThoai', null, array( 'required' => false, 'label' => 'list.label_so_dien_thoai', ))
+		           ->add('soDienThoaiSecours', null, array(
+			           'label'    => 'list.label_so_dien_thoai_secours',
+			           'required' => false
+		           ))
+		           ->add('diaChiThuongTru', null, array(
+			           'required' => false,
+			           'label'    => 'list.label_dia_chi_thuong_tru',
+		           ))
+		           ->add('diaChiTamTru', null, array(
+			           'required' => false,
+			           'label'    => 'list.label_dia_chi_tam_tru',
+		           ));
+		$formMapper->end();
+		
+		$pool    = $this->getConfigurationPool();
+		$request = $this->getRequest();
+		/** @var QueryBuilder $parentQuery */
+		$tenThanhMeQuery = $this->getModelManager()->createQuery(ChristianName::class);
+		/** @var Expr $expr */
+		$expr = $tenThanhMeQuery->expr();
+//				$sql = $childrenQuery->getQuery()->getSQL();
+		$rootAlias = $tenThanhMeQuery->getRootAliases()[0];
+		$tenThanhMeQuery->andWhere($expr->eq($rootAlias . '.sex', $expr->literal('NỮ')));
+		
+		
+		/** @var QueryBuilder $parentQuery */
+		$tenThanhBoQuery = $this->getModelManager()->createQuery(ChristianName::class);
+		/** @var Expr $expr */
+//				$sql = $childrenQuery->getQuery()->getSQL();
+		$rootAlias = $tenThanhBoQuery->getRootAliases()[0];
+		$tenThanhBoQuery->andWhere($expr->eq($rootAlias . '.sex', $expr->literal('NAM')));
+		
+		$formMapper->with('form.group_gia_dinh')
+		           ->add('tenThanhMe', ModelType::class, array(
+			           'required' => false,
+			           'label'    => 'list.label_christianname_mom',
+			           'property' => 'tiengViet',
+			           'query'    => $tenThanhMeQuery
+		           ))
+		           ->add('hoTenMe', null, array( 'required' => false, 'label' => 'list.label_hoten_me', ))
+		           ->add('soDienThoaiMe', null, array( 'required' => false, 'label' => 'list.label_sdt_me', ))
+		           ->add('tenThanhBo', ModelType::class, array(
+			           'required' => false,
+			           'label'    => 'list.label_christianname_dad',
+			           'property' => 'tiengViet',
+			           'query'    => $tenThanhBoQuery
+		           ))
+		           ->add('hoTenBo', null, array( 'required' => false, 'label' => 'list.label_hoten_bo', ))
+		           ->add('soDienThoaiBo', null, array( 'required' => false, 'label' => 'list.label_sdt_bo', ))
+		           ->add('soAnhChiEm', 'integer', array( 'required' => false, 'label' => 'list.label_so_ace', ));
+		$formMapper->end();
+		
+		$formMapper->end();
 		
 		
 	}
@@ -526,28 +582,13 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		$object->setThieuNhi(true);
 		$object->setHuynhTruong(false);
 		
-		$container = $this->getConfigurationPool()->getContainer();
 	}
 	
 	/**
 	 * @param ThanhVien $object
 	 */
 	public function prePersist($object) {
-		$container = $this->getConfigurationPool()->getContainer();
-		$registry  = $container->get('doctrine');
-		$userRepo  = $registry->getRepository(User::class);
-		if( ! empty($userRepo->findOneBy([ 'username' => $object->getUser()->getUsername() ]))) {
-			throw new Exception();
-		}
-//		$user = $container->get('sonata.user.user_manager')->createUser();
-		$user     = $object->getUser();
-		$username = $object->getUser()->getUsername();
-//		$user->setUsername();
-		$user->setPassword($username);
-		$user->setEnabled(true);
-		$user->addRole(User::ROLE_HUYNH_TRUONG);
-		
-		$this->getModelManager()->update($user);
+	
 	}
 	
 	/**

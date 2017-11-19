@@ -205,7 +205,7 @@ class ThanhVien {
 	];
 	
 	public function isBQT() {
-		return $this->xuDoanPhoNgoai || $this->xuDoanPhoNoi || $this->xuDoanTruong;
+		return $this->xuDoanPhoNgoai || $this->xuDoanPhoNoi || $this->xuDoanTruong || $this->thuKyXuDoan;
 	}
 	
 	/**
@@ -221,6 +221,13 @@ class ThanhVien {
 	 * @ORM\Column(type="string", length=4, nullable=true)
 	 */
 	protected $code;
+	
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $notes;
 	
 	/**
 	 * @var string
@@ -349,9 +356,9 @@ class ThanhVien {
 				
 				if( ! empty($newCDNumber) && (empty($chiDoanCu) || ! empty($chiDoanCu) && $newCDNumber !== $chiDoanCu->getNumber())) {
 					$chiDoanMoi = $namHoc->getChiDoanWithNumber($newCDNumber);
-					if(!empty($chiDoanCu)){
-					$chiDoanCu->getPhanBoHangNam()->removeElement($phanBo);
-				}
+					if( ! empty($chiDoanCu)) {
+						$chiDoanCu->getPhanBoHangNam()->removeElement($phanBo);
+					}
 					
 					$phanBo->setChiDoan($chiDoanMoi);
 					$chiDoanMoi->getPhanBoHangNam()->add($phanBo);
@@ -451,6 +458,20 @@ class ThanhVien {
 	/**
 	 * @var ChristianName
 	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ChristianName", cascade={"persist","merge"})
+	 * @ORM\JoinColumn(name="id_ten_thanh_bo", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $tenThanhBo;
+	
+	/**
+	 * @var ChristianName
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ChristianName", cascade={"persist","merge"})
+	 * @ORM\JoinColumn(name="id_ten_thanh_me", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $tenThanhMe;
+	
+	/**
+	 * @var ChristianName
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BinhLe\ThieuNhi\ChristianName", cascade={"persist","merge"})
 	 * @ORM\JoinColumn(name="id_ten_giao_khu", referencedColumnName="id", onDelete="SET NULL")
 	 */
 	protected $tenGiaoKhu;
@@ -460,6 +481,12 @@ class ThanhVien {
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $dob;
+	
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $soAnhChiEm = 0;
 	
 	/**
 	 * @var integer
@@ -546,6 +573,12 @@ class ThanhVien {
 	protected $thuKyXuDoan = false;
 	
 	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $thuQuyXuDoan = false;
+	
+	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
@@ -586,6 +619,18 @@ class ThanhVien {
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $hoTenMe;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $ngheNghiepBo;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $ngheNghiepMe;
 	
 	/**
 	 * @var string
@@ -1199,6 +1244,118 @@ class ThanhVien {
 	 */
 	public function setTenGiaoKhu($tenGiaoKhu) {
 		$this->tenGiaoKhu = $tenGiaoKhu;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public static function getChristianNameSex() {
+		return self::$christianNameSex;
+	}
+	
+	/**
+	 * @param array $christianNameSex
+	 */
+	public static function setChristianNameSex($christianNameSex) {
+		self::$christianNameSex = $christianNameSex;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getNotes() {
+		return $this->notes;
+	}
+	
+	/**
+	 * @param string $notes
+	 */
+	public function setNotes($notes) {
+		$this->notes = $notes;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isThuQuyXuDoan() {
+		return $this->thuQuyXuDoan;
+	}
+	
+	/**
+	 * @param bool $thuQuyXuDoan
+	 */
+	public function setThuQuyXuDoan($thuQuyXuDoan) {
+		$this->thuQuyXuDoan = $thuQuyXuDoan;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getNgheNghiepBo() {
+		return $this->ngheNghiepBo;
+	}
+	
+	/**
+	 * @param string $ngheNghiepBo
+	 */
+	public function setNgheNghiepBo($ngheNghiepBo) {
+		$this->ngheNghiepBo = $ngheNghiepBo;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getNgheNghiepMe() {
+		return $this->ngheNghiepMe;
+	}
+	
+	/**
+	 * @param string $ngheNghiepMe
+	 */
+	public function setNgheNghiepMe($ngheNghiepMe) {
+		$this->ngheNghiepMe = $ngheNghiepMe;
+	}
+	
+	/**
+	 * @return ChristianName
+	 */
+	public function getTenThanhBo() {
+		return $this->tenThanhBo;
+	}
+	
+	/**
+	 * @param ChristianName $tenThanhBo
+	 */
+	public function setTenThanhBo($tenThanhBo) {
+		$this->tenThanhBo = $tenThanhBo;
+	}
+	
+	/**
+	 * @return ChristianName
+	 */
+	public function getTenThanhMe() {
+		return $this->tenThanhMe;
+	}
+	
+	/**
+	 * @param ChristianName $tenThanhMe
+	 */
+	public function setTenThanhMe($tenThanhMe) {
+		$this->tenThanhMe = $tenThanhMe;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getSoAnhChiEm() {
+		return $this->soAnhChiEm;
+	}
+	
+	/**
+	 * @param int $soAnhChiEm
+	 */
+	public function setSoAnhChiEm($soAnhChiEm) {
+		$this->soAnhChiEm = $soAnhChiEm;
 	}
 	
 }

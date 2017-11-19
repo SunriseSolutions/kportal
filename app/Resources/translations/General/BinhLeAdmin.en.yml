@@ -33,6 +33,11 @@ filter:
     label_phan_bo_chi_doan_name: Chi Đoàn
     label_phan_bo_chi_doan_nam_hoc_id: Năm Học
 list:
+    label_hoten_me: Họ-tên Mẹ
+    label_hoten_bo: Họ-tên Bố
+    label_sdt_me: SĐT Mẹ
+    label_sdt_bo: SĐT Bố
+
     label__nhom_giao_ly: Nhóm Giáo-lý
     label_so_thieu_nhi: Số Thiếu-nhi
     label_so_thieu_nhi_ngheo:  Số Thiếu-nhi nghèo
@@ -70,6 +75,9 @@ list:
     label_cot_diem_bi_loai_bo: Cột điểm bị loại bỏ
 
     label_christianname: Tên Thánh
+    label_christianname_mom:  Tên Thánh Mẹ
+    label_christianname_dad:  Tên Thánh Bố
+    label_so_ace: Có mấy Anh-Chị-Em
     label_firstname: Tên gọi
     label_middlename: Tên lót
     label_lastname: Họ
@@ -86,8 +94,9 @@ list:
     label_so_dien_thoai_me: SĐT Mẹ
     label_so_dien_thoai_bo: SĐT Bố
     label_dia_chi_thuong_tru: Đ/c thường trú
+    label_dia_chi_tam_tru: Đ/c tạm trú
     label_dia_chi: Địa-chỉ
-
+    label_notes: Ghi-chú
     label_email_address: Email Address
 form:
     label_user: User
@@ -107,6 +116,8 @@ form:
     tab_info: Info
     tab_main_body_info: Main Body
     group_general: General
+    group_lien_lac: Thông-tin Liên-lạc
+    group_gia_dinh: Gia-đình
     group_extra: Extra
 
 

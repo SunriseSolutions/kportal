@@ -30,7 +30,7 @@ class ThanhVienListener {
 		
 		if( ! empty($tenThanh = $object->getTenThanh())) {
 			$christianName = $tenThanh->getTiengViet();
-			$object->setSex($object->getSex());
+			$object->setSex($tenThanh->getSex());
 		} else {
 			$christianName = $object->getChristianname();
 			if( ! empty($christianName)) {

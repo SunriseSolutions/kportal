@@ -44,6 +44,7 @@ class PhanBo {
 		$this->xuDoanPhoNoi   = $tv->isXuDoanPhoNoi();
 		$this->xuDoanPhoNgoai = $tv->isXuDoanPhoNgoai();
 		$this->thuKyXuDoan    = $tv->isThuKyXuDoan();
+		$this->thuQuyXuDoan   = $tv->isThuQuyXuDoan();
 	}
 	
 	public function getCacPhanBoThieuNhiPhuTrach() {
@@ -287,12 +288,24 @@ class PhanBo {
 	 * @ORM\Column(type="integer", options={"default":0})
 	 */
 	protected $tienQuyDong = 0;
-
+	
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
-	protected $ngheoKho = false;	
+	protected $ngheoKho = false;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $nhanSach = false;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $dongTienSach = false;
 	
 	/**
 	 * @var boolean
@@ -359,6 +372,12 @@ class PhanBo {
 	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
 	protected $thuKyXuDoan = false;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $thuQuyXuDoan = false;
 	
 	/**
 	 * @var string
@@ -617,7 +636,7 @@ class PhanBo {
 	public function setDaDongQuy($daDongQuy) {
 		$this->daDongQuy = $daDongQuy;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -630,7 +649,7 @@ class PhanBo {
 	 */
 	public function setNgheoKho($ngheoKho) {
 		$this->ngheoKho = $ngheoKho;
-	}	
+	}
 	
 	/**
 	 * @return ArrayCollection
@@ -702,4 +721,45 @@ class PhanBo {
 		$this->thuKyXuDoan = $thuKyXuDoan;
 	}
 	
+	/**
+	 * @return bool
+	 */
+	public function isDongTienSach() {
+		return $this->dongTienSach;
+	}
+	
+	/**
+	 * @param bool $dongTienSach
+	 */
+	public function setDongTienSach($dongTienSach) {
+		$this->dongTienSach = $dongTienSach;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isThuQuyXuDoan() {
+		return $this->thuQuyXuDoan;
+	}
+	
+	/**
+	 * @param bool $thuQuyXuDoan
+	 */
+	public function setThuQuyXuDoan($thuQuyXuDoan) {
+		$this->thuQuyXuDoan = $thuQuyXuDoan;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isNhanSach() {
+		return $this->nhanSach;
+	}
+	
+	/**
+	 * @param bool $nhanSach
+	 */
+	public function setNhanSach($nhanSach) {
+		$this->nhanSach = $nhanSach;
+	}
 }
