@@ -31,12 +31,12 @@ use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
 class BanQuanTriChiDoanAdmin extends BinhLeThieuNhiAdmin {
-
+	
 	protected $baseRouteName = 'admin_app_binhle_thieunhi_banquantri_chidoan';
-	protected $baseRoutePattern = '/app/binhle-thieunhi-banquantri-chidoan';	
+	protected $baseRoutePattern = '/app/binhle-thieunhi-banquantri-chidoan';
 	protected $action = '';
 	protected $actionParams = [];
-
+	
 	protected $datagridValues = array(
 		// display the first page (default = 1)
 		'_page'       => 1,
@@ -45,8 +45,8 @@ class BanQuanTriChiDoanAdmin extends BinhLeThieuNhiAdmin {
 		'_sort_order' => 'ASC',
 		
 		// name of the ordered field (default = the model's id field, if any)
-		'_sort_by'    => 'number',		
-	);	
+		'_sort_by'    => 'number',
+	);
 	
 	/**
 	 * @return array
@@ -117,6 +117,10 @@ class BanQuanTriChiDoanAdmin extends BinhLeThieuNhiAdmin {
 			return false;
 		}
 		
+		if($this->action === 'bao-cao-tien-quy' && $tv->isThuQuyXuDoan()) {
+			return true;
+		}
+		
 		if( ! $tv->isBQT()) {
 			return false;
 		}
@@ -184,7 +188,7 @@ class BanQuanTriChiDoanAdmin extends BinhLeThieuNhiAdmin {
 		
 		$listMapper
 //			->addIdentifier('id')
-			->add('number', 'numeric', array('label'=>'list.label_chi_doan'));
+			->add('number', 'numeric', array( 'label' => 'list.label_chi_doan' ));
 		if($this->action === 'bao-cao-tien-quy') {
 			$listMapper->add('_progress', null, array(
 				'header_style' => 'width: 30%; text-align: center',

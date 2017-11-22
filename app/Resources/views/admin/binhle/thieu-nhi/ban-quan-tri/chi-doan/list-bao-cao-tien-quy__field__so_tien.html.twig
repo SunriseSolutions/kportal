@@ -1,8 +1,1 @@
-{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
-{% block field %}    
-<strong>Tổng thu theo thực tế <code>{{ object.soTienQuyDaDong|number_format }}</code></strong>
-<br/>
-<strong>Tổng thu theo Công-thức <code>{{ object.soTienQuyDaDong|number_format }}</code></strong>
-<br/>
-<strong>Tổng thu theo Công thức trên Tổng Sĩ-số<code>{{ (object.soThieuNhi * object.namHoc.tienQuy) | number_format }}</code></strong>
-{% endblock %}
+{% extends '::admin/binhle/thieu-nhi/phan-doan-truong/chi-doan/list-bao-cao-tien-quy__field__so_tien.html.twig' %}
