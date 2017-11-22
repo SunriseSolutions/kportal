@@ -705,6 +705,9 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		$object->setThieuNhi(true);
 		$object->setHuynhTruong(false);
 		
+		$namHocHienTai = $this->getConfigurationPool()->getContainer()->get('app.binhle_thieunhi_namhoc')->getNamHocHienTai();
+		$object->initiatePhanBo($namHocHienTai);
+		
 	}
 	
 	/**
