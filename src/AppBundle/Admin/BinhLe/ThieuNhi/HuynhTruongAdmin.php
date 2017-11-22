@@ -408,6 +408,9 @@ class HuynhTruongAdmin extends BaseAdmin {
 		           ->add('phanDoanTruong', null, array(
 			           'label' => 'list.label_phan_doan_truong',
 		           ))
+		           ->add('thuQuyXuDoan', null, array(
+			           'label' => 'list.label_thu_quy_xu_doan',
+		           ))
 		           ->add('thuKyXuDoan', null, array(
 			           'label' => 'list.label_thu_ky_xu_doan',
 		           ))
