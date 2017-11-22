@@ -33,6 +33,8 @@ filter:
     label_phan_bo_chi_doan_name: Chi Đoàn
     label_phan_bo_chi_doan_nam_hoc_id: Năm Học
 list:
+    label_ngheo_kho: Nghèo-khó
+    label_dac_biet: Hoàn-cảnh đặc biệt
     label_hoten_me: Họ-tên Mẹ
     label_hoten_bo: Họ-tên Bố
     label_sdt_me: SĐT Mẹ

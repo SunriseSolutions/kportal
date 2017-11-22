@@ -31,26 +31,28 @@ class TVTruongPhuTrachDoiAdminController extends BaseCRUDController {
 		}
 		
 		/** @var TVTruongPhuTrachDoiAdmin $admin */
-		$admin = $this->admin;
+		$admin   = $this->admin;
 		$manager = $this->get('doctrine.orm.default_entity_manager');
 		
 		if($request->isMethod('post')) {
-			$diem    = floatval($request->request->get('diem', 0));
-			$soTien  = $request->request->getInt('soTien', 0);
-			$dongQuy = $request->request->getBoolean('dongQuy', false);
+			$diem     = floatval($request->request->get('diem', 0));
+			$soTien   = $request->request->getInt('soTien', 0);
+			$dongQuy  = $request->request->getBoolean('dongQuy', false);
 			$ngheoKho = $request->request->getBoolean('ngheoKho', false);
 			
 			$phanBoId = $request->request->get('phanBoId');
 			$phanBo   = $this->getDoctrine()->getRepository(PhanBo::class)->find($phanBoId);
 			
-			if( ($dongQuy === false && $soTien === 0 || $dongQuy === true && $soTien > 0 || !empty($phanBo))) {
-				
+			if(($dongQuy === false && $soTien === 0 || $dongQuy === true && $soTien > 0 || ! empty($phanBo))) {
 				
 				$phanBo->setTienQuyDong($soTien);
 				$phanBo->setDaDongQuy($dongQuy);
 				$phanBo->setNgheoKho($ngheoKho);
+				$tv = $phanBo->getThanhVien();
+				$tv->setNgheoKho($ngheoKho);
 				
 				$manager->persist($phanBo);
+				$manager->persist($tv);
 				$manager->flush();
 
 //

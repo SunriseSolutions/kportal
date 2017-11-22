@@ -20,6 +20,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\CoreBundle\Form\Type\BooleanType;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
 use Sonata\CoreBundle\Form\Type\EqualType;
@@ -75,7 +76,6 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		return parent::getTemplate($name);
 	}
 	
-	
 	public function configureRoutes(RouteCollection $collection) {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
 		$collection->add('thieuNhiNhom', 'thieu-nhi/nhom-giao-ly/{phanBo}/list');
@@ -112,7 +112,6 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		if($this->isAdmin()) {
 			return true;
 		}
-		
 		
 		if($name === 'DELETE') {
 			return false;
@@ -511,6 +510,12 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			           'choices'            => $danhSachChiDoan,
 			           'translation_domain' => $this->translationDomain
 		           ))
+		           ->add('ngheoKho', null, array(
+			           'label' => 'list.label_ngheo_kho',
+		           ))
+		           ->add('dacBiet', null, array(
+			           'label' => 'list.label_dac_biet',
+		           ))
 		           ->add('enabled', null, array(
 			           'label' => 'list.label_enabled',
 		           ));
@@ -573,6 +578,124 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		$formMapper->end();
 		
 		
+	}
+	
+	protected function configureShowFields(ShowMapper $show) {
+		parent::configureShowFields($show);
+		$tv        = $this->getUserThanhVien();
+		$showField = false;
+		if($tv->isBQT() || $tv->isPhanDoanTruong()) {
+			$showField = true;
+		} else {
+			$phanBoNamNay = $tv->getPhanBoNamNay();
+			$cacTruong    = $phanBoNamNay->getCacTruongPhuTrachDoi();
+			/** @var TruongPhuTrachDoi $truong */
+			foreach($cacTruong as $truong) {
+				/** @var ThanhVien $subject */
+				$subject        = $this->getSubject();
+				$phanBoThieuNhi = $subject->getPhanBoNamNay();
+				$nhomGL         = $phanBoThieuNhi->getDoiNhomGiaoLy();
+				if($nhomGL->getId() === $truong->getDoiNhomGiaoLy()->getId()) {
+					$showField = true;
+				}
+			}
+		}
+		
+		
+		$show
+			->tab('form.tab_info')
+			->with('form.group_general', [ 'class' => 'col-md-6' ])->end()
+			->with('form.group_extra', [ 'class' => 'col-md-6' ])->end()
+			->with('form.group_lien_lac', [ 'class' => 'col-md-3' ])->end()
+			->with('form.group_gia_dinh', [ 'class' => 'col-md-3' ])->end()
+			//->with('form.group_job_locations', ['class' => 'col-md-4'])->end()
+			->end();
+		$show
+			->tab('form.tab_info')
+			->with('form.group_general');
+		
+		$show
+			->add('tenThanh', ModelType::class, array(
+				'required'            => false,
+				'label'               => 'list.label_christianname',
+				'associated_property' => 'tiengViet'
+			))
+//			->add('christianname', ChoiceType::class, array(
+//				'label'              => 'list.label_christianname',
+//				'placeholder'        => 'Chọn Tên Thánh',
+//				'required'           => false,
+//				'choices'            => ThanhVien::$christianNames,
+//				'data'               => $christianName,
+//				'translation_domain' => $this->translationDomain
+//			))
+			->add('lastname', null, array(
+				'label' => 'list.label_lastname',
+			))
+			->add('middlename', null, array(
+				'label' => 'list.label_middlename',
+			))
+			->add('firstname', null, array(
+				'label' => 'list.label_firstname',
+			))
+			->add('dob', DatePickerType::class, array(
+				'format'   => 'dd/MM/yyyy',
+				'required' => false,
+				'label'    => 'list.label_dob'
+			))
+			->add('notes', CKEditorType::class, array(
+				'required' => false,
+				'label'    => 'list.label_notes'
+			));
+		
+		$show
+			->end();
+		
+		$show->with('form.group_extra')
+		     ->add('phanDoan', null, array( 'label' => 'list.label_phan_doan' ))
+		     ->add('chiDoan', null, array( 'label' => 'list.label_chi_doan' ))
+		     ->add('ngheoKho', null, array(
+			     'label' => 'list.label_ngheo_kho',
+		     ))
+		     ->add('dacBiet', null, array(
+			     'label' => 'list.label_dac_biet',
+		     ))
+		     ->add('enabled', null, array(
+			     'label' => 'list.label_active',
+		     ));
+		$show->end();
+		
+		if($showField) {
+			$show->with('form.group_lien_lac')
+			     ->add('soDienThoai', null, array( 'label' => 'list.label_so_dien_thoai', ))
+			     ->add('soDienThoaiSecours', null, array(
+				     'label' => 'list.label_so_dien_thoai_secours'
+			     ))
+			     ->add('diaChiThuongTru', null, array(
+				     'label' => 'list.label_dia_chi_thuong_tru',
+			     ))
+			     ->add('diaChiTamTru', null, array(
+				     'label' => 'list.label_dia_chi_tam_tru',
+			     ));
+			$show->end();
+			
+			$show->with('form.group_gia_dinh')
+			     ->add('tenThanhMe', ModelType::class, array(
+				     'label'               => 'list.label_christianname_mom',
+				     'associated_property' => 'tiengViet'
+			     ))
+			     ->add('hoTenMe', null, array( 'label' => 'list.label_hoten_me', ))
+			     ->add('soDienThoaiMe', null, array( 'label' => 'list.label_sdt_me', ))
+			     ->add('tenThanhBo', ModelType::class, array(
+				     'label'               => 'list.label_christianname_dad',
+				     'associated_property' => 'tiengViet'
+			     ))
+			     ->add('hoTenBo', null, array( 'label' => 'list.label_hoten_bo', ))
+			     ->add('soDienThoaiBo', null, array( 'label' => 'list.label_sdt_bo', ))
+			     ->add('soAnhChiEm', 'integer', array( 'label' => 'list.label_so_ace', ));
+			$show->end();
+			
+			$show->end();
+		}
 	}
 	
 	/**

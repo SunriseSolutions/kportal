@@ -369,6 +369,7 @@ class ThanhVien {
 					$phanBo->setChiDoan($chiDoanMoi);
 					$chiDoanMoi->getPhanBoHangNam()->add($phanBo);
 				}
+				
 				return $phanBo;
 			}
 		}
@@ -510,6 +511,18 @@ class ThanhVien {
 	 * @ORM\Column(type="boolean", options={"default":true})
 	 */
 	protected $enabled = true;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $ngheoKho = false;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $dacBiet = false;
 	
 	/**
 	 * @var boolean
@@ -1361,6 +1374,34 @@ class ThanhVien {
 	 */
 	public function setSoAnhChiEm($soAnhChiEm) {
 		$this->soAnhChiEm = $soAnhChiEm;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isNgheoKho() {
+		return $this->ngheoKho;
+	}
+	
+	/**
+	 * @param bool $ngheoKho
+	 */
+	public function setNgheoKho($ngheoKho) {
+		$this->ngheoKho = $ngheoKho;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isDacBiet() {
+		return $this->dacBiet;
+	}
+	
+	/**
+	 * @param bool $dacBiet
+	 */
+	public function setDacBiet($dacBiet) {
+		$this->dacBiet = $dacBiet;
 	}
 	
 }

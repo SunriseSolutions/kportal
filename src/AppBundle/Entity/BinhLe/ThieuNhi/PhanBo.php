@@ -33,6 +33,8 @@ class PhanBo {
 		$tv                = $this->thanhVien;
 		$this->huynhTruong = $tv->isHuynhTruong();
 		$this->thieuNhi    = $tv->isThieuNhi();
+		$this->ngheoKho    = $tv->isNgheoKho();
+		$this->dacBiet     = $tv->isDacBiet();
 		
 		if($this->huynhTruong && $this->thieuNhi) {
 			throw new InvalidArgumentException();
@@ -294,6 +296,12 @@ class PhanBo {
 	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
 	protected $ngheoKho = false;
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $dacBiet = false;
 	
 	/**
 	 * @var boolean
@@ -762,4 +770,20 @@ class PhanBo {
 	public function setNhanSach($nhanSach) {
 		$this->nhanSach = $nhanSach;
 	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isDacBiet() {
+		return $this->dacBiet;
+	}
+	
+	/**
+	 * @param bool $dacBiet
+	 */
+	public function setDacBiet($dacBiet) {
+		$this->dacBiet = $dacBiet;
+	}
+	
+	
 }
