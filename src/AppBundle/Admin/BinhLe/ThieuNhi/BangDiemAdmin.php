@@ -24,6 +24,7 @@ use Sonata\DoctrineORMAdminBundle\Datagrid;
 use Sonata\DoctrineORMAdminBundle\Filter\Filter;
 use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
@@ -36,6 +37,18 @@ class BangDiemAdmin extends BinhLeThieuNhiAdmin {
 	
 	protected $action = '';
 	protected $actionParams = [];
+	
+	protected $datagridValues = array(
+		// display the first page (default = 1)
+		'_page'       => 1,
+		
+		// reverse order (default = 'DESC')
+		'_sort_order' => 'ASC',
+		
+		// name of the ordered field (default = the model's id field, if any)
+		'_sort_by'    => 'phanBo.thanhVien.firstname',
+	);
+	
 	
 	public function getTemplate($name) {
 		if($name === 'list') {
@@ -113,6 +126,37 @@ class BangDiemAdmin extends BinhLeThieuNhiAdmin {
 		
 		return $query;
 	}
+	public function generateUrl($name, array $parameters = array(), $absolute = UrlGeneratorInterface::ABSOLUTE_PATH) {
+		if($name === 'list') {
+			$request = $this->getRequest();
+			$id      = $request->query->get('id');
+			$hocKy   = $request->query->get('hocKy');
+			
+			$parameters['id']    = $id;
+			$parameters['hocKy'] = $hocKy;
+			
+		} elseif($name === 'edit') {
+		
+		}
+		
+		return parent::generateUrl($name, $parameters, $absolute);
+	}
+	
+	public function getPersistentParameters() {
+		$parameters = parent::getPersistentParameters();
+		if( ! $this->hasRequest() || empty($this->action)) {
+			return $parameters;
+		}
+		$request = $this->getRequest();
+		$id      = $request->query->get('id');
+		$hocKy   = $request->query->get('hocKy');
+		
+		return array_merge($parameters, array(
+			'action' => $this->action,
+			'id'     => $id,
+			'hocKy'  => $hocKy
+		));
+	}
 	
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
@@ -123,7 +167,7 @@ class BangDiemAdmin extends BinhLeThieuNhiAdmin {
 //				'associated_property' => 'name',
 //				'admin_code'         => 'app.admin.binhle_thieunhi_thieunhi'
 //			));
-			->add('phanBo.thanhVien.name', null, array(
+			->add('phanBo.thanhVien.firstname', null, array(
 				'label' => 'list.label_full_name'
 				,
 				'template'=>'::admin/binhle/thieu-nhi/chi-doan/bang-diem/list__field__name.html.twig'

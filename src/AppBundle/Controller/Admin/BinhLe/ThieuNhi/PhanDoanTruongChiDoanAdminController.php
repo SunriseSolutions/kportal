@@ -67,6 +67,12 @@ class PhanDoanTruongChiDoanAdminController extends BaseThieuNhiAdminController {
 		} elseif($action === 'tra-ve') {
 			$chiDoan->$setterDuyetBandDiemMethod(false);
 			$chiDoan->$setterHoanTatBandDiemMethod(false);
+			/** @var DoiNhomGiaoLy $dngl */
+			foreach($chiDoan->getCacDoiNhomGiaoLy() as $dngl) {
+				$dnglSetterMethod = 'setDuyetBangDiemHK' . $hocKy . 'CDT';
+				$dngl->$dnglSetterMethod(false);
+				$manager->persist($dngl);
+			}
 		}
 		
 		try {

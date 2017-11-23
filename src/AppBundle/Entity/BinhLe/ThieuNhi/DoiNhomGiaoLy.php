@@ -171,21 +171,6 @@ class DoiNhomGiaoLy {
 	}
 	
 	/**
-	 * @param bool $duocDuyetBangDiemHK1
-	 */
-	public function setDuocDuyetBangDiemHK1($duocDuyetBangDiemHK1) {
-		$this->duocDuyetBangDiemHK1 = $duocDuyetBangDiemHK1;
-	}
-	
-	
-	/**
-	 * @param bool $duocDuyetBangDiemHK2
-	 */
-	public function setDuocDuyetBangDiemHK2($duocDuyetBangDiemHK2) {
-		$this->duocDuyetBangDiemHK2 = $duocDuyetBangDiemHK2;
-	}
-	
-	/**
 	 * @return bool
 	 */
 	public function isDuyetBangDiemHK1CDT() {

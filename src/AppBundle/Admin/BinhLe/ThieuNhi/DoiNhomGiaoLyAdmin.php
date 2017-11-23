@@ -121,7 +121,7 @@ class DoiNhomGiaoLyAdmin extends BinhLeThieuNhiAdmin {
 		$listMapper
 //			->addIdentifier('id')
 			->add('id', 'text', array())
-			->add('number')
+			->add('number',null,array('label'=>'list.label_nhom_giao_ly','template'=>'::admin/binhle/thieu-nhi/doi-nhom-giao-ly/list__field__doi_giao_ly.html.twig'))
 			->add('_action', 'actions', array(
 				'actions' => array(
 					'duyet_bang_diem' => array( 'template' => '::admin/binhle/thieu-nhi/doi-nhom-giao-ly/list__action__duyet_bang_diem.html.twig' ),

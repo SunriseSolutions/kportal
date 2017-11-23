@@ -131,6 +131,20 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.binhle_thieunhi_chidoan_bangdiem, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
+    app.admin.binhle_thieunhi_phandoantruong_bangdiem:
+        class: AppBundle\Admin\BinhLe\ThieuNhi\PhanDoanTruongBangDiemAdmin
+        arguments: [~, AppBundle\Entity\BinhLe\ThieuNhi\BangDiem, AppBundle:Admin/BinhLe/ThieuNhi/PhanDoanTruongBangDiemAdmin]
+        calls:
+#            - [setRouteBuilder,['@sonata.admin.route.path_info_slashes']]
+            - [setIvoryCkeditor,['default']]
+#            - [setStringService, ['@bean_core.string']]
+#            - [setPHPCRService, ['@app.phpcr']]
+#            - [addChild, ['@app.admin.product_clinics']]
+            - [setTranslationDomain, ['BinhLeAdmin']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: dashboard.binhle_thieunhi_phandoantruong_bangdiem, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
+
+
 
     app.admin.binhle_thieunhi_chidoan:
         class: AppBundle\Admin\BinhLe\ThieuNhi\ChiDoanAdmin
