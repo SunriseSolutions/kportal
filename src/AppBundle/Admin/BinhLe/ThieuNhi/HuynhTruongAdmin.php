@@ -22,7 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class HuynhTruongAdmin extends BaseAdmin {
+class HuynhTruongAdmin extends BinhLeThieuNhiAdmin {
 	protected $baseRouteName = 'admin_app_binhle_thieunhi_huynhtruong';
 	
 	protected $baseRoutePattern = '/app/binhle-thieunhi-huynhtruong';
@@ -113,7 +113,13 @@ class HuynhTruongAdmin extends BaseAdmin {
 		} elseif($thanhVien->isBQT()) {
 			return true;
 		}
-		
+		if($thanhVien->isPhanDoanTruong()) {
+			if( ! empty($object)) {
+				if($object->getPhanDoan() === $thanhVien->getPhanDoan()) {
+					return true;
+				}
+			}
+		}
 		if($name === 'LIST' || $name === 'VIEW') {
 			return true;
 		}
@@ -183,6 +189,10 @@ class HuynhTruongAdmin extends BaseAdmin {
 		
 		
 		$query->andWhere($expr->eq($rootAlias . '.huynhTruong', $expr->literal(true)));
+		$tv = $this->getUserThanhVien();
+		if($tv->isPhanDoanTruong()) {
+			$qb->andWhere($expr->eq($rootAlias . '.phanDoan', $expr->literal($tv->getPhanDoan())));
+		}
 		
 		if($this->action === 'truong-chi-doan') {
 //			$query->andWhere($expr->eq($rootAlias . '.huynhTruong', $expr->literal(true)));
@@ -270,29 +280,69 @@ class HuynhTruongAdmin extends BaseAdmin {
 		$isAdmin   = $this->isAdmin();
 		$container = $this->getConfigurationPool()->getContainer();
 		
-		$user                                    = $container->get('app.user')->getUser();
-		$thanhVien                               = $user->getThanhVien();
+		$thanhVien                               = $this->getUserThanhVien();
 		ThanhVienAdminHelper::$translationDomain = $this->translationDomain;
 		
-		
-		$danhSachChiDoan = [
-			'Chiên Con 4 tuổi'    => 4,
-			'Chiên Con 5 tuổi'    => 5,
-			'Chiên Con 6 tuổi'    => 6,
-			'Ấu Nhi 7 tuổi'       => 7,
-			'Ấu Nhi 8 tuổi'       => 8,
-			'Ấu Nhi 9 tuổi'       => 9,
-			'Thiếu Nhi 10 tuổi'   => 10,
-			'Thiếu Nhi 11 tuổi'   => 11,
-			'Thiếu Nhi 12 tuổi'   => 12,
-			'Nghĩa Sĩ 13 tuổi'    => 13,
-			'Nghĩa Sĩ 14 tuổi'    => 14,
-			'Nghĩa Sĩ 15 tuổi'    => 15,
-			'Tông Đồ 16 tuổi'     => 16,
-			'Tông Đồ 17 tuổi'     => 17,
-			'Tông Đồ 18 tuổi'     => 18,
-			'Dự Trưởng (19 tuổi)' => 19,
-		];
+		if($thanhVien->isPhanDoanTruong()) {
+			$phanDoan = $thanhVien->getPhanDoan();
+			switch($phanDoan) {
+				case ThanhVien::PHAN_DOAN_CHIEN:
+					$danhSachChiDoan = [
+						'Chiên Con 4 tuổi' => 4,
+						'Chiên Con 5 tuổi' => 5,
+						'Chiên Con 6 tuổi' => 6
+					];
+					break;
+				case ThanhVien::PHAN_DOAN_AU:
+					$danhSachChiDoan = [
+						'Ấu Nhi 7 tuổi' => 7,
+						'Ấu Nhi 8 tuổi' => 8,
+						'Ấu Nhi 9 tuổi' => 9
+					];
+					break;
+				case ThanhVien::PHAN_DOAN_THIEU:
+					$danhSachChiDoan = [
+						'Thiếu Nhi 10 tuổi' => 10,
+						'Thiếu Nhi 11 tuổi' => 11,
+						'Thiếu Nhi 12 tuổi' => 12,
+					];
+					break;
+				case ThanhVien::PHAN_DOAN_NGHIA:
+					$danhSachChiDoan = [
+						'Nghĩa Sĩ 13 tuổi' => 13,
+						'Nghĩa Sĩ 14 tuổi' => 14,
+						'Nghĩa Sĩ 15 tuổi' => 15,
+					];
+					break;
+				case ThanhVien::PHAN_DOAN_TONG_DO:
+					$danhSachChiDoan = [
+						'Tông Đồ 16 tuổi' => 16,
+						'Tông Đồ 17 tuổi' => 17,
+						'Tông Đồ 18 tuổi' => 18,
+					];
+					break;
+			}
+			
+		} else {
+			$danhSachChiDoan = [
+				'Chiên Con 4 tuổi'    => 4,
+				'Chiên Con 5 tuổi'    => 5,
+				'Chiên Con 6 tuổi'    => 6,
+				'Ấu Nhi 7 tuổi'       => 7,
+				'Ấu Nhi 8 tuổi'       => 8,
+				'Ấu Nhi 9 tuổi'       => 9,
+				'Thiếu Nhi 10 tuổi'   => 10,
+				'Thiếu Nhi 11 tuổi'   => 11,
+				'Thiếu Nhi 12 tuổi'   => 12,
+				'Nghĩa Sĩ 13 tuổi'    => 13,
+				'Nghĩa Sĩ 14 tuổi'    => 14,
+				'Nghĩa Sĩ 15 tuổi'    => 15,
+				'Tông Đồ 16 tuổi'     => 16,
+				'Tông Đồ 17 tuổi'     => 17,
+				'Tông Đồ 18 tuổi'     => 18,
+				'Dự Trưởng (19 tuổi)' => 19,
+			];
+		}
 		
 		
 		/** @var ThanhVien $subject */
@@ -387,21 +437,23 @@ class HuynhTruongAdmin extends BaseAdmin {
 		$formMapper
 			->end();
 		
-		$formMapper->with('form.group_extra')
-		           ->add('phanDoan', ChoiceType::class, array(
-			           'label'              => 'list.label_phan_doan',
-			           'placeholder'        => 'Chọn Phân Đoàn',
-			           'choices'            => ThanhVien::$danhSachPhanDoan,
-			           'translation_domain' => $this->translationDomain,
-			           'required'           => false
-		           ))
-		           ->add('chiDoan', ChoiceType::class, array(
-			           'required'           => false,
-			           'label'              => 'list.label_chi_doan',
-			           'placeholder'        => 'Chọn Chi Đoàn',
-			           'choices'            => $danhSachChiDoan,
-			           'translation_domain' => $this->translationDomain
-		           ))
+		$formMapper->with('form.group_extra');
+		if($thanhVien->isBQT()) {
+			$formMapper->add('phanDoan', ChoiceType::class, array(
+				'label'              => 'list.label_phan_doan',
+				'placeholder'        => 'Chọn Phân Đoàn',
+				'choices'            => ThanhVien::$danhSachPhanDoan,
+				'translation_domain' => $this->translationDomain,
+				'required'           => false
+			));
+		}
+		$formMapper->add('chiDoan', ChoiceType::class, array(
+			'required'           => false,
+			'label'              => 'list.label_chi_doan',
+			'placeholder'        => 'Chọn Chi Đoàn',
+			'choices'            => $danhSachChiDoan,
+			'translation_domain' => $this->translationDomain
+		))
 		           ->add('chiDoanTruong', null, array(
 			           'label' => 'list.label_chi_doan_truong',
 		           ))

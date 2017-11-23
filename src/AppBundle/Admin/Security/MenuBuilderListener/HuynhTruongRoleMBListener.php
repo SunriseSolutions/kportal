@@ -69,6 +69,9 @@ class HuynhTruongRoleMBListener {
 					))->setLabel($translator->trans('dashboard.thieunhi_duyet_diem', [], 'BinhLeAdmin'));
 					
 					$baoCaoTienQuy = true;
+				} elseif($thanhVien->isPhanDoanTruong()) {
+					$this->banQuanTri = $menu->addChild('thieunhi_banquantri')->setLabel($translator->trans('dashboard.thieunhi_phandoantruong', [], 'BinhLeAdmin'));
+					$this->addBanQuanTriMenuItems($translator, $thanhVien, []);
 				}
 				
 				if($thanhVien->isThuQuyXuDoan() || $baoCaoTienQuy) {
