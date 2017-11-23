@@ -2,7 +2,7 @@
 
 </style>
 {% if admin.isGranted('duyet-bang-diem',object) %}
-    <a class="btn btn-info"
+    <a target="_blank" class="btn btn-info"
        href="{{ path('admin_app_binhle_thieunhi_chidoan_bangdiem_list', {'id': object.id, 'hocKy':1,'action':'xem' }) }}">
         Xem Bảng điểm</a>
     <br style="line-height: 34px;"/>
