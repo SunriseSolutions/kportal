@@ -530,6 +530,12 @@ class ThanhVien {
 	
 	/**
 	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $soeur = false;
+	
+	/**
+	 * @var boolean
 	 * @ORM\Column(type="boolean", options={"default":true})
 	 */
 	protected $enabled = true;
@@ -1424,6 +1430,20 @@ class ThanhVien {
 	 */
 	public function setDacBiet($dacBiet) {
 		$this->dacBiet = $dacBiet;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isSoeur() {
+		return $this->soeur;
+	}
+	
+	/**
+	 * @param bool $soeur
+	 */
+	public function setSoeur($soeur) {
+		$this->soeur = $soeur;
 	}
 	
 }
