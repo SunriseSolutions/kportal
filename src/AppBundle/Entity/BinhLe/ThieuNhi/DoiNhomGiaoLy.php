@@ -66,12 +66,6 @@ class DoiNhomGiaoLy {
 	 * @var boolean
 	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
-	protected $duyetBangDiemHK1PDT = false;
-	
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean", options={"default":false})
-	 */
 	protected $hoanTatBangDiemHK1 = false;
 	
 	/**
@@ -79,12 +73,6 @@ class DoiNhomGiaoLy {
 	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
 	protected $duyetBangDiemHK2CDT = false;
-	
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean", options={"default":false})
-	 */
-	protected $duyetBangDiemHK2PDT = false;
 	
 	/**
 	 * @var boolean
@@ -214,20 +202,6 @@ class DoiNhomGiaoLy {
 	/**
 	 * @return bool
 	 */
-	public function isDuyetBangDiemHK1PDT() {
-		return $this->duyetBangDiemHK1PDT;
-	}
-	
-	/**
-	 * @param bool $duyetBangDiemHK1PDT
-	 */
-	public function setDuyetBangDiemHK1PDT($duyetBangDiemHK1PDT) {
-		$this->duyetBangDiemHK1PDT = $duyetBangDiemHK1PDT;
-	}
-	
-	/**
-	 * @return bool
-	 */
 	public function isDuyetBangDiemHK2CDT() {
 		return $this->duyetBangDiemHK2CDT;
 	}
@@ -239,17 +213,4 @@ class DoiNhomGiaoLy {
 		$this->duyetBangDiemHK2CDT = $duyetBangDiemHK2CDT;
 	}
 	
-	/**
-	 * @return bool
-	 */
-	public function isDuyetBangDiemHK2PDT() {
-		return $this->duyetBangDiemHK2PDT;
-	}
-	
-	/**
-	 * @param bool $duyetBangDiemHK2PDT
-	 */
-	public function setDuyetBangDiemHK2PDT($duyetBangDiemHK2PDT) {
-		$this->duyetBangDiemHK2PDT = $duyetBangDiemHK2PDT;
-	}
 }

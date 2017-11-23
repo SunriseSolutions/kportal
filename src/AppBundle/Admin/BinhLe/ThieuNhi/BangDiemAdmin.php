@@ -27,7 +27,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
-class BangDiemAdmin extends BaseAdmin {
+class BangDiemAdmin extends BinhLeThieuNhiAdmin {
 	
 	/**
 	 * @var integer
@@ -71,27 +71,28 @@ class BangDiemAdmin extends BaseAdmin {
 		];
 		
 		// this text filter will be used to retrieve autocomplete fields
-		$datagridMapper
-			->add('phanBo.phanDoan', 'doctrine_orm_choice', array(
-				'show_filter' => true,
-			), 'choice', array(
-				'choices' => ThanhVien::$danhSachPhanDoan
-			))
-			->add('phanBo.chiDoan.name', 'doctrine_orm_choice', array(
-				'show_filter' => true,
-			), 'choice', array(
-				'choices' => $danhSachChiDoan
-			))
-			->add('phanBo.chiDoan.namHoc.id', null, array(
-				'show_filter' => true,
-			));
+//		$datagridMapper
+//			->add('phanBo.phanDoan', 'doctrine_orm_choice', array(
+//				'show_filter' => true,
+//			), 'choice', array(
+//				'choices' => ThanhVien::$danhSachPhanDoan
+//			))
+//			->add('phanBo.chiDoan.name', 'doctrine_orm_choice', array(
+//				'show_filter' => true,
+//			), 'choice', array(
+//				'choices' => $danhSachChiDoan
+//			))
+//			->add('phanBo.chiDoan.namHoc.id', null, array(
+//				'show_filter' => true,
+//			));
 	}
 	
 	public function isGranted($name, $object = null) {
+		if(in_array($name, [ 'LIST', 'SHOW' ])) {
+			return true;
+		}
+		
 		if(empty($this->namHoc)) {
-			if(in_array($name, [ 'LIST', 'SHOW' ])) {
-				return true;
-			}
 			
 			return false;
 		}
@@ -117,20 +118,47 @@ class BangDiemAdmin extends BaseAdmin {
 		$listMapper
 //			->addIdentifier('id')
 //			->addIdentifier('id', null, array())
+//			->addIdentifier('phanBo.thanhVien', null, array(
+//				'label'               => 'list.label_full_name',
+//				'associated_property' => 'name',
+//				'admin_code'         => 'app.admin.binhle_thieunhi_thieunhi'
+//			));
 			->add('phanBo.thanhVien.name', null, array(
 				'label' => 'list.label_full_name'
-			))
-			->add('tbYear')
-			->add('category')
-			->add('phanBo.chiDoan.name', null, array(
-				'label' => 'list.label_chi_doan'
-			))
-			->add('phanBo.phanDoan', null, array(
-				'label' => 'list.label_chi_doan'
-			))
-			->add('phanBo.chiDoan.namHoc.id', 'text', array(
-				'label' => 'list.label_nam_hoc'
+				,
+				'template'=>'::admin/binhle/thieu-nhi/chi-doan/bang-diem/list__field__name.html.twig'
 			));
+		$request = $this->getRequest();
+		if($request->query->getInt('hocKy') === 1) {
+			$listMapper
+				->add('cc9')
+				->add('cc10')
+				->add('cc11')
+				->add('cc12')
+				->add('tbCCTerm1',null,array('label'=>'list.label_tb_cc_term1'))
+				->add('quizTerm1')
+				->add('midTerm1')
+				->add('finalTerm1')
+				->add('sundayTicketTerm1')
+			;
+			
+		} else {
+			$listMapper
+				->add('cc1')
+				->add('cc2')
+				->add('cc3')
+				->add('cc4')
+				->add('cc5')
+				->add('tbCCTerm2',null,array('label'=>'list.label_tb_cc_term2'))
+				->add('quizTerm2')
+				->add('midTerm2')
+				->add('finalTerm2')
+				->add('sundayTicketTerm2')
+			;
+		}
+//		$listMapper->add('phanBo.chiDoan.id', null, array(
+//			'label' => 'list.label_chi_doan'
+//		));
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {

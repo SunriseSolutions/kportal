@@ -1,3 +1,9 @@
+PHAN_DOAN_THIEU: Thiếu
+PHAN_DOAN_AU: ẤU
+PHAN_DOAN_NGHIA_SY: Nghĩa
+PHAN_DOAN_CHIEN: Chiên
+PHAN_DOAN_TONG_DO: Tông-Đồ
+
 user:
     email_exists: This email has already been used by another user.
 
@@ -33,6 +39,30 @@ filter:
     label_phan_bo_chi_doan_name: Chi Đoàn
     label_phan_bo_chi_doan_nam_hoc_id: Năm Học
 list:
+    label_cc9: CC-9
+    label_cc10: CC-10
+    label_cc11: CC-11
+    label_cc12: CC-12
+
+    label_cc1: CC-1
+    label_cc2: CC-2
+    label_cc3: CC-3
+    label_cc4: CC-4
+    label_cc5: CC-5
+
+    label_tb_cc_term1: TB. CC
+    label_tb_cc_term2: TB. CC
+
+    label_quiz_term1: Miệng
+    label_mid_term1: 1-tiết
+    label_final_term1: Thi HK-I
+    label_sunday_ticket_term1: Phiếu Lễ HK-I
+
+    label_quiz_term2: Miệng
+    label_mid_term2: 1-tiết
+    label_final_term2: Thi HK-II
+    label_sunday_ticket_term2: Phiếu Lễ HK-II
+
     label_ngheo_kho: Nghèo-khó
     label_dac_biet: Hoàn-cảnh đặc biệt
     label_hoten_me: Họ-tên Mẹ
@@ -132,3 +162,4 @@ breadcrumb:
     link_chi_doan_list: Danh-sách Chi-đoàn
     link_thanh_vien_list: DS Thành Viên
     link_doi_nhom_giao_ly_list: Đội - Nhóm Giáo-lý
+    link_bang_diem_list: Bảng điểm

@@ -81,6 +81,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		$collection->add('thieuNhiNhom', 'thieu-nhi/nhom-giao-ly/{phanBo}/list');
 		$collection->add('thieuNhiChiDoan', 'thieu-nhi/chi-doan/{phanBo}/list');
 		$collection->add('sanhHoatLai', 'thieu-nhi/' . $this->getRouterIdParameter() . '/sanh-hoat-lai');
+		$collection->add('nghiSanhHoat', 'thieu-nhi/' . $this->getRouterIdParameter() . '/nghi-sanh-hoat');
 		parent::configureRoutes($collection);
 	}
 	
@@ -92,7 +93,18 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		if( ! in_array($this->action, [ 'list-thieu-nhi-nhom', 'list-thieu-nhi-chi-doan' ])) {
 			$datagridMapper->add('chiDoan', null, array( 'label' => 'list.label_chi_doan', 'show_filter' => true ));
 		}
-		$datagridMapper->add('namHoc', null, array( 'label' => 'list.label_nam_hoc', 'show_filter' => true ));
+//		$datagridMapper->add('namHoc', null, array( 'label' => 'list.label_nam_hoc', 'show_filter' => true ));
+		$datagridMapper
+			->add('ngheoKho', null, array(
+				'label'       => 'list.label_ngheo_kho',
+				'show_filter' => true,
+				'default'     => true
+			))
+			->add('dacBiet', null, array(
+				'label'       => 'list.label_dac_biet',
+				'show_filter' => true,
+				'default'     => true
+			));
 		$datagridMapper->add('enabled', null, array(
 			'label'       => 'list.label_active',
 			'show_filter' => true,
@@ -109,25 +121,13 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 	public function isGranted($name, $object = null) {
 		$this->getAction();
 		$container = $this->getConfigurationPool()->getContainer();
-		if($this->isAdmin()) {
-			return true;
-		}
 		
-		if($name === 'DELETE') {
-			return false;
-		}
-		
-		$user = $container->get('app.user')->getUser();
-		if(empty($thanhVien = $user->getThanhVien())) {
-			return false;
-		} elseif($thanhVien->isBQT()) {
-			return true;
-		}
-		if( ! $thanhVien->isEnabled()) {
-			return false;
-		}
-		
+		$thanhVien = $this->getUserThanhVien();
 		if($name === 'sanh-hoat-lai') {
+			if(empty($thanhVien)) {
+				return $this->isAdmin();
+			}
+			
 			if(empty($object)) {
 				return false;
 			}
@@ -135,10 +135,28 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				return false;
 			}
 			
-			return ! empty($object->isCDTorGreater($thanhVien));
+			return ! empty($thanhVien->isCDTorGreater($object));
+		} elseif($name === 'nghi-sanh-hoat') {
+			if(empty($thanhVien)) {
+				return $this->isAdmin();
+			}
+			
+			if(empty($object)) {
+				return false;
+			}
+			if( ! $object->isEnabled()) {
+				return false;
+			}
+			
+			return ! empty($thanhVien->isTruongPTorGreater($object));
 		}
 		
 		if($name === 'xet-len-lop') {
+			
+			if(empty($thanhVien)) {
+				return $this->isAdmin();
+			}
+			
 			if(empty($object)) {
 				return false;
 			}
@@ -150,7 +168,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				}
 			}
 			
-			if(($permission = $object->isCDTorGreater($thanhVien)) !== null) {
+			if(($permission = $thanhVien->isCDTorGreater($object)) !== null) {
 				return $permission;
 			}
 			
@@ -167,6 +185,21 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				}
 			}
 			
+			return false;
+		}
+		
+		if($this->isAdmin()) {
+			return true;
+		}
+		
+		if($name === 'DELETE') {
+			return false;
+		}
+		
+		if($thanhVien->isBQT()) {
+			return true;
+		}
+		if( ! $thanhVien->isEnabled()) {
 			return false;
 		}
 		
@@ -199,9 +232,9 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				}
 				
 				if($name === 'EDIT') {
-					if($thanhVien->isChiDoanTruong()) {
-						return true;
-					}
+//					if($thanhVien->isChiDoanTruong()) {
+//						return true;
+//					}
 					if(empty($object)) {
 						return false;
 					}
@@ -337,12 +370,13 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		
 		$listMapper
 			->addIdentifier('code')
-			->addIdentifier('christianname', null, array())
-			// ->addIdentifier('name', null, array())
-			// ->addIdentifier('firstname', null, array())
-			->addIdentifier('lastname', null, array())
-			->addIdentifier('middlename', null, array())
-			->addIdentifier('firstname', null, array());
+//			->addIdentifier('christianname', null, array())
+			->addIdentifier('name', null, array())
+//			->addIdentifier('lastname', null, array())
+//			->addIdentifier('middlename', null, array())
+//			->addIdentifier('firstname', null, array())
+			->addIdentifier('hoTenBo', null, array( 'label' => 'list.label_hoten_bo' ))
+			->addIdentifier('hoTenMe', null, array( 'label' => 'list.label_hoten_me' ));
 		if( ! empty($thanhVien = $this->getUserThanhVien()) && $thanhVien->isBQT()) {
 			$listMapper
 				->add('dob', null, array( 'editable' => true ))
@@ -368,26 +402,29 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				));
 		}
 		
-		if( ! in_array($this->action, [ 'list-thieu-nhi-chi-doan', 'list-thieu-nhi-nhom' ])) {
+		if($this->action !== 'list-thieu-nhi-nhom') {
 			$listMapper->add('_nhomGiaoLy', 'actions', array(
 				'template' => '::admin/binhle/thieu-nhi/thieu-nhi/list__field__doi_giao_ly.html.twig'
 			));
 			
-			$listMapper->add('chiDoan', 'choice', array(
-				'editable' => false,
+			if( ! in_array($this->action, [ 'list-thieu-nhi-chi-doan' ])) {
+				$listMapper->add('chiDoan', 'choice', array(
+					'editable' => false,
 //				'class' => 'Vendor\ExampleBundle\Entity\ExampleStatus',
-				'choices'  => $danhSachChiDoan,
-			));
+					'choices'  => $danhSachChiDoan,
+				));
+			}
 		}
 		$listMapper->add('namHoc', 'text', array( 'editable' => false ));
-		
-		$listMapper->add('enabled', null, array( 'editable' => true, 'label' => 'list.label_active' ))
+		$listMapper->add('ngheoKho')->add('dacBiet');
+		$listMapper->add('enabled', null, array( 'editable' => false, 'label' => 'list.label_active' ))
 		           ->add('_action', 'actions', array(
 			           'actions' => array(
-				           'edit'          => array(),
+				           'edit'           => array(),
 //					'delete' => array(),
-				           'xet_len_lop'   => array( 'template' => '::admin/binhle/thieu-nhi/thieu-nhi/list__action__xet_len_lop.html.twig' ),
-				           'sanh_hoat_lai' => array( 'template' => '::admin/binhle/thieu-nhi/thieu-nhi/list__action__sanh_hoat_lai.html.twig' )
+				           'xet_len_lop'    => array( 'template' => '::admin/binhle/thieu-nhi/thieu-nhi/list__action__xet_len_lop.html.twig' ),
+				           'sanh_hoat_lai'  => array( 'template' => '::admin/binhle/thieu-nhi/thieu-nhi/list__action__sanh_hoat_lai.html.twig' ),
+				           'nghi_sanh_hoat' => array( 'template' => '::admin/binhle/thieu-nhi/thieu-nhi/list__action__nghi_sanh_hoat.html.twig' )
 
 //                ,
 //                    'view_description' => array('template' => '::admin/product/description.html.twig')

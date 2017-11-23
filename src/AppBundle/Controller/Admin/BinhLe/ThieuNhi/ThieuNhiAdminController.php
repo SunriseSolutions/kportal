@@ -23,17 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ThieuNhiAdminController extends BaseCRUDController {
-	private function getRefererParams() {
-		$request  = $this->getRequest();
-		$referer  = $request->headers->get('referer');
-		$baseUrl  = $request->getBaseUrl();
-		$lastPath = substr($referer, strpos($referer, $baseUrl) + strlen($baseUrl));
-		
-		return $this->get('router')->match($lastPath);
-//		getMatcher()
-	}
-	
+class ThieuNhiAdminController extends BaseThieuNhiAdminController {
 	public function sanhHoatLaiAction($id = null, Request $request) {
 		/**
 		 * @var ThanhVien $thanhVien
@@ -73,6 +63,46 @@ class ThieuNhiAdminController extends BaseCRUDController {
 			$routeParams
 		));
 	}
+	
+	public function nghiSanhHoatAction($id = null, Request $request) {
+		/**
+		 * @var ThanhVien $thanhVien
+		 */
+		$thanhVien = $this->admin->getSubject();
+		if( ! $thanhVien) {
+			throw new NotFoundHttpException(sprintf('unable to find the Thieu-nhi with id : %s', $id));
+		}
+		
+		/** @var ThieuNhiAdmin $admin */
+		$admin         = $this->admin;
+		$namHocService = $this->get('app.binhle_thieunhi_namhoc');
+		$thanhVien->setEnabled(false);
+		
+		$manager = $this->get('doctrine.orm.default_entity_manager');
+		$manager->persist($thanhVien);
+		try {
+			$manager->flush();
+		} catch(Exception $e) {
+			$this->addFlash('sonata_flash_error', $e);
+		}
+		
+		$this->addFlash('sonata_flash_success', $thanhVien->getName() . ' đã nghỉ sanh hoạt.');
+		
+		$params      = $this->getRefererParams();
+		$routeParams = $params;
+		unset($routeParams['_route']);
+		unset($routeParams['_controller']);
+		unset($routeParams['_sonata_admin']);
+		unset($routeParams['_sonata_name']);
+		unset($routeParams['_locale']);
+		
+		
+		return $this->redirect($this->generateUrl(
+			$params['_route'],
+			$routeParams
+		));
+	}
+	
 	
 	public function thieuNhiNhomAction(PhanBo $phanBo, Request $request) {
 		/** @var ThanhVienAdmin $admin */

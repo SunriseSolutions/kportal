@@ -19,6 +19,7 @@ class ThanhVienService extends BaseService {
 		foreach($cacTruongPT as $truongPT) {
 			$cacDoiNhomGiaoLyStr .= $truongPT->getDoiNhomGiaoLy()->getNumber() . ', ';
 		}
+		
 		$cacDoiNhomGiaoLyStr = substr($cacDoiNhomGiaoLyStr, 0, - 2);
 		$cacDoiNhomGiaoLyStr .= sprintf(' (%s)', $thanhVien->getTitle() . ' ' . $thanhVien->getFirstname());
 		
@@ -226,7 +227,7 @@ class ThanhVienService extends BaseService {
 				$sumCCStr   = 'SUM(';
 				$sumCCCount = 0;
 				foreach($cotDiem as $key => $value) {
-					if(in_array($value, $cacCotDiemBiLoaiBo)) {
+					if(!empty($cacCotDiemBiLoaiBo) && in_array($value, $cacCotDiemBiLoaiBo)) {
 						continue;
 					}
 					$sumCCStr .= $key . $cusorRow . ',';
@@ -256,10 +257,10 @@ class ThanhVienService extends BaseService {
 					'K' => 'midTerm1',
 					'L' => 'finalTerm1',
 				];
-				$sumTerm1Str    = 'SUM(';
+				$sumTerm1Str   = 'SUM(';
 				$sumTerm1Count = 0;
 				foreach($cotDiem as $key => $value) {
-					if(in_array($value, $cacCotDiemBiLoaiBo)) {
+					if(!empty($cacCotDiemBiLoaiBo) && in_array($value, $cacCotDiemBiLoaiBo)) {
 						continue;
 					}
 					$sumTerm1Str .= $key . $cusorRow . ',';

@@ -246,17 +246,39 @@ class ThanhVien {
 		$this->phanBoHangNam = new ArrayCollection();
 	}
 	
-	public function isCDTorGreater(ThanhVien $thanhVien) {
-		if( ! $thanhVien->isHuynhTruong()) {
-			return false;
-		}
-		if($thanhVien->isPhanDoanTruong()) {
+	public function isTruongPTorGreater(ThanhVien $thanhVien) {
+		if($this->isCDTorGreater($thanhVien)) {
 			return true;
 		}
-		if($thanhVien->getChiDoan() !== $this->getChiDoan()) {
+		$phanBo    = $this->getPhanBoNamNay();
+		$cacTruong = $phanBo->getCacTruongPhuTrachDoi();
+		/** @var TruongPhuTrachDoi $truong */
+		foreach($cacTruong as $truong) {
+			$phanBoTN = $thanhVien->getPhanBoNamNay();
+			if($truong->getDoiNhomGiaoLy()->getId() === $phanBoTN->getDoiNhomGiaoLy()->getId()) {
+				return true;
+			}
+		}
+		
+		return null;
+	}
+	
+	public function isCDTorGreater(ThanhVien $thanhVien) {
+		if( ! $this->isHuynhTruong()) {
 			return false;
 		}
-		if($thanhVien->isChiDoanTruong()) {
+		
+		if($this->isBQT()) {
+			return true;
+		}
+		
+		if($this->isPhanDoanTruong()) {
+			return true;
+		}
+		if($this->getChiDoan() !== $thanhVien->getChiDoan()) {
+			return false;
+		}
+		if($this->isChiDoanTruong()) {
 			return true;
 		}
 		

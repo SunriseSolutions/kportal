@@ -17,25 +17,31 @@
 
         <li class="user-header {{ _bg_class }}">
             {% if _user_image %}
-                <img src="{{ _user_image }}" class="img-circle" alt="Avatar" />
+                <img src="{{ _user_image }}" class="img-circle" alt="Avatar"/>
             {% endif %}
             <p>{{ app.user }}</p>
+            {% if app.user.thanhVien is not empty %}
+                {% set tv = app.user.thanhVien %}
+                <p> <strong>Chi-đoàn:</strong> {{ tv.chiDoan }} <br/> <strong>Phân-đoàn:</strong> {{ tv.phanDoan|trans({},'BinhLeAdmin') }}  </p>
+            {% endif %}
         </li>
 
-{#
-    Uncomment to add some information
-        <li class="user-body">
+        {#
+            Uncomment to add some information
+                <li class="user-body">
 
-        </li>
-#}
+                </li>
+        #}
 
         <li class="user-footer">
             <div class="pull-left">
-                <a href="{{ _profile_uri }}" class="btn btn-default btn-flat"><i class="fa fa-user"></i> {{ _profile_text }}</a>
+                <a href="{{ _profile_uri }}" class="btn btn-default btn-flat"><i
+                            class="fa fa-user"></i> {{ _profile_text }}</a>
             </div>
 
             <div class="pull-right">
-                <a href="{{ _logout_uri }}" class="btn btn-default btn-flat"><i class="fa fa-sign-out fa-fw"></i> {{ _logout_text }}</a>
+                <a href="{{ _logout_uri }}" class="btn btn-default btn-flat"><i
+                            class="fa fa-sign-out fa-fw"></i> {{ _logout_text }}</a>
             </div>
         </li>
     {% endif %}

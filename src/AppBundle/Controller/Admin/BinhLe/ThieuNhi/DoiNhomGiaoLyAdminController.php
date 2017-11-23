@@ -3,7 +3,7 @@
 namespace AppBundle\Controller\Admin\BinhLe\ThieuNhi;
 
 use AppBundle\Admin\BinhLe\ThieuNhi\ChiDoanAdmin;
-use AppBundle\Admin\BinhLe\ThieuNhi\DoiNhomGiaoLyAdminBinhLe;
+use AppBundle\Admin\BinhLe\ThieuNhi\DoiNhomGiaoLyAdmin;
 use AppBundle\Controller\Admin\BaseCRUDController;
 use AppBundle\Entity\BinhLe\ThieuNhi\ChiDoan;
 use AppBundle\Entity\BinhLe\ThieuNhi\DoiNhomGiaoLy;
@@ -28,7 +28,7 @@ class DoiNhomGiaoLyAdminController extends BaseCRUDController {
 			throw new NotFoundHttpException(sprintf('Unable to find the DoiNhomGiaoLy with id : %s', $id));
 		}
 		
-		/** @var DoiNhomGiaoLyAdminBinhLe $admin */
+		/** @var DoiNhomGiaoLyAdmin $admin */
 		$admin = $this->admin;
 		
 		if( ! in_array($action, [ 'duyet', 'tra-ve' ])) {
@@ -43,8 +43,12 @@ class DoiNhomGiaoLyAdminController extends BaseCRUDController {
 		
 		$setterDuyetBandDiemMethod   = 'setDuyetBangDiemHK' . $hocKy . 'CDT';
 		$setterHoanTatBandDiemMethod = 'setHoanTatBangDiemHK' . $hocKy;
+		$hoanTatBandDiemMethod       = 'hoanTatBangDiemHK' . $hocKy;
 		if($action === 'duyet') {
 			$dngl->$setterDuyetBandDiemMethod(true);
+			if($dngl->getChiDoan()->$hoanTatBandDiemMethod()) {
+				$manager->persist($dngl->getChiDoan());
+			};
 		} elseif($action === 'tra-ve') {
 			$dngl->$setterDuyetBandDiemMethod(false);
 			$dngl->$setterHoanTatBandDiemMethod(false);
