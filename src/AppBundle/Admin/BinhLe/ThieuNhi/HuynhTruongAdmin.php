@@ -474,12 +474,12 @@ class HuynhTruongAdmin extends BinhLeThieuNhiAdmin {
 			           ->add('xuDoanPhoNgoai', null, array(
 				           'label' => 'list.label_xu_doan_pho_ngoai',
 			           ))
-				->add('xuDoanTruong', null, array(
-					'label' => 'list.label_xu_doan_truong',
-				))
-				->add('soeur', null, array(
-					'label' => 'list.label_soeur_tro_uy',
-				))
+			           ->add('xuDoanTruong', null, array(
+				           'label' => 'list.label_xu_doan_truong',
+			           ))
+			           ->add('soeur', null, array(
+				           'label' => 'list.label_soeur_tro_uy',
+			           ))
 			           ->add('enabled', null, array(
 				           'label' => 'list.label_enabled',
 			           ));
@@ -495,10 +495,6 @@ class HuynhTruongAdmin extends BinhLeThieuNhiAdmin {
 	public function preValidate($object) {
 		$object->setThieuNhi(false);
 		$object->setHuynhTruong(true);
-		
-		$namHocHienTai = $this->getConfigurationPool()->getContainer()->get('app.binhle_thieunhi_namhoc')->getNamHocHienTai();
-		$object->initiatePhanBo($namHocHienTai);
-		$this->getConfigurationPool()->getContainer()->get('doctrine.orm.default_entity_manager')->persist($object);
 	}
 	
 	/**
@@ -531,6 +527,11 @@ class HuynhTruongAdmin extends BinhLeThieuNhiAdmin {
 	 */
 	public function postPersist($object) {
 		$object->setCode(strtoupper(User::generate4DigitCode($object->getId())));
+		
+		$namHocHienTai = $this->getConfigurationPool()->getContainer()->get('app.binhle_thieunhi_namhoc')->getNamHocHienTai();
+		$object->initiatePhanBo($namHocHienTai);
+		$this->getConfigurationPool()->getContainer()->get('doctrine.orm.default_entity_manager')->persist($object);
+		
 		$this->getModelManager()->update($object);
 	}
 	
