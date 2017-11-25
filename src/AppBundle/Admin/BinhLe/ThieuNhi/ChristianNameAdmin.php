@@ -27,7 +27,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
-class ChristianNameAdmin extends BaseAdmin {
+class ChristianNameAdmin extends BinhLeThieuNhiAdmin {
 	
 	/**
 	 * @var integer
