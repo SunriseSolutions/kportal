@@ -456,28 +456,34 @@ class HuynhTruongAdmin extends BinhLeThieuNhiAdmin {
 		))
 		           ->add('chiDoanTruong', null, array(
 			           'label' => 'list.label_chi_doan_truong',
-		           ))
-		           ->add('phanDoanTruong', null, array(
-			           'label' => 'list.label_phan_doan_truong',
-		           ))
-		           ->add('thuQuyXuDoan', null, array(
-			           'label' => 'list.label_thu_quy_xu_doan',
-		           ))
-		           ->add('thuKyXuDoan', null, array(
-			           'label' => 'list.label_thu_ky_xu_doan',
-		           ))
-		           ->add('xuDoanPhoNoi', null, array(
-			           'label' => 'list.label_xu_doan_pho_noi',
-		           ))
-		           ->add('xuDoanPhoNgoai', null, array(
-			           'label' => 'list.label_xu_doan_pho_ngoai',
-		           ))
-		           ->add('xuDoanTruong', null, array(
-			           'label' => 'list.label_xu_doan_truong',
-		           ))
-		           ->add('enabled', null, array(
-			           'label' => 'list.label_enabled',
 		           ));
+		
+		if($thanhVien->isBQT()) {
+			$formMapper->add('phanDoanTruong', null, array(
+				'label' => 'list.label_phan_doan_truong',
+			))
+			           ->add('thuQuyXuDoan', null, array(
+				           'label' => 'list.label_thu_quy_xu_doan',
+			           ))
+			           ->add('thuKyXuDoan', null, array(
+				           'label' => 'list.label_thu_ky_xu_doan',
+			           ))
+			           ->add('xuDoanPhoNoi', null, array(
+				           'label' => 'list.label_xu_doan_pho_noi',
+			           ))
+			           ->add('xuDoanPhoNgoai', null, array(
+				           'label' => 'list.label_xu_doan_pho_ngoai',
+			           ))
+				->add('xuDoanTruong', null, array(
+					'label' => 'list.label_xu_doan_truong',
+				))
+				->add('soeur', null, array(
+					'label' => 'list.label_soeur_tro_uy',
+				))
+			           ->add('enabled', null, array(
+				           'label' => 'list.label_enabled',
+			           ));
+		}
 		$formMapper->end()->end();
 		
 		

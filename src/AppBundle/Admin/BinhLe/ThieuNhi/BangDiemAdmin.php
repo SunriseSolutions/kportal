@@ -101,13 +101,15 @@ class BangDiemAdmin extends BinhLeThieuNhiAdmin {
 	}
 	
 	public function isGranted($name, $object = null) {
-		if(in_array($name, [ 'LIST', 'SHOW' ])) {
-			return true;
-		}
+
 		
 		$tv = $this->getUserThanhVien();
 		if(empty($tv) || ! $tv->isEnabled()) {
 			return $this->isAdmin();
+		}
+		
+		if(in_array($name, [ 'LIST', 'SHOW' ])) {
+			return true;
 		}
 		
 		if(empty($this->namHoc)) {
