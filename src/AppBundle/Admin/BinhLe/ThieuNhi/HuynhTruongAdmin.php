@@ -495,6 +495,9 @@ class HuynhTruongAdmin extends BinhLeThieuNhiAdmin {
 	public function preValidate($object) {
 		$object->setThieuNhi(false);
 		$object->setHuynhTruong(true);
+		
+		$namHocHienTai = $this->getConfigurationPool()->getContainer()->get('app.binhle_thieunhi_namhoc')->getNamHocHienTai();
+		$object->initiatePhanBo($namHocHienTai);
 	}
 	
 	/**
