@@ -498,6 +498,7 @@ class HuynhTruongAdmin extends BinhLeThieuNhiAdmin {
 		
 		$namHocHienTai = $this->getConfigurationPool()->getContainer()->get('app.binhle_thieunhi_namhoc')->getNamHocHienTai();
 		$object->initiatePhanBo($namHocHienTai);
+		$container->get('doctrine.orm.default_entity_manager')->persist($object);
 	}
 	
 	/**
