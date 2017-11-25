@@ -49,7 +49,9 @@ class PhanDoanTruongBangDiemAdmin extends BangDiemAdmin {
 	
 	public function isGranted($name, $object = null) {
 		$tv = $this->getUserThanhVien();
-		
+		if(empty($tv)) {
+			return false;
+		}
 		if( ! $tv->isBQT() && ! $tv->isPhanDoanTruong()) {
 			return false;
 		}
