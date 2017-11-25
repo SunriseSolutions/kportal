@@ -44,7 +44,7 @@ class HuynhTruongRoleMBListener {
 		$request = $this->container->get('request_stack')->getCurrentRequest();
 //        $pos = $user->getPosition(['roles' => [Position::ROLE_ADMIN]]);
 		
-		if( ! empty($thanhVien = $user->getThanhVien())) {
+		if( ! empty($thanhVien = $user->getThanhVien()) && $thanhVien->isEnabled()) {
 			if($user->hasRole(User::ROLE_HUYNH_TRUONG)) {
 				$menu       = $event->getMenu();
 				$this->menu = $menu;

@@ -28,7 +28,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
-class TVTruongPhuTrachDoiAdmin extends BaseAdmin {
+class TVTruongPhuTrachDoiAdmin extends BinhLeThieuNhiAdmin {
 	protected $baseRouteName = 'admin_app_binhle_thieunhi_tv_truongphutrachdoi';
 	
 	protected $baseRoutePattern = '/app/binhle-thieunhi-tv-truongphutrachdoi';
@@ -64,6 +64,12 @@ class TVTruongPhuTrachDoiAdmin extends BaseAdmin {
 	 * @return bool|mixed
 	 */
 	public function isGranted($name, $object = null) {
+		
+		$tv = $this->getUserThanhVien();
+		if(empty($tv) || ! $tv->isEnabled()) {
+			return $this->isAdmin();
+		}
+		
 		return true;
 	}
 	

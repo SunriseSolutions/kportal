@@ -28,7 +28,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
-class NamHocAdmin extends BaseAdmin {
+class NamHocAdmin extends BinhLeThieuNhiAdmin {
 	
 	public function getTemplate($name) {
 		if($name === 'list') {
@@ -66,6 +66,11 @@ class NamHocAdmin extends BaseAdmin {
 		}
 		
 		if(empty($this->namHoc)) {
+		}
+		
+		$tv = $this->getUserThanhVien();
+		if(empty($tv) || ! $tv->isEnabled()) {
+			return $this->isAdmin();
 		}
 		
 		if($name === 'KHAI_GIANG') {

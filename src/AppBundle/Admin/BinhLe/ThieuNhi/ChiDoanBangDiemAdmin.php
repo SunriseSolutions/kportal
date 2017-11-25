@@ -49,10 +49,12 @@ class ChiDoanBangDiemAdmin extends BangDiemAdmin {
 	}
 	
 	public function isGranted($name, $object = null) {
+		
 		$tv = $this->getUserThanhVien();
-		if(empty($tv)) {
-			return false;
+		if(empty($tv) || ! $tv->isEnabled()) {
+			return $this->isAdmin();
 		}
+		
 		if( ! $tv->isChiDoanTruong()) {
 			return false;
 		}

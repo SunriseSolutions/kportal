@@ -30,7 +30,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
-class PhanBoAdmin extends BaseAdmin {
+class PhanBoAdmin extends BinhLeThieuNhiAdmin {
 	
 	protected $action = '';
 	protected $actionParams = [];
@@ -110,8 +110,10 @@ class PhanBoAdmin extends BaseAdmin {
 	 */
 	public function isGranted($name, $object = null) {
 		$container = $this->getConfigurationPool()->getContainer();
-		if($this->isAdmin()) {
-			return true;
+		
+		$tv = $this->getUserThanhVien();
+		if(empty($tv) || ! $tv->isEnabled()) {
+			return $this->isAdmin();
 		}
 		
 		if($name === 'DELETE') {

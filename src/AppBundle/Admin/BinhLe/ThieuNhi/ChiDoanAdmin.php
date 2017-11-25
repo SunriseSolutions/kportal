@@ -30,7 +30,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints\Valid;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 
-class ChiDoanAdmin extends BaseAdmin {
+class ChiDoanAdmin extends BinhLeThieuNhiAdmin {
 	
 	protected $action = '';
 	protected $actionParams = [];
@@ -104,9 +104,12 @@ class ChiDoanAdmin extends BaseAdmin {
 		}
 		
 		$user = $container->get('app.user')->getUser();
-		if(empty($thanhVien = $user->getThanhVien())) {
-			return false;
-		} elseif($thanhVien->isBQT()) {
+		
+		$thanhVien = $this->getUserThanhVien();
+		if(empty($thanhVien) || ! $thanhVien->isEnabled()) {
+			return $this->isAdmin();
+		}
+		if($thanhVien->isBQT()) {
 			if($name === 'chia-doi-thieu-nhi') {
 				return false;
 			}
@@ -244,22 +247,22 @@ class ChiDoanAdmin extends BaseAdmin {
 				'multiple'           => true,
 				'placeholder'        => 'Chọn Cot Diem',
 				'choices'            => [
-					'Chuyên cần T9' => 'cc9',
+					'Chuyên cần T9'  => 'cc9',
 					'Chuyên cần T10' => 'cc10',
 					'Chuyên cần T11' => 'cc11',
 					'Chuyên cần T12' => 'cc12',
-					'Chuyên cần T1' => 'cc1',
-					'Chuyên cần T2' => 'cc2',
-					'Chuyên cần T3' => 'cc3',
-					'Chuyên cần T4' => 'cc4',
-					'Chuyên cần T5' => 'cc5',
-					'TB Miệng HK-1' => 'quizTerm1',
-					'TB Miệng HK-2' => 'quizTerm2',
+					'Chuyên cần T1'  => 'cc1',
+					'Chuyên cần T2'  => 'cc2',
+					'Chuyên cần T3'  => 'cc3',
+					'Chuyên cần T4'  => 'cc4',
+					'Chuyên cần T5'  => 'cc5',
+					'TB Miệng HK-1'  => 'quizTerm1',
+					'TB Miệng HK-2'  => 'quizTerm2',
 					
-					'Giữa HK-1'      => 'midTerm1',
-					'Thi HK-1'       => 'finalTerm1',
-					'Giữa HK-2'      => 'midTerm2',
-					'Thi HK-2'       => 'finalTerm2'
+					'Giữa HK-1' => 'midTerm1',
+					'Thi HK-1'  => 'finalTerm1',
+					'Giữa HK-2' => 'midTerm2',
+					'Thi HK-2'  => 'finalTerm2'
 				],
 				'translation_domain' => $this->translationDomain
 			));
@@ -274,6 +277,6 @@ class ChiDoanAdmin extends BaseAdmin {
 	 * @param ChiDoan $object
 	 */
 	public function preValidate($object) {
-
+	
 	}
 }

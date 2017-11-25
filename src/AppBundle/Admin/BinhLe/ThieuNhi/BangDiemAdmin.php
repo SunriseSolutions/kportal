@@ -105,6 +105,11 @@ class BangDiemAdmin extends BinhLeThieuNhiAdmin {
 			return true;
 		}
 		
+		$tv = $this->getUserThanhVien();
+		if(empty($tv) || ! $tv->isEnabled()) {
+			return $this->isAdmin();
+		}
+		
 		if(empty($this->namHoc)) {
 			
 			return false;
@@ -126,6 +131,7 @@ class BangDiemAdmin extends BinhLeThieuNhiAdmin {
 		
 		return $query;
 	}
+	
 	public function generateUrl($name, array $parameters = array(), $absolute = UrlGeneratorInterface::ABSOLUTE_PATH) {
 		if($name === 'list') {
 			$request = $this->getRequest();
@@ -168,9 +174,9 @@ class BangDiemAdmin extends BinhLeThieuNhiAdmin {
 //				'admin_code'         => 'app.admin.binhle_thieunhi_thieunhi'
 //			));
 			->add('phanBo.thanhVien.firstname', null, array(
-				'label' => 'list.label_full_name'
-				,
-				'template'=>'::admin/binhle/thieu-nhi/chi-doan/bang-diem/list__field__name.html.twig'
+				'label'    => 'list.label_full_name'
+			,
+				'template' => '::admin/binhle/thieu-nhi/chi-doan/bang-diem/list__field__name.html.twig'
 			));
 		$request = $this->getRequest();
 		if($request->query->getInt('hocKy') === 1) {
@@ -179,12 +185,11 @@ class BangDiemAdmin extends BinhLeThieuNhiAdmin {
 				->add('cc10')
 				->add('cc11')
 				->add('cc12')
-				->add('tbCCTerm1',null,array('label'=>'list.label_tb_cc_term1'))
+				->add('tbCCTerm1', null, array( 'label' => 'list.label_tb_cc_term1' ))
 				->add('quizTerm1')
 				->add('midTerm1')
 				->add('finalTerm1')
-				->add('sundayTicketTerm1')
-			;
+				->add('sundayTicketTerm1');
 			
 		} else {
 			$listMapper
@@ -193,12 +198,11 @@ class BangDiemAdmin extends BinhLeThieuNhiAdmin {
 				->add('cc3')
 				->add('cc4')
 				->add('cc5')
-				->add('tbCCTerm2',null,array('label'=>'list.label_tb_cc_term2'))
+				->add('tbCCTerm2', null, array( 'label' => 'list.label_tb_cc_term2' ))
 				->add('quizTerm2')
 				->add('midTerm2')
 				->add('finalTerm2')
-				->add('sundayTicketTerm2')
-			;
+				->add('sundayTicketTerm2');
 		}
 //		$listMapper->add('phanBo.chiDoan.id', null, array(
 //			'label' => 'list.label_chi_doan'

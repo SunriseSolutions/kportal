@@ -70,10 +70,10 @@ class DoiNhomGiaoLyAdmin extends BinhLeThieuNhiAdmin {
 			return true;
 		}
 
-		$thanhVien = $this->getUserThanhVien();
-
-		if(empty($thanhVien)) {
-			return false;
+		$tv = $thanhVien = $this->getUserThanhVien();
+		
+		if(empty($tv) || ! $tv->isEnabled()) {
+			return $this->isAdmin();
 		}
 		
 		if($thanhVien->isChiDoanTruong()) {

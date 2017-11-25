@@ -122,7 +122,12 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		$this->getAction();
 		$container = $this->getConfigurationPool()->getContainer();
 		
-		$thanhVien = $this->getUserThanhVien();
+		$tv = $thanhVien = $this->getUserThanhVien();
+		
+		if(empty($tv) || ! $tv->isEnabled()) {
+			return $this->isAdmin();
+		}
+		
 		if($name === 'sanh-hoat-lai') {
 			if(empty($thanhVien)) {
 				return $this->isAdmin();

@@ -57,9 +57,11 @@ class TruongPhuTrachDoiAdmin extends BaseAdmin {
 	public function isGranted($name, $object = null) {
 		$container = $this->getConfigurationPool()->getContainer();
 		
-		if($this->isAdmin()) {
-			return true;
+		$tv = $this->getUserThanhVien();
+		if(empty($tv) || ! $tv->isEnabled()) {
+			return $this->isAdmin();
 		}
+		
 		$user = $container->get('app.user')->getUser();
 		if(empty($thanhVien = $user->getThanhVien())) {
 			return false;

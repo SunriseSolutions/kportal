@@ -20,7 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ThanhVienAdmin extends BaseAdmin {
+class ThanhVienAdmin extends BinhLeThieuNhiAdmin {
 	protected $action = '';
 	protected $actionParams = [];
 	
@@ -90,8 +90,10 @@ class ThanhVienAdmin extends BaseAdmin {
 	 */
 	public function isGranted($name, $object = null) {
 		$container = $this->getConfigurationPool()->getContainer();
-		if($this->isAdmin()) {
-			return true;
+		
+		$tv = $this->getUserThanhVien();
+		if(empty($tv) || ! $tv->isEnabled()) {
+			return $this->isAdmin();
 		}
 		
 		if(is_array($name)) {

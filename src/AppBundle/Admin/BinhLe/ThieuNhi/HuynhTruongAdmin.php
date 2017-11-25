@@ -99,8 +99,10 @@ class HuynhTruongAdmin extends BinhLeThieuNhiAdmin {
 	 */
 	public function isGranted($name, $object = null) {
 		$container = $this->getConfigurationPool()->getContainer();
-		if($this->isAdmin()) {
-			return true;
+		
+		$tv = $thanhVien = $this->getUserThanhVien();
+		if(empty($tv) || ! $tv->isEnabled()) {
+			return $this->isAdmin();
 		}
 		
 		if($name === 'DELETE') {
@@ -108,9 +110,7 @@ class HuynhTruongAdmin extends BinhLeThieuNhiAdmin {
 		}
 		
 		$user = $container->get('app.user')->getUser();
-		if(empty($thanhVien = $user->getThanhVien())) {
-			return false;
-		} elseif($thanhVien->isBQT()) {
+		if($thanhVien->isBQT()) {
 			return true;
 		}
 		if($thanhVien->isPhanDoanTruong()) {

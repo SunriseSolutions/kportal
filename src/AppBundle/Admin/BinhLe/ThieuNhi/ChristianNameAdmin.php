@@ -49,6 +49,12 @@ class ChristianNameAdmin extends BaseAdmin {
 	}
 	
 	public function isGranted($name, $object = null) {
+		
+		$tv = $this->getUserThanhVien();
+		if(empty($tv) || ! $tv->isEnabled()) {
+			return $this->isAdmin();
+		}
+		
 		return parent::isGranted($name, $object);
 	}
 	
