@@ -19,6 +19,21 @@ use Symfony\Component\Security\Core\Exception\InvalidArgumentException;
 
 class DoiNhomGiaoLyAdminController extends BaseCRUDController {
 	
+	
+	public function baoCaoTienQuyAction(Request $request) {
+		/** @var DoiNhomGiaoLyAdmin $admin */
+		$admin = $this->admin;
+
+//		if( ! empty($namHoc = $this->get('app.binhle_thieunhi_namhoc')->getNamHocHienTai())) {
+//			$admin->setNamHoc($namHoc->getId());
+//		}
+		
+		$admin->setAction('bao-cao-tien-quy');
+		
+		return parent::listAction();
+		
+	}
+	
 	public function bangDiemAction($id = null, $hocKy = null, $action = null, Request $request) {
 		/**
 		 * @var DoiNhomGiaoLy $dngl

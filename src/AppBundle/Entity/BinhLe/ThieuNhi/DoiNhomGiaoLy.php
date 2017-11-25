@@ -21,11 +21,96 @@ class DoiNhomGiaoLy {
 	 */
 	protected $id;
 	
+	
+	/** @var integer */
+	private $soThieuNhi = null;
+	/** @var integer */
+	private $soThieuNhiDongQuy = null;
+	/** @var integer */
+	private $soTienQuyDaDong = null;
+	/** @var integer */
+	private $soThieuNhiNgheo = null;
+	
+	public function getSoThieuNhiNgheo() {
+		if($this->soThieuNhiNgheo === null) {
+			$this->soThieuNhiNgheo = 0;
+			/** @var PhanBo $phanBo */
+			foreach($this->phanBoHangNam as $phanBo) {
+				if($phanBo->getThanhVien()->isEnabled()) {
+					if($phanBo->isNgheoKho()) {
+						$this->soThieuNhiNgheo ++;
+					}
+				}
+			}
+		}
+		
+		return $this->soThieuNhiNgheo;
+	}
+	
+	public function getPhanTramDongQuy() {
+		return ($this->getSoThieuNhiDongQuy() / $this->getSoThieuNhi()) * 100;
+	}
+	
+	public function getSoTienQuyDaDong() {
+		if($this->soTienQuyDaDong === null) {
+			$this->soTienQuyDaDong = 0;
+			
+			/** @var PhanBo $phanBo */
+			foreach($this->phanBoHangNam as $phanBo) {
+				if($phanBo->getThanhVien()->isEnabled()) {
+					if($phanBo->isDaDongQuy()) {
+						$this->soTienQuyDaDong += $phanBo->getTienQuyDong();
+					}
+				}
+			}
+		}
+		
+		return $this->soTienQuyDaDong;
+	}
+	
+	public function getSoThieuNhiDongQuy() {
+		if($this->soThieuNhiDongQuy === null) {
+			$this->soThieuNhi = 0;
+			$counter          = 0;
+			/** @var PhanBo $phanBo */
+			foreach($this->phanBoHangNam as $phanBo) {
+				if($phanBo->getThanhVien()->isEnabled()) {
+					$this->soThieuNhi ++;
+					if($phanBo->isDaDongQuy()) {
+						$counter ++;
+					}
+				}
+			}
+			$this->soThieuNhiDongQuy = $counter;
+		}
+		
+		return $this->soThieuNhiDongQuy;
+	}
+	
+	public function getSoThieuNhi() {
+		if($this->soThieuNhi === null) {
+			$counter = 0;
+			/** @var PhanBo $phanBo */
+			foreach($this->phanBoHangNam as $phanBo) {
+				if($phanBo->getThanhVien()->isEnabled()) {
+					$counter ++;
+				}
+			}
+			$this->soThieuNhi = $counter;
+		}
+		
+		return $this->soThieuNhi;
+	}
+	
 	/**
 	 * @return string
 	 */
 	public function getId() {
 		return $this->id;
+	}
+	
+	public function getNamHoc() {
+		return $this->chiDoan->getNamHoc();
 	}
 	
 	function __construct() {

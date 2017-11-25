@@ -45,34 +45,34 @@ class ThieuNhiCommand extends ContainerAwareCommand {
 			}
 		}
 
-			if( ! empty($cname = $tv->getChristianname())) {
-				$cname = mb_strtoupper(trim($cname));
-				try {
+//			if( ! empty($cname = $tv->getChristianname())) {
+//				$cname = mb_strtoupper(trim($cname));
+//				try {
+////					$output->writeln($tv->getName());
+//					$enName = ThanhVien::$christianNames[ $cname ];
+//					if(empty($tenThanh = $cNameRepo->findOneBy([ 'code' => $enName ]))) {
+//						$tenThanh = new ChristianName();
+//						$tenThanh->getCacThanhVien()->add($tv);
+//						$tenThanh->setSex(ThanhVien::$christianNameSex[ $cname ]);
+//						$tenThanh->setTiengViet($cname);
+//						$tenThanh->setTiengAnh($enName);
+//						$tenThanh->setCode($enName);
+//						$manager->persist($tenThanh);
+//						$manager->flush();
+//					}
+//					$tv->setTenThanh($tenThanh);
+//					$manager->persist($tv);
+//				} catch(ContextErrorException $ex) {
+//					$output->writeln('ERROR ' . $ex->getTraceAsString());
+//					$output->writeln($tv->getChristianname());
 //					$output->writeln($tv->getName());
-					$enName = ThanhVien::$christianNames[ $cname ];					
-					if(empty($tenThanh = $cNameRepo->findOneBy([ 'code' => $enName ]))) {
-						$tenThanh = new ChristianName();
-						$tenThanh->getCacThanhVien()->add($tv);
-						$tenThanh->setSex(ThanhVien::$christianNameSex[ $cname ]);
-						$tenThanh->setTiengViet($cname);
-						$tenThanh->setTiengAnh($enName);
-						$tenThanh->setCode($enName);
-						$manager->persist($tenThanh);
-						$manager->flush();
-					}
-					$tv->setTenThanh($tenThanh);
-					$manager->persist($tv);
-				} catch(ContextErrorException $ex) {
-					$output->writeln('ERROR ' . $ex->getTraceAsString());
-					$output->writeln($tv->getChristianname());
-					$output->writeln($tv->getName());
-					$output->writeln($cname . ' - ' . $enName);
-					
-					$output->writeln(ThanhVien::$christianNames[ $cname ]);
-//					var_dump(ThanhVien::$christianNameSex);
-					die(- 1);
-				}
-			}
+//					$output->writeln($cname . ' - ' . $enName);
+//
+//					$output->writeln(ThanhVien::$christianNames[ $cname ]);
+////					var_dump(ThanhVien::$christianNameSex);
+//					die(- 1);
+//				}
+//			}
 		}
 		
 		$cNameViet = array_flip(ThanhVien::$christianNames);

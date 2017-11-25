@@ -70,7 +70,6 @@ class PhanDoanTruongChiDoanAdmin extends BinhLeThieuNhiAdmin {
 	
 	public function configureRoutes(RouteCollection $collection) {
 		$collection->add('baoCaoTienQuy', 'bao-cao-tien-quy');
-		$collection->add('baoCaoTienQuyChiDoan', 'bao-cao-tien-quy/' . $this->getRouterIdParameter());
 		$collection->add('bangDiem', $this->getRouterIdParameter() . '/bang-diem/{hocKy}/{action}');
 		parent::configureRoutes($collection);
 	}

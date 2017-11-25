@@ -40,6 +40,7 @@ class DoiNhomGiaoLyAdmin extends BinhLeThieuNhiAdmin {
 	
 	public function configureRoutes(RouteCollection $collection) {
 		parent::configureRoutes($collection);
+		$collection->add('baoCaoTienQuy', 'bao-cao-tien-quy');
 		$collection->add('bangDiem', $this->getRouterIdParameter() . '/bang-diem/{hocKy}/{action}');
 	}
 	
@@ -69,7 +70,7 @@ class DoiNhomGiaoLyAdmin extends BinhLeThieuNhiAdmin {
 		if($this->isAdmin()) {
 			return true;
 		}
-
+		
 		$tv = $thanhVien = $this->getUserThanhVien();
 		
 		if(empty($tv) || ! $tv->isEnabled()) {
@@ -90,13 +91,13 @@ class DoiNhomGiaoLyAdmin extends BinhLeThieuNhiAdmin {
 				
 				return false;
 			}
-		}else{
-			if($name !== 'LIST'){
+		} else {
+			if($name !== 'LIST') {
 				return false;
 			}
 			if($thanhVien->isBQT()) {
 				return true;
-			}			
+			}
 		}
 		
 		return parent::isGranted($name, $object);
@@ -110,9 +111,9 @@ class DoiNhomGiaoLyAdmin extends BinhLeThieuNhiAdmin {
 		/** @var QueryBuilder $qb */
 		$qb        = $query->getQueryBuilder();
 		$rootAlias = $qb->getRootAliases()[0];
-		if(!empty($chiDoan = $this->getUserChiDoan())){
-		$query->andWhere($expr->eq($rootAlias . '.chiDoan', $chiDoan));
-	}
+		if( ! empty($chiDoan = $this->getUserChiDoan())) {
+			$query->andWhere($expr->eq($rootAlias . '.chiDoan', $chiDoan));
+		}
 		
 		return $query;
 	}
@@ -120,18 +121,48 @@ class DoiNhomGiaoLyAdmin extends BinhLeThieuNhiAdmin {
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
 //			->addIdentifier('id')
-			->add('id', 'text', array())
-			->add('number',null,array('label'=>'list.label_nhom_giao_ly','template'=>'::admin/binhle/thieu-nhi/doi-nhom-giao-ly/list__field__doi_giao_ly.html.twig'))
-			->add('_action', 'actions', array(
-				'actions' => array(
-					'duyet_bang_diem' => array( 'template' => '::admin/binhle/thieu-nhi/doi-nhom-giao-ly/list__action__duyet_bang_diem.html.twig' ),
-					'delete'          => array(),
+			->add('id', 'text', array());
+		if($this->action === 'bao-cao-tien-quy') {
+			$listMapper->add('_progress', null, array(
+				'header_style' => 'width: 30%; text-align: center',
+				
+				'label'    => 'list.label_progress'
+			,
+				'template' => '::admin/binhle/thieu-nhi/doi-nhom-giao-ly/list-bao-cao-tien-quy__field__progress.html.twig'
+			));
+			$listMapper->add('_so_thieu_nhi', null, array(
+				'label'    => 'list.label_so_thieu_nhi'
+			,
+				'template' => '::admin/binhle/thieu-nhi/doi-nhom-giao-ly/list-bao-cao-tien-quy__field__so_thieu_nhi.html.twig'
+			));
+			$listMapper->add('_so_tien', null, array(
+				'label'    => 'list.label_so_tien'
+			,
+				'template' => '::admin/binhle/thieu-nhi/doi-nhom-giao-ly/list-bao-cao-tien-quy__field__so_tien.html.twig'
+			));
+			$listMapper->add('_so_thieu_nhi_ngheo', null, array(
+				'label'    => 'list.label_so_thieu_nhi_ngheo'
+			,
+				'template' => '::admin/binhle/thieu-nhi/doi-nhom-giao-ly/list-bao-cao-tien-quy__field__so_thieu_nhi_ngheo.html.twig'
+			));
+		} else {
+			$listMapper
+				->add('number', null, array(
+					'label'    => 'list.label_nhom_giao_ly',
+					'template' => '::admin/binhle/thieu-nhi/doi-nhom-giao-ly/list__field__doi_giao_ly.html.twig'
+				))
+				->add('_action', 'actions', array(
+					'actions' => array(
+						'duyet_bang_diem' => array( 'template' => '::admin/binhle/thieu-nhi/doi-nhom-giao-ly/list__action__duyet_bang_diem.html.twig' ),
+						'delete'          => array(),
 //                ,
 //                    'view_description' => array('template' => '::admin/product/description.html.twig')
 //                ,
 //                    'view_tos' => array('template' => '::admin/product/tos.html.twig')
-				)
-			));
+					)
+				));
+			
+		}
 	}
 	
 	protected function configureFormFields(FormMapper $formMapper) {
