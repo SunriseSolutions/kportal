@@ -28,6 +28,33 @@ list:
     label_first_name: First Name
     label_last_name: Last Name
     label_updated_at: Updated At
+
+
+    label_christianname: Tên Thánh
+    label_christianname_mom:  Tên Thánh Mẹ
+    label_christianname_dad:  Tên Thánh Bố
+    label_so_ace: Có mấy Anh-Chị-Em
+    label_firstname: Tên gọi
+    label_middlename: Tên lót
+    label_lastname: Họ
+    label_huynh_truong: Huynh Trưởng
+    label_chi_doan: Chi Đoàn
+    label_chi_doan_truong: Chi Đoàn Trưởng
+    label_phan_doan: Phân Đoàn
+    label_phan_doan_truong: Phân Đoàn Trưởng
+    label_nam_hoc: Năm Học
+    label_thanh_vien: Thiếu Nhi/Trưởng
+    label_dob: Sanh thần
+    label_so_dien_thoai: SĐT
+    label_so_dien_thoai_secours: SĐT phụ
+    label_so_dien_thoai_me: SĐT Mẹ
+    label_so_dien_thoai_bo: SĐT Bố
+    label_dia_chi_thuong_tru: Đ/c thường trú
+    label_dia_chi_tam_tru: Đ/c tạm trú
+    label_dia_chi: Địa-chỉ
+    label_notes: Ghi-chú
+    label_email_address: Email Address
+
 form:
     label_admin: Admin User
     label_firstname: First name
