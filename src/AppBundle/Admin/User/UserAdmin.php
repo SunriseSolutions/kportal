@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Admin\User;
 
 use Doctrine\ORM\Query\Expr;
@@ -15,100 +16,93 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
-class UserAdmin extends BaseUserAdmin
-{    private $action;
-
-    protected $datagridValues = array(
-        // display the first page (default = 1)
+class UserAdmin extends BaseUserAdmin {
+	private $action;
+	
+	protected $datagridValues = array(
+		// display the first page (default = 1)
 //        '_page' => 1,
-        // reverse order (default = 'ASC')
-        '_sort_order' => 'DESC',
-        // name of the ordered field (default = the model's id field, if any)
-        '_sort_by' => 'updatedAt',
-    );
-
-    /**
-     * @param string $name
-     * @param User $object
-     */
-    public function isGranted($name, $object = null)
-    {
-        $container = $this->getConfigurationPool()->getContainer();
-        $isAdmin = $container->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
+		// reverse order (default = 'ASC')
+		'_sort_order' => 'DESC',
+		// name of the ordered field (default = the model's id field, if any)
+		'_sort_by'    => 'updatedAt',
+	);
+	
+	/**
+	 * @param string $name
+	 * @param User   $object
+	 */
+	public function isGranted($name, $object = null) {
+		$container = $this->getConfigurationPool()->getContainer();
+		$isAdmin   = $container->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
 //        $pos = $container->get('app.user')->getPosition();
-        if (in_array($name, ['CREATE', 'DELETE', 'LIST'])) {
-            return $isAdmin;
-        }
-        if ($name === 'EDIT') {
-            if ($isAdmin) {
-                return true;
-            }
-            if (!empty($object) && $object->getId() === $container->get('app.user')->getUser()->getId()) {
-                return true;
-            }
-            return false;
-        }
+		if(in_array($name, [ 'CREATE', 'DELETE', 'LIST' ])) {
+			return $isAdmin;
+		}
+		if($name === 'EDIT') {
+			if($isAdmin) {
+				return true;
+			}
+			if( ! empty($object) && $object->getId() === $container->get('app.user')->getUser()->getId()) {
+				return true;
+			}
+			
+			return false;
+		}
 //        if (empty($isAdmin)) {
 //            return false;
 //        }
-
-        return parent::isGranted($name, $object);
-    }
-
-    public function toString($object)
-    {
-        return $object instanceof User
-            ? $object->getEmail()
-            : 'Talent'; // shown in the breadcrumb on the create view
-    }
-
-    public function createQuery($context = 'list')
-    {
-        /** @var ProxyQueryInterface $query */
-        $query = parent::createQuery($context);
-        if (empty($this->getParentFieldDescription())) {
+		
+		return parent::isGranted($name, $object);
+	}
+	
+	public function toString($object) {
+		return $object instanceof User
+			? $object->getEmail()
+			: 'Talent'; // shown in the breadcrumb on the create view
+	}
+	
+	public function createQuery($context = 'list') {
+		/** @var ProxyQueryInterface $query */
+		$query = parent::createQuery($context);
+		if(empty($this->getParentFieldDescription())) {
 //            $this->filterQueryByPosition($query, 'position', '', '');
-        }
+		}
 
 //        $query->andWhere()
-
-        return $query;
-    }
-
-    public function configureRoutes(RouteCollection $collection)
-    {
-        parent::configureRoutes($collection);
-        $collection->add('talent_bank', 'talent-bank');
-        $collection->add('show_user_profile', $this->getRouterIdParameter() . '/show-user-profile');
-
-    }
-
-    public function getTemplate($name)
-    {
-        return parent::getTemplate($name);
-    }
-
-    protected function configureShowFields(ShowMapper $showMapper)
-    {
-        parent::configureShowFields($showMapper);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configureListFields(ListMapper $listMapper)
-    {
-        parent::configureListFields($listMapper);
-        $listMapper->remove('impersonating');
-        $listMapper->remove('groups');
-        $listMapper->add('positions', null, ['template'=>'::admin/user/list__field_positions.html.twig']);
-    }
-
-    protected function configureFormFields(FormMapper $formMapper)
-    {
-        if ($this->getConfigurationPool()->getContainer()->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
-            parent::configureFormFields($formMapper);
-        } else {
+		
+		return $query;
+	}
+	
+	public function configureRoutes(RouteCollection $collection) {
+		parent::configureRoutes($collection);
+		$collection->add('talent_bank', 'talent-bank');
+		$collection->add('show_user_profile', $this->getRouterIdParameter() . '/show-user-profile');
+		
+	}
+	
+	public function getTemplate($name) {
+		return parent::getTemplate($name);
+	}
+	
+	protected function configureShowFields(ShowMapper $showMapper) {
+		parent::configureShowFields($showMapper);
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function configureListFields(ListMapper $listMapper) {
+		parent::configureListFields($listMapper);
+		$listMapper->remove('impersonating');
+		$listMapper->remove('groups');
+		$listMapper->add('positions', null, [ 'template' => '::admin/user/list__field_positions.html.twig' ]);
+	}
+	
+	protected function configureFormFields(FormMapper $formMapper) {
+		if($this->getConfigurationPool()->getContainer()->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+			parent::configureFormFields($formMapper);
+		} else {
 //        $formMapper->removeGroup('Social','User');
 //        $formMapper->removeGroup('Groups','Security');
 //        $formMapper->removeGroup('Keys','Security');
@@ -123,64 +117,68 @@ class UserAdmin extends BaseUserAdmin
 //        $formMapper->remove('locale');
 //        $formMapper->remove('timezone');
 //        $formMapper->remove('phone');
-            $formMapper
-                ->with('Profile', ['class' => 'col-md-6'])->end()
-                ->with('General', ['class' => 'col-md-6'])->end();
-
-            $formMapper
-                ->with('General')
+			$formMapper
+				->with('Profile', [ 'class' => 'col-md-6' ])->end()
+				->with('General', [ 'class' => 'col-md-6' ])->end();
+			
+			$formMapper
+				->with('General')
 //                ->add('username')
-                ->add('email')
+				->add('email')
 //                ->add('admin')
-                ->add('plainPassword', 'text', [
-                    'required' => (!$this->getSubject() || is_null($this->getSubject()->getId())),
-                ])
-                ->end()
-                ->with('Profile')
-	            ->add('lastname', null, ['required' => false])
-	            ->add('middlename', null, ['required' => false])
-                ->add('firstname', null, ['required' => false])
-                ->end();
-        }
-
-    }
-
-    /**
-     * @param User $object
-     */
-    public function prePersist($object)
-    {
-        parent::prePersist($object);
-        if (!$object->isEnabled()) {
-            $object->setEnabled(true);
-        }
-    }
-
-    /**
-     * @param User $object
-     */
-    public function preUpdate($object)
-    {
-        parent::preUpdate($object);
-        if (!$object->isEnabled()) {
-            $object->setEnabled(true);
-        }
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    /**
-     * @param mixed $action
-     */
-    public function setAction($action)
-    {
-        $this->action = $action;
-    }
-
+				->add('plainPassword', 'text', [
+					'required' => ( ! $this->getSubject() || is_null($this->getSubject()->getId())),
+				])
+				->end()
+				->with('Profile')
+				->add('lastname', null, [ 'required' => false ])
+				->add('middlename', null, [ 'required' => false ])
+				->add('firstname', null, [ 'required' => false ]);
+			
+			if( ! empty($this->getConfigurationPool()->getContainer()->get('app.user')->getUser()->getThanhVien())) {
+				$formMapper->add('thanhVien.soDienThoai', null, array( 'label' => 'list.label_so_dien_thoai', 'translation_domain'=>'BinhLeAdmin' ))
+				           ->add('thanhVien.soDienThoaiSecours', null, array( 'label' => 'list.label_so_dien_thoai_secours', 'translation_domain'=>'BinhLeAdmin'  ))
+				           ->add('thanhVien.diaChiThuongTru', null, array( 'label' => 'list.label_dia_chi_thuong_tru', 'translation_domain'=>'BinhLeAdmin' ) )
+				           ->add('thanhVien.diaChiTamTru', null, array( 'label' => 'list.label_dia_chi_tam_tru', 'translation_domain'=>'BinhLeAdmin' ) );
+			}
+			
+			$formMapper->end();
+		}
+		
+	}
+	
+	/**
+	 * @param User $object
+	 */
+	public function prePersist($object) {
+		parent::prePersist($object);
+		if( ! $object->isEnabled()) {
+			$object->setEnabled(true);
+		}
+	}
+	
+	/**
+	 * @param User $object
+	 */
+	public function preUpdate($object) {
+		parent::preUpdate($object);
+		if( ! $object->isEnabled()) {
+			$object->setEnabled(true);
+		}
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getAction() {
+		return $this->action;
+	}
+	
+	/**
+	 * @param mixed $action
+	 */
+	public function setAction($action) {
+		$this->action = $action;
+	}
+	
 }
