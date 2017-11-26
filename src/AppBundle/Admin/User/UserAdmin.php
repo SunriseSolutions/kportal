@@ -130,16 +130,39 @@ class UserAdmin extends BaseUserAdmin {
 					'required' => ( ! $this->getSubject() || is_null($this->getSubject()->getId())),
 				])
 				->end()
-				->with('Profile')
-				->add('lastname', null, [ 'required' => false ])
-				->add('middlename', null, [ 'required' => false ])
-				->add('firstname', null, [ 'required' => false ]);
+				->with('Profile');
 			
 			if( ! empty($this->getConfigurationPool()->getContainer()->get('app.user')->getUser()->getThanhVien())) {
-				$formMapper->add('thanhVien.soDienThoai', null, array( 'label' => 'list.label_so_dien_thoai', 'translation_domain'=>'BinhLeAdmin' ))
-				           ->add('thanhVien.soDienThoaiSecours', null, array( 'label' => 'list.label_so_dien_thoai_secours', 'translation_domain'=>'BinhLeAdmin'  ))
-				           ->add('thanhVien.diaChiThuongTru', null, array( 'label' => 'list.label_dia_chi_thuong_tru', 'translation_domain'=>'BinhLeAdmin' ) )
-				           ->add('thanhVien.diaChiTamTru', null, array( 'label' => 'list.label_dia_chi_tam_tru', 'translation_domain'=>'BinhLeAdmin' ) );
+				$formMapper
+					->add('thanhVien.lastname', null, [ 'required'           => false,
+					                                    'label'              => 'thanh_vien.label_lastname',
+					                                    'translation_domain' => 'BinhLeAdmin'
+					])
+					->add('thanhVien.middlename', null, [ 'required'           => false,
+					                                      'label'              => 'thanh_vien.label_middlename',
+					                                      'translation_domain' => 'BinhLeAdmin'
+					])
+					->add('thanhVien.firstname', null, [ 'required'           => false,
+					                                     'label'              => 'thanh_vien.label_firstname',
+					                                     'translation_domain' => 'BinhLeAdmin'
+					]);
+				$formMapper->add('thanhVien.soDienThoai', null, array( 'label'              => 'thanh_vien.label_so_dien_thoai',
+				                                                       'translation_domain' => 'BinhLeAdmin'
+				))
+				           ->add('thanhVien.soDienThoaiSecours', null, array( 'label'              => 'thanh_vien.label_so_dien_thoai_secours',
+				                                                              'translation_domain' => 'BinhLeAdmin'
+				           ))
+				           ->add('thanhVien.diaChiThuongTru', null, array( 'label'              => 'thanh_vien.label_dia_chi_thuong_tru',
+				                                                           'translation_domain' => 'BinhLeAdmin'
+				           ))
+				           ->add('thanhVien.diaChiTamTru', null, array( 'label'              => 'thanh_vien.label_dia_chi_tam_tru',
+				                                                        'translation_domain' => 'BinhLeAdmin'
+				           ));
+			} else {
+				$formMapper
+					->add('lastname', null, [ 'required' => false ])
+					->add('middlename', null, [ 'required' => false ])
+					->add('firstname', null, [ 'required' => false ]);
 			}
 			
 			$formMapper->end();

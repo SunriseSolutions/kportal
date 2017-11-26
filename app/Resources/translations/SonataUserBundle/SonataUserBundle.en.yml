@@ -6,30 +6,10 @@ desc_choose_login_method: Choose one of the following sign in methods.
 
 label_accept_terms: By clicking on <strong>"Sign Up"</strong>, I have read and accept <a target="_blank" href="%privacy_policy_url%"><strong>Privacy & Policy</strong></a> and <a target="_blank" href="%terms_of_use_url%"><strong>Terms of Use</strong></a>.
 
-gender:
-    f: Female
-    m: Male
-    u: Unspecified
-marital_status:
-    s: Single
-    m: Married
-    u: Unspecified
-show:
-    label_profile_title: Prof Title
-    label_profile_years_of_experience: Years of Experience
-    label_profile_skills: Skills
-    label_cv_media: CV/Resumes
-    label_profile_summary: Summary
-    label_marital_status: Marital Status
-    label_address: Address
-list:
-    label_positions: Positions
-    label_avatar: Avatar
-    label_first_name: First Name
-    label_last_name: Last Name
-    label_updated_at: Updated At
-
-
+thanh_vien:
+    label_firstname: Tên gọi
+    label_middlename: Tên lót
+    label_lastname: Họ
     label_christianname: Tên Thánh
     label_christianname_mom:  Tên Thánh Mẹ
     label_christianname_dad:  Tên Thánh Bố
@@ -54,6 +34,31 @@ list:
     label_dia_chi: Địa-chỉ
     label_notes: Ghi-chú
     label_email_address: Email Address
+
+
+gender:
+    f: Female
+    m: Male
+    u: Unspecified
+marital_status:
+    s: Single
+    m: Married
+    u: Unspecified
+show:
+    label_profile_title: Prof Title
+    label_profile_years_of_experience: Years of Experience
+    label_profile_skills: Skills
+    label_cv_media: CV/Resumes
+    label_profile_summary: Summary
+    label_marital_status: Marital Status
+    label_address: Address
+list:
+    label_positions: Positions
+    label_avatar: Avatar
+    label_first_name: First Name
+    label_last_name: Last Name
+    label_updated_at: Updated At
+
 
 form:
     label_admin: Admin User
