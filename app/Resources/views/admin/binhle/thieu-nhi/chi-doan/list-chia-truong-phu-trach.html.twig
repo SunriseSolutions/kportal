@@ -110,6 +110,12 @@
                     {% set doi1 = '' %}
                     {% set doi2 = '' %}
                     {% set doi3 = '' %}
+                    {% set doi4 = '' %}
+                    {% set doi5 = '' %}
+                    {% set doi6 = '' %}
+                    {% set doi7 = '' %}
+                    {% set doi8 = '' %}
+
                     {% for truongPhuTrach in phanBo.cacTruongPhuTrachDoi %}
 
                     {% if loop.index == 1 %}
@@ -124,14 +130,33 @@
                     {% set doi3 = truongPhuTrach.doiNhomGiaoLy.number %}
                     {% endif %}
 
+                    {% if loop.index == 4 %}
+                    {% set doi4 = truongPhuTrach.doiNhomGiaoLy.number %}
+                    {% endif %}
+
+                    {% if loop.index == 5 %}
+                    {% set doi5 = truongPhuTrach.doiNhomGiaoLy.number %}
+                    {% endif %}
+
+                    {% if loop.index == 6 %}
+                    {% set doi6 = truongPhuTrach.doiNhomGiaoLy.number %}
+                    {% endif %}
+
+                    {% if loop.index == 7 %}
+                    {% set doi7 = truongPhuTrach.doiNhomGiaoLy.number %}
+                    {% endif %}
+
+                    {% if loop.index == 8 %}
+                    {% set doi8 = truongPhuTrach.doiNhomGiaoLy.number %}
+                    {% endif %}
+
                     {% endfor %}
                     {% spaceless %}
-                    ["{{ thanhVien.code }}", '{{ thanhVien.christianName }}', '{{ thanhVien.lastName }}', '{{ thanhVien.middleName }}', '{{ thanhVien.firstName }}', '{{ doi1 }}', '{{ doi2 }}', '{{ doi3 }}'],
+                    ["{{ thanhVien.code }}", '{{ thanhVien.christianName }}', '{{ thanhVien.lastName }}', '{{ thanhVien.middleName }}', '{{ thanhVien.firstName }}', '{{ doi1 }}', '{{ doi2 }}', '{{ doi3 }}', '{{ doi4 }}', '{{ doi5 }}', '{{ doi6 }}', '{{ doi7 }}', '{{ doi8 }}'],
                     {% endspaceless %}
                     {% endif %}
                     {% endfor %}
                 ];
-
 
             var container = document.getElementById('chiDoanSpreadSheet'),
                 hot;
@@ -142,7 +167,7 @@
             window.validateDoi = function (doi1) {
                 return doi1 === '' || doi1 === 'undefined' || ( $.isNumeric(doi1) && window.cacDoiNhomGiaoLy.indexOf(parseInt(doi1)) > -1 );
             }
-            window.postDoi = function (doi1, doi2, doi3, phanBoId, thanhVienCode, thanhVienFirstName) {
+            window.postDoi = function (doi1, doi2, doi3, doi4, doi5, doi6, doi7, doi8, phanBoId, thanhVienCode, thanhVienFirstName) {
                 // Assign handlers immediately after making the request,
 // and remember the jqxhr object for this request
                 var chiaDoiPostURL = "{{ path('admin_app_binhle_thieunhi_chidoan_thieuNhiChiDoanChiaTruongPhuTrach',{'id':chiDoan.id}) }}";
@@ -153,6 +178,11 @@
                             var doi = doi1 === '' || doi1 === 'undefined' ? '' : doi1;
                             doi += doi2 === '' || doi2 === 'undefined' ? '' : ', ' + doi2;
                             doi += doi3 === '' || doi3 === 'undefined' ? '' : ', ' + doi3;
+                            doi += doi4 === '' || doi4 === 'undefined' ? '' : ', ' + doi4;
+                            doi += doi5 === '' || doi5 === 'undefined' ? '' : ', ' + doi5;
+                            doi += doi6 === '' || doi6 === 'undefined' ? '' : ', ' + doi6;
+                            doi += doi7 === '' || doi7 === 'undefined' ? '' : ', ' + doi7;
+                            doi += doi8 === '' || doi8 === 'undefined' ? '' : ', ' + doi8;
 
                             $.notify({
                                 // options
@@ -253,11 +283,18 @@
                     var doi1 = data[changedRow][5];
                     var doi2 = data[changedRow][6];
                     var doi3 = data[changedRow][7];
-                    window.postDoi(doi1, doi2, doi3, phanBoId, thanhVienCode, thanhVienFirstName);
+
+                    var doi4 = data[changedRow][8];
+                    var doi5 = data[changedRow][9];
+                    var doi6 = data[changedRow][10];
+                    var doi7 = data[changedRow][11];
+                    var doi8 = data[changedRow][12];
+
+                    window.postDoi(doi1, doi2, doi3, doi4, doi5, doi6, doi7, doi8, phanBoId, thanhVienCode, thanhVienFirstName);
 
                 }
                 ,
-                colHeaders: ['#', 'Tên Thánh', 'Họ', 'Tên Lót', 'Tên', 'Đội thứ nhất', 'Đội thứ 2', 'Đội thứ 3'],
+                colHeaders: ['#', 'Tên Thánh', 'Họ', 'Tên Lót', 'Tên', 'Đội thứ nhất', 'Đội thứ 2', 'Đội 3', 'Đội 4', 'Đội 5', 'Đội 6', 'Đội 7', 'Đội 8'],
                 columns: [
                     {
                         readOnly: true
@@ -277,6 +314,26 @@
                     {readOnly: true},
                     {readOnly: true},
                     {readOnly: true},
+                    {
+                        type: 'dropdown',
+                        source: window.cacDoiNhomGiaoLy
+                    },
+                    {
+                        type: 'dropdown',
+                        source: window.cacDoiNhomGiaoLy
+                    },
+                    {
+                        type: 'dropdown',
+                        source: window.cacDoiNhomGiaoLy
+                    },
+                    {
+                        type: 'dropdown',
+                        source: window.cacDoiNhomGiaoLy
+                    },
+                    {
+                        type: 'dropdown',
+                        source: window.cacDoiNhomGiaoLy
+                    },
                     {
                         type: 'dropdown',
                         source: window.cacDoiNhomGiaoLy
