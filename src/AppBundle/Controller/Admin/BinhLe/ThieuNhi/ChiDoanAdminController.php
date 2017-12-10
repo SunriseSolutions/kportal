@@ -37,9 +37,15 @@ class ChiDoanAdminController extends BaseCRUDController {
 			$doi1     = $request->request->getInt('doi1', 0);
 			$doi2     = $request->request->getInt('doi2', 0);
 			$doi3     = $request->request->getInt('doi3', 0);
+			$doi4     = $request->request->getInt('doi4', 0);
+			$doi5     = $request->request->getInt('doi5', 0);
+			$doi6     = $request->request->getInt('doi6', 0);
+			$doi7     = $request->request->getInt('doi7', 0);
+			$doi8     = $request->request->getInt('doi8', 0);
+			
 			$phanBoId = $request->request->get('phanBoId');
 			if( ! (empty($phanBo = $this->getDoctrine()->getRepository(PhanBo::class)->find($phanBoId)))) {
-				if($chiDoan->chiaTruongPhuTrachVaoCacDoi($doi1, $doi2, $doi3, $phanBo)) {
+				if($chiDoan->chiaTruongPhuTrachVaoCacDoi($doi1, $doi2, $doi3,$doi4,$doi5,$doi6,$doi7,$doi8, $phanBo)) {
 					$manager = $this->get('doctrine.orm.default_entity_manager');
 					$manager->persist($phanBo);
 					$manager->persist($chiDoan);

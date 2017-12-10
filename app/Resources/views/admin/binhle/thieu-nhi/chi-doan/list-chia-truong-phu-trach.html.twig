@@ -101,7 +101,7 @@
             {% endif %}
             {% endfor %}
         }
-            
+
             window.data =
                 [
                     {% for phanBo in phanBoHangNam %}
@@ -165,7 +165,7 @@
 
             window.cacDoiNhomGiaoLy = [{% for dngl in cacDoiNhomGiaoLy %} {% if loop.index > 1 %},{% endif %} {{ dngl.number }}{% endfor %}]
             window.validateDoi = function (doi1) {
-                return doi1 === '' || doi1 === 'undefined' || ( $.isNumeric(doi1) && window.cacDoiNhomGiaoLy.indexOf(parseInt(doi1)) > -1 );
+                return doi1 === '' || doi1 === 'undefined' || ($.isNumeric(doi1) && window.cacDoiNhomGiaoLy.indexOf(parseInt(doi1)) > -1);
             }
             window.postDoi = function (doi1, doi2, doi3, doi4, doi5, doi6, doi7, doi8, phanBoId, thanhVienCode, thanhVienFirstName) {
                 // Assign handlers immediately after making the request,
@@ -173,7 +173,17 @@
                 var chiaDoiPostURL = "{{ path('admin_app_binhle_thieunhi_chidoan_thieuNhiChiDoanChiaTruongPhuTrach',{'id':chiDoan.id}) }}";
                 if (window.validateDoi(doi1) && window.validateDoi(doi2) && window.validateDoi(doi3) && phanBoId != 'undefined' && phanBoId != null
                 ) {
-                    var jqxhr = $.post(chiaDoiPostURL, {doi1: doi1, doi2: doi2, doi3: doi3, phanBoId: phanBoId})
+                    var jqxhr = $.post(chiaDoiPostURL, {
+                        doi1: doi1,
+                        doi2: doi2,
+                        doi3: doi3,
+                        doi4: doi4,
+                        doi5: doi5,
+                        doi6: doi6,
+                        doi7: doi7,
+                        doi8: doi8,
+                        phanBoId: phanBoId
+                    })
                         .done(function () {
                             var doi = doi1 === '' || doi1 === 'undefined' ? '' : doi1;
                             doi += doi2 === '' || doi2 === 'undefined' ? '' : ', ' + doi2;

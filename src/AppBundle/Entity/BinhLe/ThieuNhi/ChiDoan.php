@@ -25,41 +25,43 @@ class ChiDoan {
 	private $soThieuNhiDongQuy = null;
 	/** @var integer */
 	private $soTienQuyDaDong = null;
-/** @var integer */
+	/** @var integer */
 	private $soThieuNhiNgheo = null;
-
-	public function getSoThieuNhiNgheo(){
-		if($this->soThieuNhiNgheo === null){
+	
+	public function getSoThieuNhiNgheo() {
+		if($this->soThieuNhiNgheo === null) {
 			$this->soThieuNhiNgheo = 0;
 			/** @var PhanBo $phanBo */
 			foreach($this->phanBoHangNam as $phanBo) {
-				if($phanBo->getThanhVien()->isEnabled()) {					
+				if($phanBo->getThanhVien()->isEnabled()) {
 					if($phanBo->isNgheoKho()) {
-						$this->soThieuNhiNgheo++;
+						$this->soThieuNhiNgheo ++;
 					}
 				}
-			}			
+			}
 		}
+		
 		return $this->soThieuNhiNgheo;
 	}
-
+	
 	public function getPhanTramDongQuy() {
 		return ($this->getSoThieuNhiDongQuy() / $this->getSoThieuNhi()) * 100;
 	}
-
-	public function getSoTienQuyDaDong(){
-		if($this->soTienQuyDaDong === null){
+	
+	public function getSoTienQuyDaDong() {
+		if($this->soTienQuyDaDong === null) {
 			$this->soTienQuyDaDong = 0;
 			
 			/** @var PhanBo $phanBo */
 			foreach($this->phanBoHangNam as $phanBo) {
-				if($phanBo->getThanhVien()->isEnabled()) {					
+				if($phanBo->getThanhVien()->isEnabled()) {
 					if($phanBo->isDaDongQuy()) {
-						$this->soTienQuyDaDong += $phanBo->getTienQuyDong();						
+						$this->soTienQuyDaDong += $phanBo->getTienQuyDong();
 					}
 				}
-			}			
+			}
 		}
+		
 		return $this->soTienQuyDaDong;
 	}
 	
@@ -137,19 +139,30 @@ class ChiDoan {
 		return $this->phanBoHangNam;
 	}
 	
-	public function chiaTruongPhuTrachVaoCacDoi($doi1, $doi2, $doi3, PhanBo $phanBo) {
+	public function chiaTruongPhuTrachVaoCacDoi($doi1, $doi2, $doi3, $doi4, $doi5, $doi6, $doi7, $doi8, PhanBo $phanBo) {
 		if($phanBo->getChiDoan()->getId() !== $this->id) {
 			return false;
 		}
 		$phanBo->clearCacTruongPhuTrachDoi();
-		$dngl1     = $this->getDoiNhomGiaoLy($doi1);
-		$dngl2     = $this->getDoiNhomGiaoLy($doi2);
-		$dngl3     = $this->getDoiNhomGiaoLy($doi3);
+		$dngl1 = $this->getDoiNhomGiaoLy($doi1);
+		$dngl2 = $this->getDoiNhomGiaoLy($doi2);
+		$dngl3 = $this->getDoiNhomGiaoLy($doi3);
+		$dngl4 = $this->getDoiNhomGiaoLy($doi4);
+		$dngl5 = $this->getDoiNhomGiaoLy($doi5);
+		$dngl6 = $this->getDoiNhomGiaoLy($doi6);
+		$dngl7 = $this->getDoiNhomGiaoLy($doi7);
+		$dngl8 = $this->getDoiNhomGiaoLy($doi8);
+		
 		$truongPT1 = $this->chiaTruongPhuTrach($dngl1, $phanBo);
 		$truongPT2 = $this->chiaTruongPhuTrach($dngl2, $phanBo);
 		$truongPT3 = $this->chiaTruongPhuTrach($dngl3, $phanBo);
+		$truongPT4 = $this->chiaTruongPhuTrach($dngl4, $phanBo);
+		$truongPT5 = $this->chiaTruongPhuTrach($dngl5, $phanBo);
+		$truongPT6 = $this->chiaTruongPhuTrach($dngl6, $phanBo);
+		$truongPT7 = $this->chiaTruongPhuTrach($dngl7, $phanBo);
+		$truongPT8 = $this->chiaTruongPhuTrach($dngl8, $phanBo);
 		
-		return ! empty($truongPT1) || ! empty($truongPT2) || ! empty($truongPT3);
+		return ! empty($truongPT1) || ! empty($truongPT2) || ! empty($truongPT3)|| ! empty($truongPT4)|| ! empty($truongPT5)|| ! empty($truongPT6)|| ! empty($truongPT7)|| ! empty($truongPT8);
 	}
 	
 	public function hoanTatBangDiemHK1() {
