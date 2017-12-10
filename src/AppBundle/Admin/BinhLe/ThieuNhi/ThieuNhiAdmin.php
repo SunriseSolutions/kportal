@@ -637,7 +637,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				$subject        = $this->getSubject();
 				$phanBoThieuNhi = $subject->getPhanBoNamNay();
 				$nhomGL         = $phanBoThieuNhi->getDoiNhomGiaoLy();
-				if($nhomGL->getId() === $truong->getDoiNhomGiaoLy()->getId()) {
+				if( ! empty($nhomGL) && ! empty($truong->getDoiNhomGiaoLy()) && $nhomGL->getId() === $truong->getDoiNhomGiaoLy()->getId()) {
 					$showField = true;
 				}
 			}
