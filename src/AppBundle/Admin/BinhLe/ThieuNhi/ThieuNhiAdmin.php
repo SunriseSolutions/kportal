@@ -76,7 +76,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		return parent::getTemplate($name);
 	}
 	
-	public function configureRoutes(RouteCollection $collection) {
+	public function configureRoute1s(RouteCollection $collection) {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
 		$collection->add('thieuNhiNhom', 'thieu-nhi/nhom-giao-ly/{phanBo}/list');
 		$collection->add('thieuNhiChiDoan', 'thieu-nhi/chi-doan/{phanBo}/list');
@@ -236,32 +236,31 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				if($name === 'EXPORT') {
 					return true;
 				}
-				
-				if($name === 'EDIT') {
+			}
+			
+			if($name === 'EDIT') {
 //					if($thanhVien->isChiDoanTruong()) {
 //						return true;
 //					}
-					if(empty($object)) {
-						return false;
-					}
-					
-					$doiNhomGiaoLy = $object->getPhanBoNamNay()->getDoiNhomGiaoLy();
-					
-					if(empty($doiNhomGiaoLy)) {
-						return false;
-					}
-					
-					$cacTruongPT = $doiNhomGiaoLy->getCacTruongPhuTrachDoi();
-					/** @var TruongPhuTrachDoi $item */
-					foreach($cacTruongPT as $item) {
-						if($item->getPhanBoHangNam()->getThanhVien()->getId() === $thanhVien->getId()) {
-							return true;
-						}
-					}
-					
+				if(empty($object)) {
+					return false;
+				}
+				
+				$doiNhomGiaoLy = $object->getPhanBoNamNay()->getDoiNhomGiaoLy();
+				
+				if(empty($doiNhomGiaoLy)) {
 					return $thanhVien->isCDTorGreater($object);
 				}
 				
+				$cacTruongPT = $doiNhomGiaoLy->getCacTruongPhuTrachDoi();
+				/** @var TruongPhuTrachDoi $item */
+				foreach($cacTruongPT as $item) {
+					if($item->getPhanBoHangNam()->getThanhVien()->getId() === $thanhVien->getId()) {
+						return true;
+					}
+				}
+				
+				return $thanhVien->isCDTorGreater($object);
 			}
 		}
 		
@@ -497,7 +496,6 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		//->with('form.group_job_locations', ['class' => 'col-md-4'])->end()
 //			->end();
 		
-		
 		$formMapper
 			->tab('form.tab_info')
 			->with('form.group_general');
@@ -548,7 +546,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				'required'           => true
 			));
 		}
-		if($thanhVien->isBQT() && $thanhVien->isPhanDoanTruong()) {
+		if($thanhVien->isBQT() || $thanhVien->isPhanDoanTruong()) {
 			$formMapper->add('chiDoan', ChoiceType::class, array(
 				'required'           => false,
 				'label'              => 'list.label_chi_doan',
