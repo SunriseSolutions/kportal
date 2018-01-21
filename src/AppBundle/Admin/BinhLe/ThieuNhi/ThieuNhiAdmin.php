@@ -204,6 +204,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		if($thanhVien->isBQT()) {
 			return true;
 		}
+		
 		if( ! $thanhVien->isEnabled()) {
 			return false;
 		}
@@ -213,7 +214,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		}
 		
 		if($name === 'CREATE') {
-			return false;
+			return $thanhVien->isCDTorGreater($object);
 		}
 		
 		if(in_array($this->action, [ 'truong-chi-doan', 'list-thieu-nhi-nhom' ]) || $name === 'EDIT') {
@@ -258,7 +259,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 						}
 					}
 					
-					return false;
+					return $thanhVien->isCDTorGreater($object);
 				}
 				
 			}
@@ -537,24 +538,28 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		$formMapper
 			->end();
 		
-		$formMapper->with('form.group_extra')
-		           ->add('phanDoan', ChoiceType::class, array(
-			           'label'              => 'list.label_phan_doan',
-			           'placeholder'        => 'Chọn Phân Đoàn',
-			           'choices'            => ThanhVien::$danhSachPhanDoan,
-			           'translation_domain' => $this->translationDomain,
-			           'required'           => true
-		           ))
-		           ->add('chiDoan', ChoiceType::class, array(
-			           'required'           => false,
-			           'label'              => 'list.label_chi_doan',
-			           'placeholder'        => 'Chọn Chi Đoàn',
-			           'choices'            => $danhSachChiDoan,
-			           'translation_domain' => $this->translationDomain
-		           ))
-		           ->add('ngheoKho', null, array(
-			           'label' => 'list.label_ngheo_kho',
-		           ))
+		$formMapper->with('form.group_extra');
+		if($thanhVien->isBQT()) {
+			$formMapper->add('phanDoan', ChoiceType::class, array(
+				'label'              => 'list.label_phan_doan',
+				'placeholder'        => 'Chọn Phân Đoàn',
+				'choices'            => ThanhVien::$danhSachPhanDoan,
+				'translation_domain' => $this->translationDomain,
+				'required'           => true
+			));
+		}
+		if($thanhVien->isBQT() && $thanhVien->isPhanDoanTruong()) {
+			$formMapper->add('chiDoan', ChoiceType::class, array(
+				'required'           => false,
+				'label'              => 'list.label_chi_doan',
+				'placeholder'        => 'Chọn Chi Đoàn',
+				'choices'            => $danhSachChiDoan,
+				'translation_domain' => $this->translationDomain
+			));
+		}
+		$formMapper->add('ngheoKho', null, array(
+			'label' => 'list.label_ngheo_kho',
+		))
 		           ->add('dacBiet', null, array(
 			           'label' => 'list.label_dac_biet',
 		           ))
@@ -749,6 +754,11 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		
 		$namHocHienTai = $this->getConfigurationPool()->getContainer()->get('app.binhle_thieunhi_namhoc')->getNamHocHienTai();
 		$object->initiatePhanBo($namHocHienTai);
+		if( ! empty($thanhVien = $this->getUserThanhVien())) {
+			if($thanhVien->isChiDoanTruong()) {
+				$object->setChiDoan($thanhVien->getChiDoan());
+			}
+		}
 		
 	}
 	

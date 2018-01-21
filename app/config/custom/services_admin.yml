@@ -98,10 +98,6 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: dashboard.content_layout_content_piece_vocab_entry, show_in_dashboard: false, label_translator_strategy: sonata.admin.label.strategy.underscore }
 
-
-
-
-
     app.admin.content_article_node:
         class: AppBundle\Admin\Content\NodeType\Article\ArticleNodeAdmin
         arguments: [~, AppBundle\Entity\Content\NodeType\Article\ArticleNode, AppBundle:Admin/Content/NodeType/Article/ArticleNodeAdmin]

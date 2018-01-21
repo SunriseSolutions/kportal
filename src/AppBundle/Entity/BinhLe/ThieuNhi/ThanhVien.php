@@ -205,7 +205,7 @@ class ThanhVien {
 	];
 	
 	public function isBQT() {
-		return $this->xuDoanPhoNgoai || $this->xuDoanPhoNoi || $this->xuDoanTruong || $this->thuKyXuDoan;
+		return $this->xuDoanPhoNgoai || $this->xuDoanPhoNoi || $this->xuDoanTruong || $this->thuKyXuDoan || $this->soeur;
 	}
 	
 	/**
@@ -263,7 +263,7 @@ class ThanhVien {
 		return null;
 	}
 	
-	public function isCDTorGreater(ThanhVien $thanhVien) {
+	public function isCDTorGreater(ThanhVien $thanhVien = null) {
 		if( ! $this->isHuynhTruong()) {
 			return false;
 		}
@@ -275,9 +275,12 @@ class ThanhVien {
 		if($this->isPhanDoanTruong()) {
 			return true;
 		}
-		if($this->getChiDoan() !== $thanhVien->getChiDoan()) {
-			return false;
+		if( ! empty($thanhVien)) {
+			if($this->getChiDoan() !== $thanhVien->getChiDoan()) {
+				return false;
+			}
 		}
+		
 		if($this->isChiDoanTruong()) {
 			return true;
 		}
