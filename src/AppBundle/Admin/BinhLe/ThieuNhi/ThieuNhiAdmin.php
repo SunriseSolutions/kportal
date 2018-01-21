@@ -76,7 +76,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		return parent::getTemplate($name);
 	}
 	
-	public function configureRoute1s(RouteCollection $collection) {
+	public function configureRoutes(RouteCollection $collection) {
 //		$collection->add('employeesImport', $this->getRouterIdParameter() . '/import');
 		$collection->add('thieuNhiNhom', 'thieu-nhi/nhom-giao-ly/{phanBo}/list');
 		$collection->add('thieuNhiChiDoan', 'thieu-nhi/chi-doan/{phanBo}/list');
