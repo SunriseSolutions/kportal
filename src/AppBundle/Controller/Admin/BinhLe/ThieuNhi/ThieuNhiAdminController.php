@@ -88,7 +88,11 @@ class ThieuNhiAdminController extends BaseThieuNhiAdminController {
 		
 		$this->addFlash('sonata_flash_success', $thanhVien->getName() . ' đã nghỉ sanh hoạt.');
 		
-		$params      = $this->getRefererParams();
+		$params = $this->getRefererParams();
+		if(empty($params)) {
+			return $this->redirect($this->generateUrl('admin_app_binhle_thieunhi_thieunhi_list'
+			));
+		}
 		$routeParams = $params;
 		unset($routeParams['_route']);
 		unset($routeParams['_controller']);

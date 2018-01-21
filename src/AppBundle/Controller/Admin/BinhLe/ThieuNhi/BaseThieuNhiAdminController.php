@@ -6,9 +6,12 @@ use AppBundle\Controller\Admin\BaseCRUDController;
 
 class BaseThieuNhiAdminController extends BaseCRUDController {
 	protected function getRefererParams() {
-		$request  = $this->getRequest();
-		$referer  = $request->headers->get('referer');
-		$baseUrl  = $request->getBaseUrl();
+		$request = $this->getRequest();
+		$referer = $request->headers->get('referer');
+		$baseUrl = $request->getBaseUrl();
+		if(empty($baseUrl)) {
+			return null;
+		}
 		$lastPath = substr($referer, strpos($referer, $baseUrl) + strlen($baseUrl));
 		
 		return $this->get('router')->match($lastPath);
