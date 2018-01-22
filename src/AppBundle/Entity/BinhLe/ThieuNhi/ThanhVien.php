@@ -205,7 +205,7 @@ class ThanhVien {
 	];
 	
 	public function isBQT() {
-		return $this->xuDoanPhoNgoai || $this->xuDoanPhoNoi || $this->xuDoanTruong || $this->thuKyXuDoan || $this->soeur;
+		return $this->xuDoanPhoNgoai || $this->xuDoanPhoNoi || $this->xuDoanTruong || $this->thuKyXuDoan;
 	}
 	
 	/**
