@@ -54,7 +54,7 @@ class PhanDoanTruongBangDiemAdmin extends BangDiemAdmin {
 			return $this->isAdmin();
 		}
 		
-		if( ! $tv->isBQT() && ! $tv->isPhanDoanTruong()) {
+		if( ! $tv->isBQT() && ! $tv->isPhanDoanTruongOrSoeur()) {
 			return false;
 		}
 		

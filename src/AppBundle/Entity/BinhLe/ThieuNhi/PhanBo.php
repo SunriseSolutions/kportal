@@ -29,6 +29,13 @@ class PhanBo {
 		$this->createdAt            = new \DateTime();
 	}
 	
+	/**
+	 * @return bool
+	 */
+	public function isPhanDoanTruongOrSoeur() {
+		return $this->phanDoanTruong || $this->soeur;
+	}
+	
 	public function setVaiTro() {
 		$tv                = $this->thanhVien;
 		$this->huynhTruong = $tv->isHuynhTruong();
@@ -47,6 +54,8 @@ class PhanBo {
 		$this->xuDoanPhoNgoai = $tv->isXuDoanPhoNgoai();
 		$this->thuKyXuDoan    = $tv->isThuKyXuDoan();
 		$this->thuQuyXuDoan   = $tv->isThuQuyXuDoan();
+		
+		$this->soeur       = $tv->isSoeur();
 	}
 	
 	public function getCacPhanBoThieuNhiPhuTrach() {
@@ -386,6 +395,13 @@ class PhanBo {
 	 * @ORM\Column(type="boolean", options={"default":false})
 	 */
 	protected $thuQuyXuDoan = false;
+	
+	
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", options={"default":false})
+	 */
+	protected $soeur = false;
 	
 	/**
 	 * @var string
@@ -783,6 +799,20 @@ class PhanBo {
 	 */
 	public function setDacBiet($dacBiet) {
 		$this->dacBiet = $dacBiet;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isSoeur() {
+		return $this->soeur;
+	}
+	
+	/**
+	 * @param bool $soeur
+	 */
+	public function setSoeur($soeur) {
+		$this->soeur = $soeur;
 	}
 	
 	

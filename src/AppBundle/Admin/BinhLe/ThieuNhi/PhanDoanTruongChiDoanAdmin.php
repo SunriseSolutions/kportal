@@ -102,7 +102,7 @@ class PhanDoanTruongChiDoanAdmin extends BinhLeThieuNhiAdmin {
 			return false;
 		}
 		
-		if( ! $tv->isPhanDoanTruong()) {
+		if( ! $tv->isPhanDoanTruongOrSoeur()) {
 			return false;
 		}
 		

@@ -69,7 +69,7 @@ class HuynhTruongRoleMBListener {
 					))->setLabel($translator->trans('dashboard.thieunhi_duyet_diem', [], 'BinhLeAdmin'));
 					
 					$baoCaoTienQuy = true;
-				} elseif($thanhVien->isPhanDoanTruong()) {
+				} elseif($thanhVien->isPhanDoanTruongOrSoeur()) {
 					$this->banQuanTri = $menu->addChild('thieunhi_banquantri')->setLabel($translator->trans('dashboard.thieunhi_phandoantruong', [], 'BinhLeAdmin'));
 					$this->addBanQuanTriMenuItems($translator, $thanhVien, []);
 				}
@@ -176,7 +176,7 @@ class HuynhTruongRoleMBListener {
 				))->setLabel($translator->trans('dashboard.thieunhi_truong_chi_doan', [], 'BinhLeAdmin'));
 			}
 			
-			if($phanBo->isPhanDoanTruong()) {
+			if($phanBo->isPhanDoanTruongOrSoeur()) {
 				$this->dauNam->addChild('phan doan truong duyet tien quy', array(
 					'route'           => 'admin_app_binhle_thieunhi_phandoantruong_chidoan_baoCaoTienQuy',
 					'routeParameters' => [],

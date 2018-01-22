@@ -3,6 +3,7 @@
 namespace AppBundle\Command\BinhLe;
 
 use AppBundle\Entity\BinhLe\ThieuNhi\ChristianName;
+use AppBundle\Entity\BinhLe\ThieuNhi\PhanBo;
 use AppBundle\Entity\BinhLe\ThieuNhi\ThanhVien;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
@@ -29,21 +30,31 @@ class ThieuNhiCommand extends ContainerAwareCommand {
 			'============',
 			'',
 		]);
-		$manager      = $this->getContainer()->get('doctrine.orm.default_entity_manager');
-		$cNameRepo    = $this->getContainer()->get('doctrine')->getRepository(ChristianName::class);
+		$manager   = $this->getContainer()->get('doctrine.orm.default_entity_manager');
+		$cNameRepo = $this->getContainer()->get('doctrine')->getRepository(ChristianName::class);
 		// $cacThanhVien = $this->getContainer()->get('doctrine')->getRepository(ThanhVien::class)->findBy([ 'tenThanh' => null ]);
 		$cacThanhVien = $this->getContainer()->get('doctrine')->getRepository(ThanhVien::class)->findAll();
 		/** @var ThanhVien $tv */
 		foreach($cacThanhVien as $tv) {
-		/** @var PhanBo $phanBo */
-		foreach($tv->getPhanBoHangNam() as $phanBo) {
-			if(empty($phanBo->getNamHoc())){
-				$phanBo->setNamHoc($phanBo->getChiDoan()->getNamHoc());
-				$output->writeln(['phanBo '.$tv->getName(),' duoc gan vao namhoc '.$phanBo->getChiDoan()->getNamHoc()->getId()]);
-				$manager->persist($phanBo);
-				$manager->flush();				
+			/** @var PhanBo $phanBo */
+			foreach($tv->getPhanBoHangNam() as $phanBo) {
+				if(empty($phanBo->getNamHoc())) {
+					$phanBo->setNamHoc($phanBo->getChiDoan()->getNamHoc());
+					$output->writeln([
+						'phanBo ' . $tv->getName(),
+						' duoc gan vao namhoc ' . $phanBo->getChiDoan()->getNamHoc()->getId()
+					]);
+					$manager->persist($phanBo);
+					
+				}
+				
+				if($tv->isSoeur()) {
+					$phanBo->setSoeur(true);
+					$manager->persist($phanBo);
+				}
+				
+				$manager->flush();
 			}
-		}
 
 //			if( ! empty($cname = $tv->getChristianname())) {
 //				$cname = mb_strtoupper(trim($cname));

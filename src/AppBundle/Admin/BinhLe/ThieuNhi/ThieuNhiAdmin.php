@@ -546,7 +546,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 				'required'           => true
 			));
 		}
-		if($thanhVien->isBQT() || $thanhVien->isPhanDoanTruong()) {
+		if($thanhVien->isBQT() || $thanhVien->isPhanDoanTruongOrSoeur()) {
 			$formMapper->add('chiDoan', ChoiceType::class, array(
 				'required'           => false,
 				'label'              => 'list.label_chi_doan',
@@ -629,7 +629,7 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 		parent::configureShowFields($show);
 		$tv        = $this->getUserThanhVien();
 		$showField = false;
-		if($tv->isBQT() || $tv->isPhanDoanTruong()) {
+		if($tv->isBQT() || $tv->isPhanDoanTruongOrSoeur()) {
 			$showField = true;
 		} else {
 			$phanBoNamNay = $tv->getPhanBoNamNay();

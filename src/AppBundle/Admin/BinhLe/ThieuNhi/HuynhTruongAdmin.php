@@ -113,7 +113,7 @@ class HuynhTruongAdmin extends BinhLeThieuNhiAdmin {
 		if($thanhVien->isBQT()) {
 			return true;
 		}
-		if($thanhVien->isPhanDoanTruong()) {
+		if($thanhVien->isPhanDoanTruongOrSoeur()) {
 			if( ! empty($object)) {
 				if($object->getPhanDoan() === $thanhVien->getPhanDoan()) {
 					return true;
@@ -190,7 +190,7 @@ class HuynhTruongAdmin extends BinhLeThieuNhiAdmin {
 		
 		$query->andWhere($expr->eq($rootAlias . '.huynhTruong', $expr->literal(true)));
 		$tv = $this->getUserThanhVien();
-		if($tv->isPhanDoanTruong()) {
+		if($tv->isPhanDoanTruongOrSoeur()) {
 			$qb->andWhere($expr->eq($rootAlias . '.phanDoan', $expr->literal($tv->getPhanDoan())));
 		}
 		
@@ -283,7 +283,7 @@ class HuynhTruongAdmin extends BinhLeThieuNhiAdmin {
 		$thanhVien                               = $this->getUserThanhVien();
 		ThanhVienAdminHelper::$translationDomain = $this->translationDomain;
 		
-		if($thanhVien->isPhanDoanTruong()) {
+		if($thanhVien->isPhanDoanTruongOrSoeur()) {
 			$phanDoan = $thanhVien->getPhanDoan();
 			switch($phanDoan) {
 				case ThanhVien::PHAN_DOAN_CHIEN:

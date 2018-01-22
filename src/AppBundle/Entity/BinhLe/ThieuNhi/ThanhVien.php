@@ -246,6 +246,14 @@ class ThanhVien {
 		$this->phanBoHangNam = new ArrayCollection();
 	}
 	
+	
+	/**
+	 * @return bool
+	 */
+	public function isPhanDoanTruongOrSoeur() {
+		return $this->phanDoanTruong || $this->soeur;
+	}
+	
 	public function isTruongPTorGreater(ThanhVien $thanhVien) {
 		if($this->isCDTorGreater($thanhVien)) {
 			return true;
@@ -272,7 +280,7 @@ class ThanhVien {
 			return true;
 		}
 		
-		if($this->isPhanDoanTruong()) {
+		if($this->isPhanDoanTruongOrSoeur()) {
 			return true;
 		}
 		if( ! empty($thanhVien)) {

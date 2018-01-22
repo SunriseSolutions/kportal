@@ -243,7 +243,7 @@ class PhanBoAdmin extends BinhLeThieuNhiAdmin {
 	 */
 	public function preValidate($object) {
 		
-		if( ! empty($object->isChiDoanTruong() || $object->isPhanDoanTruong())) {
+		if( ! empty($object->isChiDoanTruong() || $object->isPhanDoanTruongOrSoeur())) {
 			$object->setHuynhTruong(true);
 		}
 		
