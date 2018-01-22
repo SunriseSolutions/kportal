@@ -115,6 +115,6 @@ class ThieuNhiCommand extends ContainerAwareCommand {
 //		}
 		$output->writeln("Flushing");
 		$manager->flush();
-		$output->writeln("Successfully migrated all members with a Christian Name");
+		$output->writeln("Successfully migrated all members.");
 	}
 }
