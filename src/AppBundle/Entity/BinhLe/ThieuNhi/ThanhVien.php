@@ -296,7 +296,7 @@ class ThanhVien {
 			return true;
 		}
 		
-		return null;
+		return false;
 	}
 	
 	public function sanhHoatLai(NamHoc $namHoc) {
