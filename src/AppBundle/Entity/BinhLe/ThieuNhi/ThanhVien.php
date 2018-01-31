@@ -263,6 +263,9 @@ class ThanhVien {
 		/** @var TruongPhuTrachDoi $truong */
 		foreach($cacTruong as $truong) {
 			$phanBoTN = $thanhVien->getPhanBoNamNay();
+			if(empty($truong->getDoiNhomGiaoLy()) || empty($phanBoTN) || empty($phanBoTN->getDoiNhomGiaoLy())) {
+				return false;
+			}
 			if($truong->getDoiNhomGiaoLy()->getId() === $phanBoTN->getDoiNhomGiaoLy()->getId()) {
 				return true;
 			}
