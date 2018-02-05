@@ -123,9 +123,9 @@ class BangDiem {
 		if($hocKy === 1) {
 			$tbTerm = $this->tbTerm1 = $sumDiem / $colCount;
 		} elseif($hocKy === 2) {
-			$tbTerm              = $this->tbTerm2 = $sumDiem / $colCount;
-			$this->tbYear        = ($this->tbTerm1 + $this->tbTerm2) / 2;
-			$this->sundayTickets = $this->sundayTicketTerm1 + $this->sundayTicketTerm2;
+			$tbTerm       = $this->tbTerm2 = $sumDiem / $colCount;
+			$this->tbYear = ($this->tbTerm1 + $this->tbTerm2) / 2;
+			$this->congPhieuChuaNhat();
 			
 			$namHoc = $this->phanBo->getNamHoc();
 			switch(true) {
@@ -153,6 +153,18 @@ class BangDiem {
 		}
 		
 		return $tbTerm;
+	}
+	
+	public function congPhieuChuaNhat() {
+		if($this->sundayTicketTerm1 === null) {
+			$this->sundayTicketTerm1 = 0;
+		}
+		if($this->sundayTicketTerm2 === null) {
+			$this->sundayTicketTerm2 = 0;
+		}
+		$this->sundayTickets = $this->sundayTicketTerm1 + $this->sundayTicketTerm2;
+		
+		return $this->sundayTickets;
 	}
 	
 	/**

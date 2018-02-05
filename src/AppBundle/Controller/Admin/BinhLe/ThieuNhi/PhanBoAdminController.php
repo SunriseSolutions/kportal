@@ -219,53 +219,69 @@ class PhanBoAdminController extends BaseCRUDController {
 			$cotDiemCellFormats ['sundayTicketTerm1'] = "type:'numeric'";
 		} elseif($hocKy === 2) {
 			$cotDiemHeaders['cc1']               = 'CC-1';
-			$cotDiemHeaders['cc2']              = 'CC-2';
-			$cotDiemHeaders['cc3']              = 'CC-3';
-			$cotDiemHeaders['cc4']              = 'CC-4';
-			$cotDiemHeaders['cc5']              = 'CC-5';
+			$cotDiemHeaders['cc2']               = 'CC-2';
+			$cotDiemHeaders['cc3']               = 'CC-3';
+			$cotDiemHeaders['cc4']               = 'CC-4';
+			$cotDiemHeaders['cc5']               = 'CC-5';
 			$cotDiemHeaders['tbCCTerm2']         = 'TB. CC';
 			$cotDiemHeaders['quizTerm2']         = 'TB. Miệng';
 			$cotDiemHeaders['midTerm2']          = 'Điểm 1 Tiết';
 			$cotDiemHeaders['finalTerm2']        = 'Thi HK2';
 			$cotDiemHeaders['tbTerm2']           = 'TB. HK2';
+			$cotDiemHeaders['tbTerm1']           = 'TB. HK1';
+			$cotDiemHeaders['tbYear']            = 'TB. NĂM';
 			$cotDiemHeaders['sundayTicketTerm2'] = 'Phiếu lễ CN';
+			$cotDiemHeaders['sundayTickets']     = 'Phiếu CN Cả năm';
 			
-			$cotDiemAttrs['cc1']               = 'cc1';
-			$cotDiemAttrs['cc2']              = 'cc2';
-			$cotDiemAttrs['cc3']              = 'cc3';
-			$cotDiemAttrs['cc4']              = 'cc4';
-			$cotDiemAttrs['cc5']              = 'cc5';
-			$cotDiemAttrs['tbCCTerm2']         = 'tbCCTerm2';
-			$cotDiemAttrs['quizTerm2']         = 'quizTerm2';
-			$cotDiemAttrs['midTerm2']          = 'midTerm2';
-			$cotDiemAttrs['finalTerm2']        = 'finalTerm2';
-			$cotDiemAttrs['tbTerm2']           = 'tbTerm2';
+			$cotDiemAttrs['cc1']        = 'cc1';
+			$cotDiemAttrs['cc2']        = 'cc2';
+			$cotDiemAttrs['cc3']        = 'cc3';
+			$cotDiemAttrs['cc4']        = 'cc4';
+			$cotDiemAttrs['cc5']        = 'cc5';
+			$cotDiemAttrs['tbCCTerm2']  = 'tbCCTerm2';
+			$cotDiemAttrs['quizTerm2']  = 'quizTerm2';
+			$cotDiemAttrs['midTerm2']   = 'midTerm2';
+			$cotDiemAttrs['finalTerm2'] = 'finalTerm2';
+			$cotDiemAttrs['tbTerm2']    = 'tbTerm2';
+			
+			$cotDiemAttrs['tbTerm1']           = 'tbTerm1';
+			$cotDiemAttrs['tbYear']            = 'tbYear';
 			$cotDiemAttrs['sundayTicketTerm2'] = 'sundayTicketTerm2';
+			$cotDiemAttrs['sundayTickets']     = 'sundayTickets';
 			
-			$cotDiemLabels['cc1']               = 'điểm Chuyên-cần tháng 1';
-			$cotDiemLabels['cc2']              = 'điểm Chuyên-cần tháng 2';
-			$cotDiemLabels['cc3']              = 'điểm Chuyên-cần tháng 3';
-			$cotDiemLabels['cc4']              = 'điểm Chuyên-cần tháng 4';
-			$cotDiemLabels['cc5']              = 'điểm Chuyên-cần tháng 5';
-			$cotDiemLabels['tbCCTerm2']         = 'điểm Trung-bình Chuyên-cần';
-			$cotDiemLabels['quizTerm2']         = 'điểm Trung-bình Miệng';
-			$cotDiemLabels['midTerm2']          = 'điểm 1 Tiết/Giữa-kỳ';
-			$cotDiemLabels['finalTerm2']        = 'điểm Thi Cuối-kỳ';
-			$cotDiemLabels['tbTerm2']           = 'điểm Trung-bình Học-kỳ 2';
+			
+			$cotDiemLabels['cc1']        = 'điểm Chuyên-cần tháng 1';
+			$cotDiemLabels['cc2']        = 'điểm Chuyên-cần tháng 2';
+			$cotDiemLabels['cc3']        = 'điểm Chuyên-cần tháng 3';
+			$cotDiemLabels['cc4']        = 'điểm Chuyên-cần tháng 4';
+			$cotDiemLabels['cc5']        = 'điểm Chuyên-cần tháng 5';
+			$cotDiemLabels['tbCCTerm2']  = 'điểm Trung-bình Chuyên-cần';
+			$cotDiemLabels['quizTerm2']  = 'điểm Trung-bình Miệng';
+			$cotDiemLabels['midTerm2']   = 'điểm 1 Tiết/Giữa-kỳ';
+			$cotDiemLabels['finalTerm2'] = 'điểm Thi Cuối-kỳ';
+			$cotDiemLabels['tbTerm2']    = 'điểm Trung-bình Học-kỳ 2';
+			$cotDiemLabels['tbTerm1']    = 'TB. HK1';
+			
+			$cotDiemLabels['tbYear']            = 'TB. NĂM';
 			$cotDiemLabels['sundayTicketTerm2'] = 'phiếu lễ Chúa-nhật';
+			$cotDiemLabels['sundayTickets']     = 'phiếu lễ CN Cả Năm';
 			
-			$cotDiemCellFormats ['cc1']               = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
-			$cotDiemCellFormats ['cc2']              = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
-			$cotDiemCellFormats ['cc3']              = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
-			$cotDiemCellFormats ['cc4']              = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
-			$cotDiemCellFormats ['cc5']              = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
-			$cotDiemCellFormats ['tbCCTerm2']         = "type:'numeric',readOnly:true, format: '0,0.00'";
-			$cotDiemCellFormats ['quizTerm2']         = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
-			$cotDiemCellFormats ['midTerm2']          = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
-			$cotDiemCellFormats ['finalTerm2']        = "type:'numeric', format: '0,0.00'" . ($readOnly ? ', readOnly: true' : '');
-			$cotDiemCellFormats ['tbTerm2']           = "type:'numeric',readOnly:true, format: '0,0.00'";
+			$cotDiemCellFormats ['cc1']        = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['cc2']        = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['cc3']        = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['cc4']        = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['cc5']        = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['tbCCTerm2']  = "type:'numeric',readOnly:true, format: '0,0.00'";
+			$cotDiemCellFormats ['quizTerm2']  = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['midTerm2']   = "type:'numeric', format: '0,0.0'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['finalTerm2'] = "type:'numeric', format: '0,0.00'" . ($readOnly ? ', readOnly: true' : '');
+			$cotDiemCellFormats ['tbTerm2']    = "type:'numeric',readOnly:true, format: '0,0.00'";
+			
+			$cotDiemCellFormats ['tbTerm1'] = "type:'numeric',readOnly:true, format: '0,0.00'";
+			$cotDiemCellFormats['tbYear']   = "type:'numeric',readOnly:true, format: '0,0.00'";
+			
 			$cotDiemCellFormats ['sundayTicketTerm2'] = "type:'numeric'";
-			
+			$cotDiemCellFormats ['sundayTickets']     = "type:'numeric', readOnly:true";
 		}
 		
 		$cacCotDiemBiLoaiBo = $chiDoan->getCotDiemBiLoaiBo();
@@ -297,25 +313,27 @@ class PhanBoAdminController extends BaseCRUDController {
 				if(substr($cotDiem, 0, 2) === 'cc') {
 					$bangDiem->tinhDiemChuyenCan($hocKy);
 					$bangDiem->tinhDiemHocKy($hocKy);
-				} elseif(substr($cotDiem, 0, 6) !== 'sunday') {
+				} elseif(substr($cotDiem, 0, 6)) {
 					$bangDiem->tinhDiemHocKy($hocKy);
 				}
 				
 				$tbCC = 0;
 				if($hocKy === 1) {
-					$tbCC      = $bangDiem->getTbCCTerm1();
-					$tbTerm    = $bangDiem->getTbTerm1();
-					$tbYear    = 0;
-					$category  = '';
-					$retention = '';
-					$awarded   = '';
+					$tbCC          = $bangDiem->getTbCCTerm1();
+					$tbTerm        = $bangDiem->getTbTerm1();
+					$tbYear        = 0;
+					$sundayTickets = $bangDiem->getSundayTickets();
+					$category      = '';
+					$retention     = '';
+					$awarded       = '';
 				} elseif($hocKy === 2) {
-					$tbCC      = $bangDiem->getTbCCTerm2();
-					$tbTerm    = $bangDiem->getTbTerm2();
-					$tbYear    = $bangDiem->getTbYear();
-					$category  = $bangDiem->getCategory();
-					$retention = $bangDiem->isGradeRetention();
-					$awarded   = $bangDiem->isAwarded();
+					$tbCC          = $bangDiem->getTbCCTerm2();
+					$tbTerm        = $bangDiem->getTbTerm2();
+					$tbYear        = $bangDiem->getTbYear();
+					$sundayTickets = $bangDiem->getSundayTickets();
+					$category      = $bangDiem->getCategory();
+					$retention     = $bangDiem->isGradeRetention();
+					$awarded       = $bangDiem->isAwarded();
 				}
 				
 				$manager->persist($bangDiem);
@@ -324,7 +342,12 @@ class PhanBoAdminController extends BaseCRUDController {
 				$manager->flush();
 
 //
-				return new JsonResponse([ 'tbCC' => $tbCC, 'tbTerm' => $tbTerm, 'tbYear' => $tbYear ], 200);
+				return new JsonResponse([
+					'tbCC'          => $tbCC,
+					'tbTerm'        => $tbTerm,
+					'tbYear'        => $tbYear,
+					'sundayTickets' => $sundayTickets
+				], 200);
 			} else {
 				return new JsonResponse([ 404, 'Không thể tìm thấy Thiếu-nhi này' ], 404);
 			}
