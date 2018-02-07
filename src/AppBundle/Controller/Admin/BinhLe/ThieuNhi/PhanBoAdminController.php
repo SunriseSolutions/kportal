@@ -230,8 +230,8 @@ class PhanBoAdminController extends BaseCRUDController {
 			$cotDiemHeaders['tbTerm2']           = 'TB. HK2';
 			$cotDiemHeaders['tbTerm1']           = 'TB. HK1';
 			$cotDiemHeaders['tbYear']            = 'TB. NĂM';
-			$cotDiemHeaders['sundayTicketTerm2'] = 'Phiếu lễ CN';
-			$cotDiemHeaders['sundayTickets']     = 'Phiếu CN Cả năm';
+			$cotDiemHeaders['sundayTicketTerm2'] = 'Phiếu CN';
+			$cotDiemHeaders['sundayTickets']     = 'Phiếu Cả năm';
 			
 			$cotDiemAttrs['cc1']        = 'cc1';
 			$cotDiemAttrs['cc2']        = 'cc2';

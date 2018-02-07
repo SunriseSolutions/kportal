@@ -128,6 +128,10 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			return $this->isAdmin();
 		}
 		
+		if( ! empty($object)) {
+			$phanBoNamNay = $object->getPhanBoNamNay();
+		}
+		
 		if($name === 'sanh-hoat-lai') {
 			if(empty($thanhVien)) {
 				return $this->isAdmin();
@@ -165,7 +169,8 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 			if(empty($object)) {
 				return false;
 			}
-			if( ! empty($phanBoNamNay = $object->getPhanBoNamNay())) {
+			
+			if( ! empty($phanBoNamNay)) {
 				$bangDiem = $phanBoNamNay->createBangDiem();
 				
 				if(empty($bangDiem->isGradeRetention())) {
@@ -246,7 +251,11 @@ class ThieuNhiAdmin extends BinhLeThieuNhiAdmin {
 					return false;
 				}
 				
-				$doiNhomGiaoLy = $object->getPhanBoNamNay()->getDoiNhomGiaoLy();
+				if( ! empty($phanBoNamNay)) {
+					$doiNhomGiaoLy = $phanBoNamNay->getDoiNhomGiaoLy();
+				} else {
+					return false;
+				}
 				
 				if(empty($doiNhomGiaoLy)) {
 					return $thanhVien->isCDTorGreater($object);
