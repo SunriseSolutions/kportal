@@ -191,7 +191,9 @@ class BangDiemAdmin extends BinhLeThieuNhiAdmin {
 				->add('quizTerm1')
 				->add('midTerm1')
 				->add('finalTerm1')
-				->add('sundayTicketTerm1');
+				->add('sundayTicketTerm1')
+				->add('tbTerm1',null,array('label'=>'TB.HK1'))
+			;
 			
 		} else {
 			$listMapper
