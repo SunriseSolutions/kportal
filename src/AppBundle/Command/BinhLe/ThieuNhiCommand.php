@@ -38,8 +38,10 @@ class ThieuNhiCommand extends ContainerAwareCommand {
 		foreach($cacThanhVien as $tv) {
 			if($tv->getSex() === null) {
 				$tenThanh = $tv->getTenThanh();
-				$tv->setSex($tenThanh->getSex());
-				$manager->persist($tv);
+				if( ! empty($tenThanh)) {
+					$tv->setSex($tenThanh->getSex());
+					$manager->persist($tv);
+				}
 			}
 			if($tv->getChiDoan() >= 14 & $tv->getChiDoan() <= 15) {
 				$tv->getPhanBoNamNay()->getBangDiem()->tinhDiemHocKy(1);
