@@ -50,6 +50,7 @@ class ThieuNhiCommand extends ContainerAwareCommand {
 						$bd = $pb->getBangDiem();
 						if( ! empty($bd)) {
 							$bd->tinhDiemHocKy(1);
+							$output->writeln('tinh DIem HK1 CD:'.$pb->getChiDoan()->getId());
 							$manager->persist($bd);
 						}
 					}
