@@ -44,7 +44,7 @@ class ThieuNhiCommand extends ContainerAwareCommand {
 				}
 			}
 			if($tv->getNamHoc() === 2017) {
-				if($tv->getChiDoan() >= 14 & $tv->getChiDoan() <= 15) {
+				if($tv->getChiDoan() >= 13 & $tv->getChiDoan() <= 15) {
 					$pb = $tv->getPhanBoNamNay();
 					if( ! empty($pb)) {
 						$bd = $pb->getBangDiem();
