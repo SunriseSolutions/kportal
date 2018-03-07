@@ -43,10 +43,17 @@ class ThieuNhiCommand extends ContainerAwareCommand {
 					$manager->persist($tv);
 				}
 			}
-			if($tv->getChiDoan() >= 14 & $tv->getChiDoan() <= 15) {
-				$tv->getPhanBoNamNay()->getBangDiem()->tinhDiemHocKy(1);
-				$bd = $tv->getPhanBoNamNay()->getBangDiem();
-				$manager->persist($bd);
+			if($tv->getNamHoc() === 2017) {
+				if($tv->getChiDoan() >= 14 & $tv->getChiDoan() <= 15) {
+					$pb = $tv->getPhanBoNamNay();
+					if( ! empty($pb)) {
+						$bd = $pb->getBangDiem();
+						if( ! empty($bd)) {
+							$bd->tinhDiemHocKy(1);
+							$manager->persist($bd);
+						}
+					}
+				}
 			}
 			
 			/** @var PhanBo $phanBo */
